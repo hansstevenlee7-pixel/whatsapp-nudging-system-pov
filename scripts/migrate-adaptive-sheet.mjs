@@ -39,11 +39,12 @@ if (missingTabs.length) {
 }
 
 for (const [tab, additions] of Object.entries(headers)) {
-  const range = encodeURIComponent(`'${tab.replace(/'/g, "''")}'!1:1`);
+  const sheetRange = `'${tab.replace(/'/g, "''")}'!1:1`;
+  const range = encodeURIComponent(sheetRange);
   const current = await request(`${base}/values/${range}?majorDimension=ROWS`);
   const row = (current.values && current.values[0] || []).map(value => String(value).trim());
   const next = row.length ? row.concat(additions.filter(header => !row.includes(header))) : additions.slice();
   if (JSON.stringify(next) === JSON.stringify(row)) continue;
-  await request(`${base}/values/${range}?valueInputOption=RAW`, { method: "PUT", body: JSON.stringify({ range: `${tab}!1:1`, majorDimension: "ROWS", values: [next] }) });
+  await request(`${base}/values/${range}?valueInputOption=RAW`, { method: "PUT", body: JSON.stringify({ range: sheetRange, majorDimension: "ROWS", values: [next] }) });
   console.log(`Updated ${tab}: ${next.join(",")}`);
 }
