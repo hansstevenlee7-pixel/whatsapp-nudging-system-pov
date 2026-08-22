@@ -91,6 +91,9 @@ test("Twilio delivery is scheduled in Melbourne and sends only generated rows in
   assert.match(due.parameters.jsCode, /startsWith\('schd_'\)/);
   assert.match(due.parameters.jsCode, /ageMinutes >= 5/);
   assert.match(build.parameters.jsCode, /TWILIO_SEND_ONLY_CONTENT_SID/);
+  assert.match(build.parameters.jsCode, /TWILIO_SANDBOX_MODE/);
+  assert.match(build.parameters.jsCode, /pairs\.push\(\['Body'/);
+  assert.match(build.parameters.jsCode, /sandbox_body/);
   assert.match(build.parameters.jsCode, /StatusCallback/);
   assert.match(build.parameters.jsCode, /\/api\/whatsapp-status/);
   assert.doesNotMatch(build.parameters.jsCode, /TWILIO_COMMITMENT_CONTENT_SID|two_stage|quick_reply/);

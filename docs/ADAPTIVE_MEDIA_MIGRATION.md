@@ -24,6 +24,8 @@ Europe PMC search requires no project API key. Only open-access results with abs
 - Import the updated Workflow B. It calls `/api/internal/prepare-delivery` before Twilio and receives either the original message or an idempotently prepared media message.
 - Import and activate Workflow C after Vercel is reachable. It polls the signed discovery and adaptation endpoints every two minutes.
 - Railway needs `PORTAL_BASE_URL` and the same `N8N_PROXY_SECRET` as Vercel.
+- Set `N8N_BLOCK_ENV_ACCESS_IN_NODE=false` on the isolated n8n service because the imported workflows resolve their signed endpoint and provider settings from Railway environment variables.
+- Set `TWILIO_SANDBOX_MODE=true` only for the controlled Sandbox gate. Sandbox delivery uses a button-free free-form `Body` inside the participant-initiated 24-hour window because custom Content templates are not supported there. Registered senders leave this `false` and use `TWILIO_SEND_ONLY_CONTENT_SID`.
 
 ## Acceptance boundary
 
