@@ -54,6 +54,7 @@ test("duplicate phone numbers are rejected while an existing patient can retain 
 test("intake keeps its proxy gate while Monitoring APIs use the server-only Sheets client", () => {
   const root = path.resolve(__dirname, "../..");
   const intake = JSON.parse(fs.readFileSync(path.join(root, "workflows/workflow_a_intake.json"), "utf8"));
+  assert.equal(intake.active, false);
   assert.equal(intake.connections["Intake Webhook"].main[0][0].node, "Authorize Proxy");
   assert.equal(intake.connections["Call Gemini Vision"].main[0][0].node, "Normalize Known Enum Drift");
   assert.equal(intake.connections["Normalize Known Enum Drift"].main[0][0].node, "Validation Gate");
