@@ -123,8 +123,11 @@ function explicitInterpretation(body) {
     result.explicit = true; result.format = "video";
   } else if (/\b(don'?t|do not|no|hate|dislike)\b.{0,20}\b(video|videos|watch|youtube)\b/.test(value)) {
     result.explicit = true; result.format = "paper";
-  } else if (/\b(video|videos|watch|youtube)\b/.test(value)) { result.explicit = true; result.format = "video"; }
-  else if (/\b(paper|papers|research|article|reading|read)\b/.test(value)) { result.explicit = true; result.format = "paper"; }
+  } else if (/\b(prefer|send|want|like|more)\b.{0,30}\b(video|videos|watch|youtube)\b|\b(video|videos)\b.{0,20}\b(please|instead)\b/.test(value)) {
+    result.explicit = true; result.format = "video";
+  } else if (/\b(prefer|send|want|like|more)\b.{0,30}\b(paper|papers|research|article|reading)\b|\b(paper|papers|reading)\b.{0,20}\b(please|instead)\b/.test(value)) {
+    result.explicit = true; result.format = "paper";
+  }
   if (/\b(short|shorter|brief|less text|summar(?:y|ise|ize))\b/.test(value)) { result.explicit = true; result.summary_length = "short"; }
   if (/\b(detailed|detail|longer|full paper)\b/.test(value)) { result.explicit = true; result.summary_length = "detailed"; }
   const time = value.match(/\b(?:at|around|after)\s+([01]?\d|2[0-3])(?::([0-5]\d))?\s*(am|pm)?\b/);

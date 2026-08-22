@@ -46,7 +46,9 @@ async function paperCandidates(job, fetchImpl = fetch) {
     return rankCandidate({ media_kind: "paper", title: text(item.title), abstract: text(item.abstractText), description: text(item.abstractText),
       source_name: text(item.journalTitle || "Europe PMC"), source_id: id, source_url: sourceUrl,
       published_at: item.firstPublicationDate || null, open_access: Boolean(item.isOpenAccess === "Y" || item.openAccess === "Y"),
-      trusted: true, patient_suitable: false, metadata: { authors: item.authorString || "", doi: item.doi || "", cited_by_count: item.citedByCount || 0 }
+      trusted: true, patient_suitable: false,
+      full_text_url: item.pmcid ? `https://www.ebi.ac.uk/europepmc/webservices/rest/${encodeURIComponent(item.pmcid)}/fullTextXML` : null,
+      metadata: { authors: item.authorString || "", doi: item.doi || "", cited_by_count: item.citedByCount || 0 }
     }, query);
   });
 }
@@ -59,10 +61,17 @@ async function summarizePaper(candidate, fetchImpl = fetch) {
     short_summary: { type: "string" }, detailed_summary: { type: "string" }, limitations: { type: "string" },
     source_title: { type: "string" }, original_url: { type: "string" }
   } };
+  let sourceText = candidate.abstract;
+  if (candidate.full_text_url) {
+    try {
+      const full = await fetchImpl(candidate.full_text_url);
+      if (full.ok) sourceText = (await full.text()).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").slice(0, 100000);
+    } catch (_) {}
+  }
   const prompt = ["Summarise this health research for a general patient in plain English.",
-    "Do not add advice, recommendations, or claims absent from the supplied abstract.",
+    "Do not add advice, recommendations, or claims absent from the supplied source text.",
     "Short summary: no more than 60 words. Detailed summary: no more than 120 words. State limitations plainly.",
-    `Title: ${candidate.title}`, `URL: ${candidate.source_url}`, `Abstract: ${candidate.abstract}`].join("\n");
+    `Title: ${candidate.title}`, `URL: ${candidate.source_url}`, `Source text: ${sourceText}`].join("\n");
   const response = await fetchImpl(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(key)}`, {
     method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }],
       generationConfig: { responseMimeType: "application/json", responseSchema: schema, temperature: 0.1 } })
@@ -71,8 +80,8 @@ async function summarizePaper(candidate, fetchImpl = fetch) {
   const payload = await response.json();
   try {
     const raw = payload.candidates[0].content.parts[0].text;
-    const summary = validateSummary(JSON.parse(raw));
-    if (summary.original_url !== candidate.source_url || summary.source_title !== candidate.title) return candidate;
+    const parsed = JSON.parse(raw);
+    const summary = validateSummary(Object.assign({}, parsed, { source_title: candidate.title, original_url: candidate.source_url }));
     return Object.assign({}, candidate, summary);
   } catch (_) { return candidate; }
 }

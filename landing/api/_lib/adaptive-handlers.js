@@ -29,7 +29,12 @@ async function plan(req, res) {
     const body = req.method === "POST" ? await jsonBody(req) : {};
     const userId = String(body.user_id || url.searchParams.get("user_id") || "").trim();
     assertPatientAccess(profile, await allPatients(), userId);
-    if (req.method === "GET") return sendJson(res, 200, await store.call("plansForUser", userId));
+    if (req.method === "GET") {
+      const data = await store.call("plansForUser", userId);
+      data.proposed_pools = Object.fromEntries((data.envelopes || []).map(item => [item.behaviour_key,
+        selectPool((data.candidates || []).filter(candidate => candidate.behaviour_key === item.behaviour_key))]));
+      return sendJson(res, 200, data);
+    }
     const key = String(body.behaviour_key || "").trim();
     if (!key) throw httpError(400, "behaviour_key is required");
     const candidates = selectPool(await store.call("candidates", key));
@@ -103,7 +108,9 @@ async function prepareDelivery(req, res) {
     const tracked = await store.call("createTrackedLink", { asset_id: asset.asset_id, user_id: nudge.user_id, behaviour_key: key, nudge_id: nudgeId, target_url: asset.source_url });
     const trackedUrl = `${origin(req)}/api/r/${tracked.token}`;
     const summary = (decision.next_state.preferred_summary_length || "short") === "detailed" ? asset.detailed_summary : asset.short_summary;
-    const messageBody = [nudge.message_body, [summary, `${asset.title} — ${asset.source_name}`, trackedUrl].filter(Boolean).join("\n")].filter(Boolean).join("\n\n").slice(0, 1500);
+    const tail = [`${asset.title} — ${asset.source_name}`, trackedUrl].filter(Boolean).join("\n");
+    const lead = [nudge.message_body, summary].filter(Boolean).join("\n\n");
+    const messageBody = [lead.slice(0, Math.max(0, 900 - tail.length - 2)).trim(), tail].filter(Boolean).join("\n\n");
     const assignmentId = "ma_" + crypto.createHash("sha256").update(`${nudgeId}|${asset.asset_id}`).digest("hex").slice(0, 24);
     const now = new Date().toISOString();
     await batchWrite([

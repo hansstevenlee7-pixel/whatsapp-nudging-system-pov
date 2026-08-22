@@ -16,6 +16,9 @@ const operations = {
   async queueSearch(job) {
     const existing = rows(await request(`/rest/v1/media_search_jobs?user_id=eq.${q(job.user_id)}&behaviour_key=eq.${q(job.behaviour_key)}&status=in.(pending,processing)&select=*`, {}, true))[0];
     if (existing) return existing;
+    const since = new Date(Date.now() - 30 * 86400000).toISOString();
+    const cached = rows(await request(`/rest/v1/media_search_jobs?user_id=eq.${q(job.user_id)}&behaviour_key=eq.${q(job.behaviour_key)}&status=eq.complete&completed_at=gte.${q(since)}&select=*&order=completed_at.desc&limit=1`, {}, true))[0];
+    if (cached) return cached;
     return rows(await request("/rest/v1/media_search_jobs", { method: "POST", headers: { prefer: "return=representation" }, body: JSON.stringify(job) }, true))[0];
   },
   async pendingSearch() {

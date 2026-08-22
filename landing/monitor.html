@@ -732,8 +732,9 @@
           esc(pretty(env.pillar) + " · " + pretty(env.category)) + '</div></div><span class="chip ' +
           (env.status === "approved" ? "ok" : "warn") + '">' + esc(env.status || "draft") + '</span>';
         card.appendChild(head);
-        var candidates = (env.status === "approved" ? (data.assets || []) : (data.candidates || []))
-          .filter(function (item) { return item.behaviour_key === env.behaviour_key; }).slice(0, 3);
+        var candidates = env.status === "approved"
+          ? (data.assets || []).filter(function (item) { return item.behaviour_key === env.behaviour_key; })
+          : ((data.proposed_pools || {})[env.behaviour_key] || []);
         var pool = document.createElement("div"); pool.className = "media-pool";
         if (!candidates.length) pool.innerHTML = '<div class="delivery-empty">Automatic trusted-source search is still processing.</div>';
         candidates.forEach(function (item) {

@@ -15,9 +15,12 @@ async function queuePatientBehaviours(userId, slots, prescriptions) {
     const job = { behaviour_key: key, user_id: userId, prescription_id: String(slot.prescription_id || ""),
       action_text: slot.action_text, pillar: slot.pillar, category: slot.category, status: "pending", updated_at: new Date().toISOString() };
     queued.push(await store.call("queueSearch", job));
-    await store.call("saveDraftEnvelope", Object.assign(defaultEnvelope(Object.assign({}, slot, {
-      frequency_per_week: frequencyByPrescription.get(String(slot.prescription_id)) || 1
-    })), { user_id: userId, behaviour_key: key, status: "draft", updated_at: new Date().toISOString() }));
+    const approved = await store.call("envelopeFor", userId, key);
+    if (!approved) {
+      await store.call("saveDraftEnvelope", Object.assign(defaultEnvelope(Object.assign({}, slot, {
+        frequency_per_week: frequencyByPrescription.get(String(slot.prescription_id)) || 1
+      })), { user_id: userId, behaviour_key: key, status: "draft", updated_at: new Date().toISOString() }));
+    }
   }
   return queued;
 }

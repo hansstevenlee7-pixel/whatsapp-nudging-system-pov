@@ -32,7 +32,14 @@ async function recordDeliveryStatus(fields, now = new Date().toISOString()) {
   const status = canonicalStatus(fields.MessageStatus);
   const id = eventId(fields);
   const existingEvent = data.delivery_events.rows.find(row => text(row.event_id) === id);
-  if (existingEvent) return { duplicate: true, status, nudge_id: state.nudge_id };
+  const operational = {
+    interaction_id: id, event_at: existingEvent && existingEvent.event_at || now, event_type: "delivery_status", user_id: state.user_id,
+    nudge_id: state.nudge_id, wa_message_id: sid, status, correlation_method: "twilio_message_sid", raw_payload: fields
+  };
+  if (existingEvent) {
+    await adaptiveStore.optional("recordInteraction", operational);
+    return { duplicate: true, status, nudge_id: state.nudge_id };
+  }
 
   const event = {
     event_id: id,
@@ -56,10 +63,7 @@ async function recordDeliveryStatus(fields, now = new Date().toISOString()) {
     operation("delivery_events", data.delivery_events, event),
     operation("schedule_state", data.schedule_state, nextState, state)
   ]);
-  await adaptiveStore.optional("recordInteraction", {
-    interaction_id: id, event_at: now, event_type: "delivery_status", user_id: state.user_id,
-    nudge_id: state.nudge_id, wa_message_id: sid, status, correlation_method: "twilio_message_sid", raw_payload: fields
-  });
+  await adaptiveStore.optional("recordInteraction", operational);
   return { duplicate: false, status, nudge_id: state.nudge_id };
 }
 

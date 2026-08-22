@@ -41,6 +41,7 @@ test("explicit format requests apply within an approved envelope", () => {
   assert.equal(decision.next_state.preferred_format, "video");
   assert.equal(decision.selected_asset.asset_id, "v1");
   assert.equal(core.explicitInterpretation("I don't like reading").format, "video");
+  assert.equal(core.explicitInterpretation("I read it").explicit, false);
 });
 
 test("time and frequency changes outside the envelope are not applied", () => {
