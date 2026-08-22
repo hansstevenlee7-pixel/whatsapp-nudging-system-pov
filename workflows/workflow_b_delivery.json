@@ -1,0 +1,228 @@
+{
+  "name": "Workflow B — Nudge Delivery",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Workflow B — Nudge Delivery\n\n### Before first run\n\n**Environment variables** (n8n → Settings → Environment Variables):\n- `GOOGLE_SHEETS_SPREADSHEET_ID` — spreadsheet ID from the URL\n- `PHONE_NUMBER_ID` — WhatsApp sender phone number ID (Meta dashboard)\n- `WHATSAPP_TOKEN` — **System User permanent token** (not the 24-h API Setup token)\n\n**Credential:** create a *Google Sheets OAuth2* credential in n8n and assign it to all three Sheets nodes after import.\n\n### Required sheet columns\n\n`nudges` tab:\n`nudge_id`, `user_id`, `status`, `scheduled_date` (YYYY-MM-DD), `scheduled_time` (HH:MM), `template_name`, `message_body`, `recipient_phone` (E.164)\n\n`schedule_state` tab:\n`schedule_id`, `nudge_id`, `user_id`, `status`, `sent_at`, `wa_message_id`, `tone_sent`, `response`, `responded_at`, `last_response_at`, `barrier_tag`, `done_count`, `skip_count`, `current_streak`, `consecutive_skips`, `last_updated`\n\n### Dev test (build-order step 1)\n1. Add one row to `nudges`: `status=pending`, today's date, a past time, `template_name=hello_world`, your verified phone in `recipient_phone`.\n2. Click **Test workflow**.\n3. Verify message arrives, `nudges.status=sent`, and `schedule_state` row is created with a `wa_message_id`.\n\n### Template switch\n`hello_world` is dev-only. Once `health_plan_reminder` is approved (step 6), change `template_name` in your rows — the *Build WhatsApp Payload* node switches the API body automatically.\n\n### Build order context\n- Step 4: swap *Manual Trigger* → *Schedule Trigger* (cron every 15 min)\n- Step 7: add streak-check + reflective variant selection before *Build WhatsApp Payload*\n\n⚠️ **401 errors?** Token expired. Regenerate from Meta → System User (not API Setup).",
+        "height": 680,
+        "width": 560,
+        "color": 7
+      },
+      "id": "a0000001-0000-0000-0000-000000000001",
+      "name": "Setup Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [240, -380]
+    },
+    {
+      "parameters": {},
+      "id": "a0000001-0000-0000-0000-000000000002",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [240, 380]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "nudges",
+          "mode": "name"
+        },
+        "returnAll": true,
+        "options": {}
+      },
+      "id": "a0000001-0000-0000-0000-000000000003",
+      "name": "Read Nudges Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [460, 380],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_AFTER_IMPORT",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Keep only nudges that are due right now:\n//   status  = 'approved'  (human-reviewed via the review page / Workflow E)\n//   scheduled_date <= today (catches overdue rows too)\n//   if same day: scheduled_time <= current time\n// Nudges still 'needs_review' or 'rejected' are intentionally never sent.\n\nconst today       = $now.toISODate();            // 'YYYY-MM-DD'\nconst currentTime = $now.toFormat('HH:mm');      // 'HH:MM'\n\nconst due = items.filter(item => {\n  const { status, scheduled_date, scheduled_time } = item.json;\n  if (status !== 'approved') return false;\n  if (scheduled_date > today) return false;\n  if (scheduled_date === today && scheduled_time > currentTime) return false;\n  return true;\n});\n\n// Returning an empty array skips all downstream nodes cleanly.\nreturn due;"
+      },
+      "id": "a0000001-0000-0000-0000-000000000004",
+      "name": "Filter Due Nudges",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [680, 380]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Build the Meta WhatsApp Cloud API request body for each due nudge.\n//\n// Template routing:\n//   hello_world          — dev/test, no parameters, no Meta approval needed\n//   health_plan_reminder — production; message_body injected into {{1}}\n//\n// recipient_phone must be E.164, e.g. +61412345678.\n// schedule_id is deterministic (idempotent across retries).\n//\n// Step 7 (build order): insert streak-check logic HERE to pick standard\n// vs reflective variant before building the payload.\n\nreturn items.map(item => {\n  const {\n    recipient_phone,\n    message_body,\n    template_name,\n    nudge_id,\n    user_id\n  } = item.json;\n\n  let template;\n  if (template_name === 'hello_world') {\n    template = {\n      name: 'hello_world',\n      language: { code: 'en_US' }\n    };\n  } else {\n    // health_plan_reminder body:\n    // \"Reminder from your health plan: {{1}}. Reply DONE when completed, or SKIP to skip today.\"\n    template = {\n      name: 'health_plan_reminder',\n      language: { code: 'en_US' },\n      components: [{\n        type: 'body',\n        parameters: [{ type: 'text', text: message_body }]\n      }]\n    };\n  }\n\n  item.json.whatsapp_payload = JSON.stringify({\n    messaging_product: 'whatsapp',\n    to: recipient_phone,\n    type: 'template',\n    template\n  });\n\n  // Deterministic — safe to re-run if a prior execution partially failed.\n  item.json.schedule_id = 'sch_' + nudge_id;\n\n  return item;\n});"
+      },
+      "id": "a0000001-0000-0000-0000-000000000005",
+      "name": "Build WhatsApp Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 380]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v20.0/{{ $env.PHONE_NUMBER_ID }}/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $env.WHATSAPP_TOKEN }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ $json.whatsapp_payload }}",
+        "options": {}
+      },
+      "id": "a0000001-0000-0000-0000-000000000006",
+      "name": "Send WhatsApp",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1120, 380]
+    },
+    {
+      "parameters": {
+        "jsCode": "// The HTTP Request node replaces item data with the API response body.\n// This node merges the original nudge data back in and extracts wa_message_id.\n//\n// Meta API response shape:\n//   { messaging_product, contacts: [...], messages: [{ id: 'wamid.HBgN...' }] }\n//\n// wa_message_id is stored in schedule_state so Workflow C can correlate\n// a SKIP follow-up reply (which carries context.id) back to its nudge_id.\n\nconst nudges = $('Build WhatsApp Payload').all();\n\nreturn items.map((responseItem, i) => {\n  const nudge    = nudges[i] ? nudges[i].json : {};\n  const response = responseItem.json;\n\n  const wa_message_id = (response.messages && response.messages[0])\n    ? response.messages[0].id\n    : null;\n\n  return {\n    json: {\n      ...nudge,\n      wa_message_id\n    }\n  };\n});"
+      },
+      "id": "a0000001-0000-0000-0000-000000000009",
+      "name": "Extract & Merge Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1340, 380]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "nudges",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "nudge_id": "={{ $json.nudge_id }}",
+            "status":   "sent",
+            "sent_at":  "={{ $now.toISO() }}"
+          },
+          "matchingColumns": ["nudge_id"],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "a0000001-0000-0000-0000-000000000007",
+      "name": "Mark Nudge Sent",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [1560, 380],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_AFTER_IMPORT",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "schedule_state",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "schedule_id":    "={{ $json.schedule_id }}",
+            "nudge_id":       "={{ $json.nudge_id }}",
+            "user_id":        "={{ $json.user_id }}",
+            "status":         "sent",
+            "sent_at":        "={{ $now.toISO() }}",
+            "wa_message_id":  "={{ $json.wa_message_id }}",
+            "last_updated":   "={{ $now.toISO() }}"
+          },
+          "matchingColumns": ["nudge_id"],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "a0000001-0000-0000-0000-000000000008",
+      "name": "Update Schedule State",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [1780, 380],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_AFTER_IMPORT",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [{ "node": "Read Nudges Sheet", "type": "main", "index": 0 }]
+      ]
+    },
+    "Read Nudges Sheet": {
+      "main": [
+        [{ "node": "Filter Due Nudges", "type": "main", "index": 0 }]
+      ]
+    },
+    "Filter Due Nudges": {
+      "main": [
+        [{ "node": "Build WhatsApp Payload", "type": "main", "index": 0 }]
+      ]
+    },
+    "Build WhatsApp Payload": {
+      "main": [
+        [{ "node": "Send WhatsApp", "type": "main", "index": 0 }]
+      ]
+    },
+    "Send WhatsApp": {
+      "main": [
+        [{ "node": "Extract & Merge Response", "type": "main", "index": 0 }]
+      ]
+    },
+    "Extract & Merge Response": {
+      "main": [
+        [{ "node": "Mark Nudge Sent", "type": "main", "index": 0 }]
+      ]
+    },
+    "Mark Nudge Sent": {
+      "main": [
+        [{ "node": "Update Schedule State", "type": "main", "index": 0 }]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

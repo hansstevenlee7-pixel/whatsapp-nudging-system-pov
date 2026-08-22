@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Clinician sign in</title><link rel="stylesheet" href="auth.css"></head>
+<body><main class="auth-page"><section class="auth-card">
+  <h1>Clinician sign in</h1><p>Use your invited account to access patient intake and review.</p>
+  <form id="loginForm">
+    <div class="auth-field"><label for="email">Email</label><input id="email" type="email" autocomplete="username" required></div>
+    <div class="auth-field"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" minlength="8" required></div>
+    <button class="auth-button" type="submit">Sign in</button>
+  </form>
+  <p class="auth-message" id="message" aria-live="polite"></p>
+  <a class="auth-link" href="forgot-password.html">Forgot password?</a> · <a class="auth-link" href="index.html">Public home</a>
+</section></main><script src="auth.js"></script><script>
+(async function(){
+  try { if (Auth.session()) { await Auth.me(); location.replace(new URLSearchParams(location.search).get("next") || "monitor.html"); return; } } catch (_) {}
+  var form=document.getElementById("loginForm"),msg=document.getElementById("message");
+  form.addEventListener("submit",async function(e){e.preventDefault();var btn=form.querySelector("button");btn.disabled=true;msg.className="auth-message";msg.textContent="Signing in…";
+    try{await Auth.signIn(document.getElementById("email").value.trim(),document.getElementById("password").value);await Auth.me();location.replace(new URLSearchParams(location.search).get("next")||"monitor.html");}
+    catch(err){msg.className="auth-message error";msg.textContent=err.message;btn.disabled=false;}});
+})();
+</script></body></html>

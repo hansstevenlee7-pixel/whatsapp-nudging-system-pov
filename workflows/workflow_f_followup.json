@@ -1,0 +1,96 @@
+{
+  "name": "Workflow F — Outcome Follow-up Scheduler (Twilio)",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Outcome follow-up scheduler\n\nn8n is the clock; the work happens in JS.\n\nEvery five minutes in Australia/Melbourne this calls\n`POST /api/followup-tick` on the portal, which:\n\n- sends outcome checks whose `followup_due_at` has passed\n- closes commitment/outcome windows that expired unanswered\n  as `NO_FEEDBACK` (never `NOT_YET`)\n- writes **only** `schedule_state` — the delayed check is a\n  feedback event, never a clinician-approved nudge\n\n### Requires exactly ONE n8n variable\n\n**`FOLLOWUP_TICK_SECRET`** — must match the value set on Vercel\nProduction, or every tick returns 401. It is in `local/n8n.env`.\n\n`PORTAL_BASE_URL` is OPTIONAL. It defaults to the production\nportal and only needs setting to point somewhere else.\n\nNo Google or Twilio credentials are needed here — this workflow\nhas no Sheets nodes at all. Those live on Vercel now.\n\n### Reading a run\nThe HTTP response is the summary: `sent`, `expired_commitment`,\n`expired_outcome`, `failed`. A green run with `sent: 0` means\nnothing was due, which is the normal case.\n\n### Why only three nodes\nThe previous 16-node version is archived at\n`docs/archive/workflow_f_followup_n8n_native.json` — do NOT\nimport it. Its logic was 120 lines of Code plus 19 IF conditions\nand column mappings, and only the first was testable. The same\nlogic now lives in `landing/api/_lib/followup-scheduler.js` with\nordinary unit tests. Vercel Hobby caps cron at once per day, so\nthe clock stays here where five-minute scheduling is free.\n\nShips inactive.",
+        "height": 620,
+        "width": 460
+      },
+      "id": "f1a00000-0000-4000-8000-00000000f001",
+      "name": "Setup Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        -40
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 5
+            }
+          ]
+        }
+      },
+      "id": "f1a00000-0000-4000-8000-00000000f002",
+      "name": "Melbourne Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        380,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ ($env.PORTAL_BASE_URL || \"https://whatsapp-nudging-system.vercel.app\").replace(/\\/+$/, \"\") }}/api/followup-tick",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-followup-secret",
+              "value": "={{ $env.FOLLOWUP_TICK_SECRET }}"
+            },
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ source: workflow_f, fired_at: $now.toISO() }) }}",
+        "options": {
+          "timeout": 60000,
+          "response": {
+            "response": {
+              "neverError": false
+            }
+          }
+        }
+      },
+      "id": "f1a00000-0000-4000-8000-00000000f003",
+      "name": "Run Follow-up Tick",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        640,
+        200
+      ]
+    }
+  ],
+  "connections": {
+    "Melbourne Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Run Follow-up Tick",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Australia/Melbourne"
+  }
+}

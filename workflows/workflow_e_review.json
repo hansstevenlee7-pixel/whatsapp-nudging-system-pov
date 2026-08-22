@@ -1,0 +1,708 @@
+{
+  "id": "ncWChBzYpr1C8Ly5",
+  "name": "Workflow E — Review & Approval",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Workflow E — Review, Approval & Ownership\n\nServer-only backend for the authenticated Vercel API. Every webhook rejects requests unless `x-n8n-proxy-secret` matches `N8N_PROXY_SECRET`.\n\n### GET /webhook/review\nReads `user`, `prescriptions`, source `nudges`, delivery history, and canonical `weekly_schedule` rows. The recurring editor must read only active weekly schedule rows after migration.\n\n### POST /webhook/approve\nIdempotently replaces a patient's canonical weekly schedule, cancels removed future unsent deliveries, preserves sent history, and materializes deterministic dated nudge rows.\n\n### POST /webhook/assign-patient\nUpdates the canonical `user.doctor_id` after the Vercel API has verified administrator access.\n\nAssign the Google Sheets OAuth2 credential to every Sheets node. Add the `doctor_id` header to the user tab and create the `weekly_schedule` tab with the documented headers before activating this workflow.",
+        "height": 560,
+        "width": 620,
+        "color": 7
+      },
+      "id": "f0000001-0000-0000-0000-000000000001",
+      "name": "Setup Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [180, -420]
+    },
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "review",
+        "responseMode": "responseNode",
+        "options": { "allowedOrigins": "*" }
+      },
+      "id": "f0000001-0000-0000-0000-000000000002",
+      "name": "Webhook Review",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [220, 80],
+      "webhookId": "review-queue-webhook"
+    },
+    {
+      "parameters": {
+        "jsCode": "const expected = String($env.N8N_PROXY_SECRET || '');\nconst supplied = String(($json.headers || {})['x-n8n-proxy-secret'] || '');\nreturn [{ json: { ...$json, proxy_authorized: Boolean(expected && supplied === expected) } }];"
+      },
+      "id": "f0000001-0000-0000-0000-000000000020",
+      "name": "Authorize Review",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [330, 80]
+    },
+    {
+      "parameters": { "conditions": { "conditions": [{ "leftValue": "={{ $json.proxy_authorized }}", "rightValue": true, "operator": { "type": "boolean", "operation": "true" } }], "combinator": "and" }, "options": {} },
+      "id": "f0000001-0000-0000-0000-000000000027",
+      "name": "Review Proxy Authorized?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [380, 80]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": { "__rl": true, "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}", "mode": "id" },
+        "sheetName": { "__rl": true, "value": "user", "mode": "name" },
+        "options": {}
+      },
+      "id": "f0000001-0000-0000-0000-000000000003",
+      "name": "Read Users",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [440, 80],
+      "alwaysOutputData": true,
+      "credentials": { "googleSheetsOAuth2Api": { "id": "REPLACE_AFTER_IMPORT", "name": "Google Sheets account" } }
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": { "__rl": true, "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}", "mode": "id" },
+        "sheetName": { "__rl": true, "value": "prescriptions", "mode": "name" },
+        "options": {}
+      },
+      "id": "f0000001-0000-0000-0000-000000000004",
+      "name": "Read Prescriptions",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [660, 80],
+      "alwaysOutputData": true,
+      "credentials": { "googleSheetsOAuth2Api": { "id": "REPLACE_AFTER_IMPORT", "name": "Google Sheets account" } }
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": { "__rl": true, "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}", "mode": "id" },
+        "sheetName": { "__rl": true, "value": "nudges", "mode": "name" },
+        "options": {}
+      },
+      "id": "f0000001-0000-0000-0000-000000000005",
+      "name": "Read Nudges",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [880, 80],
+      "alwaysOutputData": true,
+      "credentials": { "googleSheetsOAuth2Api": { "id": "REPLACE_AFTER_IMPORT", "name": "Google Sheets account" } }
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": { "__rl": true, "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}", "mode": "id" },
+        "sheetName": { "__rl": true, "value": "weekly_schedule", "mode": "name" },
+        "options": {}
+      },
+      "id": "f0000001-0000-0000-0000-000000000040",
+      "name": "Read Weekly Schedule",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [990, 80],
+      "alwaysOutputData": true,
+      "credentials": { "googleSheetsOAuth2Api": { "id": "REPLACE_AFTER_IMPORT", "name": "Google Sheets account" } }
+    },
+    {
+      "parameters": {
+        "jsCode": "const users = $('Read Users').all().map(i => i.json).filter(x => x.user_id);\nconst prescriptions = $('Read Prescriptions').all().map(i => i.json).filter(x => x.prescription_id && x.user_id);\nconst allNudges = $('Read Nudges').all().map(i => i.json).filter(n => n.nudge_id && n.user_id);\nconst sourceNudges = allNudges.filter(n =>\n  !String(n.nudge_id).startsWith('schd_') &&\n  ['needs_review', 'pending', 'approved', 'rejected'].includes(String(n.status || 'needs_review'))\n);\nconst scheduleNudges = allNudges.filter(n =>\n  String(n.nudge_id).startsWith('schd_') &&\n  ['approved', 'sent'].includes(String(n.status || ''))\n);\nconst numberFields = ['frequency_per_week', 'duration_weeks', 'week_number'];\nfor (const row of [...prescriptions, ...sourceNudges, ...scheduleNudges]) {\n  for (const key of numberFields) if (row[key] !== '' && row[key] != null && !Number.isNaN(Number(row[key]))) row[key] = Number(row[key]);\n}\nconst patients = users.map(u => {\n  const nudges = sourceNudges.filter(n => n.user_id === u.user_id);\n  const schedule_nudges = scheduleNudges.filter(n => n.user_id === u.user_id);\n  const statuses = nudges.map(n => String(n.status || 'needs_review'));\n  const status = statuses.some(s => s === 'needs_review' || s === 'pending') ? 'needs_review'\n    : statuses.some(s => s === 'approved') ? 'approved'\n    : statuses.some(s => s === 'rejected') ? 'rejected'\n    : 'no_review_items';\n  return {\n    user_id: u.user_id, name: u.name || '', phone: u.phone || '', email: u.email || '',\n    user_status: u.user_status || '', status,\n    prescriptions: prescriptions.filter(p => p.user_id === u.user_id), nudges, schedule_nudges\n  };\n}).sort((a, b) => String(a.name).localeCompare(String(b.name)));\nreturn [{ json: { patients, count: patients.length, generated_at: new Date().toISOString() } }];"
+      },
+      "id": "f0000001-0000-0000-0000-000000000006",
+      "name": "Build Review Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1100, 80]
+    },
+    {
+      "parameters": {
+        "jsCode": "const payload = $json;\nconst rows = $('Read Weekly Schedule').all().map(i => i.json).filter(r => r.schedule_slot_id && r.user_id);\nfor (const patient of payload.patients || []) patient.weekly_schedule = rows.filter(r => String(r.user_id) === String(patient.user_id));\nreturn [{ json: payload }];"
+      },
+      "id": "f0000001-0000-0000-0000-000000000041",
+      "name": "Attach Weekly Schedule",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1160, 80]
+    },
+    {
+      "parameters": {
+        "jsCode": "const payload = $json;\nconst users = $('Read Users').all().map(i => i.json);\nfor (const patient of payload.patients || []) {\n  const user = users.find(u => String(u.user_id) === String(patient.user_id)) || {};\n  const legacy = [...new Set((patient.prescriptions || []).map(p => String(p.doctor_id || '')).filter(Boolean))];\n  patient.doctor_id = String(user.doctor_id || (legacy.length === 1 ? legacy[0] : ''));\n  patient.ownership_needs_review = !user.doctor_id && legacy.length !== 1;\n}\nreturn [{ json: payload }];"
+      },
+      "id": "f0000001-0000-0000-0000-000000000021",
+      "name": "Attach Patient Owners",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1210, 80]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {
+          "responseHeaders": { "entries": [
+            { "name": "Access-Control-Allow-Origin", "value": "*" },
+            { "name": "Cache-Control", "value": "no-store" }
+          ] }
+        }
+      },
+      "id": "f0000001-0000-0000-0000-000000000007",
+      "name": "Respond Review",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1320, 80]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "approve",
+        "responseMode": "responseNode",
+        "options": { "allowedOrigins": "*" }
+      },
+      "id": "f0000001-0000-0000-0000-000000000008",
+      "name": "Webhook Approve",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [220, 440],
+      "webhookId": "review-approve-webhook"
+    },
+    {
+      "parameters": {
+        "jsCode": "const expected = String($env.N8N_PROXY_SECRET || '');\nconst supplied = String(($json.headers || {})['x-n8n-proxy-secret'] || '');\nreturn [{ json: { ...$json, proxy_authorized: Boolean(expected && supplied === expected) } }];"
+      },
+      "id": "f0000001-0000-0000-0000-000000000022",
+      "name": "Authorize Approval",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [330, 440]
+    },
+    {
+      "parameters": { "conditions": { "conditions": [{ "leftValue": "={{ $json.proxy_authorized }}", "rightValue": true, "operator": { "type": "boolean", "operation": "true" } }], "combinator": "and" }, "options": {} },
+      "id": "f0000001-0000-0000-0000-000000000028",
+      "name": "Approval Proxy Authorized?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [380, 440]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": { "__rl": true, "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}", "mode": "id" },
+        "sheetName": { "__rl": true, "value": "nudges", "mode": "name" },
+        "options": {}
+      },
+      "id": "f0000001-0000-0000-0000-000000000036",
+      "name": "Read Existing Nudges for Approval",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [490, 440],
+      "credentials": { "googleSheetsOAuth2Api": { "id": "REPLACE_AFTER_IMPORT", "name": "Google Sheets account" } }
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": { "__rl": true, "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}", "mode": "id" },
+        "sheetName": { "__rl": true, "value": "weekly_schedule", "mode": "name" },
+        "options": {}
+      },
+      "id": "f0000001-0000-0000-0000-000000000042",
+      "name": "Read Existing Weekly Schedule",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [575, 440],
+      "alwaysOutputData": true,
+      "credentials": { "googleSheetsOAuth2Api": { "id": "REPLACE_AFTER_IMPORT", "name": "Google Sheets account" } }
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $('Webhook Approve').first().json.body || {};\nconst decision = body.decision === 'reject' ? 'rejected' : body.decision === 'approve' ? 'approved' : '';\nconst userId = String(body.user_id || '').trim();\nconst slots = Array.isArray(body.slots) ? body.slots : [];\nconst days = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];\nconst daySet = new Set(days);\nconst pillars = new Set(['nutrition','physical_activity','sleep','stress_management','substance_use','social_connection']);\nconst types = new Set(['reminder','reflection','challenge','affirmation']);\nconst tones = new Set(['encouraging','neutral_informational','custom']);\nconst templates = new Set(['health_plan_reminder','hello_world']);\nconst dateRe = /^\\d{4}-\\d{2}-\\d{2}$/;\nconst timeRe = /^([01]\\d|2[0-3]):[0-5]\\d$/;\nif (!userId) throw new Error('user_id is required');\nif (!decision) throw new Error('decision must be approve or reject');\nif (!slots.length) throw new Error('at least one weekly slot is required');\nfor (const [i, s] of slots.entries()) {\n  if (!daySet.has(String(s.day))) throw new Error(`slots[${i}].day is invalid`);\n  if (!timeRe.test(String(s.time || ''))) throw new Error(`slots[${i}].time is invalid`);\n  if (!types.has(String(s.nudge_type))) throw new Error(`slots[${i}].nudge_type is invalid`);\n  if (!pillars.has(String(s.pillar))) throw new Error(`slots[${i}].pillar is invalid`);\n  if (!tones.has(String(s.tone_variant))) throw new Error(`slots[${i}].tone_variant is invalid`);\n  if (!templates.has(String(s.template_name || 'health_plan_reminder'))) throw new Error(`slots[${i}].template_name is invalid`);\n  if (!String(s.prescription_id || '').trim()) throw new Error(`slots[${i}].prescription_id is required`);\n  if (!String(s.source_nudge_id || '').trim()) throw new Error(`slots[${i}].source_nudge_id is required`);\n  if (!String(s.message_body || '').trim() || String(s.message_body).length > 1024) throw new Error(`slots[${i}].message_body is invalid`);\n}\nconst now = new Date().toISOString();\nconst sourceIds = [...new Set(slots.map(s => String(s.source_nudge_id).trim()))];\nconst source_updates = sourceIds.map(nudge_id => ({ nudge_id, status: decision, reviewed_at: now }));\nconst dated_nudges = [];\nconst schedule_rows = [];\nif (decision === 'approved') {\n  const start = String(body.start_date || '');\n  const end = String(body.end_date || '');\n  if (!dateRe.test(start) || !dateRe.test(end)) throw new Error('start_date and end_date must be YYYY-MM-DD');\n  const startMs = Date.parse(start + 'T00:00:00Z');\n  const endMs = Date.parse(end + 'T00:00:00Z');\n  if (!Number.isFinite(startMs) || !Number.isFinite(endMs) || endMs < startMs) throw new Error('invalid approval date range');\n  const dayCount = Math.floor((endMs - startMs) / 86400000) + 1;\n  if (dayCount > 366) throw new Error('approval range cannot exceed 366 days');\n  for (let offset = 0; offset < dayCount; offset++) {\n    const date = new Date(startMs + offset * 86400000);\n    const iso = date.toISOString().slice(0, 10);\n    const weekday = days[date.getUTCDay()];\n    slots.forEach((s, slotIndex) => {\n      if (String(s.day) !== weekday) return;\n      const source = String(s.source_nudge_id).replace(/[^A-Za-z0-9_-]/g, '').slice(-48) || 'source';\n      const nudge_id = `schd_${source}_${iso.replace(/-/g, '')}_${String(s.time).replace(':', '')}_${slotIndex}`;\n      const tone = s.tone_variant === 'custom' ? 'neutral_informational' : s.tone_variant;\n      const nudge = {\n        nudge_id, prescription_id: String(s.prescription_id), user_id: userId,\n        nudge_type: String(s.nudge_type), pillar: String(s.pillar),\n        scheduled_date: iso, scheduled_time: String(s.time),\n        message_body: String(s.message_body).trim(), message_body_alt: String(s.message_body_alt || ''),\n        tone_variant: tone, template_name: String(s.template_name || 'health_plan_reminder'),\n        status: 'approved', sent_at: '', reviewed_at: now, week_number: Math.floor(offset / 7) + 1\n      };\n      dated_nudges.push(nudge);\n      schedule_rows.push({\n        schedule_id: `sch_${nudge_id}`, nudge_id, user_id: userId, status: 'approved', sent_at: '',\n        wa_message_id: '', barrier_followup_wa_id: '', tone_sent: '', response: '', responded_at: '',\n        last_response_at: '', barrier_tag: '', done_count: 0, skip_count: 0, current_streak: 0,\n        consecutive_skips: 0, last_updated: now\n      });\n    });\n  }\n  if (!dated_nudges.length) throw new Error('weekly slots produced no dated nudges in the selected range');\n  if (dated_nudges.length > 2000) throw new Error('approval would create more than 2000 dated nudges');\n}\nreturn [{ json: { decision, user_id: userId, dated_nudges, schedule_rows, source_updates,\n  summary: { status: 'ok', decision, user_id: userId, count: dated_nudges.length, source_count: source_updates.length } } }];"
+      },
+      "id": "f0000001-0000-0000-0000-000000000009",
+      "name": "Build Approval Plan",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [660, 440]
+    },
+    {
+      "parameters": {
+        "jsCode": "const plan = $json;\nif (plan.decision !== 'approved') return [{ json: plan }];\nconst body = $('Webhook Approve').first().json.body || {};\nconst slots = Array.isArray(body.slots) ? body.slots : [];\nconst existing = $('Read Existing Weekly Schedule').all().map(i => i.json).filter(r => r.schedule_slot_id && String(r.user_id) === String(plan.user_id));\nconst existingById = new Map(existing.map(r => [String(r.schedule_slot_id), r]));\nconst now = new Date().toISOString();\nconst token = value => String(value || '').replace(/[^A-Za-z0-9_-]/g, '').slice(-60);\nconst used = new Set();\nconst active = slots.map((slot, index) => {\n  const fallback = `slot_${token(slot.source_nudge_id) || 'source'}_${token(slot.day)}_${index}`;\n  const schedule_slot_id = token(slot.schedule_slot_id) || fallback;\n  if (used.has(schedule_slot_id)) throw new Error(`duplicate schedule_slot_id: ${schedule_slot_id}`);\n  used.add(schedule_slot_id);\n  const prior = existingById.get(schedule_slot_id) || {};\n  return {\n    schedule_slot_id, user_id: plan.user_id, source_nudge_id: String(slot.source_nudge_id), prescription_id: String(slot.prescription_id),\n    day: String(slot.day), scheduled_time: String(slot.time), nudge_type: String(slot.nudge_type), pillar: String(slot.pillar),\n    tone_variant: slot.tone_variant === 'custom' ? 'neutral_informational' : String(slot.tone_variant),\n    message_body: String(slot.message_body).trim(), message_body_alt: String(slot.message_body_alt || ''),\n    template_name: String(slot.template_name || 'health_plan_reminder'), status: 'active',\n    start_date: String(body.start_date), end_date: String(body.end_date), created_at: prior.created_at || now, updated_at: now\n  };\n});\nconst inactive = existing.filter(row => !used.has(String(row.schedule_slot_id))).map(row => ({ ...row, status: 'inactive', updated_at: now }));\nfor (const nudge of plan.dated_nudges) {\n  const match = String(nudge.nudge_id).match(/_(\\d+)$/);\n  const rule = active[match ? Number(match[1]) : -1];\n  if (!rule) throw new Error(`could not map dated nudge ${nudge.nudge_id} to a weekly slot`);\n  nudge.schedule_slot_id = rule.schedule_slot_id;\n  nudge.nudge_id = `schd_${token(rule.schedule_slot_id)}_${String(nudge.scheduled_date).replace(/-/g, '')}`;\n}\nplan.schedule_rows = plan.dated_nudges.map(n => ({\n  schedule_id: `sch_${n.nudge_id}`, nudge_id: n.nudge_id, user_id: n.user_id, status: 'approved', sent_at: '',\n  wa_message_id: '', response_wa_id: '', barrier_followup_wa_id: '', tone_sent: '', response: '', responded_at: '',\n  last_response_at: '', barrier_tag: '', done_count: 0, skip_count: 0, current_streak: 0, consecutive_skips: 0, last_updated: now\n}));\nplan.weekly_schedule_rows = active.concat(inactive);\nplan.summary.weekly_schedule = active;\nplan.summary.active_slot_count = active.length;\nplan.summary.inactive_slot_count = inactive.length;\nreturn [{ json: plan }];"
+      },
+      "id": "f0000001-0000-0000-0000-000000000043",
+      "name": "Canonicalize Weekly Schedule",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [770, 440]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Re-approval replaces the active generated schedule instead of accumulating it.\n// Remove time from generated IDs so message/time edits update the same logical\n// source/date/occurrence row. Preserve prior rows for audit, but reject every\n// older unsent generated row in the approval range so delivery cannot duplicate.\nconst plan = $json;\nif (plan.decision !== 'approved') return [{ json: plan }];\nconst body = $('Webhook Approve').first().json.body || {};\nconst remapped = new Map();\nfor (const n of plan.dated_nudges) {\n  const oldId = String(n.nudge_id);\n  const stableId = oldId.replace(/_\\d{4}_(\\d+)$/, '_$1');\n  remapped.set(oldId, stableId);\n  n.nudge_id = stableId;\n}\nfor (const s of plan.schedule_rows) {\n  const oldNudgeId = String(s.nudge_id);\n  s.nudge_id = remapped.get(oldNudgeId) || oldNudgeId;\n  s.schedule_id = 'sch_' + s.nudge_id;\n}\nconst desiredIds = new Set(plan.dated_nudges.map(n => String(n.nudge_id)));\nconst start = String(body.start_date || '');\nconst end = String(body.end_date || '');\nconst now = new Date().toISOString();\nconst stale = $('Read Existing Nudges for Approval').all().map(i => i.json).filter(n =>\n  String(n.user_id) === String(plan.user_id) &&\n  String(n.nudge_id || '').startsWith('schd_') &&\n  String(n.status || '') === 'approved' &&\n  String(n.scheduled_date || '') >= start && String(n.scheduled_date || '') <= end &&\n  !desiredIds.has(String(n.nudge_id))\n).map(n => ({ ...n, status: 'rejected', reviewed_at: now }));\nplan.dated_nudges = plan.dated_nudges.concat(stale);\nplan.schedule_rows = plan.schedule_rows.concat(stale.map(n => ({\n  schedule_id: 'sch_' + n.nudge_id, nudge_id: n.nudge_id, user_id: n.user_id, status: 'rejected',\n  sent_at: '', wa_message_id: '', barrier_followup_wa_id: '', tone_sent: '', response: '', responded_at: '',\n  last_response_at: '', barrier_tag: '', done_count: 0, skip_count: 0, current_streak: 0,\n  consecutive_skips: 0, last_updated: now\n})));\nplan.summary.superseded_count = stale.length;\nreturn [{ json: plan }];"
+      },
+      "id": "f0000001-0000-0000-0000-000000000037",
+      "name": "Reconcile Existing Schedule",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [880, 440]
+    },
+    {
+      "parameters": {
+        "jsCode": "const plan = $json;\nif (plan.decision !== 'approved') return [{ json: plan }];\nconst desiredIds = new Set(plan.dated_nudges.map(n => String(n.nudge_id)));\nconst today = new Date().toISOString().slice(0, 10);\nconst now = new Date().toISOString();\nconst alreadyIncluded = new Set(plan.dated_nudges.map(n => String(n.nudge_id)));\nconst stale = $('Read Existing Nudges for Approval').all().map(i => i.json).filter(n =>\n  String(n.user_id) === String(plan.user_id) && String(n.nudge_id || '').startsWith('schd_') &&\n  String(n.status || '') === 'approved' && String(n.scheduled_date || '') >= today &&\n  !desiredIds.has(String(n.nudge_id)) && !alreadyIncluded.has(String(n.nudge_id))\n).map(n => ({ ...n, status: 'rejected', reviewed_at: now }));\nplan.dated_nudges = plan.dated_nudges.concat(stale);\nplan.schedule_rows = plan.schedule_rows.concat(stale.map(n => ({\n  schedule_id: 'sch_' + n.nudge_id, nudge_id: n.nudge_id, user_id: n.user_id, status: 'rejected',\n  sent_at: '', wa_message_id: '', response_wa_id: '', barrier_followup_wa_id: '', tone_sent: '', response: '', responded_at: '',\n  last_response_at: '', barrier_tag: '', done_count: 0, skip_count: 0, current_streak: 0, consecutive_skips: 0, last_updated: now\n})));\nplan.summary.cancelled_future_count = stale.length;\nreturn [{ json: plan }];"
+      },
+      "id": "f0000001-0000-0000-0000-000000000044",
+      "name": "Cancel Removed Future Slots",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [990, 440]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict", "version": 2 },
+          "conditions": [
+            { "id": "approve-decision-condition", "leftValue": "={{ $json.decision }}", "rightValue": "approved", "operator": { "type": "string", "operation": "equals" } }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "f0000001-0000-0000-0000-000000000010",
+      "name": "Is Approved?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [1100, 440]
+    },
+    {
+      "parameters": {
+        "jsCode": "return $('Cancel Removed Future Slots').first().json.dated_nudges.map(row => ({ json: row }));"
+      },
+      "id": "f0000001-0000-0000-0000-000000000011",
+      "name": "Expand Dated Nudges",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [880, 360]
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": { "__rl": true, "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}", "mode": "id" },
+        "sheetName": { "__rl": true, "value": "nudges", "mode": "name" },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "nudge_id": "={{ $json.nudge_id }}", "schedule_slot_id": "={{ $json.schedule_slot_id }}", "prescription_id": "={{ $json.prescription_id }}", "user_id": "={{ $json.user_id }}",
+            "nudge_type": "={{ $json.nudge_type }}", "pillar": "={{ $json.pillar }}", "scheduled_date": "={{ $json.scheduled_date }}",
+            "scheduled_time": "={{ $json.scheduled_time }}", "message_body": "={{ $json.message_body }}", "message_body_alt": "={{ $json.message_body_alt }}",
+            "tone_variant": "={{ $json.tone_variant }}", "template_name": "={{ $json.template_name }}", "status": "={{ $json.status }}",
+            "sent_at": "", "reviewed_at": "={{ $json.reviewed_at }}", "week_number": "={{ $json.week_number }}"
+          },
+          "matchingColumns": ["nudge_id"],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "f0000001-0000-0000-0000-000000000012",
+      "name": "Upsert Dated Nudges",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [1100, 360],
+      "credentials": { "googleSheetsOAuth2Api": { "id": "REPLACE_AFTER_IMPORT", "name": "Google Sheets account" } }
+    },
+    {
+      "parameters": {
+        "jsCode": "return $('Cancel Removed Future Slots').first().json.schedule_rows.map(row => ({ json: row }));"
+      },
+      "id": "f0000001-0000-0000-0000-000000000013",
+      "name": "Prepare Schedule Rows",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1320, 360]
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": { "__rl": true, "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}", "mode": "id" },
+        "sheetName": { "__rl": true, "value": "schedule_state", "mode": "name" },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "schedule_id": "={{ $json.schedule_id }}", "nudge_id": "={{ $json.nudge_id }}", "user_id": "={{ $json.user_id }}", "status": "={{ $json.status }}",
+            "sent_at": "", "wa_message_id": "", "response_wa_id": "", "barrier_followup_wa_id": "", "tone_sent": "", "response": "", "responded_at": "",
+            "last_response_at": "", "barrier_tag": "", "done_count": 0, "skip_count": 0, "current_streak": 0,
+            "consecutive_skips": 0, "last_updated": "={{ $json.last_updated }}"
+          },
+          "matchingColumns": ["nudge_id"],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "f0000001-0000-0000-0000-000000000014",
+      "name": "Upsert Schedule Rows",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [1540, 360],
+      "credentials": { "googleSheetsOAuth2Api": { "id": "REPLACE_AFTER_IMPORT", "name": "Google Sheets account" } }
+    },
+    {
+      "parameters": {
+        "jsCode": "return $('Cancel Removed Future Slots').first().json.weekly_schedule_rows.map(row => ({ json: row }));"
+      },
+      "id": "f0000001-0000-0000-0000-000000000045",
+      "name": "Prepare Weekly Schedule Rows",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1650, 360]
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": { "__rl": true, "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}", "mode": "id" },
+        "sheetName": { "__rl": true, "value": "weekly_schedule", "mode": "name" },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "schedule_slot_id": "={{ $json.schedule_slot_id }}", "user_id": "={{ $json.user_id }}", "source_nudge_id": "={{ $json.source_nudge_id }}",
+            "prescription_id": "={{ $json.prescription_id }}", "day": "={{ $json.day }}", "scheduled_time": "={{ $json.scheduled_time }}",
+            "nudge_type": "={{ $json.nudge_type }}", "pillar": "={{ $json.pillar }}", "tone_variant": "={{ $json.tone_variant }}",
+            "message_body": "={{ $json.message_body }}", "message_body_alt": "={{ $json.message_body_alt }}", "template_name": "={{ $json.template_name }}",
+            "status": "={{ $json.status }}", "start_date": "={{ $json.start_date }}", "end_date": "={{ $json.end_date }}",
+            "created_at": "={{ $json.created_at }}", "updated_at": "={{ $json.updated_at }}"
+          },
+          "matchingColumns": ["schedule_slot_id"],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "f0000001-0000-0000-0000-000000000046",
+      "name": "Upsert Weekly Schedule",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [1760, 360],
+      "credentials": { "googleSheetsOAuth2Api": { "id": "REPLACE_AFTER_IMPORT", "name": "Google Sheets account" } }
+    },
+    {
+      "parameters": {
+        "jsCode": "return $('Build Approval Plan').first().json.source_updates.map(row => ({ json: row }));"
+      },
+      "id": "f0000001-0000-0000-0000-000000000015",
+      "name": "Prepare Approved Sources",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1760, 360]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": { "__rl": true, "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}", "mode": "id" },
+        "sheetName": { "__rl": true, "value": "nudges", "mode": "name" },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": { "nudge_id": "={{ $json.nudge_id }}", "status": "={{ $json.status }}", "reviewed_at": "={{ $json.reviewed_at }}" },
+          "matchingColumns": ["nudge_id"],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "f0000001-0000-0000-0000-000000000016",
+      "name": "Mark Approved Sources",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [1980, 360],
+      "credentials": { "googleSheetsOAuth2Api": { "id": "REPLACE_AFTER_IMPORT", "name": "Google Sheets account" } }
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": { "__rl": true, "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}", "mode": "id" },
+        "sheetName": { "__rl": true, "value": "weekly_schedule", "mode": "name" },
+        "options": {}
+      },
+      "id": "f0000001-0000-0000-0000-000000000047",
+      "name": "Read Saved Weekly Schedule",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [2090, 360],
+      "alwaysOutputData": true,
+      "credentials": { "googleSheetsOAuth2Api": { "id": "REPLACE_AFTER_IMPORT", "name": "Google Sheets account" } }
+    },
+    {
+      "parameters": {
+        "jsCode": "const plan = $('Cancel Removed Future Slots').first().json;\nconst expected = plan.summary.weekly_schedule || [];\nconst actual = items.map(i => i.json).filter(r => String(r.user_id) === String(plan.user_id) && String(r.status) === 'active');\nconst fields = ['schedule_slot_id','user_id','source_nudge_id','prescription_id','day','scheduled_time','nudge_type','pillar','tone_variant','message_body','message_body_alt','template_name','status','start_date','end_date'];\nconst normalized = rows => rows.map(r => Object.fromEntries(fields.map(k => [k, String(r[k] == null ? '' : r[k])]))).sort((a, b) => a.schedule_slot_id.localeCompare(b.schedule_slot_id));\nif (JSON.stringify(normalized(actual)) !== JSON.stringify(normalized(expected))) throw new Error('weekly_schedule persistence verification failed');\nreturn [{ json: { ...plan.summary, persisted: true, weekly_schedule: actual } }];"
+      },
+      "id": "f0000001-0000-0000-0000-000000000048",
+      "name": "Verify Saved Weekly Schedule",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2200, 360]
+    },
+    {
+      "parameters": {
+        "jsCode": "return $('Build Approval Plan').first().json.source_updates.map(row => ({ json: row }));"
+      },
+      "id": "f0000001-0000-0000-0000-000000000017",
+      "name": "Prepare Rejected Sources",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [880, 560]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": { "__rl": true, "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}", "mode": "id" },
+        "sheetName": { "__rl": true, "value": "nudges", "mode": "name" },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": { "nudge_id": "={{ $json.nudge_id }}", "status": "rejected", "reviewed_at": "={{ $json.reviewed_at }}" },
+          "matchingColumns": ["nudge_id"],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "f0000001-0000-0000-0000-000000000018",
+      "name": "Mark Rejected Sources",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [1100, 560],
+      "credentials": { "googleSheetsOAuth2Api": { "id": "REPLACE_AFTER_IMPORT", "name": "Google Sheets account" } }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $('Webhook Approve').first().json.body.decision === 'approve' ? $('Verify Saved Weekly Schedule').first().json : $('Cancel Removed Future Slots').first().json.summary }}",
+        "options": {
+          "responseHeaders": { "entries": [
+            { "name": "Access-Control-Allow-Origin", "value": "*" },
+            { "name": "Cache-Control", "value": "no-store" }
+          ] }
+        }
+      },
+      "id": "f0000001-0000-0000-0000-000000000019",
+      "name": "Respond Approve",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [2200, 440]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "assign-patient",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "f0000001-0000-0000-0000-000000000023",
+      "name": "Webhook Assign Patient",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [220, 760],
+      "webhookId": "assign-patient-owner-webhook"
+    },
+    {
+      "parameters": {
+        "jsCode": "const expected = String($env.N8N_PROXY_SECRET || '');\nconst supplied = String(($json.headers || {})['x-n8n-proxy-secret'] || '');\nconst body = $json.body || {};\nreturn [{ json: { user_id: String(body.user_id || '').trim(), doctor_id: String(body.doctor_id || '').trim(), proxy_authorized: Boolean(expected && supplied === expected) } }];"
+      },
+      "id": "f0000001-0000-0000-0000-000000000024",
+      "name": "Authorize Assignment",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [440, 760]
+    },
+    {
+      "parameters": { "conditions": { "conditions": [{ "leftValue": "={{ $json.proxy_authorized }}", "rightValue": true, "operator": { "type": "boolean", "operation": "true" } }], "combinator": "and" }, "options": {} },
+      "id": "f0000001-0000-0000-0000-000000000029",
+      "name": "Assignment Proxy Authorized?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [550, 760]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": { "__rl": true, "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}", "mode": "id" },
+        "sheetName": { "__rl": true, "value": "user", "mode": "name" },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": { "user_id": "={{ $json.user_id }}", "doctor_id": "={{ $json.doctor_id }}" },
+          "matchingColumns": ["user_id"],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "f0000001-0000-0000-0000-000000000025",
+      "name": "Update Patient Owner",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [660, 760],
+      "credentials": { "googleSheetsOAuth2Api": { "id": "REPLACE_AFTER_IMPORT", "name": "Google Sheets account" } }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { status: 'ok', user_id: $('Authorize Assignment').first().json.user_id, doctor_id: $('Authorize Assignment').first().json.doctor_id } }}",
+        "options": { "responseHeaders": { "entries": [{ "name": "Cache-Control", "value": "no-store" }] } }
+      },
+      "id": "f0000001-0000-0000-0000-000000000026",
+      "name": "Respond Assignment",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [880, 760]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "update-patient",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "f0000001-0000-0000-0000-000000000031",
+      "name": "Webhook Update Patient",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [220, 1040],
+      "webhookId": "update-patient-webhook"
+    },
+    {
+      "parameters": {
+        "jsCode": "const expected = String($env.N8N_PROXY_SECRET || '');\nconst supplied = String(($json.headers || {})['x-n8n-proxy-secret'] || '');\nconst body = $json.body || {};\nreturn [{ json: { user_id: String(body.user_id || '').trim(), name: String(body.name || '').trim(), phone: String(body.phone || '').trim(), email: String(body.email || '').trim(), user_status: String(body.user_status || '').trim(), proxy_authorized: Boolean(expected && supplied === expected) } }];"
+      },
+      "id": "f0000001-0000-0000-0000-000000000032",
+      "name": "Authorize Patient Update",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [440, 1040]
+    },
+    {
+      "parameters": { "conditions": { "conditions": [{ "leftValue": "={{ $json.proxy_authorized }}", "rightValue": true, "operator": { "type": "boolean", "operation": "true" } }], "combinator": "and" }, "options": {} },
+      "id": "f0000001-0000-0000-0000-000000000033",
+      "name": "Patient Update Proxy Authorized?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [550, 1040]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": { "__rl": true, "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}", "mode": "id" },
+        "sheetName": { "__rl": true, "value": "user", "mode": "name" },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "user_id": "={{ $json.user_id }}",
+            "name": "={{ $json.name }}",
+            "phone": "={{ $json.phone }}",
+            "email": "={{ $json.email }}",
+            "user_status": "={{ $json.user_status }}"
+          },
+          "matchingColumns": ["user_id"],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "f0000001-0000-0000-0000-000000000034",
+      "name": "Update Patient",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [660, 1040],
+      "alwaysOutputData": true,
+      "credentials": { "googleSheetsOAuth2Api": { "id": "REPLACE_AFTER_IMPORT", "name": "Google Sheets account" } }
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": { "__rl": true, "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}", "mode": "id" },
+        "sheetName": { "__rl": true, "value": "user", "mode": "name" },
+        "options": {}
+      },
+      "id": "f0000001-0000-0000-0000-000000000036",
+      "name": "Read Updated Patient",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [780, 1040],
+      "alwaysOutputData": true,
+      "credentials": { "googleSheetsOAuth2Api": { "id": "REPLACE_AFTER_IMPORT", "name": "Google Sheets account" } }
+    },
+    {
+      "parameters": {
+        "jsCode": "const expected = $('Authorize Patient Update').first().json;\nconst matches = items.map(i => i.json).filter(row => String(row.user_id || '') === expected.user_id);\nconst fields = ['user_id', 'name', 'phone', 'email', 'user_status'];\nconst patient = matches.length === 1 ? matches[0] : null;\nconst persisted = Boolean(patient && fields.every(key => String(patient[key] == null ? '' : patient[key]) === String(expected[key] == null ? '' : expected[key])));\nreturn [{ json: persisted\n  ? { status: 'ok', persisted: true, patient: Object.fromEntries(fields.map(key => [key, patient[key]])) }\n  : { status: 'persistence_conflict', persisted: false, patient: null, error: 'Patient update was not confirmed in Google Sheets.' }\n}];"
+      },
+      "id": "f0000001-0000-0000-0000-000000000037",
+      "name": "Verify Patient Update",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 1040]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {
+          "responseCode": "={{ $json.persisted ? 200 : 409 }}",
+          "responseHeaders": { "entries": [{ "name": "Cache-Control", "value": "no-store" }] }
+        }
+      },
+      "id": "f0000001-0000-0000-0000-000000000035",
+      "name": "Respond Patient Update",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1040, 1040]
+    },
+    {
+      "parameters": { "respondWith": "json", "responseBody": "={{ { error: 'Unauthorized' } }}", "options": { "responseCode": 401 } },
+      "id": "f0000001-0000-0000-0000-000000000030",
+      "name": "Respond Unauthorized",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [660, 940]
+    }
+  ],
+  "connections": {
+    "Webhook Review": { "main": [[{ "node": "Authorize Review", "type": "main", "index": 0 }]] },
+    "Authorize Review": { "main": [[{ "node": "Review Proxy Authorized?", "type": "main", "index": 0 }]] },
+    "Review Proxy Authorized?": { "main": [[{ "node": "Read Users", "type": "main", "index": 0 }], [{ "node": "Respond Unauthorized", "type": "main", "index": 0 }]] },
+    "Read Users": { "main": [[{ "node": "Read Prescriptions", "type": "main", "index": 0 }]] },
+    "Read Prescriptions": { "main": [[{ "node": "Read Nudges", "type": "main", "index": 0 }]] },
+    "Read Nudges": { "main": [[{ "node": "Read Weekly Schedule", "type": "main", "index": 0 }]] },
+    "Read Weekly Schedule": { "main": [[{ "node": "Build Review Payload", "type": "main", "index": 0 }]] },
+    "Build Review Payload": { "main": [[{ "node": "Attach Weekly Schedule", "type": "main", "index": 0 }]] },
+    "Attach Weekly Schedule": { "main": [[{ "node": "Attach Patient Owners", "type": "main", "index": 0 }]] },
+    "Attach Patient Owners": { "main": [[{ "node": "Respond Review", "type": "main", "index": 0 }]] },
+    "Webhook Approve": { "main": [[{ "node": "Authorize Approval", "type": "main", "index": 0 }]] },
+    "Authorize Approval": { "main": [[{ "node": "Approval Proxy Authorized?", "type": "main", "index": 0 }]] },
+    "Approval Proxy Authorized?": { "main": [[{ "node": "Read Existing Nudges for Approval", "type": "main", "index": 0 }], [{ "node": "Respond Unauthorized", "type": "main", "index": 0 }]] },
+    "Read Existing Nudges for Approval": { "main": [[{ "node": "Read Existing Weekly Schedule", "type": "main", "index": 0 }]] },
+    "Read Existing Weekly Schedule": { "main": [[{ "node": "Build Approval Plan", "type": "main", "index": 0 }]] },
+    "Build Approval Plan": { "main": [[{ "node": "Canonicalize Weekly Schedule", "type": "main", "index": 0 }]] },
+    "Canonicalize Weekly Schedule": { "main": [[{ "node": "Reconcile Existing Schedule", "type": "main", "index": 0 }]] },
+    "Reconcile Existing Schedule": { "main": [[{ "node": "Cancel Removed Future Slots", "type": "main", "index": 0 }]] },
+    "Cancel Removed Future Slots": { "main": [[{ "node": "Is Approved?", "type": "main", "index": 0 }]] },
+    "Is Approved?": {
+      "main": [
+        [{ "node": "Expand Dated Nudges", "type": "main", "index": 0 }],
+        [{ "node": "Prepare Rejected Sources", "type": "main", "index": 0 }]
+      ]
+    },
+    "Expand Dated Nudges": { "main": [[{ "node": "Upsert Dated Nudges", "type": "main", "index": 0 }]] },
+    "Upsert Dated Nudges": { "main": [[{ "node": "Prepare Schedule Rows", "type": "main", "index": 0 }]] },
+    "Prepare Schedule Rows": { "main": [[{ "node": "Upsert Schedule Rows", "type": "main", "index": 0 }]] },
+    "Upsert Schedule Rows": { "main": [[{ "node": "Prepare Weekly Schedule Rows", "type": "main", "index": 0 }]] },
+    "Prepare Weekly Schedule Rows": { "main": [[{ "node": "Upsert Weekly Schedule", "type": "main", "index": 0 }]] },
+    "Upsert Weekly Schedule": { "main": [[{ "node": "Prepare Approved Sources", "type": "main", "index": 0 }]] },
+    "Prepare Approved Sources": { "main": [[{ "node": "Mark Approved Sources", "type": "main", "index": 0 }]] },
+    "Mark Approved Sources": { "main": [[{ "node": "Read Saved Weekly Schedule", "type": "main", "index": 0 }]] },
+    "Read Saved Weekly Schedule": { "main": [[{ "node": "Verify Saved Weekly Schedule", "type": "main", "index": 0 }]] },
+    "Verify Saved Weekly Schedule": { "main": [[{ "node": "Respond Approve", "type": "main", "index": 0 }]] },
+    "Prepare Rejected Sources": { "main": [[{ "node": "Mark Rejected Sources", "type": "main", "index": 0 }]] },
+    "Mark Rejected Sources": { "main": [[{ "node": "Respond Approve", "type": "main", "index": 0 }]] },
+    "Webhook Assign Patient": { "main": [[{ "node": "Authorize Assignment", "type": "main", "index": 0 }]] },
+    "Authorize Assignment": { "main": [[{ "node": "Assignment Proxy Authorized?", "type": "main", "index": 0 }]] },
+    "Assignment Proxy Authorized?": { "main": [[{ "node": "Update Patient Owner", "type": "main", "index": 0 }], [{ "node": "Respond Unauthorized", "type": "main", "index": 0 }]] },
+    "Update Patient Owner": { "main": [[{ "node": "Respond Assignment", "type": "main", "index": 0 }]] },
+    "Webhook Update Patient": { "main": [[{ "node": "Authorize Patient Update", "type": "main", "index": 0 }]] },
+    "Authorize Patient Update": { "main": [[{ "node": "Patient Update Proxy Authorized?", "type": "main", "index": 0 }]] },
+    "Patient Update Proxy Authorized?": { "main": [[{ "node": "Update Patient", "type": "main", "index": 0 }], [{ "node": "Respond Unauthorized", "type": "main", "index": 0 }]] },
+    "Update Patient": { "main": [[{ "node": "Read Updated Patient", "type": "main", "index": 0 }]] },
+    "Read Updated Patient": { "main": [[{ "node": "Verify Patient Update", "type": "main", "index": 0 }]] },
+    "Verify Patient Update": { "main": [[{ "node": "Respond Patient Update", "type": "main", "index": 0 }]] }
+  },
+  "active": true,
+  "settings": { "executionOrder": "v1" }
+}

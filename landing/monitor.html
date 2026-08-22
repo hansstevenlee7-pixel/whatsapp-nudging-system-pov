@@ -1,0 +1,2035 @@
+<!doctype html>
+<html class="protected" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Monitor · Review &amp; Approve</title>
+  <link rel="stylesheet" href="auth.css" />
+  <style>
+    /* ============================================================================
+       Monitor — all patients (table) → select → explainable LLM trace →
+       recurring weekly schedule (Mon–Sun, MULTIPLE nudges/day, reused from the
+       LLM's nudges) bounded by start/stop dates → approve.
+       Apple-light tokens, consistent with index.html + input.html.
+       Patients load automatically from Google Sheets through Workflow E.
+       ============================================================================ */
+    :root {
+      color-scheme: light;
+      --bg:#f2f2f7; --card:#fff; --border:#d1d1d6; --border-strong:#b8b8bd;
+      --text:#1c1c1e; --secondary:#6e6e73; --placeholder:#8e8e93;
+      --accent:#0a84ff; --accent-press:#0071e3; --ok:#30d158; --ok-ink:#248a3d;
+      --danger:#ff3b30; --warn:#ff9f0a; --warn-ink:#a2670a;
+      --s1:8px; --s2:16px; --s3:24px; --s4:32px;
+      --radius-card:18px; --radius-field:12px;
+      --shadow:0 1px 2px rgba(0,0,0,.04),0 1px 3px rgba(0,0,0,.05);
+      --ring:0 0 0 4px rgba(10,132,255,.16);
+      --navy:#162033; --navy-soft:#eef2f8; --surface:#f8f9fc;
+      --maxw:1180px;
+    }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--text);
+      font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,system-ui,sans-serif;
+      font-size:17px; line-height:1.45; -webkit-font-smoothing:antialiased; }
+    .page { max-width:var(--maxw); margin:0 auto; padding:56px 20px 150px; }
+    @media (max-width:480px){ .page{ padding:36px 16px 150px; } }
+
+    .home { display:inline-flex; align-items:center; gap:6px; font-size:15px; font-weight:550; color:var(--accent); text-decoration:none; margin-bottom:var(--s2); }
+    .home:hover { color:var(--accent-press); }
+    .hero { margin-bottom:var(--s3); }
+    .hero h1 { font-size:34px; font-weight:700; letter-spacing:-.4px; line-height:1.08; margin:0 0 var(--s1); }
+    .hero p { font-size:17px; color:var(--secondary); margin:0; }
+
+    .card { background:var(--card); border-radius:var(--radius-card); box-shadow:var(--shadow); padding:var(--s3); margin-bottom:var(--s3); }
+    .card h2 { font-size:20px; font-weight:600; letter-spacing:-.2px; margin:0 0 4px; }
+    .card .sub { font-size:14px; color:var(--secondary); margin:0 0 20px; }
+
+    /* Automatic source status */
+    .hint { font-size:13px; color:var(--secondary); margin-top:6px; }
+    .hint.err { color:var(--danger); }
+
+    button { font:inherit; cursor:pointer; border:none; border-radius:var(--radius-field); }
+    .btn { height:44px; padding:0 18px; font-size:15px; font-weight:600; color:#fff; background:var(--accent); }
+    .btn:hover { background:var(--accent-press); }
+    .btn.ghost { color:var(--secondary); background:none; border:1px solid var(--border-strong); }
+    .btn:disabled { opacity:.4; cursor:not-allowed; }
+
+    /* Patients table */
+    .tablewrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+    table.patients { width:100%; border-collapse:separate; border-spacing:0; font-size:15px; }
+    table.patients th { text-align:left; font-size:12px; font-weight:700; letter-spacing:.3px; text-transform:uppercase;
+      color:var(--secondary); padding:0 12px 10px; border-bottom:1px solid var(--border); white-space:nowrap; }
+    table.patients td { padding:12px; border-bottom:1px solid var(--border); vertical-align:middle; }
+    table.patients tr.prow { cursor:pointer; }
+    table.patients tr.prow:hover td { background:#f7f7fa; }
+    table.patients tr.prow.sel td { background:rgba(10,132,255,.08); }
+    table.patients tr.prow.sel td:first-child { box-shadow:inset 3px 0 0 var(--accent); }
+    .pname { font-weight:600; }
+    .pmeta { color:var(--secondary); font-size:13px; }
+    .count { display:inline-block; min-width:24px; text-align:center; font-variant-numeric:tabular-nums; font-weight:600; }
+    .pill { display:inline-block; font-size:12px; font-weight:600; padding:2px 9px; border-radius:999px; white-space:nowrap; }
+    .pill.review { color:var(--warn-ink); background:rgba(255,159,10,.16); }
+    .pill.approved { color:var(--ok-ink); background:rgba(48,209,88,.14); }
+    .pill.muted { color:var(--secondary); background:rgba(120,120,128,.12); }
+    .pill.disabled { color:var(--danger); background:rgba(255,59,48,.10); }
+
+    /* Patient CRUD editor (delete is a reversible disabled status). */
+    .patient-grid { display:grid; grid-template-columns:1fr 1fr; gap:var(--s2); }
+    .patient-grid .wide { grid-column:1 / -1; }
+    @media (max-width:560px){ .patient-grid{ grid-template-columns:1fr; } .patient-grid .wide{ grid-column:auto; } }
+    .patient-actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:var(--s2); }
+    .btn.danger { color:var(--danger); background:rgba(255,59,48,.1); border:1px solid rgba(255,59,48,.28); }
+    .btn.success { color:var(--ok-ink); background:rgba(48,209,88,.12); border:1px solid rgba(48,209,88,.28); }
+
+    /* Selected patient header */
+    .selhdr { display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; margin-bottom:2px; }
+    .selhdr .id { font-size:13px; color:var(--secondary); font-family:ui-monospace,Menlo,monospace; }
+
+    /* Explainability trace */
+    .trace { display:flex; flex-direction:column; gap:var(--s2); }
+    .tblock { border:1px solid var(--border); border-radius:14px; padding:var(--s2) var(--s2) 14px; }
+    .tstep { display:grid; grid-template-columns:120px 1fr; gap:10px; padding:8px 0; border-top:1px dashed var(--border); }
+    .tstep:first-of-type { border-top:none; }
+    .tstep .k { font-size:12px; font-weight:700; letter-spacing:.3px; text-transform:uppercase; color:var(--secondary); padding-top:2px; }
+    .tstep .v { font-size:15px; }
+    @media (max-width:520px){ .tstep{ grid-template-columns:1fr; gap:2px; } }
+    .rawtext { font-style:italic; color:var(--text); }
+    .chip { display:inline-block; font-size:13px; font-weight:600; padding:2px 8px; border-radius:8px; background:rgba(10,132,255,.10); color:var(--accent); margin:0 4px 4px 0; }
+    .chip.tax { background:rgba(48,209,88,.14); color:var(--ok-ink); }
+    .chip.warn { background:rgba(255,159,10,.16); color:var(--warn-ink); }
+    /* Target behaviour list: one row per behaviour, carrying the whole triple
+       (action_text × pillar × category). Two-line grid via named areas so the
+       original single-line selectors keep working unchanged. */
+    .actionlist { display:flex; flex-direction:column; gap:10px; }
+    .actionrow { display:grid; gap:6px 8px; align-items:center;
+      grid-template-columns:1fr auto auto;
+      grid-template-areas:"text use del" "tax tax tax"; }
+    .actiontax { grid-area:tax; display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+    .actiontax label { font-size:11px; font-weight:700; letter-spacing:.3px; text-transform:uppercase; color:var(--secondary); }
+    .actiontax select { font:inherit; font-size:13px; color:var(--text); background:var(--card);
+      border:1px solid var(--border); border-radius:8px; padding:4px 8px; }
+    .actiontax select:focus { outline:none; border-color:var(--accent); box-shadow:var(--ring); }
+    .actioninput { grid-area:text; width:100%; font:inherit; font-size:14px; color:var(--text); background:var(--card); border:1px solid var(--border); border-radius:8px; padding:6px 9px; }
+    .actioninput:focus { outline:none; border-color:var(--accent); box-shadow:var(--ring); }
+    .actioninput.bad { border-color:var(--danger); }
+    .actionuse { grid-area:use; font-size:12px; color:var(--secondary); font-variant-numeric:tabular-nums; white-space:nowrap; }
+    .actiondel { grid-area:del; height:28px; width:28px; border-radius:8px; background:rgba(255,59,48,.1); color:var(--danger); font-size:15px; line-height:1; border:none; cursor:pointer; }
+    .actiondel:disabled { opacity:.35; cursor:not-allowed; }
+    .actionadd { align-self:flex-start; padding:6px 12px; font-size:13px; font-weight:600; color:var(--accent); background:rgba(10,132,255,.06); border:1px dashed var(--border-strong); border-radius:10px; cursor:pointer; }
+    .actionadd:disabled { opacity:.4; cursor:not-allowed; }
+    .actionerr { font-size:12px; color:var(--danger); }
+    .actionnote { font-size:12px; color:var(--placeholder); }
+    /* Prescription controls: the clinician's override of the LLM's parse */
+    .rxhdr { display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; padding-bottom:10px; }
+    .rxtitle { font-size:12px; font-weight:700; letter-spacing:.3px; text-transform:uppercase; color:var(--secondary); }
+    .rxbtns { display:flex; gap:8px; }
+    .rxbtns .btn.small:disabled { opacity:.4; cursor:not-allowed; }
+    .tblock.archived { opacity:.65; border-style:dashed; }
+    .tracefoot { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+    .tracefoot .hint { margin-top:0; }
+    #rxDialog { width:min(640px,calc(100% - 32px)); }
+    #rxDialog .cfield .bad { border-color:var(--danger); }
+    .rxfielderr { font-size:12px; color:var(--danger); }
+    .rxgroup { grid-column:1 / -1; margin-top:2px; padding-top:14px; border-top:1px solid var(--border); font-size:13px; font-weight:600; color:var(--secondary); }
+
+    /* Nudging period */
+    .period { display:grid; grid-template-columns:1fr 1fr; gap:var(--s2); margin-bottom:var(--s3); }
+    @media (max-width:560px){ .period{ grid-template-columns:1fr; } }
+    .pfield { display:flex; flex-direction:column; gap:6px; }
+    .pfield label { font-size:13px; font-weight:600; color:var(--secondary); }
+    .pfield input { font:inherit; color:var(--text); background:var(--card); border:1px solid var(--border); border-radius:10px; padding:9px 11px; -webkit-appearance:none; appearance:none; }
+    .pfield input:focus { outline:none; border-color:var(--accent); box-shadow:var(--ring); }
+
+    .weektools { display:flex; gap:var(--s2); flex-wrap:wrap; margin-bottom:var(--s3); }
+    .weektools button { height:36px; padding:0 14px; font-size:14px; color:var(--accent); background:rgba(10,132,255,.08); font-weight:600; }
+
+    /* Weekly editor — multiple slots per day */
+    .week { display:flex; flex-direction:column; gap:12px; }
+    .wday { border:1px solid var(--border); border-radius:12px; padding:12px; transition:border-color .15s, background .15s; }
+    .wday.has { border-color:rgba(10,132,255,.35); background:rgba(10,132,255,.03); }
+    .wday .dhdr { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:8px; }
+    .wday .dname { font-weight:700; }
+    .wday .dcount { font-size:13px; color:var(--secondary); }
+    .slotlist { display:flex; flex-direction:column; gap:8px; }
+    .slot { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:8px 10px; }
+    .slot.open { border-color:rgba(10,132,255,.4); }
+    .slothead { display:grid; grid-template-columns:1fr 116px 34px; gap:10px; align-items:center; }
+    @media (max-width:560px){ .slothead{ grid-template-columns:1fr 100px 30px; } }
+    .slot .lbl { min-width:0; text-align:left; background:none; border:none; padding:0; cursor:pointer; }
+    .slot .lbl .b { font-weight:600; font-size:14px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .slot .lbl .b .tw { color:var(--secondary); font-size:11px; margin-left:2px; }
+    .slot.open .lbl .b .tw { color:var(--accent); }
+    .slot .lbl .m { font-size:12px; color:var(--secondary); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .slot input[type=time] { width:100%; font:inherit; font-size:14px; color:var(--text); background:var(--card);
+      border:1px solid var(--border); border-radius:8px; padding:7px 8px; -webkit-appearance:none; appearance:none; }
+    .slot input[type=time]:focus { outline:none; border-color:var(--accent); box-shadow:var(--ring); }
+    .slot input.bad, .slot textarea.bad { border-color:var(--danger); }
+    .slot .rm { height:30px; width:30px; border-radius:8px; background:rgba(255,59,48,.1); color:var(--danger); font-size:16px; line-height:1; }
+    /* Expanded: 3 message options + inline editor */
+    .slotbody { margin-top:10px; display:flex; flex-direction:column; gap:8px; }
+    /* A 3x/week prescription yields up to 7 pills, so cap the height rather than
+       letting the option row push the message box off screen. */
+    .opts { display:flex; gap:6px; flex-wrap:wrap; max-height:120px; overflow-y:auto; }
+    .optpill { font-size:12px; font-weight:600; padding:5px 10px; border-radius:999px; background:rgba(120,120,128,.12); color:var(--secondary); }
+    .optpill.on { background:rgba(10,132,255,.14); color:var(--accent); }
+    .msgedit { width:100%; font:inherit; font-size:14px; color:var(--text); background:var(--card); border:1px solid var(--border);
+      border-radius:8px; padding:8px 10px; resize:vertical; line-height:1.4; min-height:64px; }
+    .msgedit:focus { outline:none; border-color:var(--accent); box-shadow:var(--ring); }
+    .msgmeta { font-size:12px; color:var(--secondary); }
+    /* Action: derived from the prescription's behaviour list, never retyped here.
+       The chips below it show the behaviour's own pillar and category. */
+    .slotfield { display:flex; flex-direction:column; gap:5px; }
+    .slotfield label { font-size:11px; font-weight:700; letter-spacing:.3px; text-transform:uppercase; color:var(--secondary); }
+    .actionpick { width:100%; font:inherit; font-size:14px; color:var(--text); background:var(--card);
+      border:1px solid var(--border); border-radius:8px; padding:8px 10px; }
+    .actionpick:focus { outline:none; border-color:var(--accent); box-shadow:var(--ring); }
+    .actionpick.bad { border-color:var(--danger); }
+    .slottax { display:flex; gap:6px; flex-wrap:wrap; font-size:12px; color:var(--secondary); }
+    .slothint { font-size:12px; color:var(--placeholder); }
+    /* Outcome follow-up: the doctor's two-stage switch and its delay */
+    .fu { border:1px solid var(--border); border-radius:10px; padding:9px 10px; display:flex; flex-direction:column; gap:7px; }
+    .futop { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+    .fuswitch { display:flex; align-items:center; gap:7px; font-size:13px; font-weight:600; color:var(--text); cursor:pointer; }
+    .fuswitch input { width:16px; height:16px; accent-color:var(--accent); cursor:pointer; }
+    .fuswitch input:disabled { cursor:not-allowed; }
+    .fuswitch.off { color:var(--secondary); }
+    .furow { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+    .furow label { font-size:11px; font-weight:700; letter-spacing:.3px; text-transform:uppercase; color:var(--secondary); }
+    .fudelay, .fucustom { font:inherit; font-size:14px; color:var(--text); background:var(--card);
+      border:1px solid var(--border); border-radius:8px; padding:6px 9px; }
+    .fudelay:focus, .fucustom:focus { outline:none; border-color:var(--accent); box-shadow:var(--ring); }
+    .fudelay.bad, .fucustom.bad { border-color:var(--danger); }
+    .fucustom { width:84px; }
+    .fuerr { font-size:12px; color:var(--danger); }
+    .funote { font-size:12px; color:var(--placeholder); }
+    .empty { font-size:13px; color:var(--placeholder); padding:4px 2px; }
+
+    /* Sticky action bar */
+    .actionbar { position:fixed; left:0; right:0; bottom:0; background:rgba(255,255,255,.92);
+      -webkit-backdrop-filter:saturate(180%) blur(8px); backdrop-filter:saturate(180%) blur(8px);
+      border-top:1px solid var(--border); padding:14px 20px; }
+    .actionbar .inner { max-width:var(--maxw); margin:0 auto; display:flex; gap:var(--s2); align-items:center; }
+    .actionbar .status { flex:1; font-size:14px; color:var(--secondary); }
+    .actionbar .status.err { color:var(--danger); }
+    .actionbar .status.ok { color:var(--ok-ink); font-weight:600; }
+    .btn-approve { height:48px; padding:0 22px; font-size:16px; font-weight:600; color:#fff; background:var(--accent); }
+    .btn-approve:hover { background:var(--accent-press); }
+    .btn-approve:disabled { opacity:.4; cursor:not-allowed; }
+    .btn-reject { height:48px; padding:0 18px; font-size:16px; font-weight:550; color:var(--danger); background:rgba(255,59,48,.1); }
+
+    /* Weekly schedule: the single add control + custom marker */
+    .addwrap { margin-top:8px; display:flex; }
+    .addnudge { flex:1; text-align:center; padding:9px 14px; font-size:14px; font-weight:600; color:var(--accent); background:rgba(10,132,255,.06); border:1px dashed var(--border-strong); border-radius:10px; }
+    .addnudge:hover { background:rgba(10,132,255,.12); }
+    .cbadge { display:inline-block; font-size:10px; font-weight:700; letter-spacing:.4px; text-transform:uppercase; padding:1px 6px; margin-left:6px; border-radius:6px; color:var(--accent); background:rgba(10,132,255,.12); vertical-align:middle; }
+
+    /* Custom-nudge modal: pillar and category are locked to the chosen
+       prescription; action and message are the clinician's own words. */
+    #customDialog { width:min(560px,calc(100% - 32px)); }
+    .cfield .locked { font-size:15px; color:var(--text); background:#f5f6f9; border:1px solid transparent;
+      border-radius:10px; padding:9px 11px; min-height:41px; }
+    .cform-sub { margin:0 0 14px !important; }
+    .cform { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .cform .wide { grid-column:1 / -1; }
+    .cfield { display:flex; flex-direction:column; gap:6px; }
+    .cfield label { font-size:13px; font-weight:600; color:var(--secondary); }
+    .cfield select, .cfield input, .cfield textarea { font:inherit; font-size:15px; color:var(--text); background:var(--card); border:1px solid var(--border); border-radius:10px; padding:9px 11px; -webkit-appearance:none; appearance:none; }
+    .cfield textarea { min-height:82px; resize:vertical; line-height:1.4; }
+    .cfield select:focus, .cfield input:focus, .cfield textarea:focus { outline:none; border-color:var(--accent); box-shadow:var(--ring); }
+    #cError { margin-top:14px; }
+    @media (max-width:560px){ .cform { grid-template-columns:1fr; } }
+
+    .hidden { display:none !important; }
+
+    /* 2026 monitoring workspace */
+    body { background:linear-gradient(180deg,#f7f9fc 0,#f2f2f7 420px); }
+    .page { padding-top:40px; }
+    .hero { display:flex; align-items:flex-end; justify-content:space-between; gap:24px; margin-bottom:28px; }
+    .hero-copy { max-width:680px; }
+    .eyebrow { margin:0 0 8px; color:var(--accent); font-size:12px; font-weight:750; letter-spacing:.09em; text-transform:uppercase; }
+    .hero h1 { font-size:40px; letter-spacing:-1.1px; }
+    .hero p { max-width:650px; }
+    .hero-action { flex:none; }
+    .hero-action.btn { display:inline-flex; align-items:center; text-decoration:none; }
+    .summary-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin-bottom:24px; }
+    .summary-card { min-height:102px; background:rgba(255,255,255,.86); border:1px solid rgba(209,209,214,.7); border-radius:16px; padding:18px; box-shadow:var(--shadow); }
+    .summary-label { display:block; color:var(--secondary); font-size:13px; font-weight:600; }
+    .summary-value { display:block; margin-top:4px; font-size:28px; line-height:1.1; font-weight:750; letter-spacing:-.6px; font-variant-numeric:tabular-nums; }
+    .summary-note { display:block; margin-top:5px; color:var(--secondary); font-size:12px; }
+    .workspace { display:grid; grid-template-columns:minmax(0,1.55fr) minmax(330px,.85fr); gap:24px; align-items:start; }
+    .workspace .card { margin-bottom:24px; }
+    .patient-list-card { min-width:0; }
+    .card-head { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:18px; }
+    .card-head .sub { margin:3px 0 0; }
+    .toolbar { display:flex; gap:10px; margin-bottom:16px; }
+    .search-wrap { position:relative; flex:1; }
+    .search-wrap svg { position:absolute; left:12px; top:50%; width:17px; height:17px; transform:translateY(-50%); color:var(--secondary); pointer-events:none; }
+    .search-input,.filter-select { width:100%; height:42px; border:1px solid var(--border); border-radius:11px; background:var(--surface); color:var(--text); font:inherit; font-size:14px; }
+    .search-input { padding:0 12px 0 38px; }
+    .filter-select { width:150px; padding:0 10px; }
+    .search-input:focus,.filter-select:focus { outline:none; border-color:var(--accent); box-shadow:var(--ring); background:#fff; }
+    table.patients td { transition:background .15s; }
+    table.patients tr.prow { outline:none; }
+    table.patients tr.prow:focus-visible td { background:rgba(10,132,255,.08); }
+    .empty-row { text-align:center; color:var(--secondary); padding:34px 16px !important; }
+    .detail-card { position:sticky; top:20px; border:1px solid rgba(209,209,214,.65); }
+    .detail-placeholder { position:sticky; top:20px; display:grid; place-items:center; min-height:310px; padding:40px; text-align:center; border:1px dashed var(--border-strong); background:rgba(255,255,255,.55); }
+    .placeholder-icon { display:grid; place-items:center; width:54px; height:54px; margin:0 auto 16px; border-radius:18px; color:var(--accent); background:rgba(10,132,255,.09); font-size:23px; }
+    .detail-placeholder h2 { margin-bottom:6px; }
+    .detail-placeholder p { max-width:260px; margin:0; color:var(--secondary); font-size:14px; }
+    .detail-identity { display:flex; align-items:center; gap:12px; min-width:0; }
+    .avatar { display:grid; place-items:center; width:44px; height:44px; flex:none; border-radius:14px; color:#fff; background:linear-gradient(145deg,#0a84ff,#5e5ce6); font-weight:750; }
+    .detail-title { min-width:0; }
+    .detail-title h2 { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .detail-id { font:12px ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--secondary); }
+    .btn.small { height:36px; padding:0 13px; font-size:13px; color:var(--accent); background:rgba(10,132,255,.08); }
+    .patient-grid { grid-template-columns:1fr; gap:13px; }
+    .pfield input:disabled { color:var(--text); opacity:1; background:#f5f6f9; border-color:transparent; cursor:default; }
+    .patient-actions { padding-top:4px; border-top:1px solid var(--border); }
+    .patient-actions .btn { flex:1; }
+    .patient-actions .btn.danger { flex:0 0 auto; }
+    .record-state { display:flex; align-items:center; gap:8px; min-height:22px; margin:12px 0 16px; font-size:13px; color:var(--secondary); }
+    .record-state::before { content:""; width:8px; height:8px; border-radius:50%; background:var(--ok); box-shadow:0 0 0 3px rgba(48,209,88,.14); }
+    .record-state.disabled::before { background:var(--danger); box-shadow:0 0 0 3px rgba(255,59,48,.12); }
+    .review-section { margin-top:2px; }
+    dialog { width:min(480px,calc(100% - 32px)); padding:0; border:0; border-radius:18px; box-shadow:0 24px 80px rgba(22,32,51,.28); }
+    dialog::backdrop { background:rgba(22,32,51,.45); backdrop-filter:blur(2px); }
+    .dialog-body { padding:24px; }
+    .dialog-icon { display:grid; place-items:center; width:44px; height:44px; margin-bottom:16px; border-radius:14px; color:var(--danger); background:rgba(255,59,48,.1); font-size:22px; }
+    .dialog-body h2 { margin:0 0 8px; font-size:21px; }
+    .dialog-body p { margin:0; color:var(--secondary); font-size:15px; }
+    .dialog-actions { display:flex; justify-content:flex-end; gap:10px; padding:16px 24px; background:#f7f7fa; border-top:1px solid var(--border); }
+    @media (max-width:860px){ .workspace{grid-template-columns:1fr;} .detail-card,.detail-placeholder{position:static;} }
+    @media (max-width:620px){
+      .hero{align-items:flex-start;flex-direction:column}.hero h1{font-size:34px}.summary-grid{grid-template-columns:1fr 1fr}.summary-card:last-child{grid-column:1/-1}
+      .toolbar{flex-direction:column}.filter-select{width:100%}table.patients th:nth-child(2),table.patients td:nth-child(2),table.patients th:nth-child(4),table.patients td:nth-child(4){display:none}
+      .actionbar .inner{flex-wrap:wrap}.actionbar .status{flex-basis:100%}.btn-reject,.btn-approve{flex:1}
+    }
+  </style>
+</head>
+<body>
+  <div class="session-bar"><span id="identity"></span><a id="adminLink" href="admin.html" hidden>Admin</a><a href="input.html">New intake</a><button id="logoutBtn" type="button">Sign out</button></div>
+  <main class="page">
+    <a class="home" href="index.html">← Home</a>
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Clinical workspace</p>
+        <h1>Monitoring &amp; review</h1>
+        <p id="heroSub">Review patient plans, maintain records, and approve upcoming WhatsApp nudges from one workspace.</p>
+      </div>
+      <a class="btn hero-action" href="input.html">+ New intake</a>
+    </header>
+
+    <section class="summary-grid hidden" id="summaryGrid" aria-label="Patient overview">
+      <div class="summary-card"><span class="summary-label">Assigned patients</span><strong class="summary-value" id="summaryPatients">0</strong><span class="summary-note">Visible to your account</span></div>
+      <div class="summary-card"><span class="summary-label">Awaiting review</span><strong class="summary-value" id="summaryReview">0</strong><span class="summary-note">Plans needing a decision</span></div>
+      <div class="summary-card"><span class="summary-label">Active schedules</span><strong class="summary-value" id="summaryActive">0</strong><span class="summary-note">Approved and enabled</span></div>
+    </section>
+
+    <!-- Automatic live load -->
+    <section class="card source" id="sourcePanel">
+      <h2>Loading patients</h2>
+      <p class="sub">Connecting to Google Sheets through n8n.</p>
+      <div class="hint" id="sourceHint">Fetching all patients…</div>
+    </section>
+
+    <div class="workspace">
+    <!-- All patients -->
+    <section class="card patient-list-card hidden" id="tableCard">
+      <div class="card-head"><div><h2>Patient records <span id="patientCount" class="pmeta"></span></h2><p class="sub">Select a patient to manage their record and review their plan.</p></div></div>
+      <div class="toolbar">
+        <label class="search-wrap" aria-label="Search patients">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>
+          <input class="search-input" id="patientSearch" type="search" placeholder="Search name, phone, or ID" autocomplete="off" />
+        </label>
+        <select class="filter-select" id="statusFilter" aria-label="Filter patient status"><option value="active" selected>Active patients</option><option value="review">Needs review</option><option value="disabled">Archived</option><option value="all">All records</option></select>
+      </div>
+      <div class="tablewrap">
+        <table class="patients">
+          <thead><tr>
+            <th>Patient</th><th>Phone</th><th>Status</th><th>Nudges</th><th>Needs review</th>
+          </tr></thead>
+          <tbody id="patientRows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Update / reversible delete -->
+    <section class="card detail-placeholder" id="patientPlaceholder">
+      <div><div class="placeholder-icon">↗</div><h2>Select a patient</h2><p>Choose a row to view patient details, manage the record, and review the current nudge plan.</p></div>
+    </section>
+    <section class="card detail-card hidden" id="patientCard">
+      <div class="card-head">
+        <div class="detail-identity"><div class="avatar" id="patientAvatar">?</div><div class="detail-title"><h2 id="patientDetailName">Patient details</h2><div class="detail-id" id="patientDetailId"></div></div></div>
+        <button type="button" class="btn small" id="editPatientBtn">Edit</button>
+      </div>
+      <div class="record-state" id="recordState">Active record</div>
+      <div class="patient-grid">
+        <div class="pfield"><label for="patientName">Full name</label><input id="patientName" autocomplete="name" disabled /></div>
+        <div class="pfield"><label for="patientPhone">WhatsApp number</label><input id="patientPhone" type="tel" autocomplete="tel" placeholder="+61412345678" disabled /></div>
+        <div class="pfield wide"><label for="patientEmail">Email</label><input id="patientEmail" type="email" autocomplete="email" disabled /></div>
+      </div>
+      <div class="patient-actions hidden" id="editPatientActions">
+        <button type="button" class="btn" id="savePatientBtn">Save changes</button>
+        <button type="button" class="btn ghost" id="cancelPatientBtn">Cancel</button>
+      </div>
+      <div class="patient-actions" id="recordPatientActions">
+        <button type="button" class="btn danger" id="disablePatientBtn">Archive record</button>
+        <button type="button" class="btn success hidden" id="reactivatePatientBtn">Reactivate patient</button>
+      </div>
+      <div class="hint" id="patientEditStatus"></div>
+    </section>
+    </div>
+
+    <!-- Explainability trace -->
+    <section class="card hidden" id="traceCard">
+      <h2>How the AI read this prescription</h2>
+      <p class="sub">Doctor's words → what the LLM parsed → the target behaviours you own. Each behaviour carries its own pillar and category, so one prescription can span several pillars. The message text is edited on each nudge in the weekly schedule below, where the action is picked from this list.</p>
+      <div class="trace" id="traceRoot"></div>
+    </section>
+
+    <!-- Weekly schedule -->
+    <section class="card hidden" id="reviewCard">
+      <div class="selhdr">
+        <h2 id="selName">—</h2><span class="id" id="selId"></span>
+      </div>
+      <p class="sub" id="selSummary"></p>
+
+      <div class="period">
+        <div class="pfield"><label for="startDate">Nudging start date</label><input type="date" id="startDate" /></div>
+        <div class="pfield"><label for="endDate">Nudging stop date</label><input type="date" id="endDate" /></div>
+      </div>
+      <div class="hint err hidden" id="periodErr">Stop date must be on or after the start date.</div>
+
+      <div class="weektools">
+        <button type="button" id="weekFromNudges">Reset from saved schedule</button>
+        <button type="button" id="weekClear">Clear all</button>
+      </div>
+      <div class="week" id="weekEditor"></div>
+    </section>
+  </main>
+
+  <dialog id="archiveDialog" aria-labelledby="archiveTitle">
+    <div class="dialog-body"><div class="dialog-icon">!</div><h2 id="archiveTitle">Archive this patient?</h2><p>The record and its audit history will be kept, but active scheduling will stop. You can reactivate it later.</p></div>
+    <div class="dialog-actions"><button type="button" class="btn ghost" id="cancelArchiveBtn">Cancel</button><button type="button" class="btn danger" id="confirmArchiveBtn">Archive record</button></div>
+  </dialog>
+
+  <!-- Add nudge: the single entry point. Attaches to a prescription the clinician
+       picks explicitly; pillar and category follow the target behaviour they
+       choose. The message is either one the model already wrote (flippable
+       afterwards in the slot) or the doctor's own. -->
+  <dialog id="customDialog" aria-labelledby="customTitle">
+    <div class="dialog-body">
+      <h2 id="customTitle">Add nudge</h2>
+      <p class="cform-sub">Choose which prescription this nudge belongs to, then which of its target behaviours it carries out — pillar and category come from that behaviour. To add a behaviour, or re-file one, use the trace card above. Once added, you can flip between every generated wording from the nudge itself.</p>
+      <div class="cform">
+        <div class="cfield wide"><label for="cPrescription">Prescription</label><select id="cPrescription"></select></div>
+        <div class="cfield"><label for="cPillarLocked">Pillar</label><div class="locked" id="cPillarLocked">—</div></div>
+        <div class="cfield"><label for="cCategoryLocked">Behaviour category</label><div class="locked" id="cCategoryLocked">—</div></div>
+        <div class="cfield wide"><label for="cAction">Target behaviour — what the patient does</label><select id="cAction"></select></div>
+        <div class="cfield"><label for="cType">Nudge type</label><select id="cType"></select></div>
+        <div class="cfield"><label for="cTone">Tone</label><select id="cTone"></select></div>
+        <div class="cfield"><label for="cDay">Day</label><select id="cDay"></select></div>
+        <div class="cfield"><label for="cTime">Time</label><input type="time" id="cTime" /></div>
+        <div class="cfield"><label for="cMessageMode">Message</label><select id="cMessageMode"><option value="generated">Use a generated message</option><option value="custom">Write my own</option></select></div>
+        <div class="cfield wide" id="cMessagePreviewField"><label for="cMessagePreview">Generated message</label><div class="locked" id="cMessagePreview">—</div></div>
+        <div class="cfield wide" id="cMessageField"><label for="cMessage">Custom message text</label><textarea id="cMessage" maxlength="1024" placeholder="Write the message the patient will receive…"></textarea></div>
+      </div>
+      <div class="hint err hidden" id="cError"></div>
+    </div>
+    <div class="dialog-actions"><button type="button" class="btn ghost" id="cCancel">Cancel</button><button type="button" class="btn" id="cSave">Add nudge</button></div>
+  </dialog>
+
+  <!-- Prescription add/edit. Creating also writes the first nudge, because a
+       prescription with no source nudge cannot be scheduled at all. -->
+  <dialog id="rxDialog" aria-labelledby="rxTitle">
+    <div class="dialog-body">
+      <h2 id="rxTitle">Add prescription</h2>
+      <p class="cform-sub" id="rxSub">Correct what the AI read, or record a prescription it never saw.</p>
+      <div class="cform">
+        <div class="cfield wide"><label for="rxRaw">Doctor's words</label><textarea id="rxRaw" maxlength="4000" placeholder="What the prescription actually says…"></textarea><div class="rxfielderr hidden" data-err="prescription_raw_text"></div></div>
+        <div class="cfield"><label for="rxPillar">Default pillar for new behaviours</label><select id="rxPillar"></select><div class="rxfielderr hidden" data-err="pillar"></div></div>
+        <div class="cfield"><label for="rxCategory">Default category</label><select id="rxCategory"></select><div class="rxfielderr hidden" data-err="category"></div></div>
+        <div class="cfield"><label for="rxFrequency">Times per week</label><input type="number" id="rxFrequency" min="1" max="7" step="1" /><div class="rxfielderr hidden" data-err="frequency_per_week"></div></div>
+        <div class="cfield"><label for="rxDuration">Duration (weeks)</label><input type="number" id="rxDuration" min="1" max="52" step="1" /><div class="rxfielderr hidden" data-err="duration_weeks"></div></div>
+        <div class="cfield wide"><label for="rxIssued">Issued on</label><input type="date" id="rxIssued" /><div class="rxfielderr hidden" data-err="issued_date"></div></div>
+        <div class="rxgroup" id="rxFirstNudgeGroup">First nudge — a prescription needs one before it can be scheduled</div>
+        <div class="cfield wide" id="rxActionField"><label for="rxAction">Target behaviour</label><input type="text" id="rxAction" maxlength="1024" placeholder="e.g. Walk for 20 minutes after dinner" /><div class="rxfielderr hidden" data-err="action_text"></div></div>
+        <div class="cfield" id="rxTypeField"><label for="rxType">Nudge type</label><select id="rxType"></select><div class="rxfielderr hidden" data-err="nudge_type"></div></div>
+        <div class="cfield" id="rxToneField"><label for="rxTone">Tone</label><select id="rxTone"></select><div class="rxfielderr hidden" data-err="tone_variant"></div></div>
+        <div class="cfield wide" id="rxMessageField"><label for="rxMessage">First message</label><textarea id="rxMessage" maxlength="1024" placeholder="The message the patient will receive…"></textarea><div class="rxfielderr hidden" data-err="message_body"></div></div>
+      </div>
+      <div class="hint err hidden" id="rxError"></div>
+    </div>
+    <div class="dialog-actions"><button type="button" class="btn ghost" id="rxCancel">Cancel</button><button type="button" class="btn" id="rxSave">Save prescription</button></div>
+  </dialog>
+
+  <dialog id="rxArchiveDialog" aria-labelledby="rxArchiveTitle">
+    <div class="dialog-body"><div class="dialog-icon">!</div><h2 id="rxArchiveTitle">Archive this prescription?</h2><p id="rxArchiveDetail">Scheduling stops immediately.</p></div>
+    <div class="dialog-actions"><button type="button" class="btn ghost" id="rxCancelArchive">Cancel</button><button type="button" class="btn danger" id="rxConfirmArchive">Archive prescription</button></div>
+  </dialog>
+
+  <div class="actionbar">
+    <div class="inner">
+      <div class="status" id="statusMsg">No data loaded.</div>
+      <button type="button" class="btn-reject hidden" id="rejectBtn">Reject</button>
+      <button type="button" class="btn-approve hidden" id="approveBtn" disabled>Approve &amp; schedule</button>
+    </div>
+  </div>
+
+  <script src="auth.js"></script>
+  <script src="review-state.js"></script>
+  <script>
+  (function () {
+    "use strict";
+    var CONFIG = { SCHEMA_URL: "../lifestyle_nudging_schema.json" };
+    var TIME_RE = /^([01]\d|2[0-3]):[0-5]\d$/;
+    var DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+    var DAYS = ["monday","tuesday","wednesday","thursday","friday","saturday","sunday"];
+    var DAY_LABEL = { monday:"Monday", tuesday:"Tuesday", wednesday:"Wednesday", thursday:"Thursday", friday:"Friday", saturday:"Saturday", sunday:"Sunday" };
+    var JS_TO_DAY = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"]; // Date.getDay() 0=Sun
+
+    var ACTION_MAX = 1024;
+    var DEFAULT_TIME = "09:00";
+    var TAX = { pillars:["nutrition","physical_activity","sleep","stress_management","substance_use","social_connection"],
+      categories:["increase","reduce","maintain","avoid","establish"],
+      nudge_types:["reminder","reflection","challenge","affirmation"], tones:["encouraging","neutral_informational"], legacy_actions:{} };
+    var el = function (id) { return document.getElementById(id); };
+
+    var state = {
+      patients: [],      // [{user_id,name,phone,status,prescriptions,nudges}]
+      selected: null,
+      selectedSnapshot: null,
+      editingPatient: false,
+      week: {},          // day -> slot[]   (slot = a reused LLM nudge placed at a time)
+      // Client-side only: prescription_id -> { added:[], removed:{}, draft:null }.
+      // The curated target-behaviour list is a view over the live week, so this
+      // holds nothing but the clinician's unsaved additions and suppressions and
+      // is discarded on every reseed.
+      actions: {},
+      period: { start: "", end: "" },
+      scheduleDirty: false,
+      scheduleSaving: false
+    };
+    var requestedUserId = new URLSearchParams(location.search).get("user_id") || "";
+    var requestedEdit = new URLSearchParams(location.search).get("edit") === "1";
+
+    // ---- Taxonomy from schema (locked enums + legacy action migration) -----
+    // Pillar and behaviour category stay locked enumerations. The Action is
+    // clinician-authored free text held per weekly slot, so the schema only
+    // supplies readable text for rows written before action_text existed.
+    function taxFromSchema(s) {
+      var d = s.$defs || {};
+      var noNull = function (a) { return (a || []).filter(function (x) { return x !== null; }); };
+      var legacy = Object.assign({}, s.x_legacy_action_labels); delete legacy.description;
+      return {
+        pillars: d.pillar.enum, categories: d.category.enum, nudge_types: d.nudge_type.enum,
+        tones: noNull(d.tone_variant.enum), legacy_actions: legacy
+      };
+    }
+    // Readable label from an enum token (store the enum, show this). No hardcoded
+    // taxonomy: every value still comes from TAX, this only formats it.
+    function pretty(v) { v = String(v == null ? "" : v); return v ? v.charAt(0).toUpperCase() + v.slice(1).replace(/_/g, " ") : v; }
+    function shorten(s, n) { s = String(s || "").trim(); return s.length > n ? s.slice(0, n).trim() + "…" : s; }
+    function legacyActionText(token) {
+      var key = String(token == null ? "" : token).trim();
+      return key ? (TAX.legacy_actions[key] || pretty(key)) : "";
+    }
+    function prescriptionOf(id) {
+      return ((state.selected && state.selected.prescriptions) || []).filter(function (r) { return r.prescription_id === id; })[0] || null;
+    }
+    // Rows saved before this change carry no action_text; convert their retired
+    // target_behavior token so the clinician sees text they can revise.
+    function actionOf(row) {
+      var stored = String((row && row.action_text) || "").trim();
+      if (stored) return stored;
+      var rx = row && prescriptionOf(row.prescription_id);
+      return legacyActionText((row && row.target_behavior) || (rx && rx.target_behavior));
+    }
+    // Timing now comes from the patient, then the source row — the fixed-action
+    // catalogue that used to carry a default_time per behaviour is gone.
+    function preferredTime() {
+      var value = String((state.selected && state.selected.preferred_nudge_time) || "").trim();
+      return TIME_RE.test(value) ? value : DEFAULT_TIME;
+    }
+    function fillSelect(sel, values, opts) {
+      opts = opts || {}; sel.innerHTML = "";
+      if (opts.placeholder) sel.appendChild(new Option(opts.placeholder, ""));
+      values.forEach(function (v) {
+        sel.appendChild(new Option(opts.label ? opts.label(v) : pretty(v), opts.value ? opts.value(v) : v));
+      });
+    }
+    function loadTaxonomy() {
+      return fetch(CONFIG.SCHEMA_URL).then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (s) { if (s && s.$defs) TAX = taxFromSchema(s); })
+        .catch(function () {/* keep fallback */});
+    }
+
+    // ---- Data loading -----------------------------------------------------
+    function normalizePatients(data) {
+      if (Array.isArray(data.patients)) return data.patients;
+      var byId = {};
+      var ensure = function (uid) { return (byId[uid] = byId[uid] || { user_id: uid, prescriptions: [], nudges: [] }); };
+      (data.users || []).forEach(function (u) { Object.assign(ensure(u.user_id), u); });
+      (data.prescriptions || []).forEach(function (p) { ensure(p.user_id).prescriptions.push(p); });
+      (data.nudges || []).forEach(function (n) { ensure(n.user_id).nudges.push(n); });
+      return Object.keys(byId).map(function (k) { return byId[k]; });
+    }
+    function setData(data, focusUserId, focusTarget) {
+      state.patients = normalizePatients(data).map(function (p) {
+        p.nudges = p.nudges || []; p.prescriptions = p.prescriptions || [];
+        return ReviewState.hydratePatient(p);
+      });
+      state.selected = null;
+      state.selectedSnapshot = null;
+      state.editingPatient = false;
+      state.actions = {};
+      state.scheduleDirty = false;
+      state.scheduleSaving = false;
+      el("sourcePanel").classList.add("hidden");
+      el("summaryGrid").classList.remove("hidden");
+      el("tableCard").classList.remove("hidden");
+      el("patientCard").classList.add("hidden");
+      el("patientPlaceholder").classList.remove("hidden");
+      el("traceCard").classList.add("hidden");
+      el("reviewCard").classList.add("hidden");
+      el("rejectBtn").classList.add("hidden"); el("approveBtn").classList.add("hidden");
+      renderTable();
+      renderSummary();
+      var s = el("statusMsg"); s.className = "status"; s.textContent = state.patients.length + " patient(s) loaded. Select one to review.";
+      var targetUserId = focusUserId || requestedUserId;
+      if (targetUserId) {
+        var requestedIndex = state.patients.findIndex(function (p) { return p.user_id === targetUserId; });
+        if (requestedIndex >= 0) selectPatient(requestedIndex, focusTarget || (requestedEdit ? "patientCard" : "traceCard"));
+      }
+    }
+    function needsReview(p) {
+      return p.nudges.filter(function (n) {
+        var s = n.status || "needs_review";
+        return s === "needs_review" || s === "pending";
+      }).length;
+    }
+    function patientStatus(p) {
+      if (p.user_status === "disabled") return { cls: "disabled", text: "disabled" };
+      if (p.user_status === "opted_out") return { cls: "disabled", text: "opted out" };
+      if (p.user_status === "paused") return { cls: "muted", text: "paused" };
+      if (!p.nudges.length) return { cls: "muted", text: p.status || "—" };
+      if (needsReview(p)) return { cls: "review", text: "needs review" };
+      if (p.nudges.some(function (n) { return n.status === "approved"; })) return { cls: "approved", text: "approved" };
+      return { cls: "muted", text: "rejected" };
+    }
+    function renderSummary() {
+      el("summaryPatients").textContent = state.patients.length;
+      el("summaryReview").textContent = state.patients.filter(function (p) { return (p.user_status || "active") === "active" && needsReview(p) > 0; }).length;
+      el("summaryActive").textContent = state.patients.filter(function (p) { return (p.user_status || "active") === "active" && p.nudges.some(function (n) { return n.status === "approved"; }); }).length;
+    }
+    function renderTable() {
+      el("patientCount").textContent = "(" + state.patients.length + ")";
+      var tb = el("patientRows"); tb.innerHTML = "";
+      var query = el("patientSearch").value.trim().toLowerCase();
+      var filter = el("statusFilter").value;
+      var visible = 0;
+      state.patients.forEach(function (p, i) {
+        var haystack = [p.name, p.phone, p.email, p.user_id].join(" ").toLowerCase();
+        var matchesQuery = !query || haystack.indexOf(query) >= 0;
+        var matchesFilter = filter === "all" ||
+          (filter === "disabled" && p.user_status === "disabled") ||
+          (filter === "review" && (p.user_status || "active") === "active" && needsReview(p) > 0) ||
+          (filter === "active" && (p.user_status || "active") === "active");
+        if (!matchesQuery || !matchesFilter) return;
+        visible += 1;
+        var tr = document.createElement("tr"); tr.className = "prow"; tr.dataset.idx = i;
+        tr.tabIndex = 0;
+        var st = patientStatus(p);
+        tr.innerHTML =
+          '<td><div class="pname">' + esc(p.name || "(unnamed)") + '</div><div class="pmeta">' + esc((p.user_id || "").slice(0, 8)) + '</div></td>' +
+          '<td class="pmeta">' + esc(p.phone || "—") + '</td>' +
+          '<td><span class="pill ' + st.cls + '">' + st.text + '</span></td>' +
+          '<td><span class="count">' + p.nudges.length + '</span></td>' +
+          '<td><span class="count">' + needsReview(p) + '</span></td>';
+        tr.addEventListener("click", function () { selectPatient(i); });
+        tr.addEventListener("keydown", function (event) { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); selectPatient(i); } });
+        tb.appendChild(tr);
+      });
+      if (!visible) {
+        var emptyRow = document.createElement("tr");
+        emptyRow.innerHTML = '<td class="empty-row" colspan="5">No patient records match this view.</td>';
+        tb.appendChild(emptyRow);
+      }
+    }
+
+    // ---- Select a patient -------------------------------------------------
+    function selectPatient(i, scrollTarget) {
+      if (state.scheduleDirty && state.selected && state.selected !== state.patients[i] &&
+          !window.confirm("Discard unsaved schedule changes?")) return;
+      state.selected = state.patients[i];
+      state.scheduleDirty = false;
+      Array.prototype.forEach.call(document.querySelectorAll("tr.prow"), function (r) { r.classList.toggle("sel", r.dataset.idx === String(i)); });
+      var p = state.selected;
+      el("selName").textContent = p.name || "(unnamed)";
+      el("selId").textContent = p.user_id || "";
+      el("selSummary").textContent = p.nudges.length + " parsed nudge(s) · " + p.prescriptions.length + " prescription(s) · phone " + (p.phone || "—");
+      el("patientName").value = p.name || "";
+      el("patientPhone").value = p.phone || "";
+      el("patientEmail").value = p.email || "";
+      state.selectedSnapshot = { name: p.name || "", phone: p.phone || "", email: p.email || "", user_status: p.user_status || "active" };
+      el("patientDetailName").textContent = p.name || "(unnamed)";
+      el("patientDetailId").textContent = p.user_id || "";
+      el("patientAvatar").textContent = (p.name || "?").trim().slice(0, 1).toUpperCase();
+      var recordStatus = p.user_status || "active";
+      el("recordState").className = "record-state" + (recordStatus === "active" ? "" : " disabled");
+      el("recordState").textContent = recordStatus === "disabled" ? "Archived record · scheduling stopped" :
+        recordStatus === "opted_out" ? "Opted out · scheduling stopped" :
+        recordStatus === "paused" ? "Paused · scheduling stopped" : "Active record · eligible for scheduling";
+      el("patientEditStatus").className = "hint"; el("patientEditStatus").textContent = "";
+      el("patientCard").classList.remove("hidden");
+      el("patientPlaceholder").classList.add("hidden");
+      el("disablePatientBtn").classList.toggle("hidden", recordStatus === "disabled" || recordStatus === "opted_out");
+      el("reactivatePatientBtn").classList.toggle("hidden", recordStatus !== "disabled");
+      setEditMode(false);
+      // Seed first: the trace's target-behaviour list reads state.week, so
+      // rendering it before the reseed would show the previous patient's actions.
+      seedWeekFromNudges();
+      renderTrace();
+      initPeriod();
+      el("traceCard").classList.remove("hidden");
+      el("reviewCard").classList.remove("hidden");
+      el("rejectBtn").classList.toggle("hidden", recordStatus !== "active");
+      el("approveBtn").classList.toggle("hidden", recordStatus !== "active");
+      el("approveBtn").textContent = isApprovedPatient(p) ? "Save schedule changes" : "Approve & schedule";
+      renderWeek(); refreshValidity();
+      el(scrollTarget || "patientCard").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    // ---- Patient update / reversible archive -----------------------------
+    function setEditMode(enabled) {
+      state.editingPatient = Boolean(enabled);
+      ["patientName", "patientPhone", "patientEmail"].forEach(function (id) { el(id).disabled = !state.editingPatient; });
+      el("editPatientBtn").classList.toggle("hidden", state.editingPatient);
+      el("editPatientActions").classList.toggle("hidden", !state.editingPatient);
+      el("recordPatientActions").classList.toggle("hidden", state.editingPatient);
+      if (state.editingPatient) setTimeout(function () { el("patientName").focus(); }, 0);
+    }
+    function cancelPatientEdit() {
+      if (!state.selectedSnapshot) return;
+      el("patientName").value = state.selectedSnapshot.name;
+      el("patientPhone").value = state.selectedSnapshot.phone;
+      el("patientEmail").value = state.selectedSnapshot.email;
+      el("patientEditStatus").textContent = "";
+      setEditMode(false);
+    }
+    function setPatientBusy(busy) {
+      ["savePatientBtn", "cancelPatientBtn", "editPatientBtn", "disablePatientBtn", "reactivatePatientBtn", "confirmArchiveBtn", "cancelArchiveBtn"].forEach(function (id) { el(id).disabled = busy; });
+    }
+    function persistedPatientMatches(patient, expected) {
+      return patient && Object.keys(expected).every(function (key) { return String(patient[key] == null ? "" : patient[key]) === String(expected[key] == null ? "" : expected[key]); });
+    }
+    function mutatePatient(method, payload, successMessage) {
+      var selectedUserId = state.selected.user_id;
+      var expected = Object.assign({}, payload); delete expected.user_id;
+      var msg = el("patientEditStatus"); msg.className = "hint"; msg.textContent = method === "DELETE" ? "Archiving record…" : "Saving changes…";
+      setPatientBusy(true);
+      return Auth.api("/api/patient", { method: method, body: JSON.stringify(payload) })
+        .then(function (out) {
+          var persisted = out && out.patient;
+          if (!out.persisted || !persistedPatientMatches(persisted, expected)) throw new Error("The record was not confirmed in Google Sheets. Your previous values are still shown so you can retry.");
+          var index = state.patients.findIndex(function (p) { return p.user_id === selectedUserId; });
+          if (index < 0) throw new Error("The saved patient is no longer available in this view.");
+          state.patients[index] = ReviewState.hydratePatient(Object.assign({}, state.patients[index], persisted));
+          var filter = el("statusFilter").value;
+          var movedOutOfView = (filter === "active" && persisted.user_status !== "active") ||
+            (filter === "disabled" && persisted.user_status !== "disabled");
+          if (movedOutOfView) {
+            setData({ patients: state.patients });
+            var status = el("statusMsg"); status.className = "status ok"; status.textContent = "✓ " + successMessage;
+          } else {
+            renderTable(); renderSummary(); selectPatient(index, "patientCard");
+            el("patientEditStatus").className = "hint";
+            el("patientEditStatus").textContent = successMessage;
+          }
+        })
+        .catch(function (err) { msg.className = "hint err"; msg.textContent = "Update failed: " + err.message; throw err; })
+        .finally(function () { setPatientBusy(false); });
+    }
+    function savePatient() {
+      if (!state.selected) return;
+      var payload = {
+        user_id: state.selected.user_id,
+        name: el("patientName").value.trim(), phone: el("patientPhone").value.trim(),
+        email: el("patientEmail").value.trim(), user_status: state.selected.user_status || "active"
+      };
+      if (!payload.name) { el("patientEditStatus").className = "hint err"; el("patientEditStatus").textContent = "Enter the patient's name."; el("patientName").focus(); return; }
+      mutatePatient("PATCH", payload, "Changes saved and confirmed.").catch(function () {});
+    }
+    function archivePatient() {
+      if (!state.selected) return;
+      var payload = { user_id: state.selected.user_id, user_status: "disabled" };
+      mutatePatient("DELETE", payload, "Record archived. Scheduling has stopped and the audit history is preserved.")
+        .then(function () { el("archiveDialog").close(); }).catch(function () {});
+    }
+    function reactivatePatient() {
+      if (!state.selected) return;
+      mutatePatient("PATCH", { user_id: state.selected.user_id, user_status: "active" }, "Patient reactivated and confirmed.").catch(function () {});
+    }
+
+    // ---- Explainability trace (per prescription) --------------------------
+    function nudgesFor(prescriptionId) {
+      return (state.selected.nudges || []).filter(function (n) { return n.prescription_id === prescriptionId; });
+    }
+
+    // ---- Target behaviours (clinician-curated action_text) ----------------
+    // The list is a view, not a store: it is derived from the live weekly slots
+    // (plus the intake drafts, until canonical slots exist) so it can never drift
+    // from what will actually be sent. state.actions holds only the clinician's
+    // unsaved additions and suppressions. An action reaches Google Sheets solely
+    // by being attached to a slot and saved as weekly_schedule.action_text.
+    // Set while a rename commit re-renders, so refreshActionLists leaves the
+    // container that fired it standing (see refreshActionLists).
+    var actionListLock = null;
+    function weekSlots() {
+      return DAYS.reduce(function (all, d) { return all.concat(state.week[d] || []); }, []);
+    }
+    function actionBucket(prescriptionId) {
+      var key = String(prescriptionId || "");
+      if (!state.actions[key]) state.actions[key] = { added: [], removed: {}, draft: null };
+      return state.actions[key];
+    }
+    // actionOf() resolves legacy target_behavior tokens, so the pure collector
+    // never has to know about the retired enum. The row's own pillar and category
+    // travel with it; collectActions decides when they lose to the prescription.
+    function sourceActionsFor(prescriptionId) {
+      return nudgesFor(prescriptionId).map(function (n) {
+        return {
+          prescription_id: n.prescription_id, action_text: actionOf(n),
+          pillar: n.pillar || "", category: n.category || ""
+        };
+      });
+    }
+    // Same normalize-then-delegate shape: the pure builder gets resolved actions
+    // so it never has to know about the retired target_behavior enum.
+    function sourceBodiesFor(prescriptionId) {
+      return nudgesFor(prescriptionId).map(function (n) {
+        return {
+          prescription_id: n.prescription_id, action_text: actionOf(n),
+          message_body: n.message_body, message_body_alt: n.message_body_alt,
+          tone_variant: n.tone_variant
+        };
+      });
+    }
+    // How many slots already use this behaviour, so a 3x/week prescription
+    // rotates through wordings 1, 2, 3 rather than repeating the first.
+    function nextOrdinalFor(prescriptionId, actionText) {
+      var key = ReviewState.actionKey(actionText);
+      return weekSlots().filter(function (s) {
+        return String(s.prescription_id || "") === String(prescriptionId || "") &&
+          ReviewState.actionKey(s.action_text) === key;
+      }).length;
+    }
+    // The behaviour list for one prescription: [{action_text, pillar, category, mixed}].
+    // Derived from the live week plus unsaved additions, never stored — a behaviour
+    // reaches Sheets only by being attached to a slot and saved.
+    function actionsFor(rx) {
+      if (!rx) return [];
+      var bucket = actionBucket(rx.prescription_id);
+      return ReviewState.collectActions({
+        prescriptionId: rx.prescription_id,
+        sources: sourceActionsFor(rx.prescription_id),
+        slots: weekSlots(),
+        added: bucket.added,
+        removed: bucket.removed,
+        hasCanonicalSchedule: state.selected.has_canonical_schedule === true,
+        // The prescription's values are the last resort only: defaults for a new
+        // behaviour and the fallback for a row written before the category column.
+        pillar: rx.pillar || "", category: rx.category || ""
+      });
+    }
+    function actionTextsFor(rx) { return ReviewState.actionTexts(actionsFor(rx)); }
+    function slotsUsingAction(prescriptionId, action) {
+      return ReviewState.countActionSlots(weekSlots(), prescriptionId, action);
+    }
+    // Renames the behaviour across the live week and the in-memory intake rows so
+    // the add picker and the Messages dropdown follow. Returns the slot count so
+    // the caller can leave the schedule clean when nothing savable changed.
+    function commitActionRename(prescriptionId, from, to) {
+      var bucket = actionBucket(prescriptionId);
+      var changed = ReviewState.applyActionRename(weekSlots(), prescriptionId, from, to);
+      ReviewState.applyActionRename(state.selected.nudges || [], prescriptionId, from, to);
+      var fromKey = ReviewState.actionKey(from);
+      bucket.added = bucket.added.map(function (entry) {
+        return ReviewState.actionKey(entry.action_text) === fromKey
+          ? Object.assign({}, entry, { action_text: to }) : entry;
+      });
+      delete bucket.removed[ReviewState.actionKey(to)];
+      return changed;
+    }
+    // Re-files a behaviour across every slot using it. Same shape as the rename:
+    // the returned count is what tells the caller whether anything savable moved.
+    function commitActionTaxonomy(prescriptionId, action, taxonomy) {
+      var changed = ReviewState.applyActionTaxonomy(weekSlots(), prescriptionId, action, taxonomy);
+      ReviewState.applyActionTaxonomy(state.selected.nudges || [], prescriptionId, action, taxonomy);
+      retainAction(prescriptionId, action, taxonomy);
+      return changed;
+    }
+    // Removing the last nudge for a behaviour must not remove the behaviour. The
+    // bucket holds the whole triple so an unsaved addition keeps the pillar and
+    // category the clinician chose for it, not the prescription's defaults.
+    function retainAction(prescriptionId, action, taxonomy) {
+      var value = String(action || "").trim();
+      if (!value) return;
+      var bucket = actionBucket(prescriptionId);
+      var key = ReviewState.actionKey(value);
+      delete bucket.removed[key];
+      var entry = bucket.added.filter(function (other) { return ReviewState.actionKey(other.action_text) === key; })[0];
+      if (!entry) { entry = { action_text: value }; bucket.added.push(entry); }
+      if (taxonomy && taxonomy.pillar) entry.pillar = taxonomy.pillar;
+      if (taxonomy && taxonomy.category) entry.category = taxonomy.category;
+    }
+    function renderTrace() {
+      var root = el("traceRoot"); root.innerHTML = "";
+      var rxs = state.selected.prescriptions || [];
+      var archived = state.selected.archived_prescriptions || [];
+      if (!rxs.length && !archived.length) {
+        var none = document.createElement("p"); none.className = "empty";
+        none.textContent = "No parsed prescriptions for this patient.";
+        root.appendChild(none);
+      }
+      rxs.forEach(function (rx) {
+        var b = document.createElement("div"); b.className = "tblock";
+        // Doctor said → what the LLM parsed → the behaviours the clinician owns.
+        // There is no separate taxonomy step: pillar and category belong to each
+        // behaviour, so they are edited on its own row rather than once for the
+        // whole prescription. A doctor's note may legitimately span pillars.
+        b.innerHTML =
+          '<div class="tstep"><div class="k">Doctor said</div><div class="v rawtext">' + esc(rx.prescription_raw_text || "—") + '</div></div>' +
+          '<div class="tstep"><div class="k">LLM parsed</div><div class="v">' +
+            '<span class="chip">' + esc(rx.frequency_per_week) + '×/week</span>' +
+            '<span class="chip">' + esc(rx.duration_weeks) + ' week(s)</span>' +
+            scheduledChip(rx) + '</div></div>';
+        // <header>, not <div>: .tstep:first-of-type is per element type, so a
+        // leading div would give "Doctor said" a stray top border.
+        b.insertBefore(buildPrescriptionHeader(rx, false), b.firstChild);
+        b.appendChild(buildActionStep(rx));
+        root.appendChild(b);
+      });
+      archived.forEach(function (rx) {
+        var b = document.createElement("div"); b.className = "tblock archived";
+        // An archived prescription keeps its own pillar and category on show: its
+        // source rows are withheld from the portal, so there are no behaviours left
+        // to derive, and the prescription's defaults are the only honest record.
+        b.innerHTML =
+          '<div class="tstep"><div class="k">Doctor said</div><div class="v rawtext">' + esc(rx.prescription_raw_text || "—") + '</div></div>' +
+          '<div class="tstep"><div class="k">Last known</div><div class="v">' +
+            '<span class="chip tax">pillar: ' + esc(rx.pillar || "?") + '</span>' +
+            '<span class="chip tax">category: ' + esc(rx.category || "?") + '</span>' +
+            '<span class="chip warn">archived — not sending</span></div></div>';
+        b.insertBefore(buildPrescriptionHeader(rx, true), b.firstChild);
+        root.appendChild(b);
+      });
+      root.appendChild(buildTraceFooter());
+    }
+    // Advisory only: nothing in the pipeline requires the slot count to match
+    // frequency_per_week, but a mismatch is exactly what a reviewer wants to see.
+    function scheduledChip(rx) {
+      var want = Number(rx.frequency_per_week);
+      var have = weekSlots().filter(function (s) { return String(s.prescription_id || "") === String(rx.prescription_id || ""); }).length;
+      if (!have && !Number.isFinite(want)) return "";
+      var off = Number.isFinite(want) && want !== have;
+      return '<span class="chip' + (off ? " warn" : "") + '">' + esc(have) + ' slot(s) scheduled</span>';
+    }
+    function prescriptionsBusy() {
+      // A prescription write re-seeds the week, which discards unsaved slots.
+      // Never trade a clinician's unsaved work for a server write.
+      return state.scheduleDirty || state.scheduleSaving;
+    }
+    // The week can go dirty long after renderTrace ran, so the controls are
+    // re-gated from refreshValidity rather than rebuilt with the card.
+    function refreshPrescriptionControls() {
+      var root = el("traceRoot"); if (!root || !state.selected) return;
+      var busy = prescriptionsBusy();
+      var patientActive = (state.selected.user_status || "active") === "active";
+      var reason = busy ? "Save or discard your schedule edits first." : "Reactivate the patient first.";
+      Array.prototype.forEach.call(root.querySelectorAll(".rxbtns button, .tracefoot button"), function (b) {
+        // Matched by id, not by leading "＋": the weekly editor's ＋ Add nudge
+        // buttons happen to live outside traceRoot, and relying on that is an
+        // accident waiting to be undone by a layout change.
+        var needsActive = b.id === "rxAddBtn" || b.textContent.indexOf("Reactivate") === 0;
+        b.disabled = busy || (needsActive && !patientActive);
+        b.title = b.disabled ? reason : "";
+      });
+      var hint = root.querySelector(".tracefoot .hint");
+      if (hint && hint.id !== "rxStatus") hint.textContent = busy ? "Save or discard your schedule edits before changing prescriptions." : "";
+    }
+    function buildPrescriptionHeader(rx, isArchived) {
+      var head = document.createElement("header"); head.className = "rxhdr";
+      var title = document.createElement("span"); title.className = "rxtitle";
+      // The doctor's own words, not "pillar · category": one prescription may now
+      // carry behaviours in several pillars, so that pair would name only one of
+      // them. The raw text is the one thing true of the whole prescription.
+      title.textContent = shorten(String(rx.prescription_raw_text || "").trim(), 60) || "Prescription";
+      var btns = document.createElement("div"); btns.className = "rxbtns";
+      var busy = prescriptionsBusy();
+      var patientActive = (state.selected.user_status || "active") === "active";
+      var addBtn = function (label, cls, disabled, why, onClick) {
+        var b = document.createElement("button"); b.type = "button"; b.className = cls; b.textContent = label;
+        b.disabled = Boolean(disabled); if (disabled && why) b.title = why;
+        b.addEventListener("click", onClick); btns.appendChild(b); return b;
+      };
+      if (isArchived) {
+        addBtn("Reactivate", "btn small", busy || !patientActive,
+          busy ? "Save or discard your schedule edits first." : "Reactivate the patient first.",
+          function () { reactivatePrescriptionRow(rx); });
+      } else {
+        addBtn("✎ Edit", "btn small", busy, "Save or discard your schedule edits first.",
+          function () { openPrescriptionDialog("edit", rx); });
+        addBtn("Archive", "btn small danger", busy, "Save or discard your schedule edits first.",
+          function () { openArchivePrescription(rx); });
+      }
+      head.appendChild(title); head.appendChild(btns);
+      return head;
+    }
+    function buildTraceFooter() {
+      // Appended unconditionally: the patient with no prescriptions at all is
+      // precisely the one who needs this button.
+      var foot = document.createElement("div"); foot.className = "tracefoot";
+      var busy = prescriptionsBusy();
+      var patientActive = (state.selected.user_status || "active") === "active";
+      var add = document.createElement("button");
+      add.type = "button"; add.id = "rxAddBtn"; add.className = "btn small"; add.textContent = "＋ Add prescription";
+      add.disabled = busy || !patientActive;
+      if (add.disabled) add.title = busy ? "Save or discard your schedule edits first." : "Reactivate the patient first.";
+      add.addEventListener("click", function () { openPrescriptionDialog("create", null); });
+      foot.appendChild(add);
+      if (busy) {
+        var hint = document.createElement("span"); hint.className = "hint";
+        hint.textContent = "Save or discard your schedule edits before changing prescriptions.";
+        foot.appendChild(hint);
+      }
+      var status = document.createElement("span"); status.className = "hint"; status.id = "rxStatus";
+      foot.appendChild(status);
+      return foot;
+    }
+    // "Target behaviour" is the UI name for one behaviour triple: the clinician's
+    // free-text action_text plus its own pillar and category. It is NOT the retired
+    // target_behavior enum, which is never written.
+    function buildActionStep(rx) {
+      var step = document.createElement("div"); step.className = "tstep";
+      var k = document.createElement("div"); k.className = "k"; k.textContent = "Target behaviour";
+      var v = document.createElement("div"); v.className = "v";
+      // Action text is clinician free text and esc() does not escape apostrophes,
+      // so every row below is built with createElement — never innerHTML.
+      var list = document.createElement("div"); list.className = "actionlist";
+      list.setAttribute("data-rx", String(rx.prescription_id || ""));
+      renderActionList(rx.prescription_id, list);
+      v.appendChild(list);
+      step.appendChild(k); step.appendChild(v); return step;
+    }
+    function distinctActions(rx) { return actionTextsFor(rx); }
+    function renderActionList(prescriptionId, container) {
+      container.innerHTML = "";
+      var rx = prescriptionOf(prescriptionId);
+      if (!rx) return;
+      var bucket = actionBucket(prescriptionId);
+      var behaviours = actionsFor(rx);
+      // A draft is a blank behaviour the clinician has just opened; it starts from
+      // the prescription's defaults, which is exactly what those defaults are for.
+      var rows = behaviours.concat(bucket.draft === null ? []
+        : [{ action_text: bucket.draft, pillar: rx.pillar || "", category: rx.category || "", mixed: false }]);
+      if (!rows.length) {
+        var none = document.createElement("div"); none.className = "empty";
+        none.textContent = "No target behaviour yet — add one, or set one on a nudge below.";
+        container.appendChild(none);
+      }
+      rows.forEach(function (behaviour, index) {
+        var action = behaviour.action_text;
+        var isDraft = bucket.draft !== null && index === rows.length - 1;
+        var used = isDraft ? 0 : slotsUsingAction(prescriptionId, action);
+        var original = action;
+
+        var row = document.createElement("div"); row.className = "actionrow";
+        var input = document.createElement("input");
+        input.type = "text"; input.className = "actioninput"; input.value = action;
+        input.maxLength = ACTION_MAX;
+        input.placeholder = "e.g. Walk for 20 minutes after dinner";
+        input.setAttribute("aria-label", "Target behaviour");
+        var err = document.createElement("div"); err.className = "actionerr"; err.hidden = true;
+
+        var use = document.createElement("span"); use.className = "actionuse";
+        // A behaviour with no slot is not persisted anywhere, so say so rather
+        // than reporting a reassuring "used by 0".
+        use.textContent = used ? "used by " + used : "not scheduled";
+        if (!used) use.title = "Attach it to a nudge below — an unscheduled behaviour is not saved.";
+
+        var del = document.createElement("button");
+        del.type = "button"; del.className = "actiondel"; del.textContent = "✕";
+        del.disabled = used > 0;
+        del.title = used > 0 ? "Used by " + used + " scheduled nudge(s) — remove them first" : "Remove this target behaviour";
+
+        // Pillar and category belong to this behaviour, not to the prescription.
+        // Re-filing one rewrites every slot that uses it, in the same commit shape
+        // as the rename below: only a change that reached a slot is savable.
+        var tax = document.createElement("div"); tax.className = "actiontax";
+        var pillarSel = document.createElement("select");
+        pillarSel.setAttribute("aria-label", "Pillar");
+        fillSelect(pillarSel, TAX.pillars);
+        pillarSel.value = behaviour.pillar || rx.pillar || TAX.pillars[0];
+        var catSel = document.createElement("select");
+        catSel.setAttribute("aria-label", "Behaviour category");
+        fillSelect(catSel, TAX.categories);
+        catSel.value = behaviour.category || rx.category || TAX.categories[0];
+        var pLabel = document.createElement("label"); pLabel.textContent = "Pillar";
+        var cLabel = document.createElement("label"); cLabel.textContent = "Category";
+        tax.appendChild(pLabel); tax.appendChild(pillarSel);
+        tax.appendChild(cLabel); tax.appendChild(catSel);
+        if (behaviour.mixed) {
+          var warn = document.createElement("span"); warn.className = "chip warn";
+          warn.textContent = "mixed — saving will normalise";
+          tax.appendChild(warn);
+        }
+        var onTaxChange = function () {
+          // Read the field, not the closure: a rename may already have moved this
+          // row on from the wording it was rendered with.
+          var current = input.value.trim();
+          if (!current) return;
+          var changed = commitActionTaxonomy(prescriptionId, current,
+            { pillar: pillarSel.value, category: catSel.value });
+          actionListLock = container;
+          try {
+            if (changed > 0) { renderWeek(); markScheduleDirty(); }
+            else { refreshValidity(); }
+          } finally { actionListLock = null; }
+        };
+        pillarSel.addEventListener("change", onTaxChange);
+        catSel.addEventListener("change", onTaxChange);
+
+        // Typing only revalidates. Committing on change must not rebuild this
+        // container: a mousedown on a neighbouring button blurs this input, and a
+        // rebuild would destroy that button before its click fires.
+        input.addEventListener("input", function () {
+          input.className = "actioninput" + (input.value.trim() ? "" : " bad");
+          err.hidden = true;
+        });
+        input.addEventListener("keydown", function (e) {
+          if (e.key === "Enter") { e.preventDefault(); input.blur(); }
+          else if (e.key === "Escape") { e.preventDefault(); input.value = original; input.blur(); }
+        });
+        input.addEventListener("change", function () {
+          var value = input.value.trim();
+          // Every branch below settles the row in place. A structural rebuild here
+          // would run during the blur that a neighbouring mousedown caused, and
+          // would delete that neighbour before its click could fire.
+          if (isDraft && !value) {
+            bucket.draft = null; isDraft = false;
+            row.hidden = true; err.hidden = true; releaseDraft(container);
+            return;
+          }
+          var check = ReviewState.validateActionEdit({
+            value: input.value, current: original, actions: actionTextsFor(rx), max: ACTION_MAX
+          });
+          if (!check.ok) {
+            err.textContent = check.error; err.hidden = false;
+            input.className = "actioninput bad";
+            return;
+          }
+          input.value = check.value; input.className = "actioninput"; err.hidden = true;
+          if (isDraft) {
+            bucket.draft = null; isDraft = false;
+            original = check.value;
+            // The draft's selects are already showing the prescription defaults;
+            // capture them so the new behaviour keeps them rather than re-deriving.
+            retainAction(prescriptionId, check.value, { pillar: pillarSel.value, category: catSel.value });
+            releaseDraft(container);
+            updateActionCounts(container);
+            refreshCustomActions();
+            return;
+          }
+          if (ReviewState.actionKey(check.value) === ReviewState.actionKey(original)) return;
+          var changed = commitActionRename(prescriptionId, original, check.value);
+          original = check.value;
+          // Only a rename that reached a slot is savable. Marking the schedule
+          // dirty otherwise would enable Approve and report a false success.
+          actionListLock = container;
+          try {
+            if (changed > 0) { renderWeek(); markScheduleDirty(); }
+            else { refreshActionLists(); refreshValidity(); }
+          } finally { actionListLock = null; }
+          refreshCustomActions();
+        });
+        del.addEventListener("click", function () {
+          // Read the field, not the closure: a rename or a settled draft has
+          // already moved this row on from the value it was rendered with.
+          var current = ReviewState.actionKey(input.value);
+          if (isDraft) { bucket.draft = null; }
+          else if (current) {
+            bucket.removed[current] = 1;
+            bucket.added = bucket.added.filter(function (other) {
+              return ReviewState.actionKey(other.action_text) !== current;
+            });
+          }
+          // Safe to rebuild here: this click handler is already running, so
+          // removing its own button cannot cancel it.
+          renderActionList(prescriptionId, container);
+          refreshCustomActions();
+          refreshValidity();
+        });
+
+        row.appendChild(input); row.appendChild(use); row.appendChild(del); row.appendChild(tax);
+        container.appendChild(row); container.appendChild(err);
+      });
+
+      var add = document.createElement("button");
+      add.type = "button"; add.className = "actionadd"; add.textContent = "＋ Add target behaviour";
+      add.disabled = bucket.draft !== null;
+      add.addEventListener("click", function () {
+        bucket.draft = "";
+        renderActionList(prescriptionId, container);
+        var fields = container.querySelectorAll(".actioninput");
+        if (fields.length) fields[fields.length - 1].focus();
+      });
+      container.appendChild(add);
+
+      var note = document.createElement("div"); note.className = "actionnote";
+      note.textContent = "Pillar and category belong to the behaviour — re-file one and every nudge using it follows. " +
+        "A behaviour is saved once a scheduled nudge uses it.";
+      container.appendChild(note);
+    }
+    // Refill the lists in place after the week changes, rather than re-running
+    // renderTrace and tearing down the whole card on every slot edit.
+    function refreshActionLists() {
+      var lists = el("traceRoot").querySelectorAll(".actionlist");
+      Array.prototype.forEach.call(lists, function (list) {
+        // Two containers must never be torn down mid-interaction: the one being
+        // typed into, and the one whose change handler triggered this refresh —
+        // rebuilding the latter destroys the button the clinician is clicking
+        // before its click event fires, costing every neighbour a second click.
+        if (list === actionListLock || list.contains(document.activeElement)) {
+          updateActionCounts(list);
+          return;
+        }
+        renderActionList(list.getAttribute("data-rx"), list);
+      });
+    }
+    // Re-arm "＋ Add target behaviour" once the pending draft row has settled.
+    function releaseDraft(container) {
+      var add = container.querySelector(".actionadd");
+      if (add) add.disabled = false;
+    }
+    // Usage counters and the delete guard, refreshed without touching the DOM shape.
+    function updateActionCounts(list) {
+      var prescriptionId = list.getAttribute("data-rx");
+      Array.prototype.forEach.call(list.querySelectorAll(".actionrow"), function (row) {
+        var input = row.querySelector(".actioninput");
+        var use = row.querySelector(".actionuse");
+        var del = row.querySelector(".actiondel");
+        if (!input || !use || !del) return;
+        var value = input.value.trim();
+        if (!value) return;
+        var used = slotsUsingAction(prescriptionId, value);
+        use.textContent = used ? "used by " + used : "not scheduled";
+        use.title = used ? "" : "Attach it to a nudge below — an unscheduled behaviour is not saved.";
+        del.disabled = used > 0;
+        del.title = used > 0 ? "Used by " + used + " scheduled nudge(s) — remove them first" : "Remove this target behaviour";
+      });
+    }
+    // ---- Weekly editor: multiple slots per day (reuse LLM nudges) ----------
+    function slotFromNudge(n, ordinal) {
+      var t0 = TAX.tones.includes(n.tone_variant) ? n.tone_variant : "encouraging";
+      var action = actionOf(n);
+      // Every wording the model wrote for this behaviour becomes an option, with
+      // a doctor-custom last. Derived rather than stored: only message_body and
+      // message_body_alt survive a save, so the saved body is matched back into
+      // the regenerated list here — an edited one lands in the custom option.
+      var built = ReviewState.buildMessageOptions({
+        sources: sourceBodiesFor(n.prescription_id),
+        prescriptionId: n.prescription_id,
+        actionText: action,
+        currentText: n.message_body || "",
+        customTone: t0, preferredTone: t0,
+        ordinal: ordinal || 0
+      });
+      var rx = prescriptionOf(n.prescription_id);
+      // The row's own taxonomy wins; the prescription only fills a blank. Inverting
+      // this would overwrite each slot's pillar with its prescription's on every
+      // reload and persist that on the next save, silently collapsing a
+      // multi-pillar prescription back to one. Shared with collectActions so the
+      // precedence cannot drift between the trace card and the schedule.
+      var tax = ReviewState.behaviourTaxonomy(n, rx);
+      return {
+        schedule_slot_id: n.schedule_slot_id || "",
+        source_nudge_id: n.source_nudge_id || n.nudge_id || "", prescription_id: n.prescription_id || "",
+        pillar: tax.pillar, category: tax.category,
+        action_text: action, nudge_type: n.nudge_type || TAX.nudge_types[0],
+        template_name: n.template_name || "health_plan_reminder",
+        time: TIME_RE.test(n.scheduled_time || "") ? n.scheduled_time : preferredTime(),
+        // Survives save → reload → edit: the saved slot carries both fields, so
+        // reseeding from weekly_schedule restores exactly what was approved.
+        followup_enabled: ReviewState.isFollowupEnabled(n.followup_enabled),
+        followup_delay_hours: String(n.followup_delay_hours == null ? "" : n.followup_delay_hours).trim(),
+        // Frozen at creation. Re-deriving on every render would silently discard
+        // whatever the doctor typed into the custom option.
+        options: built.options, selected: built.selected, expanded: false
+      };
+    }
+    function activeOpt(slot) {
+      return slot.options[slot.selected] || { tone: "", text: "", origin: "", alt: "", label: "", generated: false };
+    }
+    function blankWeek() { var w = {}; DAYS.forEach(function (d) { w[d] = []; }); return w; }
+    function newSlotId(sourceId) {
+      var token = ReviewState.sourceToken(sourceId) || "source";
+      var random = window.crypto && window.crypto.randomUUID ? window.crypto.randomUUID().replace(/-/g, "") :
+        Date.now().toString(36) + Math.random().toString(36).slice(2);
+      return "slot_" + token.slice(-24) + "_" + random.slice(-20);
+    }
+    function isApprovedPatient(patient) {
+      return Boolean(patient && (patient.has_canonical_schedule || (patient.nudges || []).some(function (n) { return n.status === "approved"; })));
+    }
+    function markScheduleDirty() {
+      state.scheduleDirty = true;
+      refreshValidity();
+    }
+    function seedWeekFromNudges() {
+      var w = blankWeek();
+      var canonical = state.selected.has_canonical_schedule ? (state.selected.weekly_schedule || []) : [];
+      var legacy = state.selected.legacy_schedule || [];
+      var source = canonical.length ? canonical : (legacy.length ? legacy : (state.selected.nudges || []));
+      var ordered = source.slice().sort(function (a, b) {
+        return ((a.scheduled_date || "") + "T" + (a.scheduled_time || "")).localeCompare((b.scheduled_date || "") + "T" + (b.scheduled_time || ""));
+      });
+      ordered.forEach(function (n, ordinal) {
+        var day = DAYS.includes(n.day) ? n.day : "";
+        if (!day) {
+          if (!DATE_RE.test(n.scheduled_date || "")) return;
+          var dt = new Date(n.scheduled_date + "T00:00:00"); if (isNaN(dt)) return;
+          day = JS_TO_DAY[dt.getDay()];
+        }
+        var slot = slotFromNudge(n, ordinal);
+        slot.schedule_slot_id = slot.schedule_slot_id || "slot_" + (ReviewState.sourceToken(slot.source_nudge_id) || "source") + "_" + day + "_" + ordinal;
+        w[day].push(slot);
+      });
+      state.week = w;
+      // The target-behaviour buffer only ever describes the week it was edited
+      // against. Every caller of this function (patient switch, "reset from
+      // saved schedule", post-save rehydrate) means "discard my edits".
+      state.actions = {};
+      state.scheduleDirty = false;
+    }
+
+    // ---- Slot behaviour picker -------------------------------------------
+    // The action is derived from the prescription's curated behaviour list, never
+    // retyped here: that is what stops the same behaviour existing under three
+    // spellings, and it is what lets the slot inherit a pillar and category the
+    // clinician set once. Picking a behaviour adopts its whole triple.
+    function buildActionPicker(slot) {
+      var sel = document.createElement("select");
+      sel.setAttribute("aria-label", "Target behaviour");
+      var rx = prescriptionOf(slot.prescription_id);
+      var behaviours = actionsFor(rx);
+      var stored = String(slot.action_text || "").trim();
+      var known = ReviewState.findBehaviour(behaviours, stored);
+      if (!behaviours.length && !stored) {
+        sel.appendChild(new Option("No target behaviour on this prescription", ""));
+      } else if (!stored) {
+        sel.appendChild(new Option("Choose a target behaviour…", ""));
+      }
+      // A stored action the list does not contain is pinned verbatim and preselected.
+      // Without it the <select> would snap to its first option and silently change
+      // what this slot sends — a legacy slot must survive being merely looked at.
+      if (stored && !known) sel.appendChild(new Option(stored + " — not in this prescription", stored));
+      behaviours.forEach(function (b) { sel.appendChild(new Option(b.action_text, b.action_text)); });
+      sel.value = stored;
+      sel.className = "actionpick" + (stored ? "" : " bad");
+      sel.addEventListener("change", function () {
+        slot.action_text = sel.value;
+        var picked = ReviewState.findBehaviour(actionsFor(rx), sel.value);
+        if (picked) {
+          if (picked.pillar) slot.pillar = picked.pillar;
+          if (picked.category) slot.category = picked.category;
+        }
+        renderWeek(); markScheduleDirty();
+      });
+      return sel;
+    }
+
+    // ---- Outcome follow-up control (two-stage feedback) -------------------
+    // Off, the nudge keeps the single Done/In progress/Not yet prompt. On, the
+    // initial message asks "Will you do this?" and a Yes arms exactly one delayed
+    // "Were you able to complete it?" this many hours after delivery. The delay is
+    // therefore only meaningful while the switch is on, and is required there.
+    function followupControls(slot) {
+      var wrap = document.createElement("div"); wrap.className = "fu";
+      var actionable = ReviewState.isActionableNudgeType(slot.nudge_type);
+      var enabled = slot.followup_enabled === true && actionable;
+
+      var top = document.createElement("div"); top.className = "futop";
+      var sw = document.createElement("label"); sw.className = "fuswitch" + (enabled ? "" : " off");
+      var box = document.createElement("input"); box.type = "checkbox"; box.checked = enabled;
+      box.disabled = !actionable;
+      var swText = document.createElement("span"); swText.textContent = "Send outcome follow-up";
+      sw.appendChild(box); sw.appendChild(swText);
+      top.appendChild(sw);
+      wrap.appendChild(top);
+
+      var err = document.createElement("div"); err.className = "fuerr hidden";
+      var note = document.createElement("div"); note.className = "funote";
+
+      if (!actionable) {
+        note.textContent = "Only a reminder or challenge can ask for a commitment — " +
+          pretty(slot.nudge_type) + " messages are informational.";
+        wrap.appendChild(note);
+        return wrap;
+      }
+
+      var row = document.createElement("div"); row.className = "furow hidden";
+      var rlabel = document.createElement("label"); rlabel.textContent = "Ask after";
+      var preset = document.createElement("select"); preset.className = "fudelay";
+      ReviewState.FOLLOWUP_PRESET_HOURS.forEach(function (h) {
+        preset.appendChild(new Option(h + (h === 1 ? " hour" : " hours"), String(h)));
+      });
+      preset.appendChild(new Option("Custom…", "custom"));
+      var custom = document.createElement("input"); custom.type = "number"; custom.className = "fucustom hidden";
+      custom.min = ReviewState.FOLLOWUP_MIN_HOURS; custom.max = ReviewState.FOLLOWUP_MAX_HOURS; custom.step = 1;
+      custom.placeholder = "hrs";
+      row.appendChild(rlabel); row.appendChild(preset); row.appendChild(custom);
+      wrap.appendChild(row); wrap.appendChild(err); wrap.appendChild(note);
+
+      // A value the presets cannot express (say 5) must still round-trip, so the
+      // custom field opens itself when the stored delay is not a preset.
+      var stored = String(slot.followup_delay_hours || "");
+      var isPreset = ReviewState.FOLLOWUP_PRESET_HOURS.indexOf(Number(stored)) >= 0;
+      preset.value = stored && isPreset ? stored : (stored ? "custom" : "4");
+      custom.value = stored && !isPreset ? stored : "";
+
+      function currentHours() {
+        return preset.value === "custom" ? custom.value : preset.value;
+      }
+      function sync(rerender) {
+        var on = box.checked;
+        slot.followup_enabled = on;
+        slot.followup_delay_hours = on ? String(currentHours() || "").trim() : "";
+        sw.className = "fuswitch" + (on ? "" : " off");
+        row.classList.toggle("hidden", !on);
+        custom.classList.toggle("hidden", preset.value !== "custom");
+        var check = ReviewState.validateFollowup({
+          enabled: on, hours: slot.followup_delay_hours, nudgeType: slot.nudge_type
+        });
+        err.classList.toggle("hidden", !check.error);
+        err.textContent = check.error;
+        preset.className = "fudelay" + (check.error && preset.value !== "custom" ? " bad" : "");
+        custom.className = "fucustom" + (preset.value === "custom" ? "" : " hidden") + (check.error && preset.value === "custom" ? " bad" : "");
+        note.textContent = on
+          ? "Asks “Will you do this?” first. A Yes schedules one check " + (slot.followup_delay_hours || "—") +
+            " hour(s) after the message is delivered. No reply is recorded as no feedback, never as “not yet”."
+          : "Keeps the single Done / In progress / Not yet prompt.";
+        state.scheduleDirty = true;
+        if (rerender) renderWeek();
+        refreshValidity();
+      }
+
+      box.addEventListener("change", function () { sync(false); markScheduleDirty(); });
+      preset.addEventListener("change", function () { sync(false); markScheduleDirty(); });
+      custom.addEventListener("input", function () { sync(false); });
+      custom.addEventListener("change", function () { sync(false); markScheduleDirty(); });
+      // Paint the initial state without marking the week dirty.
+      var wasDirty = state.scheduleDirty;
+      sync(false);
+      state.scheduleDirty = wasDirty;
+      return wrap;
+    }
+
+    function renderWeek() {
+      var root = el("weekEditor"); root.innerHTML = "";
+      DAYS.forEach(function (day) {
+        var slots = state.week[day];
+        var wd = document.createElement("div"); wd.className = "wday" + (slots.length ? " has" : "");
+
+        var hdr = document.createElement("div"); hdr.className = "dhdr";
+        hdr.innerHTML = '<span class="dname">' + DAY_LABEL[day] + '</span><span class="dcount">' + slots.length + ' nudge(s)</span>';
+        wd.appendChild(hdr);
+
+        var list = document.createElement("div"); list.className = "slotlist";
+        if (!slots.length) { var e = document.createElement("div"); e.className = "empty"; e.textContent = "No nudges this day."; list.appendChild(e); }
+        slots.forEach(function (slot, si) {
+          var act = activeOpt(slot);
+          var wrap = document.createElement("div"); wrap.className = "slot" + (slot.expanded ? " open" : "");
+
+          var head = document.createElement("div"); head.className = "slothead";
+          var lbl = document.createElement("button"); lbl.type = "button"; lbl.className = "lbl";
+          var headLabel = String(slot.action_text || "").trim() || pretty(slot.pillar) || "nudge";
+          // Derived from the selected option rather than a slot flag, so it stays
+          // accurate after a reload — the old slot.source was never persisted.
+          var customBadge = act.generated === false ? '<span class="cbadge">custom</span>' : "";
+          // Visible while collapsed so a two-stage nudge is obvious when scanning
+          // the week, not only once the slot is expanded.
+          var fuBadge = ReviewState.validateFollowup({ enabled: slot.followup_enabled, hours: slot.followup_delay_hours, nudgeType: slot.nudge_type }).enabled
+            ? '<span class="cbadge">+' + esc(String(slot.followup_delay_hours || "?")) + 'h check</span>' : "";
+          lbl.innerHTML = '<div class="b">' + esc(headLabel + " · " + slot.nudge_type) + customBadge + fuBadge + ' <span class="tw">' + (slot.expanded ? "▲ edit" : "▾ edit") + '</span></div>' +
+                          '<div class="m">' + esc(pretty(act.tone) + " · " + (act.text ? act.text.slice(0, 60) : "(empty — edit)")) + '</div>';
+          lbl.addEventListener("click", function () { slot.expanded = !slot.expanded; renderWeek(); });
+          var time = document.createElement("input"); time.type = "time"; time.value = slot.time;
+          if (!TIME_RE.test(slot.time || "")) time.className = "bad";
+          time.addEventListener("change", function () { slot.time = time.value; time.className = TIME_RE.test(slot.time || "") ? "" : "bad"; markScheduleDirty(); });
+          var rm = document.createElement("button"); rm.className = "rm"; rm.type = "button"; rm.textContent = "✕"; rm.title = "Remove";
+          // Keep the behaviour in the curated list: deleting the last nudge that
+          // uses it is not the same as retiring the behaviour itself.
+          rm.addEventListener("click", function () {
+            retainAction(slot.prescription_id, slot.action_text);
+            slots.splice(si, 1); renderWeek(); markScheduleDirty();
+          });
+          head.appendChild(lbl); head.appendChild(time); head.appendChild(rm);
+          wrap.appendChild(head);
+
+          if (slot.expanded) {
+            var body = document.createElement("div"); body.className = "slotbody";
+            // Action first: the execution step this slot commits the patient to.
+            // Pillar and category below it are inherited from the prescription and
+            // are shown read-only so the trace stays legible during review.
+            var af = document.createElement("div"); af.className = "slotfield";
+            var alabel = document.createElement("label"); alabel.textContent = "Action — what the patient does";
+            var apick = buildActionPicker(slot);
+            var atax = document.createElement("div"); atax.className = "slottax";
+            // The slot's own values, with no prescription fallback: slotFromNudge
+            // already resolved that once, and re-falling-back here would hide a
+            // behaviour that genuinely sits in another pillar.
+            atax.innerHTML = '<span class="chip tax">pillar: ' + esc(slot.pillar || "?") + '</span>' +
+              '<span class="chip tax">category: ' + esc(slot.category || "?") + '</span>';
+            var ahint = document.createElement("div"); ahint.className = "slothint";
+            ahint.textContent = "Reword or re-file this behaviour in the trace card above — the change follows every nudge that uses it.";
+            af.appendChild(alabel); af.appendChild(apick); af.appendChild(atax); af.appendChild(ahint);
+            body.appendChild(af);
+            body.appendChild(followupControls(slot));
+            var opts = document.createElement("div"); opts.className = "opts";
+            slot.options.forEach(function (o, oi) {
+              var b = document.createElement("button"); b.type = "button"; b.className = "optpill" + (oi === slot.selected ? " on" : "");
+              b.textContent = "Option " + (oi + 1) + " · " + (o.label || o.tone || "custom");
+              b.addEventListener("click", function () { slot.selected = oi; renderWeek(); markScheduleDirty(); });
+              opts.appendChild(b);
+            });
+            body.appendChild(opts);
+            var ta = document.createElement("textarea"); ta.className = "msgedit" + (act.text && act.text.trim() ? "" : " bad");
+            ta.value = act.text; ta.maxLength = 1024; ta.placeholder = "Message text — the doctor can edit this…";
+            ta.addEventListener("input", function () { act.text = ta.value; state.scheduleDirty = true; refreshValidity(); });
+            ta.addEventListener("change", function () { act.text = ta.value; renderWeek(); markScheduleDirty(); });
+            body.appendChild(ta);
+            var meta = document.createElement("div"); meta.className = "msgmeta";
+            meta.textContent = "Option " + (slot.selected + 1) + " of " + slot.options.length + " · this text is what gets sent · " + (act.text ? act.text.length : 0) + "/1024";
+            body.appendChild(meta);
+            wrap.appendChild(body);
+          }
+          list.appendChild(wrap);
+        });
+        wd.appendChild(list);
+
+        // One way in. The old pair asked the clinician to choose between N
+        // near-identical generated rows or start from scratch; both are now the
+        // same act, and the wording choice moved onto the finished slot.
+        var aw = document.createElement("div"); aw.className = "addwrap";
+        var addBtn = document.createElement("button"); addBtn.type = "button"; addBtn.className = "addnudge";
+        addBtn.textContent = "＋ Add nudge";
+        addBtn.addEventListener("click", function () { openCustomDialog(day); });
+        aw.appendChild(addBtn);
+        wd.appendChild(aw);
+        root.appendChild(wd);
+      });
+      // The curated list is a view over these slots, so it follows every edit.
+      refreshActionLists();
+    }
+
+    // ---- Add-nudge modal (prescription-anchored) -------------------------
+    // The single way to add a nudge. It attaches to a prescription the clinician
+    // chooses explicitly — never to the "closest" match. Pillar and category come
+    // from the target behaviour they pick, not from the prescription; the doctor
+    // sets the behaviour, type, tone, day and time, and either takes one of the
+    // model's wordings or writes their own. Either way the finished slot carries
+    // every generated wording, so the choice made here is never final.
+    function initCustomDialog() {
+      fillSelect(el("cType"), TAX.nudge_types);
+      fillSelect(el("cTone"), TAX.tones);
+      fillSelect(el("cDay"), DAYS, { label: function (d) { return DAY_LABEL[d]; } });
+      el("cPrescription").addEventListener("change", showCustomAnchor);
+      el("cAction").addEventListener("change", function () { showCustomTaxonomy(); refreshMessagePreview(); });
+      el("cTone").addEventListener("change", refreshMessagePreview);
+      el("cMessageMode").addEventListener("change", refreshMessagePreview);
+      el("cCancel").addEventListener("click", function () { el("customDialog").close(); });
+      el("cSave").addEventListener("click", saveAddNudge);
+    }
+    // The server requires the source row to hang off the same prescription, so the
+    // anchor is resolved strictly within it. Preferring a row that shares the
+    // behaviour also sharpens the server's action backfill for legacy sources.
+    function customAnchorFor(prescriptionId, actionText) {
+      var rows = (state.selected.nudges || []).filter(function (n) { return n.prescription_id === prescriptionId; });
+      var key = ReviewState.actionKey(actionText);
+      var matched = key ? rows.filter(function (n) { return ReviewState.actionKey(actionOf(n)) === key; })[0] : null;
+      return matched || rows[0] || null;
+    }
+    // The doctor's words first, then the behaviours under them. A leading
+    // "pillar · category" would name only one of several pillars this prescription
+    // may now carry.
+    function prescriptionOptionLabel(rx) {
+      var parts = [shorten(String(rx.prescription_raw_text || "").trim(), 40) || "Prescription"];
+      var actions = distinctActions(rx);
+      if (actions.length) parts.push(shorten(actions.join(", "), 40));
+      return parts.join(" · ");
+    }
+    function refreshCustomPrescriptions() {
+      var rxs = (state.selected.prescriptions || []).filter(function (r) { return customAnchorFor(r.prescription_id); });
+      fillSelect(el("cPrescription"), rxs, {
+        value: function (r) { return r.prescription_id; }, label: prescriptionOptionLabel,
+        placeholder: rxs.length ? null : "No prescription available"
+      });
+      showCustomAnchor();
+    }
+    // The target-behaviour list is inherited from the chosen prescription; pillar
+    // and category then come from whichever behaviour is selected, which is why
+    // they are shown as a consequence of #cAction rather than of #cPrescription.
+    // The behaviour is picked, never retyped, so one prescription cannot
+    // accumulate near-identical spellings of one action.
+    function showCustomAnchor() {
+      refreshCustomActions();
+      refreshMessagePreview();
+    }
+    // The behaviour's own taxonomy, falling back to the prescription's defaults
+    // only when no behaviour is selected yet.
+    function showCustomTaxonomy() {
+      var rx = prescriptionOf(el("cPrescription").value);
+      var picked = rx ? ReviewState.findBehaviour(actionsFor(rx), el("cAction").value) : null;
+      var tax = ReviewState.behaviourTaxonomy(picked || {}, rx || {});
+      el("cPillarLocked").textContent = pretty(tax.pillar) || "—";
+      el("cCategoryLocked").textContent = pretty(tax.category) || "—";
+    }
+    function refreshCustomActions() {
+      var dialog = el("customDialog");
+      if (!dialog || !dialog.open || !state.selected) return;
+      var rx = prescriptionOf(el("cPrescription").value);
+      var actions = rx ? actionTextsFor(rx) : [];
+      var chosen = el("cAction").value;
+      // pretty() would capitalise and de-underscore the clinician's own wording,
+      // so both label and value pass the text through untouched.
+      fillSelect(el("cAction"), actions, {
+        label: function (a) { return a; }, value: function (a) { return a; },
+        placeholder: actions.length ? null : "No target behaviour yet — add one in the trace above"
+      });
+      if (actions.indexOf(chosen) >= 0) el("cAction").value = chosen;
+      showCustomTaxonomy();
+    }
+    // What the model already wrote for the currently chosen prescription and
+    // behaviour. Shown read-only because the clinician can flip between every
+    // wording once the nudge exists — picking here is only the starting point.
+    function currentDialogOptions() {
+      var prescriptionId = el("cPrescription").value;
+      return ReviewState.buildMessageOptions({
+        sources: sourceBodiesFor(prescriptionId),
+        prescriptionId: prescriptionId,
+        actionText: el("cAction").value,
+        currentText: "",
+        customTone: el("cTone").value, preferredTone: el("cTone").value,
+        ordinal: nextOrdinalFor(prescriptionId, el("cAction").value)
+      });
+    }
+    function refreshMessagePreview() {
+      var dialog = el("customDialog");
+      // Same guard as refreshCustomActions: background week renders must never
+      // reach into a closed dialog.
+      if (!dialog || !dialog.open || !state.selected) return;
+      var built = currentDialogOptions();
+      var generated = built.generatedCount > 0;
+      var custom = el("cMessageMode").value === "custom";
+      el("cMessagePreview").textContent = generated
+        ? built.options[built.selected].text +
+          (built.generatedCount > 1 ? "\n\n(" + built.generatedCount + " wordings available — flip between them after adding.)" : "")
+        : "This prescription has no generated message.";
+      el("cMessagePreviewField").classList.toggle("hidden", custom);
+      el("cMessageField").classList.toggle("hidden", !custom);
+    }
+    function openCustomDialog(day) {
+      if (!state.selected) return;
+      el("cError").className = "hint err hidden"; el("cError").textContent = "";
+      // Open before populating: refreshCustomActions() deliberately ignores a
+      // closed dialog so background week renders never touch it.
+      el("customDialog").showModal();
+      refreshCustomPrescriptions();
+      // Prefill hard: the old dropdown was two clicks, so a form that had to be
+      // filled field by field would be a regression. The anchor's own type and
+      // tone are a better default than the first enum member.
+      var anchor = customAnchorFor(el("cPrescription").value, el("cAction").value);
+      el("cType").value = anchor && TAX.nudge_types.indexOf(anchor.nudge_type) >= 0 ? anchor.nudge_type : TAX.nudge_types[0];
+      el("cTone").value = anchor && TAX.tones.indexOf(anchor.tone_variant) >= 0 ? anchor.tone_variant : TAX.tones[0];
+      el("cDay").value = DAYS.indexOf(day) >= 0 ? day : "monday";
+      el("cTime").value = preferredTime();
+      el("cMessage").value = "";
+      el("cMessageMode").value = currentDialogOptions().generatedCount > 0 ? "generated" : "custom";
+      refreshMessagePreview();
+    }
+    function saveAddNudge() {
+      if (!state.selected) return;
+      var prescriptionId = el("cPrescription").value, action = el("cAction").value.trim(),
+          type = el("cType").value, tone = el("cTone").value, day = el("cDay").value,
+          time = el("cTime").value, mode = el("cMessageMode").value,
+          message = el("cMessage").value.trim();
+      var rx = prescriptionOf(prescriptionId);
+      var anchor = rx ? customAnchorFor(prescriptionId, action) : null;
+      var generatedCount = rx ? currentDialogOptions().generatedCount : 0;
+      var err = "";
+      if (!rx) err = "Choose which prescription this nudge belongs to.";
+      else if (!anchor) err = "This prescription has no parsed nudge to attach a nudge to.";
+      else if (!action) err = "Choose a target behaviour, or add one in the trace card above.";
+      else if (action.length > ACTION_MAX) err = "Keep the action to " + ACTION_MAX + " characters or fewer.";
+      else if (TAX.nudge_types.indexOf(type) < 0) err = "Choose a nudge type.";
+      else if (TAX.tones.indexOf(tone) < 0) err = "Choose a tone.";
+      else if (DAYS.indexOf(day) < 0) err = "Choose a day.";
+      else if (!TIME_RE.test(time)) err = "Enter a valid time (HH:MM).";
+      else if (mode === "generated" && !generatedCount) err = "This prescription has no generated message — choose “Write my own”.";
+      else if (mode === "custom" && !message) err = "Enter the message text.";
+      else if (mode === "custom" && message.length > 1024) err = "Keep the message to 1024 characters or fewer.";
+      if (err) { el("cError").className = "hint err"; el("cError").textContent = err; return; }
+
+      // Routed through slotFromNudge so there is exactly one slot constructor.
+      // A typed message arrives as currentText and lands pre-filled in the custom
+      // option; leaving it blank lets the rotation pick a generated wording. Both
+      // paths end up with the full option list attached.
+      // The behaviour's own pillar and category ride on the seed, so slotFromNudge
+      // reads them off the row rather than falling back to the prescription — a
+      // nutrition behaviour under a physical_activity prescription stays nutrition.
+      var behaviour = ReviewState.findBehaviour(actionsFor(rx), action) || {};
+      var seed = {
+        source_nudge_id: anchor.source_nudge_id || anchor.nudge_id,
+        prescription_id: prescriptionId, action_text: action, nudge_type: type,
+        pillar: behaviour.pillar || "", category: behaviour.category || "",
+        tone_variant: tone, scheduled_time: time,
+        message_body: mode === "custom" ? message : "",
+        template_name: "health_plan_reminder",
+        // Starts single-stage like every other new slot; the doctor turns the
+        // follow-up on by expanding it, so the choice is always deliberate.
+        followup_enabled: false, followup_delay_hours: ""
+      };
+      var slot = slotFromNudge(seed, nextOrdinalFor(prescriptionId, action));
+      slot.schedule_slot_id = newSlotId(seed.source_nudge_id);
+      state.week[day].push(slot);
+      el("customDialog").close();
+      renderWeek(); markScheduleDirty();
+    }
+
+    // ---- Prescription CRUD (human-in-the-loop override of the LLM parse) --
+    // Workflow A's parse is a draft. When it reads the wrong pillar, invents a
+    // category or mis-counts the frequency, the clinician corrects it here rather
+    // than in the spreadsheet. Creating also writes the first nudge, because a
+    // prescription with no source row can never be scheduled.
+    var rxDialogMode = "create";
+    var rxDialogTarget = null;
+    var rxArchiveTarget = null;
+    var rxSaving = false;
+
+    function initPrescriptionDialog() {
+      fillSelect(el("rxPillar"), TAX.pillars);
+      fillSelect(el("rxCategory"), TAX.categories);
+      fillSelect(el("rxType"), TAX.nudge_types);
+      fillSelect(el("rxTone"), TAX.tones);
+      el("rxCancel").addEventListener("click", function () { el("rxDialog").close(); });
+      el("rxSave").addEventListener("click", savePrescriptionDraft);
+      el("rxCancelArchive").addEventListener("click", function () { el("rxArchiveDialog").close(); });
+      el("rxConfirmArchive").addEventListener("click", confirmArchivePrescription);
+    }
+    function clearPrescriptionErrors() {
+      el("rxError").className = "hint err hidden"; el("rxError").textContent = "";
+      Array.prototype.forEach.call(el("rxDialog").querySelectorAll(".rxfielderr"), function (node) {
+        node.className = "rxfielderr hidden"; node.textContent = "";
+      });
+      Array.prototype.forEach.call(el("rxDialog").querySelectorAll(".bad"), function (node) {
+        node.classList.remove("bad");
+      });
+    }
+    function showPrescriptionErrors(errors) {
+      Object.keys(errors).forEach(function (field) {
+        var node = el("rxDialog").querySelector('[data-err="' + field + '"]');
+        if (!node) return;
+        node.className = "rxfielderr"; node.textContent = errors[field];
+        var control = node.parentNode.querySelector("input, select, textarea");
+        if (control) control.classList.add("bad");
+      });
+    }
+    function setCreateOnlyVisible(visible) {
+      ["rxFirstNudgeGroup", "rxActionField", "rxTypeField", "rxToneField", "rxMessageField"].forEach(function (id) {
+        el(id).classList.toggle("hidden", !visible);
+      });
+    }
+    function openPrescriptionDialog(mode, rx) {
+      if (!state.selected || prescriptionsBusy()) return;
+      rxDialogMode = mode; rxDialogTarget = rx || null;
+      clearPrescriptionErrors();
+      el("rxDialog").showModal();
+      var creating = mode === "create";
+      el("rxTitle").textContent = creating ? "Add prescription" : "Edit prescription";
+      el("rxSub").textContent = creating
+        ? "Record a prescription the AI never saw. Its first nudge is created with it, so it can be scheduled straight away."
+        : "Correct what the AI read. Pillar and category here are only the defaults a new target behaviour starts from — changing them leaves the behaviours already scheduled exactly where they are.";
+      el("rxSave").textContent = creating ? "Create prescription" : "Save changes";
+      setCreateOnlyVisible(creating);
+      el("rxRaw").value = creating ? "" : (rx.prescription_raw_text || "");
+      el("rxPillar").value = creating ? TAX.pillars[0] : (rx.pillar || TAX.pillars[0]);
+      el("rxCategory").value = creating ? TAX.categories[0] : (rx.category || TAX.categories[0]);
+      el("rxFrequency").value = creating ? 3 : (rx.frequency_per_week || 3);
+      el("rxDuration").value = creating ? 4 : (rx.duration_weeks || 4);
+      el("rxIssued").value = creating ? todayISO() : (rx.issued_date || todayISO());
+      if (creating) {
+        el("rxAction").value = ""; el("rxMessage").value = "";
+        el("rxType").selectedIndex = 0; el("rxTone").selectedIndex = 0;
+      }
+    }
+    function prescriptionDraft() {
+      var creating = rxDialogMode === "create";
+      return ReviewState.validatePrescriptionDraft({
+        creating: creating, today: todayISO(), actionMax: ACTION_MAX,
+        pillars: TAX.pillars, categories: TAX.categories, nudgeTypes: TAX.nudge_types, tones: TAX.tones,
+        pillar: el("rxPillar").value,
+        category: el("rxCategory").value,
+        frequency_per_week: el("rxFrequency").value,
+        duration_weeks: el("rxDuration").value,
+        issued_date: el("rxIssued").value,
+        prescription_raw_text: el("rxRaw").value,
+        action_text: creating ? el("rxAction").value : "",
+        nudge_type: creating ? el("rxType").value : "",
+        tone_variant: creating ? el("rxTone").value : "",
+        message_body: creating ? el("rxMessage").value : ""
+      });
+    }
+    function savePrescriptionDraft() {
+      if (!state.selected || rxSaving) return;
+      clearPrescriptionErrors();
+      var draft = prescriptionDraft();
+      if (!draft.ok) { showPrescriptionErrors(draft.errors); return; }
+      var payload = Object.assign({ user_id: state.selected.user_id }, draft.value);
+      var creating = rxDialogMode === "create";
+      if (!creating) payload.prescription_id = rxDialogTarget.prescription_id;
+      if (creating) payload.scheduled_time = preferredTime();
+      mutatePrescription(creating ? "POST" : "PATCH", payload,
+        creating ? "Prescription created and ready to schedule." : "Prescription updated.");
+    }
+    function openArchivePrescription(rx) {
+      if (prescriptionsBusy()) return;
+      rxArchiveTarget = rx;
+      var slots = weekSlots().filter(function (s) { return String(s.prescription_id || "") === String(rx.prescription_id || ""); }).length;
+      el("rxArchiveDetail").textContent = "Scheduling stops immediately. " + slots +
+        " weekly slot(s) will be deactivated and any unsent future nudges cancelled. Sent history is kept. " +
+        "Reactivating restores the prescription — not its schedule; you will rebuild the week and approve it again.";
+      el("rxArchiveDialog").showModal();
+    }
+    function confirmArchivePrescription() {
+      if (!rxArchiveTarget) return;
+      el("rxArchiveDialog").close();
+      mutatePrescription("DELETE", { user_id: state.selected.user_id, prescription_id: rxArchiveTarget.prescription_id }, "");
+      rxArchiveTarget = null;
+    }
+    function reactivatePrescriptionRow(rx) {
+      if (prescriptionsBusy()) return;
+      mutatePrescription("PATCH", { user_id: state.selected.user_id, prescription_id: rx.prescription_id, status: "active" },
+        "Prescription reactivated — its schedule was not restored. Add nudges to the week and approve.");
+    }
+    function mutatePrescription(requestMethod, payload, successMessage) {
+      rxSaving = true;
+      var status = el("rxStatus"); if (status) { status.className = "hint"; status.textContent = "Saving…"; }
+      Auth.api("/api/prescription", { method: requestMethod, body: JSON.stringify(payload) })
+        .then(function (out) {
+          if (!out || !out.persisted || !out.patient) throw new Error("The change was not confirmed.");
+          var index = state.patients.findIndex(function (p) { return p.user_id === payload.user_id; });
+          if (index < 0) throw new Error("The patient is no longer available in this view.");
+          state.patients[index] = ReviewState.hydratePatient(out.patient);
+          if (el("rxDialog").open) el("rxDialog").close();
+          // selectPatient re-seeds the week, which is what keeps the target-behaviour
+          // buffer and the custom-nudge dropdown from serving an archived plan.
+          selectPatient(index, "traceCard");
+          var message = successMessage;
+          if (requestMethod === "DELETE") {
+            message = "Prescription archived — " + (out.deactivated_slot_count || 0) + " slot(s) deactivated, " +
+              (out.cancelled_future_count || 0) + " unsent nudge(s) cancelled, " +
+              (out.preserved_sent_count || 0) + " sent nudge(s) kept.";
+          }
+          var s = el("rxStatus"); if (s) { s.className = "hint"; s.textContent = message; }
+          el("statusMsg").className = "status ok"; el("statusMsg").textContent = "✓ " + message;
+        })
+        .catch(function (err) {
+          if (el("rxDialog").open) { el("rxError").className = "hint err"; el("rxError").textContent = err.message; }
+          var s = el("rxStatus"); if (s) { s.className = "hint err"; s.textContent = err.message; }
+          el("statusMsg").className = "status err"; el("statusMsg").textContent = "Prescription change failed: " + err.message;
+        })
+        .finally(function () { rxSaving = false; });
+    }
+
+    // ---- Period (start/stop bounds) --------------------------------------
+    // Local-date formatting (avoid toISOString(), which shifts to UTC and can move the date a day).
+    function fmtISO(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+    function todayISO() { return fmtISO(new Date()); }
+    function addDaysISO(iso, n) { var d = new Date(iso + "T00:00:00"); d.setDate(d.getDate() + n); return fmtISO(d); }
+    function initPeriod() {
+      var dates = (state.selected.nudges || []).map(function (n) { return n.scheduled_date; }).filter(function (d) { return DATE_RE.test(d || ""); }).sort();
+      var savedStart = state.selected.schedule_start_date;
+      var savedEnd = state.selected.schedule_end_date;
+      var start = DATE_RE.test(savedStart || "") ? savedStart : (dates[0] || todayISO());
+      var end = DATE_RE.test(savedEnd || "") ? savedEnd : addDaysISO(start, 27);
+      state.period = { start: start, end: end };
+      el("startDate").value = state.period.start; el("endDate").value = state.period.end;
+    }
+
+    // ---- Validity ---------------------------------------------------------
+    function totalSlots() { return DAYS.reduce(function (a, d) { return a + state.week[d].length; }, 0); }
+    function badTimes() { return DAYS.some(function (d) { return state.week[d].some(function (s) { return !TIME_RE.test(s.time || ""); }); }); }
+    function emptyMsgs() { return DAYS.some(function (d) { return state.week[d].some(function (s) { return !(activeOpt(s).text || "").trim(); }); }); }
+    function emptyActions() { return DAYS.some(function (d) { return state.week[d].some(function (s) { return !String(s.action_text || "").trim(); }); }); }
+    // A follow-up switched on with no usable delay is the one new way to make the
+    // week unsavable, so it blocks approval the same way an empty action does.
+    function badFollowups() {
+      return DAYS.some(function (d) {
+        return state.week[d].some(function (s) {
+          return !ReviewState.validateFollowup({ enabled: s.followup_enabled, hours: s.followup_delay_hours, nudgeType: s.nudge_type }).ok;
+        });
+      });
+    }
+    function refreshValidity() {
+      var total = totalSlots();
+      var bad = badTimes();
+      var noMsg = emptyMsgs();
+      var noAction = emptyActions();
+      var badFollowup = badFollowups();
+      var pStart = state.period.start, pEnd = state.period.end;
+      var periodMissing = !pStart || !pEnd, periodOrder = pStart && pEnd && pEnd < pStart;
+      el("periodErr").classList.toggle("hidden", !periodOrder);
+      refreshPrescriptionControls();
+      var active = state.selected && (state.selected.user_status || "active") === "active";
+      var approved = isApprovedPatient(state.selected);
+      var ok = active && total > 0 && !bad && !noAction && !noMsg && !badFollowup && !periodMissing && !periodOrder &&
+        !state.scheduleSaving && (!approved || state.scheduleDirty);
+      el("approveBtn").disabled = !ok;
+      var s = el("statusMsg");
+      if (!state.selected) { s.className = "status"; s.textContent = "Select a patient."; }
+      else if (!active) { s.className = "status err"; s.textContent = "Patient is disabled. Reactivate them before scheduling."; }
+      // A patient whose only prescriptions are archived has nothing to schedule,
+      // so "add a nudge" would be a dead end rather than an instruction.
+      else if (!(state.selected.prescriptions || []).length) {
+        s.className = "status err";
+        s.textContent = (state.selected.archived_prescriptions || []).length
+          ? "All prescriptions are archived. Reactivate one, or add a new prescription."
+          : "No prescriptions yet. Add one in the trace card above.";
+      }
+      else if (!total) { s.className = "status err"; s.textContent = "Add at least one nudge to a day."; }
+      else if (bad) { s.className = "status err"; s.textContent = "Every nudge needs a valid time."; }
+      else if (noAction) { s.className = "status err"; s.textContent = "Every nudge needs an action (expand it to edit)."; }
+      else if (noMsg) { s.className = "status err"; s.textContent = "Every nudge needs a non-empty message (expand it to edit)."; }
+      else if (badFollowup) { s.className = "status err"; s.textContent = "A nudge has the outcome follow-up on with an invalid delay — use 1 to 72 whole hours."; }
+      else if (periodMissing) { s.className = "status err"; s.textContent = "Set a start and stop date."; }
+      else if (periodOrder) { s.className = "status err"; s.textContent = "Stop date must be on/after the start date."; }
+      else if (state.scheduleSaving) { s.className = "status"; s.textContent = "Saving schedule…"; }
+      else if (approved && !state.scheduleDirty) { s.className = "status ok"; s.textContent = "✓ Schedule is saved."; }
+      else { s.className = "status"; s.textContent = total + " nudge(s)/week · " + pStart + " → " + pEnd + (approved ? " · unsaved changes." : "."); }
+    }
+
+    // ---- Approve payload --------------------------------------------------
+    function buildApprovePayload(decision) {
+      var slots = [];
+      DAYS.forEach(function (day) {
+        state.week[day].forEach(function (s) {
+          var act = activeOpt(s);
+          s.schedule_slot_id = s.schedule_slot_id || newSlotId(s.source_nudge_id);
+          // Normalized here rather than at edit time so the wire value always
+          // matches what the server will store: delay blank whenever the switch
+          // is off, and the switch itself off on a non-actionable nudge type.
+          var fu = ReviewState.validateFollowup({ enabled: s.followup_enabled, hours: s.followup_delay_hours, nudgeType: s.nudge_type });
+          slots.push({ schedule_slot_id: s.schedule_slot_id, day: day, time: s.time, nudge_type: s.nudge_type,
+            // The whole behaviour triple, so a slot filed under a different pillar
+            // from its prescription persists as filed.
+            pillar: s.pillar, category: s.category || "",
+            action_text: String(s.action_text || "").trim(),
+            followup_enabled: fu.enabled, followup_delay_hours: fu.hours,
+            // The opposite-tone counterpart of the body actually being sent, and
+            // blank once the doctor has edited it — a stale pairing would claim a
+            // rewrite that no longer matches.
+            tone_variant: act.tone, message_body: act.text, message_body_alt: ReviewState.altForOption(act),
+            template_name: s.template_name, prescription_id: s.prescription_id, source_nudge_id: s.source_nudge_id });
+        });
+      });
+      return { user_id: state.selected.user_id, decision: decision, recurrence: "weekly",
+        start_date: state.period.start, end_date: state.period.end, slots: slots };
+    }
+    function postApprove(decision) {
+      var payload = buildApprovePayload(decision);
+      var approved = decision === "approve" && isApprovedPatient(state.selected);
+      var endpoint = approved ? "/api/schedule" : "/api/approve";
+      var requestMethod = approved ? "PUT" : "POST";
+      var finalStatus = null;
+      state.scheduleSaving = true;
+      refreshValidity();
+      Auth.api(endpoint, { method: requestMethod, body: JSON.stringify(payload) })
+        .then(function (out) {
+          if (decision === "approve" && !Array.isArray(out.weekly_schedule)) throw new Error("The saved schedule was not confirmed by the workflow.");
+          var index = state.patients.findIndex(function (p) { return p.user_id === payload.user_id; });
+          if (index < 0) throw new Error("The saved patient is no longer available in this view.");
+          var patient = Object.assign({}, state.patients[index]);
+          patient.weekly_schedule = out.weekly_schedule || patient.weekly_schedule || [];
+          patient.has_canonical_schedule = decision === "approve" ? true : patient.has_canonical_schedule;
+          if (decision === "approve") {
+            var approvedSources = new Set(payload.slots.map(function (slot) { return slot.source_nudge_id; }));
+            patient.nudges = (patient.nudges || []).map(function (n) {
+              return approvedSources.has(n.nudge_id) ? Object.assign({}, n, { status: "approved" }) : n;
+            });
+          }
+          state.patients[index] = ReviewState.hydratePatient(patient);
+          state.selected = state.patients[index];
+          seedWeekFromNudges();
+          initPeriod();
+          state.scheduleDirty = false;
+          el("approveBtn").textContent = isApprovedPatient(state.selected) ? "Save schedule changes" : "Approve & schedule";
+          renderTable(); renderSummary(); renderWeek();
+          finalStatus = { cls: "status ok", text: "✓ Schedule saved and confirmed" + (out.count != null ? " — " + out.count + " future nudge(s)." : ".") };
+        })
+        .catch(function (err) { finalStatus = { cls: "status err", text: "Save failed: " + err.message + " Your edits are still shown so you can retry." }; })
+        .finally(function () {
+          state.scheduleSaving = false;
+          refreshValidity();
+          if (finalStatus) { el("statusMsg").className = finalStatus.cls; el("statusMsg").textContent = finalStatus.text; }
+        });
+    }
+
+    // ---- Fetch all --------------------------------------------------------
+    function fetchAll() {
+      hint("Fetching assigned patients…", false);
+      Auth.api("/api/patients")
+        .then(function (d) { setData(d); })
+        .catch(function (err) { hint("Fetch failed: " + err.message + ". Reload the page to retry.", true); });
+    }
+    function hint(msg, isErr) { var h = el("sourceHint"); h.className = "hint" + (isErr ? " err" : ""); h.textContent = msg; }
+    function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]; }); }
+
+    // ---- Boot -------------------------------------------------------------
+    el("approveBtn").addEventListener("click", function () { postApprove("approve"); });
+    el("rejectBtn").addEventListener("click", function () { postApprove("reject"); });
+    el("weekFromNudges").addEventListener("click", function () { seedWeekFromNudges(); initPeriod(); renderWeek(); refreshValidity(); });
+    el("weekClear").addEventListener("click", function () { state.week = blankWeek(); renderWeek(); markScheduleDirty(); });
+    el("startDate").addEventListener("change", function () { state.period.start = el("startDate").value; markScheduleDirty(); });
+    el("endDate").addEventListener("change", function () { state.period.end = el("endDate").value; markScheduleDirty(); });
+    el("patientSearch").addEventListener("input", renderTable);
+    el("statusFilter").addEventListener("change", renderTable);
+    el("editPatientBtn").addEventListener("click", function () { setEditMode(true); });
+    el("cancelPatientBtn").addEventListener("click", cancelPatientEdit);
+    el("savePatientBtn").addEventListener("click", savePatient);
+    el("disablePatientBtn").addEventListener("click", function () { el("archiveDialog").showModal(); });
+    el("cancelArchiveBtn").addEventListener("click", function () { el("archiveDialog").close(); });
+    el("confirmArchiveBtn").addEventListener("click", archivePatient);
+    el("reactivatePatientBtn").addEventListener("click", reactivatePatient);
+    window.addEventListener("beforeunload", function (event) {
+      if (!state.scheduleDirty) return;
+      event.preventDefault();
+      event.returnValue = "";
+    });
+
+    Auth.guard().then(function (profile) {
+      el("identity").textContent = profile.display_name + (profile.role === "admin" ? " · Admin" : " · Doctor");
+      el("adminLink").hidden = profile.role !== "admin";
+      el("logoutBtn").addEventListener("click", Auth.signOut);
+      return loadTaxonomy();
+    }).then(function () {
+      initCustomDialog();
+      initPrescriptionDialog();
+      fetchAll();
+      if (requestedUserId) hint("Opening patient " + requestedUserId.slice(0, 8) + "…", false);
+    }).catch(function (err) { console.error(err); });
+
+    window.__monitor = { setData: setData, buildApprovePayload: buildApprovePayload, getState: function () { return state; } };
+  })();
+  </script>
+</body>
+</html>

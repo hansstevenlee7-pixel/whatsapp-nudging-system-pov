@@ -1,0 +1,593 @@
+<!doctype html>
+<html class="protected" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Patient Intake</title>
+  <link rel="stylesheet" href="auth.css" />
+  <style>
+    /* ============================================================================
+       Patient Intake — Apple HIG light-mode refinement
+       (Monash FIT5126 lifestyle-nudging prototype)
+
+       Visual changes vs previous version
+       ------------------------------------------------------------------------
+       1. Committed to Apple light mode (dark-mode media query removed) using the
+          system palette: bg #F2F2F7, white cards, #D1D1D6 borders, #0A84FF accent.
+       2. Grouped "inset list" rows replaced with iOS form cells: each input is a
+          bordered, rounded field with a clear accent focus ring.
+       3. Section titles are sentence case at a calm weight (no ALL CAPS captions).
+       4. Upload area is now a solid-bordered white card (no dashed border) with an
+          SF-style upload glyph and a larger tap target.
+       5. Consistent 8-point spacing scale; generous card padding and section gaps.
+       ============================================================================ */
+
+    :root {
+      color-scheme: light;
+
+      /* Apple system palette (light) */
+      --bg: #f2f2f7;
+      --card: #ffffff;
+      --border: #d1d1d6;
+      --border-strong: #b8b8bd;
+      --text: #1c1c1e;
+      --secondary: #6e6e73;
+      --placeholder: #8e8e93;
+      --accent: #0a84ff;
+      --accent-press: #0071e3;
+      --ok: #30d158;
+      --danger: #ff3b30;
+
+      /* 8-point spacing scale */
+      --s1: 8px; --s2: 16px; --s3: 24px; --s4: 32px; --s5: 40px;
+
+      --radius-card: 18px;
+      --radius-field: 12px;
+      --shadow: 0 1px 2px rgba(0,0,0,.04), 0 1px 3px rgba(0,0,0,.05);
+      --ring: 0 0 0 4px rgba(10,132,255,.16);
+      --maxw: 600px;
+    }
+
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+                   "Segoe UI", Roboto, system-ui, sans-serif;
+      font-size: 17px;
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    .page { max-width: var(--maxw); margin: 0 auto; padding: 56px 20px 96px; }
+    @media (max-width: 480px) { .page { padding: 36px 16px 72px; } }
+
+    /* ---- Header ------------------------------------------------------------ */
+    .hero { margin-bottom: var(--s4); }
+    .hero h1 {
+      font-size: 34px; font-weight: 700; letter-spacing: -0.4px;
+      line-height: 1.08; margin: 0 0 var(--s1);
+    }
+    .hero p {
+      font-size: 17px; color: var(--secondary); margin: 0; max-width: 52ch;
+    }
+    .home {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 15px; font-weight: 550; color: var(--accent);
+      text-decoration: none; margin-bottom: var(--s2);
+    }
+    .home:hover { color: var(--accent-press); }
+
+    /* ---- Card (grouped section surface) ------------------------------------ */
+    .card {
+      background: var(--card);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow);
+      padding: var(--s3);
+      margin-bottom: var(--s3);
+    }
+    .card h2 {
+      font-size: 20px; font-weight: 600; letter-spacing: -0.2px;
+      color: var(--text); margin: 0 0 20px;
+    }
+
+    /* ---- Fields (iOS form cells) ------------------------------------------- */
+    .row { margin-bottom: 20px; }
+    .row:last-child { margin-bottom: 0; }
+    .row > label {
+      display: block; font-size: 15px; font-weight: 590;
+      color: var(--text); margin-bottom: var(--s1);
+    }
+    .field, .field-block {
+      width: 100%;
+      font: inherit; color: var(--text);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-field);
+      transition: border-color .15s ease, box-shadow .15s ease;
+      -webkit-appearance: none; appearance: none;
+    }
+    .field { height: 50px; padding: 0 16px; }
+    .field-block { display: block; min-height: 132px; padding: 14px 16px; resize: vertical; line-height: 1.5; }
+    .field::placeholder, .field-block::placeholder { color: var(--placeholder); }
+    .field:focus, .field-block:focus {
+      outline: none; border-color: var(--accent); box-shadow: var(--ring);
+    }
+    .row.invalid .field, .row.invalid .field-block, .row.invalid .dropzone {
+      border-color: var(--danger);
+    }
+    .row-error { display: none; color: var(--danger); font-size: 13px; margin-top: var(--s1); }
+    .row.invalid .row-error { display: block; }
+
+    /* ---- Upload card (solid border, no dashed) ----------------------------- */
+    .dropzone {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; gap: var(--s1);
+      min-height: 148px; padding: var(--s3);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      cursor: pointer;
+      transition: border-color .15s ease, background .15s ease;
+    }
+    .dropzone:hover { border-color: var(--border-strong); }
+    .dropzone:focus-visible { outline: none; border-color: var(--accent); box-shadow: var(--ring); }
+    .dropzone.drag { border-color: var(--accent); background: rgba(10,132,255,.05); }
+    .dropzone .glyph { color: var(--accent); line-height: 0; }
+    .dropzone .primary { font-size: 16px; font-weight: 550; color: var(--text); }
+    .dropzone .primary b { color: var(--accent); font-weight: 600; }
+    .dropzone .sub { font-size: 13px; color: var(--secondary); }
+
+    .filechip {
+      display: none; align-items: center; gap: var(--s2);
+      margin-top: var(--s2); padding: 12px 14px;
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-field);
+    }
+    .filechip.show { display: flex; }
+    .filechip img { width: 40px; height: 40px; object-fit: cover; border-radius: 9px; flex: none; }
+    .filechip .meta { flex: 1; min-width: 0; }
+    .filechip .name { font-size: 15px; font-weight: 550; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .filechip .size { font-size: 13px; color: var(--secondary); }
+    .filechip button {
+      flex: none; border: none; background: none; color: var(--accent);
+      font: inherit; font-size: 15px; font-weight: 550; cursor: pointer; padding: 6px 4px;
+    }
+
+    .or {
+      display: flex; align-items: center; gap: var(--s2);
+      color: var(--secondary); font-size: 13px; margin: var(--s2) 2px;
+    }
+    .or::before, .or::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+
+    /* ---- Consent ----------------------------------------------------------- */
+    .consent { display: flex; align-items: flex-start; gap: var(--s2); cursor: pointer; }
+    .consent input {
+      flex: none; width: 22px; height: 22px; margin: 1px 0 0;
+      accent-color: var(--accent); cursor: pointer;
+    }
+    .consent span { font-size: 15px; line-height: 1.5; color: var(--text); }
+    .consent span b { font-weight: 600; }
+
+    /* ---- Actions ----------------------------------------------------------- */
+    .actions { margin-top: var(--s3); }
+    .btn-primary {
+      width: 100%; height: 52px;
+      font: inherit; font-size: 17px; font-weight: 600; color: #fff;
+      background: var(--accent); border: none; border-radius: var(--radius-field);
+      cursor: pointer; transition: background .12s ease, transform .06s ease;
+    }
+    .btn-primary:hover { background: var(--accent-press); }
+    .btn-primary:active { transform: scale(.985); }
+    .btn-primary:disabled { background: #8e8e93; cursor: wait; transform: none; }
+    .btn-primary:focus-visible { outline: none; box-shadow: var(--ring); }
+    .btn-text {
+      display: block; width: 100%; margin-top: 14px;
+      font: inherit; font-size: 15px; color: var(--secondary);
+      background: none; border: none; cursor: pointer;
+    }
+    .btn-text:hover { color: var(--text); }
+
+    .submit-status { min-height: 22px; margin-top: 12px; text-align: center; font-size: 14px; color: var(--secondary); }
+    .submit-status.error { color: var(--danger); }
+
+    /* ---- Duplicate-phone dialog ------------------------------------------- */
+    .modal-backdrop {
+      position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center;
+      padding: 20px; background: rgba(0,0,0,.35); backdrop-filter: blur(4px);
+    }
+    .modal-backdrop[hidden] { display: none; }
+    .modal {
+      width: min(100%, 430px); padding: 26px; background: var(--card);
+      border-radius: 20px; box-shadow: 0 18px 60px rgba(0,0,0,.2);
+    }
+    .modal h2 { margin: 0 0 10px; font-size: 22px; letter-spacing: -.2px; }
+    .modal p { margin: 0 0 22px; color: var(--secondary); font-size: 15px; }
+    .modal-actions { display: grid; gap: 10px; }
+    .modal-actions button, .modal-actions a {
+      display: flex; align-items: center; justify-content: center; min-height: 46px;
+      padding: 10px 16px; border-radius: 12px; font: inherit; font-size: 15px;
+      font-weight: 600; text-decoration: none; cursor: pointer;
+    }
+    .modal-actions [hidden] { display: none; }
+    .modal-primary { border: 0; background: var(--accent); color: #fff; }
+    .modal-secondary { border: 1px solid var(--border); background: var(--card); color: var(--accent); }
+
+    .footnote { margin-top: var(--s4); text-align: center; font-size: 13px; color: var(--secondary); }
+    .footnote code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <div class="session-bar"><span id="identity"></span><a id="adminLink" href="admin.html" hidden>Admin</a><a href="monitor.html">Monitor</a><button id="logoutBtn" type="button">Sign out</button></div>
+  <main class="page">
+    <a class="home" href="index.html">← Home</a>
+    <header class="hero">
+      <h1>Patient Intake</h1>
+      <p>Register a patient and submit their doctor’s lifestyle prescription to begin their personalised nudge plan.</p>
+    </header>
+
+    <form id="intakeForm" novalidate>
+      <!-- Patient details -->
+      <section class="card">
+        <h2>Patient details</h2>
+
+        <div class="row" data-row="name">
+          <label for="name">Full name</label>
+          <input class="field" type="text" id="name" autocomplete="name" placeholder="Jane Appleseed" />
+          <div class="row-error" data-for="name"></div>
+        </div>
+
+        <div class="row" data-row="phone">
+          <label for="phone">WhatsApp number</label>
+          <input class="field" type="tel" id="phone" autocomplete="tel" placeholder="+61412345678" />
+          <div class="row-error" data-for="phone"></div>
+        </div>
+
+        <div class="row" data-row="email">
+          <label for="email">Email</label>
+          <input class="field" type="email" id="email" autocomplete="email" placeholder="jane@example.com" />
+          <div class="row-error" data-for="email"></div>
+        </div>
+      </section>
+
+      <!-- Prescription (core backend input) -->
+      <section class="card">
+        <h2>Prescription</h2>
+
+        <div class="row" data-row="assigned_doctor_id">
+          <label for="assigned_doctor_id">Prescriber</label>
+          <select class="field" id="assigned_doctor_id" disabled><option>Loading clinician…</option></select>
+          <div class="hint">Doctors are assigned from the signed-in account. Administrators may select another active clinician.</div>
+        </div>
+
+        <div class="row" data-row="issued_date">
+          <label for="issued_date">Date issued</label>
+          <input class="field" type="date" id="issued_date" />
+          <div class="row-error" data-for="issued_date"></div>
+        </div>
+
+        <!-- Upload + free-text alternative share one .row so validation state
+             (setError('prescription')) can highlight the whole area. -->
+        <div class="row" data-row="prescription">
+          <label>Prescription document</label>
+          <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Upload prescription file">
+            <span class="glyph" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 15V4" /><path d="M8 8l4-4 4 4" />
+                <path d="M4 14v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4" />
+              </svg>
+            </span>
+            <span class="primary"><b>Upload</b> a scan or photo</span>
+            <span class="sub">Image or PDF · up to 5 MB · read by the AI parser at intake</span>
+            <input type="file" id="fileInput" accept="image/*,application/pdf" hidden />
+          </div>
+
+          <div class="filechip" id="filechip">
+            <img id="fileThumb" alt="" hidden />
+            <div class="meta">
+              <div class="name" id="fileName"></div>
+              <div class="size" id="fileSize"></div>
+            </div>
+            <button type="button" id="fileRemove" aria-label="Remove file">Remove</button>
+          </div>
+
+          <div class="or">or type it</div>
+          <textarea class="field-block" id="prescription_raw_text"
+            placeholder="e.g. Increase daily steps to 10,000. Reduce alcohol to 2 drinks/week. Aim for 7–9 hours sleep. Add a 20-minute walk after dinner, 5 days a week."></textarea>
+          <div class="row-error" data-for="prescription"></div>
+        </div>
+      </section>
+
+      <!-- Consent (mandatory ethics) -->
+      <section class="card">
+        <h2>Consent</h2>
+        <div class="row" data-row="opt_in_whatsapp">
+          <label class="consent" for="opt_in_whatsapp">
+            <input type="checkbox" id="opt_in_whatsapp" />
+            <span>
+              The patient consents to receiving lifestyle nudge messages via WhatsApp and understands they can
+              reply <b>STOP</b> at any time to opt out and halt all future messages.
+            </span>
+          </label>
+          <div class="row-error" data-for="opt_in_whatsapp"></div>
+        </div>
+      </section>
+
+      <div class="actions">
+        <button type="submit" class="btn-primary" id="submitBtn">Create intake</button>
+        <button type="reset" class="btn-text">Clear form</button>
+        <div class="submit-status" id="submitStatus" role="status" aria-live="polite"></div>
+      </div>
+    </form>
+
+    <p class="footnote">Authenticated clinician intake · records are saved directly to the patient workflow.</p>
+  </main>
+
+  <div class="modal-backdrop" id="duplicateModal" hidden>
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="duplicateTitle" aria-describedby="duplicateMessage">
+      <h2 id="duplicateTitle">Phone number already registered</h2>
+      <p id="duplicateMessage"></p>
+      <div class="modal-actions">
+        <button type="button" class="modal-primary" id="differentPhoneBtn">Use a different number</button>
+        <a class="modal-secondary" id="openPatientBtn" href="monitor.html">Open patient in Monitor</a>
+      </div>
+    </section>
+  </div>
+
+  <script src="auth.js"></script>
+  <script>
+  (function () {
+    "use strict";
+    var currentProfile = null;
+
+    var form = document.getElementById("intakeForm");
+    var dropzone = document.getElementById("dropzone");
+    var fileInput = document.getElementById("fileInput");
+    var filechip = document.getElementById("filechip");
+    var fileThumb = document.getElementById("fileThumb");
+    var fileNameEl = document.getElementById("fileName");
+    var fileSizeEl = document.getElementById("fileSize");
+    var fileRemove = document.getElementById("fileRemove");
+    var textarea = document.getElementById("prescription_raw_text");
+    var submitBtn = document.getElementById("submitBtn");
+    var submitStatus = document.getElementById("submitStatus");
+    var duplicateModal = document.getElementById("duplicateModal");
+    var duplicateMessage = document.getElementById("duplicateMessage");
+    var differentPhoneBtn = document.getElementById("differentPhoneBtn");
+    var openPatientBtn = document.getElementById("openPatientBtn");
+
+    var MAX_BYTES = 5 * 1024 * 1024;
+    var PHONE_RE = /^\+[1-9]\d{7,14}$/;
+    var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // Currently attached prescription file (base64 + metadata), or null.
+    var attached = null;
+
+    // ---- File handling (unchanged behaviour) -----------------------------
+    function humanSize(bytes) {
+      if (bytes < 1024) return bytes + " B";
+      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
+      return (bytes / 1024 / 1024).toFixed(2) + " MB";
+    }
+
+    function handleFile(file) {
+      clearError("prescription");
+      if (!file) return;
+      var okType = /^image\//.test(file.type) || file.type === "application/pdf";
+      if (!okType) { setError("prescription", "Unsupported file type. Use an image or PDF."); return; }
+      if (file.size > MAX_BYTES) { setError("prescription", "File is larger than 5 MB."); return; }
+
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        var dataUrl = e.target.result;                 // data:<mime>;base64,<payload>
+        var base64 = String(dataUrl).split(",")[1] || "";
+        attached = { base64: base64, filename: file.name, mimetype: file.type };
+
+        fileNameEl.textContent = file.name;
+        fileSizeEl.textContent = humanSize(file.size) + " · " + (file.type || "unknown");
+        if (/^image\//.test(file.type)) { fileThumb.src = dataUrl; fileThumb.hidden = false; }
+        else { fileThumb.hidden = true; fileThumb.removeAttribute("src"); }
+        filechip.classList.add("show");
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function clearFile() {
+      attached = null;
+      fileInput.value = "";
+      filechip.classList.remove("show");
+      fileThumb.hidden = true; fileThumb.removeAttribute("src");
+      fileNameEl.textContent = ""; fileSizeEl.textContent = "";
+    }
+
+    dropzone.addEventListener("click", function () { fileInput.click(); });
+    dropzone.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); fileInput.click(); }
+    });
+    fileInput.addEventListener("change", function () { handleFile(fileInput.files[0]); });
+    fileRemove.addEventListener("click", clearFile);
+
+    ["dragenter", "dragover"].forEach(function (ev) {
+      dropzone.addEventListener(ev, function (e) { e.preventDefault(); dropzone.classList.add("drag"); });
+    });
+    ["dragleave", "drop"].forEach(function (ev) {
+      dropzone.addEventListener(ev, function (e) { e.preventDefault(); dropzone.classList.remove("drag"); });
+    });
+    dropzone.addEventListener("drop", function (e) {
+      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+    });
+
+    // ---- Validation helpers ----------------------------------------------
+    // Errors live on the .row wrapper (data-row) so the field + border can react;
+    // text renders in the matching .row-error[data-for].
+    function setError(key, msg) {
+      var el = form.querySelector('.row-error[data-for="' + key + '"]');
+      if (el) el.textContent = msg || "";
+      var row = form.querySelector('.row[data-row="' + key + '"]');
+      if (row && msg) row.classList.add("invalid");
+    }
+    function clearError(key) {
+      var el = form.querySelector('.row-error[data-for="' + key + '"]');
+      if (el) el.textContent = "";
+      var row = form.querySelector('.row[data-row="' + key + '"]');
+      if (row) row.classList.remove("invalid");
+    }
+
+    function uuidv4() {
+      if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+      return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+        var r = (Math.random() * 16) | 0, v = c === "x" ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+      });
+    }
+
+    // Questionnaire validation (age/gender/activity/goal/time) REMOVED with the
+    // section. Only patient details, prescription and consent remain.
+    function validate(data) {
+      var ok = true;
+      ["name", "phone", "email", "issued_date", "opt_in_whatsapp", "prescription"].forEach(clearError);
+
+      if (!data.user.name) { setError("name", "Required."); ok = false; }
+      if (!PHONE_RE.test(data.user.phone)) { setError("phone", "Enter a valid E.164 number, e.g. +61412345678."); ok = false; }
+      if (!EMAIL_RE.test(data.user.email)) { setError("email", "Enter a valid email."); ok = false; }
+
+      if (!data.prescription_input.issued_date) { setError("issued_date", "Required."); ok = false; }
+
+      var hasText = !!data.prescription_input.prescription_raw_text;
+      var hasFile = !!data.prescription_input.prescription_image_base64;
+      if (!hasText && !hasFile) { setError("prescription", "Upload a prescription file or type it in."); ok = false; }
+
+      if (!data.questionnaire.opt_in_whatsapp) { setError("opt_in_whatsapp", "Consent is required to send WhatsApp nudges."); ok = false; }
+
+      return ok;
+    }
+
+    // ---- Payload ---------------------------------------------------------
+    // NOTE: the `questionnaire` object now carries only opt_in_whatsapp — the
+    // age/gender/activity_level/primary_goal/preferred_nudge_time keys were
+    // removed with the Baseline Questionnaire section. The `user` and
+    // `prescription_input` contracts are unchanged, so Workflow A still works;
+    // it will simply receive an empty questionnaire (see README follow-up).
+    function buildPayload() {
+      var text = textarea.value.trim();
+      return {
+        user: {
+          user_id: uuidv4(),
+          name: document.getElementById("name").value.trim(),
+          phone: document.getElementById("phone").value.trim(),
+          email: document.getElementById("email").value.trim(),
+          created_at: new Date().toISOString(),
+          user_status: "active"
+        },
+        questionnaire: {
+          opt_in_whatsapp: document.getElementById("opt_in_whatsapp").checked
+        },
+        assigned_doctor_id: document.getElementById("assigned_doctor_id").value,
+        prescription_input: {
+          issued_date: document.getElementById("issued_date").value,
+          prescription_raw_text: text,
+          prescription_image_base64: attached ? attached.base64 : null,
+          prescription_image_filename: attached ? attached.filename : null,
+          prescription_image_mimetype: attached ? attached.mimetype : null
+        },
+        submitted_at: new Date().toISOString()
+      };
+    }
+
+    function setSubmitting(active) {
+      submitBtn.disabled = active;
+      submitBtn.textContent = active ? "Creating patient…" : "Create intake";
+    }
+
+    function closeDuplicateDialog() {
+      duplicateModal.hidden = true;
+      setError("phone", "Enter a different WhatsApp number, or edit the existing patient in Monitor.");
+      var phone = document.getElementById("phone");
+      phone.focus(); phone.select();
+    }
+
+    function showDuplicateDialog(existingUserId) {
+      var canEdit = !!existingUserId;
+      duplicateMessage.textContent = canEdit
+        ? "This WhatsApp number belongs to an existing patient. Enter a different number, or open Monitor to update that patient instead."
+        : "This WhatsApp number is already registered. Enter a different number to continue.";
+      openPatientBtn.hidden = !canEdit;
+      openPatientBtn.href = canEdit
+        ? "monitor.html?user_id=" + encodeURIComponent(existingUserId) + "&edit=1"
+        : "monitor.html";
+      duplicateModal.hidden = false;
+      differentPhoneBtn.focus();
+    }
+
+    differentPhoneBtn.addEventListener("click", closeDuplicateDialog);
+    duplicateModal.addEventListener("click", function (e) { if (e.target === duplicateModal) closeDuplicateDialog(); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !duplicateModal.hidden) closeDuplicateDialog(); });
+
+    // ---- Submit / reset --------------------------------------------------
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      var payload = buildPayload();
+      if (!validate(payload)) {
+        var firstErr = form.querySelector(".row.invalid, .row-error.block:not(:empty)");
+        if (firstErr && firstErr.scrollIntoView) firstErr.scrollIntoView({ behavior: "smooth", block: "center" });
+        submitStatus.textContent = "Please correct the highlighted fields.";
+        submitStatus.className = "submit-status error";
+        return;
+      }
+
+      setSubmitting(true);
+      submitStatus.textContent = "Submitting prescription and creating the patient plan…";
+      submitStatus.className = "submit-status";
+      try {
+        var out = await Auth.api("/api/intake", { method: "POST", body: JSON.stringify(payload) });
+        var uid = out.user_id || payload.user.user_id;
+        window.location.href = "monitor.html?user_id=" + encodeURIComponent(uid);
+      } catch (err) {
+        if (err.status === 409 && err.body && err.body.code === "duplicate_phone") {
+          submitStatus.textContent = "No new patient was created.";
+          submitStatus.className = "submit-status error";
+          showDuplicateDialog(err.body.existing_user_id || "");
+          return;
+        }
+        submitStatus.textContent = "Intake failed: " + err.message;
+        submitStatus.className = "submit-status error";
+      } finally {
+        setSubmitting(false);
+      }
+    });
+
+    form.addEventListener("reset", function () {
+      clearFile();
+      duplicateModal.hidden = true;
+      submitStatus.textContent = "";
+      submitStatus.className = "submit-status";
+      ["name", "phone", "email", "issued_date", "opt_in_whatsapp", "prescription"].forEach(clearError);
+    });
+
+    async function bootAuth() {
+      currentProfile = await Auth.guard();
+      document.getElementById("identity").textContent = currentProfile.display_name + (currentProfile.role === "admin" ? " · Admin" : " · Doctor");
+      document.getElementById("adminLink").hidden = currentProfile.role !== "admin";
+      document.getElementById("logoutBtn").addEventListener("click", Auth.signOut);
+      var select = document.getElementById("assigned_doctor_id");
+      if (currentProfile.role === "admin") {
+        var data = await Auth.api("/api/admin/users");
+        select.innerHTML = "";
+        (data.profiles || []).filter(function (p) { return p.status === "active" && p.doctor_id; }).forEach(function (p) {
+          select.appendChild(new Option(p.display_name, p.doctor_id, false, p.doctor_id === currentProfile.doctor_id));
+        });
+        select.disabled = false;
+      } else {
+        select.innerHTML = "";
+        select.appendChild(new Option(currentProfile.display_name, currentProfile.doctor_id, true, true));
+      }
+      document.getElementById("issued_date").value = new Date().toISOString().slice(0, 10);
+    }
+    bootAuth().catch(function (err) { console.error(err); });
+  })();
+  </script>
+</body>
+</html>

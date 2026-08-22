@@ -1,0 +1,1300 @@
+{
+  "name": "Workflow C — Feedback Handler (Twilio)",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Workflow C — Feedback Handler (Twilio)\n\n### Twilio webhook setup\nConfigure the Sandbox **When a message comes in** URL as:\n`https://your-n8n.com/webhook/whatsapp-webhook` using HTTP POST.\n\n### Stage 1 — commitment (two-stage nudges only)\n| Button / typed text | Stored `commitment_response` | Action |\n|---|---|---|\n| Yes | `YES` | Status → `awaiting_followup`; the outcome check becomes eligible at `followup_due_at` |\n| No | `NO` | Status → `declined`; `followup_due_at` cleared so no check is ever sent |\n| (no reply) | `NO_FEEDBACK` | Written by Workflow F when the window closes — never `NOT_YET` |\n\nA repeated Yes is recorded as `commitment_repeat`: it refreshes\n`response_wa_id` only and never touches `followup_due_at`, so a duplicated\nwebhook cannot arm a second follow-up.\n\n### Stage 2 — outcome (sent by Workflow F)\n| Button / typed text | Stored `outcome_response` | Action |\n|---|---|---|\n| Done | `DONE` | Mark done and increment completion/streak once |\n| Not yet | `NOT_YET` | Mark not yet and ask what got in the way (existing barrier flow) |\n| (no reply) | `NO_FEEDBACK` | Written by Workflow F when the window closes |\n\n### Single-stage nudges (unchanged)\nDone / In progress / Not yet behave exactly as before and write `response`.\n\n### Correlation\n`OriginalRepliedMessageSid` is matched against `followup_wa_id` (stage 2),\n`barrier_followup_wa_id` (barrier), then `wa_message_id` (stage 1 or\nsingle-stage), so a reply always resolves to the question it answers. A typed\nreply with no context resolves to the patient's most recently asked open\nquestion. `response_wa_id` makes webhook retries idempotent.\n\n### STOP\nTyped `STOP` opts the patient out immediately, cancels **every** pending\ncommitment and follow-up, and sends one confirmation. If Twilio Advanced Opt-Out\nalready handled the keyword it supplies `OptOutType=STOP`; the opt-out is then\npersisted identically but **no second confirmation is sent**, because Twilio has\nalready replied.\n\n### Required environment variables\n`GOOGLE_SHEETS_SPREADSHEET_ID`, `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_WHATSAPP_FROM`.\n\n### Required Sheet columns\n`schedule_state` needs `response_wa_id`, `parent_nudge_id`, `delivered_at`,\n`followup_enabled`, `followup_delay_hours`, `commitment_response`,\n`commitment_responded_at`, `followup_due_at`, `followup_sent_at`,\n`followup_wa_id`, `outcome_response` and `outcome_responded_at` before activation.\n\nThis workflow is suitable for bounded Sandbox testing. Add Twilio request-signature validation before participant use.",
+        "height": 980,
+        "width": 620,
+        "color": 7
+      },
+      "id": "c0000001-0000-0000-0000-000000000001",
+      "name": "Setup Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        240,
+        -440
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "whatsapp-webhook",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "c0000001-0000-0000-0000-000000000002",
+      "name": "WhatsApp Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        240,
+        380
+      ],
+      "webhookId": "whatsapp-feedback-webhook"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse Twilio's application/x-www-form-urlencoded inbound webhook.\nconst payload = $json && $json.body && typeof $json.body === 'object' ? $json.body : $json;\nconst stripChannel = value => String(value || '').trim().replace(/^whatsapp:/i, '');\nconst replyBody = String(payload.Body || '').trim();\nconst buttonPayload = String(payload.ButtonPayload || '').trim();\nconst buttonText = String(payload.ButtonText || '').trim();\nconst replyValue = buttonPayload || buttonText || replyBody;\nconst fromPhone = stripChannel(payload.From);\nif (!/^\\+[1-9]\\d{7,14}$/.test(fromPhone) || !String(payload.MessageSid || '').trim()) return [];\n\nreturn [{ json: {\n  from_phone: fromPhone,\n  to_phone: stripChannel(payload.To),\n  reply_body: replyBody,\n  reply_value: replyValue,\n  reply_keyword: replyValue.toUpperCase(),\n  button_payload: buttonPayload,\n  button_text: buttonText,\n  incoming_wa_id: String(payload.MessageSid).trim(),\n  context_wa_id: String(payload.OriginalRepliedMessageSid || '').trim() || null,\n  // Present only when Twilio Advanced Opt-Out already handled the keyword. It\n  // means the patient has been opted out upstream and has already been sent\n  // Twilio's own confirmation.\n  opt_out_type: String(payload.OptOutType || '').trim().toUpperCase(),\n  received_at: new Date().toISOString()\n} }];"
+      },
+      "id": "c0000001-0000-0000-0000-000000000003",
+      "name": "Parse Incoming Message",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        460,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "user",
+          "mode": "name"
+        },
+        "returnAll": true,
+        "options": {}
+      },
+      "id": "c0000001-0000-0000-0000-000000000010",
+      "name": "Load Users Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        680,
+        380
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_AFTER_IMPORT",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Resolve the Twilio sender to exactly one patient.\nconst parsed = $('Parse Incoming Message').first().json;\nconst user = items.map(i => i.json).find(u => String(u.phone || '').trim() === parsed.from_phone);\nif (!user) return [];\nreturn [{ json: { ...parsed, user_id: String(user.user_id), user_status: String(user.user_status || '') } }];"
+      },
+      "id": "c0000001-0000-0000-0000-000000000011",
+      "name": "Resolve Patient",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        900,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "schedule_state",
+          "mode": "name"
+        },
+        "returnAll": true,
+        "options": {}
+      },
+      "id": "c0000001-0000-0000-0000-000000000004",
+      "name": "Load Schedule State",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        1120,
+        380
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_AFTER_IMPORT",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Resolve an inbound reply to one schedule row AND one conversation stage, then\n// normalize it. Stage matters: the same word means different things depending on\n// which question is open, so correlation happens before mapping, never after.\nconst parsed = $('Resolve Patient').first().json;\nconst rows = items.map(i => i.json);\nconst text = v => String(v == null ? '' : v).trim();\nconst norm = v => text(v).toUpperCase().replace(/[_-]+/g, ' ').replace(/\\s+/g, ' ');\n\n// Stage 1: \"Will you do this?\" — buttons plus typed accessibility fallbacks.\nconst COMMITMENT_MAP = {\n  'YES': 'YES', 'Y': 'YES', 'YEP': 'YES', 'YEAH': 'YES', 'OK': 'YES', 'OKAY': 'YES',\n  'I WILL': 'YES', 'YES I WILL': 'YES', 'COMMIT': 'YES',\n  'NO': 'NO', 'N': 'NO', 'NOPE': 'NO', 'CANT': 'NO', \"CAN'T\": 'NO', 'NOT TODAY': 'NO', 'NO I WONT': 'NO'\n};\n// Stage 2: \"Were you able to complete it?\" — here a bare \"no\" means not yet, and\n// a bare \"yes\" means done. Same tokens, different stage, deliberately.\nconst OUTCOME_MAP = {\n  'DONE': 'DONE', 'COMPLETED': 'DONE', 'YES': 'DONE', 'Y': 'DONE', 'FINISHED': 'DONE',\n  'NOT YET': 'NOT_YET', 'NOTYET': 'NOT_YET', 'NO': 'NOT_YET', 'N': 'NOT_YET',\n  'NOT STARTED': 'NOT_YET', 'NONE': 'NOT_YET', 'SKIP': 'NOT_YET'\n};\n// Single-stage nudges keep the original three-way prompt untouched.\nconst PROGRESS_MAP = {\n  'DONE': 'DONE', 'COMPLETED': 'DONE',\n  'IN PROGRESS': 'IN_PROGRESS', 'STARTED': 'IN_PROGRESS',\n  'NOT YET': 'NOT_YET', 'NOT STARTED': 'NOT_YET', 'NONE': 'NOT_YET', 'SKIP': 'NOT_YET'\n};\n\nconst value = norm(parsed.reply_value);\nconst base = {\n  ...parsed, canonical_response: null, commitment_response: null, outcome_response: null,\n  stage: null, nudge_id: null, schedule_id: null, previous_response: '',\n  followup_due_at: '', followup_delay_hours: '', cancel_nudge_ids: [], cancel_rows: [],\n  done_count: 0, skip_count: 0, current_streak: 0, consecutive_skips: 0\n};\n\n// Webhook retries replay the same MessageSid. Checked first so a retry can never\n// re-run a state transition, in either stage.\nif (rows.some(r => text(r.response_wa_id) === parsed.incoming_wa_id)) return [{ json: { ...base, reply_type: 'duplicate' } }];\n\nconst userRows = rows.filter(r => String(r.user_id) === parsed.user_id);\n\n// STOP is the mandatory ethics opt-out and outranks everything else. It cancels\n// every question still open for this patient, so no scheduler pass can deliver a\n// follow-up after the patient has asked to stop.\nconst OPEN_STATUSES = ['awaiting_commitment', 'awaiting_followup'];\nif (value === 'STOP' || parsed.opt_out_type === 'STOP') {\n  // Each cancelled row carries its stage and its already-recorded answers. An\n  // awaiting_followup row has ALREADY answered the commitment (YES); only its\n  // outcome window is closing, so overwriting commitment_response there would\n  // destroy a real observation — a YES that was cut short by STOP is not the\n  // same as a commitment that was never given.\n  const cancel = userRows\n    .filter(r => OPEN_STATUSES.includes(text(r.status)))\n    .map(r => ({\n      nudge_id: text(r.nudge_id),\n      status: text(r.status),\n      prior_commitment: text(r.commitment_response),\n      prior_outcome: text(r.outcome_response)\n    }))\n    .filter(r => r.nudge_id);\n  // Twilio Advanced Opt-Out has already replied to the patient; sending our own\n  // acknowledgement as well would double-message someone who just asked to stop.\n  const replyType = parsed.opt_out_type === 'STOP' ? 'stop_optout' : 'stop';\n  return [{ json: { ...base, reply_type: replyType, cancel_rows: cancel, cancel_nudge_ids: cancel.map(r => r.nudge_id) } }];\n}\n\nconst withRow = (row, stage) => ({\n  ...base, stage,\n  nudge_id: row.nudge_id,\n  schedule_id: row.schedule_id,\n  previous_response: text(row.response),\n  followup_due_at: text(row.followup_due_at),\n  followup_delay_hours: text(row.followup_delay_hours),\n  done_count: parseInt(row.done_count) || 0,\n  skip_count: parseInt(row.skip_count) || 0,\n  current_streak: parseInt(row.current_streak) || 0,\n  consecutive_skips: parseInt(row.consecutive_skips) || 0\n});\n\n// An explicit WhatsApp reply names the exact message it answers, so context is\n// matched most-specific first: the outcome check, then the barrier prompt, then\n// the initial nudge.\nconst ctx = parsed.context_wa_id;\nconst ctxOutcome = ctx ? userRows.find(r => text(r.followup_wa_id) === ctx) : null;\nconst ctxBarrier = ctx ? userRows.find(r => text(r.barrier_followup_wa_id) === ctx) : null;\nconst ctxInitial = ctx ? userRows.find(r => text(r.wa_message_id) === ctx) : null;\n\n// Without context, the patient is answering whichever question was asked most\n// recently. asked_at is the moment that specific question went out, not the\n// row's last touch, so a stale barrier cannot outrank a fresh outcome check.\nconst instant = v => { const ms = Date.parse(text(v)); return Number.isFinite(ms) ? ms : 0; };\nconst open = [];\nuserRows.forEach(r => {\n  const status = text(r.status);\n  if (status === 'awaiting_followup' && text(r.followup_sent_at) && !text(r.outcome_response)) {\n    open.push({ row: r, stage: 'outcome', asked: instant(r.followup_sent_at) });\n  }\n  if (status === 'awaiting_commitment' && !text(r.commitment_response)) {\n    open.push({ row: r, stage: 'commitment', asked: instant(r.sent_at) });\n  }\n  if (['sent', 'in_progress', 'not_yet'].includes(status) && text(r.wa_message_id)) {\n    open.push({ row: r, stage: 'progress', asked: instant(r.sent_at) || instant(r.last_updated) });\n  }\n});\nopen.sort((a, b) => b.asked - a.asked);\n\n// What a reply to the *initial* message means depends on what that message\n// asked, not on where the row has since moved. A two-stage nudge asked \"Will you\n// do this?\", so a reply to it is a stage-1 answer even after the row has already\n// advanced to awaiting_followup — which is exactly what a second tap on Yes is.\nconst isTwoStage = r => ['true', 'yes', '1', 'on'].includes(text(r.followup_enabled).toLowerCase()) ||\n  text(r.status) === 'awaiting_commitment' || !!text(r.commitment_response);\n\nlet target = null;\nif (ctxOutcome) target = { row: ctxOutcome, stage: 'outcome' };\nelse if (ctxBarrier) target = { row: ctxBarrier, stage: 'barrier' };\nelse if (ctxInitial) target = { row: ctxInitial, stage: isTwoStage(ctxInitial) ? 'commitment' : 'progress' };\nelse target = open[0] || null;\n\n// A barrier prompt is still outstanding and the reply matches nothing in the\n// current stage — that is the barrier answer. Preserved from the single-stage\n// flow, and now also reachable after a stage-2 NOT_YET.\nconst byNewest = (a, b) => instant(b.last_updated) - instant(a.last_updated);\nconst pendingBarrier = userRows.filter(r => text(r.barrier_followup_wa_id)).sort(byNewest)[0] || null;\n\nif (target && target.stage === 'barrier') return [{ json: { ...withRow(target.row, 'barrier'), reply_type: 'barrier' } }];\n\nif (target && target.stage === 'commitment') {\n  const commitment = COMMITMENT_MAP[value] || null;\n  // Already answered: refresh idempotency only. Never re-derive followup_due_at,\n  // or a second Yes would arm a second follow-up.\n  if (text(target.row.commitment_response)) {\n    return [{ json: { ...withRow(target.row, 'commitment'), reply_type: 'commitment_repeat', commitment_response: text(target.row.commitment_response) } }];\n  }\n  if (commitment === 'YES') return [{ json: { ...withRow(target.row, 'commitment'), reply_type: 'commit_yes', commitment_response: 'YES' } }];\n  if (commitment === 'NO') return [{ json: { ...withRow(target.row, 'commitment'), reply_type: 'commit_no', commitment_response: 'NO' } }];\n}\n\nif (target && target.stage === 'outcome') {\n  const outcome = OUTCOME_MAP[value] || null;\n  if (outcome === 'DONE') return [{ json: { ...withRow(target.row, 'outcome'), reply_type: 'done', canonical_response: 'DONE', outcome_response: 'DONE' } }];\n  if (outcome === 'NOT_YET') return [{ json: { ...withRow(target.row, 'outcome'), reply_type: 'not_yet', canonical_response: 'NOT_YET', outcome_response: 'NOT_YET' } }];\n}\n\nif (target && target.stage === 'progress') {\n  const progress = PROGRESS_MAP[value] || null;\n  if (progress === 'DONE') return [{ json: { ...withRow(target.row, 'progress'), reply_type: 'done', canonical_response: 'DONE' } }];\n  if (progress === 'IN_PROGRESS') return [{ json: { ...withRow(target.row, 'progress'), reply_type: 'in_progress', canonical_response: 'IN_PROGRESS' } }];\n  if (progress === 'NOT_YET') return [{ json: { ...withRow(target.row, 'progress'), reply_type: 'not_yet', canonical_response: 'NOT_YET' } }];\n}\n\nif (pendingBarrier) return [{ json: { ...withRow(pendingBarrier, 'barrier'), reply_type: 'barrier' } }];\nreturn [{ json: { ...base, reply_type: 'unknown' } }];"
+      },
+      "id": "c0000001-0000-0000-0000-000000000005",
+      "name": "Classify Reply",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1340,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {},
+          "conditions": [
+            {
+              "leftValue": "={{ $json.reply_type }}",
+              "rightValue": "stop",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "c0000001-0000-0000-0000-000000000006",
+      "name": "Is STOP?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1560,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {},
+          "conditions": [
+            {
+              "leftValue": "={{ $json.reply_type }}",
+              "rightValue": "done",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "c0000001-0000-0000-0000-000000000007",
+      "name": "Is DONE?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1780,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {},
+          "conditions": [
+            {
+              "leftValue": "={{ $json.reply_type }}",
+              "rightValue": "in_progress",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "c0000001-0000-0000-0000-000000000008",
+      "name": "Is IN PROGRESS?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        2000,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {},
+          "conditions": [
+            {
+              "leftValue": "={{ $json.reply_type }}",
+              "rightValue": "not_yet",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "c0000001-0000-0000-0000-000000000009",
+      "name": "Is NOT YET?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        2220,
+        600
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {},
+          "conditions": [
+            {
+              "leftValue": "={{ $json.reply_type }}",
+              "rightValue": "barrier",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "c0000001-0000-0000-0000-000000000020",
+      "name": "Is BARRIER?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        2440,
+        700
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {},
+          "conditions": [
+            {
+              "leftValue": "={{ $json.reply_type }}",
+              "rightValue": "unknown",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "c0000001-0000-0000-0000-000000000021",
+      "name": "Is UNKNOWN?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        2660,
+        820
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "user",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "user_id": "={{ $json.user_id }}",
+            "user_status": "opted_out"
+          },
+          "matchingColumns": [
+            "user_id"
+          ],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "c0000001-0000-0000-0000-000000000012",
+      "name": "Update User Status",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        1780,
+        180
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_AFTER_IMPORT",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "schedule_state",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "nudge_id": "={{ $json.nudge_id }}",
+            "status": "done",
+            "response": "DONE",
+            "response_wa_id": "={{ $json.incoming_wa_id }}",
+            "responded_at": "={{ $json.received_at }}",
+            "last_response_at": "={{ $json.received_at }}",
+            "done_count": "={{ $json.previous_response === 'DONE' ? $json.done_count : $json.done_count + 1 }}",
+            "current_streak": "={{ $json.previous_response === 'DONE' ? $json.current_streak : $json.current_streak + 1 }}",
+            "consecutive_skips": "=0",
+            "last_updated": "={{ $now.toISO() }}",
+            "outcome_response": "={{ $json.stage === 'outcome' ? 'DONE' : '' }}",
+            "outcome_responded_at": "={{ $json.stage === 'outcome' ? $json.received_at : '' }}"
+          },
+          "matchingColumns": [
+            "nudge_id"
+          ],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "c0000001-0000-0000-0000-000000000013",
+      "name": "Update State DONE",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        2000,
+        320
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_AFTER_IMPORT",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "schedule_state",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "nudge_id": "={{ $json.nudge_id }}",
+            "status": "in_progress",
+            "response": "IN_PROGRESS",
+            "response_wa_id": "={{ $json.incoming_wa_id }}",
+            "responded_at": "={{ $json.received_at }}",
+            "last_response_at": "={{ $json.received_at }}",
+            "last_updated": "={{ $now.toISO() }}"
+          },
+          "matchingColumns": [
+            "nudge_id"
+          ],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "c0000001-0000-0000-0000-000000000014",
+      "name": "Update State IN PROGRESS",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        2220,
+        440
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_AFTER_IMPORT",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "schedule_state",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "nudge_id": "={{ $json.nudge_id }}",
+            "status": "not_yet",
+            "response": "NOT_YET",
+            "response_wa_id": "={{ $json.incoming_wa_id }}",
+            "responded_at": "={{ $json.received_at }}",
+            "last_response_at": "={{ $json.received_at }}",
+            "skip_count": "={{ ['NOT_YET', 'SKIP'].includes($json.previous_response) ? $json.skip_count : $json.skip_count + 1 }}",
+            "current_streak": "=0",
+            "consecutive_skips": "={{ ['NOT_YET', 'SKIP'].includes($json.previous_response) ? $json.consecutive_skips : $json.consecutive_skips + 1 }}",
+            "last_updated": "={{ $now.toISO() }}",
+            "outcome_response": "={{ $json.stage === 'outcome' ? 'NOT_YET' : '' }}",
+            "outcome_responded_at": "={{ $json.stage === 'outcome' ? $json.received_at : '' }}"
+          },
+          "matchingColumns": [
+            "nudge_id"
+          ],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "c0000001-0000-0000-0000-000000000015",
+      "name": "Update State NOT YET",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        2440,
+        520
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_AFTER_IMPORT",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Map a barrier reply to the fixed research enum.\nconst body = String($json.reply_body || $json.reply_value || '').trim().toLowerCase();\nconst map = {\n  '1': 'stress', 'stress': 'stress',\n  '2': 'fatigue', 'tired': 'fatigue', 'fatigue': 'fatigue', 'exhausted': 'fatigue',\n  '3': 'time', 'no time': 'time', 'busy': 'time', 'time': 'time',\n  '4': 'goal_too_hard', 'too hard': 'goal_too_hard', 'hard': 'goal_too_hard', 'difficult': 'goal_too_hard',\n  '5': 'life_event', 'life event': 'life_event', 'life': 'life_event',\n  '6': 'environment', 'environment': 'environment', 'environ': 'environment',\n  '7': 'social', 'social': 'social',\n  '8': 'other', 'other': 'other'\n};\nreturn [{ json: { ...$json, barrier_tag: map[body] || 'other' } }];"
+      },
+      "id": "c0000001-0000-0000-0000-000000000016",
+      "name": "Map Barrier Keyword",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2660,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "schedule_state",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "nudge_id": "={{ $json.nudge_id }}",
+            "barrier_tag": "={{ $json.barrier_tag }}",
+            "barrier_followup_wa_id": "",
+            "response_wa_id": "={{ $json.incoming_wa_id }}",
+            "last_response_at": "={{ $json.received_at }}",
+            "last_updated": "={{ $now.toISO() }}"
+          },
+          "matchingColumns": [
+            "nudge_id"
+          ],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "c0000001-0000-0000-0000-000000000017",
+      "name": "Update Barrier Tag",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        2880,
+        660
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_AFTER_IMPORT",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Build a deterministic free-form acknowledgement inside the user-opened 24-hour window.\nconst result = $('Classify Reply').first().json;\nconst sid = String($env.TWILIO_ACCOUNT_SID || '').trim();\nconst token = String($env.TWILIO_AUTH_TOKEN || '').trim();\nconst from = String($env.TWILIO_WHATSAPP_FROM || '').trim();\nif (!sid || !token || !/^whatsapp:\\+[1-9]\\d{7,14}$/.test(from)) throw new Error('Missing or invalid Twilio feedback credentials');\nconst hours = String(result.followup_delay_hours || '').trim();\nconst messages = {\n  commit_yes: 'Great — noted. I will check back' + (hours ? ' in about ' + hours + ' hour(s)' : ' later') + ' to see how it went.',\n  commit_no: 'Thanks for letting me know. No check-in for this one.',\n  commitment_repeat: 'Thanks — already noted. I will still check back later.',\n  done: 'Thanks — your progress has been marked as Done.',\n  in_progress: 'Thanks — your progress has been marked as In progress. Tap Done when you complete it.',\n  not_yet: 'Thanks — your progress has been marked as Not yet. What got in the way?\\n\\n1 = Stress\\n2 = Tired or fatigued\\n3 = Not enough time\\n4 = Goal too hard\\n5 = Life event\\n6 = Environment\\n7 = Social\\n8 = Other\\n\\nReply with a number or keyword.',\n  barrier: 'Thanks — your response has been recorded.',\n  stop: 'You have been opted out. You will not receive any more health-plan messages.',\n  unknown: 'Please tap one of the buttons on the latest check-in. You can also type STOP at any time.'\n};\n// stop_optout is absent on purpose: Twilio Advanced Opt-Out has already confirmed\n// to the patient, so returning nothing here prevents a duplicate message.\nconst body = messages[result.reply_type];\nif (!body) return [];\nconst encodeForm = pairs => pairs.map(([k, v]) => encodeURIComponent(k) + '=' + encodeURIComponent(String(v))).join('&');\nreturn [{ json: { ...result, outbound_body: body, twilio_url: 'https://api.twilio.com/2010-04-01/Accounts/' + sid + '/Messages.json', twilio_authorization: 'Basic ' + Buffer.from(sid + ':' + token).toString('base64'), twilio_form: encodeForm([['From', from], ['To', 'whatsapp:' + result.from_phone], ['Body', body]]) } }];"
+      },
+      "id": "c0000001-0000-0000-0000-000000000018",
+      "name": "Build Confirmation Request",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3100,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.twilio_url }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $json.twilio_authorization }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/x-www-form-urlencoded",
+        "body": "={{ $json.twilio_form }}",
+        "options": {}
+      },
+      "id": "c0000001-0000-0000-0000-000000000019",
+      "name": "Send Confirmation via Twilio",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3320,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Only NOT_YET confirmations become pending barrier prompts.\nconst result = $('Classify Reply').first().json;\nconst response = items[0].json || {};\nif (result.reply_type !== 'not_yet') return [];\nif (!response.sid) throw new Error('Twilio barrier follow-up response missing Message SID');\nreturn [{ json: { nudge_id: result.nudge_id, barrier_followup_wa_id: response.sid } }];"
+      },
+      "id": "c0000001-0000-0000-0000-000000000022",
+      "name": "Extract Barrier Follow-up ID",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3540,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "schedule_state",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "nudge_id": "={{ $json.nudge_id }}",
+            "barrier_followup_wa_id": "={{ $json.barrier_followup_wa_id }}",
+            "last_updated": "={{ $now.toISO() }}"
+          },
+          "matchingColumns": [
+            "nudge_id"
+          ],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "c0000001-0000-0000-0000-000000000023",
+      "name": "Store Barrier Follow-up ID",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        3760,
+        380
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_AFTER_IMPORT",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {},
+          "conditions": [
+            {
+              "leftValue": "={{ $json.reply_type }}",
+              "rightValue": "commit_yes",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "c0000001-0000-0000-0000-000000000030",
+      "name": "Is COMMIT YES?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        2000,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {},
+          "conditions": [
+            {
+              "leftValue": "={{ $json.reply_type }}",
+              "rightValue": "commit_no",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "c0000001-0000-0000-0000-000000000031",
+      "name": "Is COMMIT NO?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        2220,
+        60
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {},
+          "conditions": [
+            {
+              "leftValue": "={{ $json.reply_type }}",
+              "rightValue": "commitment_repeat",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "c0000001-0000-0000-0000-000000000032",
+      "name": "Is COMMIT REPEAT?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        2440,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "schedule_state",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "nudge_id": "={{ $json.nudge_id }}",
+            "status": "awaiting_followup",
+            "commitment_response": "YES",
+            "commitment_responded_at": "={{ $json.received_at }}",
+            "response_wa_id": "={{ $json.incoming_wa_id }}",
+            "last_response_at": "={{ $json.received_at }}",
+            "last_updated": "={{ $now.toISO() }}"
+          },
+          "matchingColumns": [
+            "nudge_id"
+          ],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "c0000001-0000-0000-0000-000000000033",
+      "name": "Update State COMMIT YES",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        2220,
+        240
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_AFTER_IMPORT",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "schedule_state",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "nudge_id": "={{ $json.nudge_id }}",
+            "status": "declined",
+            "commitment_response": "NO",
+            "commitment_responded_at": "={{ $json.received_at }}",
+            "followup_due_at": "",
+            "response_wa_id": "={{ $json.incoming_wa_id }}",
+            "last_response_at": "={{ $json.received_at }}",
+            "last_updated": "={{ $now.toISO() }}"
+          },
+          "matchingColumns": [
+            "nudge_id"
+          ],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "c0000001-0000-0000-0000-000000000034",
+      "name": "Update State COMMIT NO",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        2440,
+        180
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_AFTER_IMPORT",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "schedule_state",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "nudge_id": "={{ $json.nudge_id }}",
+            "response_wa_id": "={{ $json.incoming_wa_id }}",
+            "last_updated": "={{ $now.toISO() }}"
+          },
+          "matchingColumns": [
+            "nudge_id"
+          ],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "c0000001-0000-0000-0000-000000000035",
+      "name": "Update State COMMIT REPEAT",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        2660,
+        120
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_AFTER_IMPORT",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Fan the opt-out out to one item per still-open question so every pending\n// commitment and follow-up is cancelled, not just the one that was replied to.\n// Each item carries the stage it was cancelled at, because what counts as\n// 'unanswered' differs per stage — see Cancel Pending Follow-ups.\nconst result = $('Classify Reply').first().json;\nconst rows = (result.cancel_rows && result.cancel_rows.length)\n  ? result.cancel_rows\n  : (result.cancel_nudge_ids || []).map(id => ({ nudge_id: id, status: 'awaiting_commitment', prior_commitment: '', prior_outcome: '' }));\nreturn rows.map(r => ({ json: {\n  nudge_id: r.nudge_id,\n  prior_status: r.status || 'awaiting_commitment',\n  prior_commitment: r.prior_commitment || '',\n  prior_outcome: r.prior_outcome || ''\n} }));"
+      },
+      "id": "c0000001-0000-0000-0000-000000000036",
+      "name": "Expand Pending Follow-ups",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1780,
+        20
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "schedule_state",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "nudge_id": "={{ $json.nudge_id }}",
+            "status": "opted_out",
+            "followup_due_at": "",
+            "commitment_response": "={{ $json.prior_status === 'awaiting_followup' ? $json.prior_commitment : 'NO_FEEDBACK' }}",
+            "last_updated": "={{ $now.toISO() }}",
+            "outcome_response": "={{ $json.prior_status === 'awaiting_followup' ? 'NO_FEEDBACK' : $json.prior_outcome }}"
+          },
+          "matchingColumns": [
+            "nudge_id"
+          ],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "c0000001-0000-0000-0000-000000000037",
+      "name": "Cancel Pending Follow-ups",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        2000,
+        20
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_AFTER_IMPORT",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "WhatsApp Webhook": {
+      "main": [
+        [
+          {
+            "node": "Parse Incoming Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Incoming Message": {
+      "main": [
+        [
+          {
+            "node": "Load Users Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Load Users Sheet": {
+      "main": [
+        [
+          {
+            "node": "Resolve Patient",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resolve Patient": {
+      "main": [
+        [
+          {
+            "node": "Load Schedule State",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Load Schedule State": {
+      "main": [
+        [
+          {
+            "node": "Classify Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Classify Reply": {
+      "main": [
+        [
+          {
+            "node": "Is STOP?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is STOP?": {
+      "main": [
+        [
+          {
+            "node": "Update User Status",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Expand Pending Follow-ups",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Is COMMIT YES?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is DONE?": {
+      "main": [
+        [
+          {
+            "node": "Update State DONE",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Is IN PROGRESS?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is IN PROGRESS?": {
+      "main": [
+        [
+          {
+            "node": "Update State IN PROGRESS",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Is NOT YET?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is NOT YET?": {
+      "main": [
+        [
+          {
+            "node": "Update State NOT YET",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Is BARRIER?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is BARRIER?": {
+      "main": [
+        [
+          {
+            "node": "Map Barrier Keyword",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Is UNKNOWN?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is UNKNOWN?": {
+      "main": [
+        [
+          {
+            "node": "Build Confirmation Request",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Update User Status": {
+      "main": [
+        [
+          {
+            "node": "Build Confirmation Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update State DONE": {
+      "main": [
+        [
+          {
+            "node": "Build Confirmation Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update State IN PROGRESS": {
+      "main": [
+        [
+          {
+            "node": "Build Confirmation Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update State NOT YET": {
+      "main": [
+        [
+          {
+            "node": "Build Confirmation Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Map Barrier Keyword": {
+      "main": [
+        [
+          {
+            "node": "Update Barrier Tag",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Barrier Tag": {
+      "main": [
+        [
+          {
+            "node": "Build Confirmation Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Confirmation Request": {
+      "main": [
+        [
+          {
+            "node": "Send Confirmation via Twilio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Confirmation via Twilio": {
+      "main": [
+        [
+          {
+            "node": "Extract Barrier Follow-up ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Barrier Follow-up ID": {
+      "main": [
+        [
+          {
+            "node": "Store Barrier Follow-up ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Expand Pending Follow-ups": {
+      "main": [
+        [
+          {
+            "node": "Cancel Pending Follow-ups",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cancel Pending Follow-ups": {
+      "main": [
+        []
+      ]
+    },
+    "Is COMMIT YES?": {
+      "main": [
+        [
+          {
+            "node": "Update State COMMIT YES",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Is COMMIT NO?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is COMMIT NO?": {
+      "main": [
+        [
+          {
+            "node": "Update State COMMIT NO",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Is COMMIT REPEAT?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is COMMIT REPEAT?": {
+      "main": [
+        [
+          {
+            "node": "Update State COMMIT REPEAT",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Is DONE?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update State COMMIT YES": {
+      "main": [
+        [
+          {
+            "node": "Build Confirmation Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update State COMMIT NO": {
+      "main": [
+        [
+          {
+            "node": "Build Confirmation Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update State COMMIT REPEAT": {
+      "main": [
+        [
+          {
+            "node": "Build Confirmation Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Australia/Melbourne"
+  }
+}

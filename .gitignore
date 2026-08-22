@@ -1,0 +1,34 @@
+# Secrets — never commit
+.env
+.env.local
+.env.*.local
+
+# Local n8n runtime — real secrets & data (keep .example only)
+local/n8n.env
+local/n8n.txt
+n8n_data/
+
+# n8n exports that may contain credentials
+*.json.bak
+
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Google OAuth client secrets
+client_secret_*.json
+.vercel
+
+# Google service-account keys — never commit
+local/*.json
+*-service-account*.json
+
+# Node dependencies
+node_modules/
+
+# Claude Code personal settings
+.claude/settings.local.json

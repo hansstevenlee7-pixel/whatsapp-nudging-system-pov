@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Two-stage feedback simulator (local)</title>
+<style>
+  :root {
+    --bg:#f5f5f7; --card:#fff; --text:#1d1d1f; --secondary:#6e6e73; --border:#d2d2d7;
+    --accent:#0a84ff; --ok:#30d158; --ok-ink:#128a3a; --warn:#ff9f0a; --danger:#ff3b30; --radius:14px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#000; --card:#1c1c1e; --text:#f5f5f7; --secondary:#98989d; --border:#38383a; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; }
+  header { padding:18px 22px; border-bottom:1px solid var(--border); background:var(--card); position:sticky; top:0; z-index:5; }
+  h1 { margin:0 0 3px; font-size:19px; }
+  .sub { color:var(--secondary); font-size:13px; }
+  .warn { display:inline-block; margin-top:8px; font-size:12px; font-weight:600; padding:3px 9px; border-radius:8px; background:rgba(255,159,10,.16); color:#8a5a00; }
+  @media (prefers-color-scheme: dark) { .warn { color:var(--warn); } }
+  main { display:grid; grid-template-columns:minmax(0,1fr) 380px; gap:18px; padding:18px 22px; align-items:start; }
+  @media (max-width:900px) { main { grid-template-columns:1fr; } }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px; margin-bottom:16px; }
+  .card h2 { margin:0 0 12px; font-size:13px; text-transform:uppercase; letter-spacing:.4px; color:var(--secondary); }
+  button { font:inherit; font-weight:600; padding:8px 14px; border-radius:10px; border:1px solid var(--border); background:var(--card); color:var(--text); cursor:pointer; }
+  button.primary { background:var(--accent); border-color:var(--accent); color:#fff; }
+  button.ghost { background:transparent; }
+  button:disabled { opacity:.4; cursor:not-allowed; }
+  .row { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:10px; }
+  label { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.3px; color:var(--secondary); }
+  input, select { font:inherit; padding:7px 10px; border-radius:9px; border:1px solid var(--border); background:var(--card); color:var(--text); }
+  .hint { font-size:12px; color:var(--secondary); margin:6px 0 0; }
+  /* Phone */
+  .phone { border:1px solid var(--border); border-radius:20px; background:var(--bg); padding:12px; height:520px; overflow-y:auto; display:flex; flex-direction:column; gap:9px; }
+  .msg { max-width:86%; padding:9px 12px; border-radius:14px; font-size:14px; white-space:pre-wrap; word-break:break-word; }
+  .msg.out { align-self:flex-start; background:var(--card); border:1px solid var(--border); border-bottom-left-radius:5px; }
+  .msg.in { align-self:flex-end; background:#d9fdd3; color:#111; border-bottom-right-radius:5px; }
+  @media (prefers-color-scheme: dark) { .msg.in { background:#075e54; color:#f5f5f7; } }
+  .msg .meta { display:block; margin-top:5px; font-size:10px; opacity:.65; }
+  .btns { display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; }
+  .btns button { font-size:12px; padding:5px 11px; border-radius:999px; border-color:var(--accent); color:var(--accent); background:transparent; }
+  table { width:100%; border-collapse:collapse; font-size:12px; }
+  th, td { text-align:left; padding:5px 7px; border-bottom:1px solid var(--border); vertical-align:top; }
+  th { color:var(--secondary); font-size:11px; text-transform:uppercase; letter-spacing:.3px; }
+  code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:11.5px; }
+  .pill { display:inline-block; font-size:11px; font-weight:700; padding:2px 7px; border-radius:7px; background:rgba(120,120,128,.14); color:var(--secondary); }
+  .pill.await { background:rgba(255,159,10,.16); color:#8a5a00; }
+  .pill.ok { background:rgba(48,209,88,.16); color:var(--ok-ink); }
+  .pill.bad { background:rgba(255,59,48,.13); color:var(--danger); }
+  @media (prefers-color-scheme: dark) { .pill.await { color:var(--warn); } }
+  .scroll { overflow-x:auto; }
+  #status { font-size:13px; min-height:20px; margin-top:8px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Two-stage feedback simulator</h1>
+  <div class="sub">Drives the real Workflow B / C / F Code nodes against an in-memory sheet.</div>
+  <div class="warn">Local only — no Google Sheets, Supabase, Twilio or n8n is contacted. Nothing persists across a restart.</div>
+</header>
+
+<main>
+  <div>
+    <div class="card">
+      <h2>1 · Simulated clock</h2>
+      <div class="row">
+        <label for="clock">Pretend it is</label>
+        <input type="datetime-local" id="clock" step="60" />
+        <button class="ghost" id="nowBtn">Now</button>
+        <button class="ghost" data-skip="1">+1h</button>
+        <button class="ghost" data-skip="4">+4h</button>
+        <button class="ghost" data-skip="24">+24h</button>
+      </div>
+      <p class="hint">Every action below is evaluated at this instant, so a 4-hour follow-up delay can be tested in seconds rather than in four hours.</p>
+    </div>
+
+    <div class="card">
+      <h2>2 · Run the pipeline</h2>
+      <div class="row">
+        <button class="primary" id="deliverBtn">Deliver due nudges (Workflow B)</button>
+        <button class="primary" id="tickBtn">Run scheduler tick (Workflow F)</button>
+        <button class="ghost" id="resetBtn">Reset sheet</button>
+      </div>
+      <p class="hint">Approve a schedule in the Monitor first, then deliver. Run the scheduler tick after advancing the clock past the follow-up delay.</p>
+      <div id="status"></div>
+    </div>
+
+    <div class="card">
+      <h2>3 · schedule_state</h2>
+      <div class="scroll"><table id="stateTable"><thead><tr>
+        <th>nudge</th><th>status</th><th>f/up</th><th>commitment</th><th>due</th><th>check sent</th><th>outcome</th>
+      </tr></thead><tbody></tbody></table></div>
+    </div>
+  </div>
+
+  <div>
+    <div class="card">
+      <h2>Patient handset</h2>
+      <div class="row">
+        <label for="phone">From</label>
+        <select id="phone"></select>
+      </div>
+      <div class="phone" id="phone-log"></div>
+      <div class="row" style="margin-top:12px">
+        <input type="text" id="typed" placeholder="Type a reply…" style="flex:1" />
+        <button id="sendTyped">Send</button>
+      </div>
+      <div class="btns">
+        <button data-quick="STOP">STOP (typed)</button>
+        <button data-optout="STOP">STOP via Twilio opt-out</button>
+      </div>
+      <p class="hint">Tap a button on a message to reply in context, exactly as WhatsApp would set <code>OriginalRepliedMessageSid</code>.</p>
+    </div>
+  </div>
+</main>
+
+<script>
+(function () {
+  "use strict";
+  var el = function (id) { return document.getElementById(id); };
+  var state = { outbox: [], schedule_state: [], users: [] };
+
+  function clockIso() {
+    var value = el("clock").value;
+    return value ? new Date(value).toISOString() : new Date().toISOString();
+  }
+  function setClock(date) {
+    var local = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+    el("clock").value = local.toISOString().slice(0, 16);
+  }
+  function api(path, options) {
+    var url = path + (path.indexOf("?") >= 0 ? "&" : "?") + "at=" + encodeURIComponent(clockIso());
+    return fetch(url, Object.assign({ headers: { "content-type": "application/json" } }, options || {}))
+      .then(function (r) { return r.json().then(function (b) { if (!r.ok) throw new Error(b.error || "request failed"); return b; }); });
+  }
+  function status(text, kind) {
+    el("status").textContent = text;
+    el("status").style.color = kind === "err" ? "var(--danger)" : kind === "ok" ? "var(--ok-ink)" : "var(--secondary)";
+  }
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]; }); }
+  function shortSid(sid) { return String(sid || "").slice(0, 10); }
+
+  function refresh() {
+    return api("/__sim/state").then(function (data) {
+      state = data;
+      renderPhones();
+      renderLog();
+      renderState();
+    });
+  }
+
+  function renderPhones() {
+    var select = el("phone");
+    var current = select.value;
+    select.innerHTML = "";
+    state.users.forEach(function (u) {
+      var option = document.createElement("option");
+      option.value = u.phone;
+      option.textContent = u.name + " · " + u.phone + (u.user_status !== "active" ? " (" + u.user_status + ")" : "");
+      select.appendChild(option);
+    });
+    if (current) select.value = current;
+  }
+
+  function renderLog() {
+    var log = el("phone-log");
+    var phone = el("phone").value;
+    log.innerHTML = "";
+    // The outbox arrives newest-first for the table; the handset reads oldest-first.
+    state.outbox.slice().reverse().filter(function (m) {
+      return m.direction === "in" ? m.from === phone : String(m.to || "").indexOf(phone) >= 0;
+    }).forEach(function (m) {
+      var div = document.createElement("div");
+      div.className = "msg " + m.direction;
+      div.innerHTML = esc(m.body) + '<span class="meta">' + esc(m.kind || "reply") + " · " + shortSid(m.sid) + "</span>";
+      if (m.direction === "out" && m.buttons && m.buttons.length) {
+        var btns = document.createElement("div");
+        btns.className = "btns";
+        m.buttons.forEach(function (label) {
+          var b = document.createElement("button");
+          b.textContent = label;
+          b.addEventListener("click", function () { reply({ buttonPayload: label, contextSid: m.sid }); });
+          btns.appendChild(b);
+        });
+        div.appendChild(btns);
+      }
+      log.appendChild(div);
+    });
+    log.scrollTop = log.scrollHeight;
+  }
+
+  function pill(value, awaiting) {
+    if (!value) return '<span class="pill">—</span>';
+    var cls = ["done", "YES", "DONE"].indexOf(value) >= 0 ? "ok"
+      : ["no_feedback", "NO_FEEDBACK", "declined", "NO", "opted_out"].indexOf(value) >= 0 ? "bad"
+      : awaiting ? "await" : "";
+    return '<span class="pill ' + cls + '">' + esc(value) + "</span>";
+  }
+
+  function renderState() {
+    var body = el("stateTable").querySelector("tbody");
+    body.innerHTML = "";
+    state.schedule_state.forEach(function (row) {
+      var tr = document.createElement("tr");
+      tr.innerHTML =
+        "<td><code>" + esc(String(row.nudge_id).slice(-16)) + "</code></td>" +
+        "<td>" + pill(row.status, String(row.status).indexOf("awaiting") === 0) + "</td>" +
+        "<td>" + (row.followup_enabled === "TRUE" ? esc(row.followup_delay_hours) + "h" : "—") + "</td>" +
+        "<td>" + pill(row.commitment_response) + "</td>" +
+        "<td>" + esc(String(row.followup_due_at || "").slice(11, 16) || "—") + "</td>" +
+        "<td>" + esc(String(row.followup_sent_at || "").slice(11, 16) || "—") + "</td>" +
+        "<td>" + pill(row.outcome_response) + "</td>";
+      body.appendChild(tr);
+    });
+    if (!state.schedule_state.length) {
+      body.innerHTML = '<tr><td colspan="7" style="color:var(--secondary)">Nothing yet — approve a schedule in the Monitor, then deliver.</td></tr>';
+    }
+  }
+
+  function reply(payload) {
+    return api("/__sim/reply", { method: "POST", body: JSON.stringify(Object.assign({ from: el("phone").value }, payload)) })
+      .then(function (result) {
+        status("Reply classified as " + result.reply_type + (result.stage ? " (stage: " + result.stage + ")" : "") + ".", "ok");
+        return refresh();
+      })
+      .catch(function (error) { status(error.message, "err"); });
+  }
+
+  el("nowBtn").addEventListener("click", function () { setClock(new Date()); });
+  Array.prototype.forEach.call(document.querySelectorAll("[data-skip]"), function (button) {
+    button.addEventListener("click", function () {
+      var hours = Number(button.getAttribute("data-skip"));
+      setClock(new Date(Date.parse(clockIso()) + hours * 3600000));
+      status("Clock advanced " + hours + "h. Run a scheduler tick to see what became due.");
+    });
+  });
+  el("deliverBtn").addEventListener("click", function () {
+    api("/__sim/deliver", { method: "POST" })
+      .then(function (r) { status("Delivered " + r.delivered + " nudge(s).", r.delivered ? "ok" : ""); return refresh(); })
+      .catch(function (e) { status(e.message, "err"); });
+  });
+  el("tickBtn").addEventListener("click", function () {
+    api("/__sim/tick", { method: "POST" })
+      .then(function (r) {
+        status("Scheduler: sent " + r.sent + " outcome check(s), expired " + r.expired_commitment + " commitment(s) and " + r.expired_outcome + " outcome(s).",
+          r.sent || r.expired_commitment || r.expired_outcome ? "ok" : "");
+        return refresh();
+      })
+      .catch(function (e) { status(e.message, "err"); });
+  });
+  el("resetBtn").addEventListener("click", function () {
+    api("/__sim/reset", { method: "POST" }).then(function () { status("Sheet reset to seed data.", "ok"); return refresh(); });
+  });
+  el("sendTyped").addEventListener("click", function () {
+    var body = el("typed").value.trim();
+    if (!body) return;
+    el("typed").value = "";
+    reply({ body: body });
+  });
+  el("typed").addEventListener("keydown", function (event) { if (event.key === "Enter") el("sendTyped").click(); });
+  el("phone").addEventListener("change", renderLog);
+  Array.prototype.forEach.call(document.querySelectorAll("[data-quick]"), function (button) {
+    button.addEventListener("click", function () { reply({ body: button.getAttribute("data-quick") }); });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll("[data-optout]"), function (button) {
+    button.addEventListener("click", function () { reply({ body: "STOP", optOutType: button.getAttribute("data-optout") }); });
+  });
+
+  setClock(new Date());
+  refresh().then(function () { status("Ready. Approve a schedule in the Monitor, then deliver."); });
+})();
+</script>
+</body>
+</html>

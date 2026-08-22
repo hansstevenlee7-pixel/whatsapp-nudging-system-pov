@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Lifestyle Nudging</title>
+  <script>
+    // Some Supabase invite/recovery emails return to the configured Site URL
+    // instead of the requested redirect path. Preserve the URL fragment (it
+    // contains the short-lived session) and hand only auth flows to the public
+    // password page before rendering the landing page.
+    (function () {
+      var hash = new URLSearchParams(location.hash.replace(/^#/, ""));
+      var query = new URLSearchParams(location.search);
+      var type = hash.get("type") || query.get("type");
+      var authError = query.has("error_code") || query.has("error_description") || hash.has("error_code") || hash.has("error_description");
+      if ((type === "invite" || type === "recovery") && hash.has("access_token") || authError) {
+        location.replace("set-password.html" + location.search + location.hash);
+      }
+    })();
+  </script>
+  <style>
+    /* ============================================================================
+       Landing — hub for the two operator flows (Input / Monitor).
+       Apple-light styling, identical design tokens to input.html + monitor.html
+       (Monash FIT5126 lifestyle-nudging prototype). Pure navigation, no network.
+       ============================================================================ */
+    :root {
+      color-scheme: light;
+      --bg: #f2f2f7; --card: #ffffff; --border: #d1d1d6; --border-strong: #b8b8bd;
+      --text: #1c1c1e; --secondary: #6e6e73; --placeholder: #8e8e93;
+      --accent: #0a84ff; --accent-press: #0071e3; --ok: #30d158; --danger: #ff3b30;
+      --s1: 8px; --s2: 16px; --s3: 24px; --s4: 32px; --s5: 40px;
+      --radius-card: 18px; --radius-field: 12px;
+      --shadow: 0 1px 2px rgba(0,0,0,.04), 0 1px 3px rgba(0,0,0,.05);
+      --shadow-lift: 0 6px 16px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.06);
+      --ring: 0 0 0 4px rgba(10,132,255,.16);
+      --maxw: 720px;
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0; min-height: 100dvh;
+      background: var(--bg); color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+                   "Segoe UI", Roboto, system-ui, sans-serif;
+      font-size: 17px; line-height: 1.45;
+      -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+    }
+
+    .page {
+      max-width: var(--maxw); margin: 0 auto;
+      padding: 72px 20px 96px;
+      display: flex; flex-direction: column; min-height: 100dvh;
+    }
+    @media (max-width: 480px) { .page { padding: 44px 16px 64px; } }
+
+    /* ---- Header ------------------------------------------------------------ */
+    .hero { margin-bottom: var(--s5); }
+    .eyebrow {
+      display: inline-block; font-size: 13px; font-weight: 600; letter-spacing: .3px;
+      color: var(--accent); margin: 0 0 12px;
+    }
+    .hero h1 {
+      font-size: 40px; font-weight: 700; letter-spacing: -0.6px;
+      line-height: 1.05; margin: 0 0 var(--s2);
+    }
+    @media (max-width: 480px) { .hero h1 { font-size: 32px; } }
+    .hero p { font-size: 18px; color: var(--secondary); margin: 0; max-width: 54ch; }
+
+    /* ---- Choice grid ------------------------------------------------------- */
+    .choices { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s3); }
+    @media (max-width: 560px) { .choices { grid-template-columns: 1fr; } }
+
+    .choice {
+      display: flex; flex-direction: column;
+      background: var(--card);
+      border: 1px solid transparent;
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow);
+      padding: var(--s3);
+      text-decoration: none; color: inherit;
+      transition: transform .14s ease, box-shadow .14s ease, border-color .14s ease;
+    }
+    .choice:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); border-color: var(--border); }
+    .choice:active { transform: translateY(-1px); }
+    .choice:focus-visible { outline: none; box-shadow: var(--ring); }
+
+    .choice .icon {
+      width: 56px; height: 56px; border-radius: 15px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: var(--s3);
+    }
+    .choice.input .icon   { background: rgba(10,132,255,.12); color: var(--accent); }
+    .choice.monitor .icon { background: rgba(48,209,88,.14);  color: #248a3d; }
+
+    .choice h2 {
+      font-size: 21px; font-weight: 640; letter-spacing: -0.2px;
+      margin: 0 0 var(--s1);
+    }
+    .choice p {
+      font-size: 15px; line-height: 1.5; color: var(--secondary);
+      margin: 0 0 var(--s3); flex: 1;
+    }
+    .choice .go {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 15px; font-weight: 600;
+    }
+    .choice.input .go   { color: var(--accent); }
+    .choice.monitor .go { color: #248a3d; }
+    .choice .go svg { transition: transform .14s ease; }
+    .choice:hover .go svg { transform: translateX(3px); }
+
+    /* ---- Pipeline strip ---------------------------------------------------- */
+    .pipeline {
+      margin-top: var(--s5); padding: var(--s2) var(--s3);
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px;
+      display: flex; align-items: center; flex-wrap: wrap; gap: 10px 12px;
+      font-size: 13px; color: var(--secondary);
+    }
+    .pipeline b { color: var(--text); font-weight: 600; }
+    .pipeline .arrow { color: var(--placeholder); }
+
+    .footnote { margin-top: auto; padding-top: var(--s5); font-size: 13px; color: var(--secondary); }
+    .footnote code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <span class="eyebrow">Monash FIT5126 · Research prototype</span>
+      <h1>Lifestyle Nudging</h1>
+      <p>A closed-loop system that turns a doctor’s lifestyle prescription into a schedule of
+         personalised, adaptive WhatsApp nudges. Choose an operation to begin.</p>
+    </header>
+
+    <nav class="choices">
+      <!-- Input -->
+      <a class="choice input" href="input.html">
+        <span class="icon" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 15V4" /><path d="M8 8l4-4 4 4" />
+            <path d="M4 14v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4" />
+          </svg>
+        </span>
+        <h2>New intake</h2>
+        <p>Register a patient and submit their prescription. The AI parses it into a first-week
+           nudge plan and writes it for review.</p>
+        <span class="go">Start intake
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="M13 6l6 6-6 6" /></svg>
+        </span>
+      </a>
+
+      <!-- Monitor -->
+      <a class="choice monitor" href="monitor.html">
+        <span class="icon" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 11l3 3L22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+          </svg>
+        </span>
+        <h2>Review &amp; monitor</h2>
+        <p>Open a patient’s parsed schedule, edit or approve nudges before delivery, and track the
+           plan’s status. The human-in-the-loop gate.</p>
+        <span class="go">Open monitor
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="M13 6l6 6-6 6" /></svg>
+        </span>
+      </a>
+    </nav>
+
+    <div class="pipeline" aria-label="Pipeline overview">
+      <b>Pipeline</b>
+      <span>Input</span><span class="arrow">→</span>
+      <span>Interpret (LLM)</span><span class="arrow">→</span>
+      <span>Review</span><span class="arrow">→</span>
+      <span>Nudge</span><span class="arrow">→</span>
+      <span>Feedback</span><span class="arrow">→</span>
+      <span>Adapt</span>
+    </div>
+
+    <p class="footnote"><a href="login.html">Clinician sign in</a> · Intake and review require an invited account.</p>
+  </main>
+</body>
+</html>
