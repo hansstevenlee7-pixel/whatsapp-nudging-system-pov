@@ -4,6 +4,7 @@
 .env.*.local
 
 # Local n8n runtime — real secrets & data (keep .example only)
+n8n.env
 local/n8n.env
 local/n8n.txt
 n8n_data/
