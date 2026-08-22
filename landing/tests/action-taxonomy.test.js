@@ -20,7 +20,6 @@ const ReviewState = require("../review-state");
 const projectRoot = path.resolve(__dirname, "../..");
 const readJson = relative => JSON.parse(fs.readFileSync(path.join(projectRoot, relative), "utf8"));
 const intake = readJson("workflows/workflow_a_intake.json");
-const adaptation = readJson("workflows/workflow_d_adaptation.json");
 const monitorHtml = fs.readFileSync(path.resolve(__dirname, "../monitor.html"), "utf8");
 
 const ACTION = "Walk for 20 minutes after dinner — outdoors if it's dry";
@@ -378,29 +377,6 @@ test("the trace card owns the whole behaviour, taxonomy included", function () {
   // A stored action missing from the list is pinned verbatim, or the <select>
   // would snap to its first option and silently change what the slot sends.
   assert.match(monitorHtml, /not in this prescription/);
-});
-
-// ---- Weekly adaptation may reword, never re-scope -------------------------
-
-test("weekly adaptation restores the stored action even when the model rewrites it", function () {
-  const stored = [{ nudge_id: "ndg-1", prescription_id: "rx-1", user_id: "usr-1", pillar: "sleep", action_text: "Be in bed by 10pm", scheduled_date: "2026-08-10" }];
-  const returned = [{
-    nudge_id: "ndg-1", pillar: "sleep", nudge_type: "affirmation", tone_variant: "encouraging",
-    template_name: "health_plan_reminder", message_body: "Nine nights running — keep it up.",
-    action_text: "Sleep whenever you feel tired"
-  }];
-  const code = node(adaptation, "Validation Gate").parameters.jsCode;
-  const userCtx = { user: { user_id: "usr-1" }, summary_text: "Week recap", nextWeekNudges: stored };
-  const items = [{ json: { candidates: [{ content: { parts: [{ text: JSON.stringify(returned) }] } }] } }];
-  const result = runCode(code, { items, $: () => ({ item: { json: userCtx } }) })[0].json;
-
-  assert.equal(result.validation_passed, true);
-  assert.equal(result.new_nudges[0].action_text, "Be in bed by 10pm");
-  assert.equal(result.action_text_restored, 1);
-  assert.equal(result.new_nudges[0].message_body, "Nine nights running — keep it up.");
-  // Belt and braces: the Sheets writer never maps the column at all.
-  assert.equal(node(adaptation, "Update Nudge Rows").parameters.columns.value.action_text, undefined);
-  assert.match(node(adaptation, "Build Gemini Prompt").parameters.jsCode, /Never reword, shorten, merge or replace it/);
 });
 
 // ---- Legacy rows keep working ------------------------------------------

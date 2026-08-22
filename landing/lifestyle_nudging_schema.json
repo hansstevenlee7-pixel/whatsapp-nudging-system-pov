@@ -1,11 +1,18 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Lifestyle Nudging Schema",
-  "description": "Flat five-layer schema for the AI-powered personalised lifestyle nudging system. No nested objects — all layers are arrays of flat records keyed by ID fields for n8n compatibility.",
+  "title": "Send-and-Observe Lifestyle Nudging System Schema",
+  "description": "Flat Google Sheets contract for clinician review, scheduled WhatsApp delivery, STOP safety, and auditable provider delivery events.",
   "type": "object",
-  "required": ["user", "questionnaire", "prescriptions", "nudges", "weekly_schedule", "schedule_state"],
+  "required": [
+    "user",
+    "questionnaire",
+    "prescriptions",
+    "nudges",
+    "weekly_schedule",
+    "schedule_state",
+    "delivery_events"
+  ],
   "additionalProperties": false,
-
   "$defs": {
     "pillar": {
       "type": "string",
@@ -20,76 +27,60 @@
     },
     "category": {
       "type": "string",
-      "enum": ["increase", "reduce", "maintain", "avoid", "establish"]
+      "enum": [
+        "increase",
+        "reduce",
+        "maintain",
+        "avoid",
+        "establish"
+      ]
     },
     "nudge_type": {
       "type": "string",
-      "enum": ["reminder", "reflection", "challenge", "affirmation"]
+      "enum": [
+        "reminder",
+        "reflection",
+        "challenge",
+        "affirmation"
+      ]
     },
     "nudge_status": {
       "type": "string",
-      "enum": ["pending", "needs_review", "approved", "rejected", "sent", "awaiting_commitment", "declined", "awaiting_followup", "in_progress", "not_yet", "done", "no_feedback", "opted_out", "skipped", "failed", "paused_adaptation"],
-      "description": "Lifecycle: Workflow A writes needs_review → human review page approves/rejects → Workflow B delivery sends only approved. A single-stage nudge goes approved → sent. A two-stage nudge (followup_enabled) goes approved → awaiting_commitment → declined | awaiting_followup → done | not_yet | no_feedback. no_feedback is the terminal state for a window that expired without a reply and must never be recorded as not_yet. opted_out is set when STOP cancels a pending stage. 'pending' retained for hand-filled/manual rows."
-    },
-    "commitment_response": {
-      "type": ["string", "null"],
-      "enum": ["YES", "NO", "NO_FEEDBACK", "", null],
-      "description": "Stage 1 of the two-stage feedback flow: the patient's answer to 'Will you do this?'. Deliberately kept separate from outcome_response — a YES that later goes unanswered is a different research observation from a NO, and compressing both stages into one field would erase that distinction."
-    },
-    "outcome_response": {
-      "type": ["string", "null"],
-      "enum": ["DONE", "NOT_YET", "NO_FEEDBACK", "", null],
-      "description": "Stage 2 of the two-stage feedback flow: the patient's answer to the delayed 'Were you able to complete it?'. NOT_YET opens the existing barrier question. A missing reply is NO_FEEDBACK, never NOT_YET."
-    },
-    "followup_delay_hours": {
-      "type": ["integer", "string", "null"],
-      "description": "Whole hours between the initial nudge's delivery and its outcome check. Required when followup_enabled is TRUE; 1-72 inclusive. Stored as text because Sheets returns FORMATTED_VALUE, so every comparison is String()-normalized."
-    },
-    "barrier_tag": {
-      "type": ["string", "null"],
       "enum": [
-        "stress",
-        "fatigue",
-        "time",
-        "goal_too_hard",
-        "life_event",
-        "environment",
-        "social",
-        "other",
-        null
-      ]
-    },
-    "user_response": {
-      "type": ["string", "null"],
-      "enum": [
-        "DONE",
-        "IN_PROGRESS",
-        "NOT_YET",
-        "SKIP",
-        "NO_FEEDBACK",
-        "STOP",
-        "",
-        null
+        "pending",
+        "needs_review",
+        "approved",
+        "rejected",
+        "accepted",
+        "queued",
+        "sending",
+        "sent",
+        "delivered",
+        "read",
+        "failed",
+        "undelivered",
+        "canceled"
       ],
-      "description": "Outcome-level summary of the exchange, kept for Workflow D aggregation and the evaluation metrics. In the two-stage flow this mirrors outcome_response once stage 2 resolves and stays blank while a stage is still open — the authoritative per-stage values are commitment_response and outcome_response, which are never merged into this field. NO_FEEDBACK means a response window closed unanswered and must never be recorded as NOT_YET. STOP triggers immediate opt-out (mandatory ethics requirement). Sets user_status=opted_out; Workflow C halts all future sends."
+      "description": "Review and outbound delivery lifecycle. Provider states are system observations, not patient adherence outcomes."
     },
     "tone_variant": {
-      "type": ["string", "null"],
-      "enum": ["encouraging", "neutral_informational", null]
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "encouraging",
+        "neutral_informational",
+        null
+      ]
     },
     "action_text": {
       "type": "string",
       "minLength": 1,
       "maxLength": 1024,
       "description": "Clinician-editable execution step: the concrete thing the patient is asked to do for this nudge slot. Drafted by the LLM at intake, freely revised by the clinician at review, and immutable to weekly adaptation. Free text by design — pillar and category remain the locked taxonomy, so the research trace stays raw prescription → locked pillar/category → clinician-approved action → message → feedback."
-    },
-    "followup_enabled": {
-      "type": ["string", "boolean", "null"],
-      "enum": ["TRUE", "FALSE", true, false, "", null],
-      "description": "Clinician switch for the two-stage feedback flow on this nudge. TRUE turns the initial message into a commitment question ('Will you do this?', Yes/No) and arms one delayed outcome check. FALSE keeps the existing single-stage Done/In progress/Not yet quick reply. Stored as the literal text TRUE/FALSE so a Sheets round trip cannot turn it into a locale-dependent boolean."
     }
   },
-
   "x_legacy_action_labels": {
     "description": "Schema annotation (not a JSON-Schema keyword; ignored by validators). Migration aid only: readable text for rows written before action_text existed, keyed by the retired prescriptions.target_behavior token. Nothing generates these tokens any more — the LLM drafts action_text and the clinician revises it. Default nudge timing now comes from the patient's preferred_nudge_time or the source nudge, not from this table.",
     "daily_steps_10000": "Walk 10,000 steps",
@@ -118,60 +109,121 @@
     "stress_journaling_daily": "Write a short stress journal entry",
     "deep_breathing_daily": "Do a deep-breathing exercise"
   },
-
   "properties": {
     "user": {
       "type": "array",
       "description": "One record per registered user.",
       "items": {
         "type": "object",
-        "required": ["user_id", "doctor_id", "name", "phone", "email", "created_at", "user_status"],
+        "required": [
+          "user_id",
+          "doctor_id",
+          "name",
+          "phone",
+          "email",
+          "created_at",
+          "user_status"
+        ],
         "additionalProperties": false,
         "properties": {
-          "user_id":     { "type": "string", "description": "UUID v4" },
-          "doctor_id":   { "type": "string", "description": "Immutable clinician identity that owns this patient" },
-          "name":        { "type": "string" },
-          "phone":       { "type": "string", "pattern": "^\\+[1-9]\\d{7,14}$", "description": "E.164 format, e.g. +61412345678" },
-          "email":       { "type": "string", "format": "email" },
-          "created_at":  { "type": "string", "format": "date-time" },
+          "user_id": {
+            "type": "string",
+            "description": "UUID v4"
+          },
+          "doctor_id": {
+            "type": "string",
+            "description": "Immutable clinician identity that owns this patient"
+          },
+          "name": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string",
+            "pattern": "^\\+[1-9]\\d{7,14}$",
+            "description": "E.164 format, e.g. +61412345678"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
           "user_status": {
             "type": "string",
-            "enum": ["active", "disabled", "opted_out", "paused"],
+            "enum": [
+              "active",
+              "disabled",
+              "opted_out",
+              "paused"
+            ],
             "description": "disabled is a reversible clinical archive; opted_out is set by STOP. Workflow B sends only to active users."
           }
         }
       }
     },
-
     "questionnaire": {
       "type": "array",
       "description": "Baseline lifestyle/health questionnaire completed at enrolment. One record per user.",
       "items": {
         "type": "object",
         "required": [
-          "questionnaire_id", "user_id", "completed_at",
-          "age", "gender", "activity_level",
-          "primary_goal", "preferred_nudge_time", "opt_in_whatsapp"
+          "questionnaire_id",
+          "user_id",
+          "completed_at",
+          "age",
+          "gender",
+          "activity_level",
+          "primary_goal",
+          "preferred_nudge_time",
+          "opt_in_whatsapp"
         ],
         "additionalProperties": false,
         "properties": {
-          "questionnaire_id":    { "type": "string" },
-          "user_id":             { "type": "string" },
-          "completed_at":        { "type": "string", "format": "date-time" },
-          "age":                 { "type": "integer", "minimum": 18, "maximum": 120 },
+          "questionnaire_id": {
+            "type": "string"
+          },
+          "user_id": {
+            "type": "string"
+          },
+          "completed_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "age": {
+            "type": "integer",
+            "minimum": 18,
+            "maximum": 120
+          },
           "gender": {
             "type": "string",
-            "enum": ["male", "female", "non_binary", "prefer_not_to_say"]
+            "enum": [
+              "male",
+              "female",
+              "non_binary",
+              "prefer_not_to_say"
+            ]
           },
           "activity_level": {
             "type": "string",
-            "enum": ["sedentary", "lightly_active", "moderately_active", "very_active"]
+            "enum": [
+              "sedentary",
+              "lightly_active",
+              "moderately_active",
+              "very_active"
+            ]
           },
           "primary_goal": {
             "type": "string",
             "enum": [
-              "weight_management", "cardiovascular_health", "mental_wellbeing",
-              "sleep_improvement", "substance_reduction", "social_engagement", "general_wellness"
+              "weight_management",
+              "cardiovascular_health",
+              "mental_wellbeing",
+              "sleep_improvement",
+              "substance_reduction",
+              "social_engagement",
+              "general_wellness"
             ]
           },
           "preferred_nudge_time": {
@@ -179,27 +231,43 @@
             "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$",
             "description": "HH:MM in user's local time"
           },
-          "opt_in_whatsapp": { "type": "boolean" }
+          "opt_in_whatsapp": {
+            "type": "boolean"
+          }
         }
       }
     },
-
     "prescriptions": {
       "type": "array",
       "description": "Canonical prescription objects parsed from the doctor's free-text input by the LLM at intake. A prescription is the doctor's note, not a single behaviour: the taxonomy triple (action_text × pillar × category) lives on each nudge and weekly slot, so one prescription may span several pillars. The pillar and category here are the DEFAULTS a new behaviour starts from and the fallback for legacy rows that carry none — they are not a lock.",
       "items": {
         "type": "object",
         "required": [
-          "prescription_id", "user_id", "doctor_id", "issued_date",
-          "pillar", "category",
-          "frequency_per_week", "duration_weeks", "status"
+          "prescription_id",
+          "user_id",
+          "doctor_id",
+          "issued_date",
+          "pillar",
+          "category",
+          "frequency_per_week",
+          "duration_weeks",
+          "status"
         ],
         "additionalProperties": false,
         "properties": {
-          "prescription_id":    { "type": "string" },
-          "user_id":            { "type": "string" },
-          "doctor_id":          { "type": "string" },
-          "issued_date":        { "type": "string", "format": "date" },
+          "prescription_id": {
+            "type": "string"
+          },
+          "user_id": {
+            "type": "string"
+          },
+          "doctor_id": {
+            "type": "string"
+          },
+          "issued_date": {
+            "type": "string",
+            "format": "date"
+          },
           "pillar": {
             "$ref": "#/$defs/pillar",
             "description": "Default pillar for behaviours added to this prescription, and the fallback for a legacy nudge or slot whose own pillar is blank. Changing it never rewrites an existing behaviour."
@@ -209,58 +277,110 @@
             "description": "Default category for behaviours added to this prescription, and the fallback for a nudge or slot whose own category is blank."
           },
           "target_behavior": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "description": "RETIRED fixed-action enum. Nothing writes this any more; it is retained only so legacy rows still validate and can be migrated to action_text through x_legacy_action_labels. Blank on every new row.",
             "enum": [
-              "", null,
-              "daily_steps_10000", "daily_steps_7500", "daily_steps_5000",
-              "aerobic_exercise_30min", "aerobic_exercise_20min",
-              "resistance_training_2x_week", "resistance_training_3x_week",
-              "vegetable_servings_5_per_day", "fruit_servings_2_per_day",
-              "sugar_intake_reduction", "processed_food_reduction",
-              "water_intake_2L_per_day", "alcohol_reduction", "alcohol_elimination",
-              "smoking_reduction", "smoking_cessation",
-              "sleep_7_to_9_hours", "sleep_onset_consistency",
+              "",
+              null,
+              "daily_steps_10000",
+              "daily_steps_7500",
+              "daily_steps_5000",
+              "aerobic_exercise_30min",
+              "aerobic_exercise_20min",
+              "resistance_training_2x_week",
+              "resistance_training_3x_week",
+              "vegetable_servings_5_per_day",
+              "fruit_servings_2_per_day",
+              "sugar_intake_reduction",
+              "processed_food_reduction",
+              "water_intake_2L_per_day",
+              "alcohol_reduction",
+              "alcohol_elimination",
+              "smoking_reduction",
+              "smoking_cessation",
+              "sleep_7_to_9_hours",
+              "sleep_onset_consistency",
               "screen_time_reduction_before_bed",
-              "mindfulness_10min_daily", "mindfulness_5min_daily",
-              "social_activity_1x_week", "social_activity_2x_week",
-              "stress_journaling_daily", "deep_breathing_daily"
+              "mindfulness_10min_daily",
+              "mindfulness_5min_daily",
+              "social_activity_1x_week",
+              "social_activity_2x_week",
+              "stress_journaling_daily",
+              "deep_breathing_daily"
             ]
           },
-          "frequency_per_week": { "type": "integer", "minimum": 1, "maximum": 7 },
-          "duration_weeks":     { "type": "integer", "minimum": 1, "maximum": 52 },
+          "frequency_per_week": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 7
+          },
+          "duration_weeks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 52
+          },
           "prescription_raw_text": {
             "type": "string",
             "description": "Original free-text from the doctor. Stored for audit; not used downstream."
           },
           "status": {
             "type": "string",
-            "enum": ["active", "completed", "paused", "withdrawn", "archived"],
+            "enum": [
+              "active",
+              "completed",
+              "paused",
+              "withdrawn",
+              "archived"
+            ],
             "description": "archived is a reversible clinical archive set by the clinician portal: the prescription's weekly slots are deactivated and its unsent future nudges cancelled, while sent history is preserved. Reactivating restores the prescription only — the schedule must be rebuilt and re-approved. A blank value reads as active."
           }
         }
       }
     },
-
     "nudges": {
       "type": "array",
       "description": "Pre-written nudge messages generated in bulk at intake (single LLM call). message_body and message_body_alt are the only LLM free-text fields — all others are enumerations.",
       "items": {
         "type": "object",
         "required": [
-          "nudge_id", "prescription_id", "user_id",
-          "nudge_type", "pillar", "action_text",
-          "scheduled_date", "scheduled_time",
-          "message_body", "template_name",
-          "status", "week_number", "tone_variant"
+          "nudge_id",
+          "prescription_id",
+          "user_id",
+          "nudge_type",
+          "pillar",
+          "action_text",
+          "scheduled_date",
+          "scheduled_time",
+          "message_body",
+          "template_name",
+          "status",
+          "week_number",
+          "tone_variant"
         ],
         "additionalProperties": false,
         "properties": {
-          "nudge_id":        { "type": "string" },
-          "schedule_slot_id": { "type": ["string", "null"], "description": "Stable recurring slot that materialized this delivery. Null on intake/source nudges." },
-          "prescription_id": { "type": "string" },
-          "user_id":         { "type": "string" },
-          "nudge_type":      { "$ref": "#/$defs/nudge_type" },
+          "nudge_id": {
+            "type": "string"
+          },
+          "schedule_slot_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Stable recurring slot that materialized this delivery. Null on intake/source nudges."
+          },
+          "prescription_id": {
+            "type": "string"
+          },
+          "user_id": {
+            "type": "string"
+          },
+          "nudge_type": {
+            "$ref": "#/$defs/nudge_type"
+          },
           "pillar": {
             "$ref": "#/$defs/pillar",
             "description": "This behaviour's own pillar. Copied verbatim from the weekly slot on a dated delivery. Need not match the prescription's default — one prescription may span pillars."
@@ -269,12 +389,15 @@
             "$ref": "#/$defs/category",
             "description": "This behaviour's own category, alongside pillar and action_text. Blank on a legacy row, which falls back to the prescription's default on read and is filled on the clinician's next save."
           },
-          "action_text":     {
+          "action_text": {
             "$ref": "#/$defs/action_text",
             "description": "What the patient is asked to do. On a dated delivery row this is copied verbatim from its weekly slot; on a source nudge it is the LLM's intake draft."
           },
-          "scheduled_date":  { "type": "string", "format": "date" },
-          "scheduled_time":  {
+          "scheduled_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "scheduled_time": {
             "type": "string",
             "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
           },
@@ -285,8 +408,11 @@
             "maxLength": 1024
           },
           "message_body_alt": {
-            "type": ["string", "null"],
-            "description": "LLM-generated nudge text (alternate tone). Generated at intake alongside message_body. Workflow B alternates tone sends; Workflow D personalises tone selection from schedule_state.tone_sent history.",
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "LLM-generated alternate wording retained for clinician choice during review.",
             "maxLength": 1024
           },
           "tone_variant": {
@@ -295,49 +421,94 @@
           },
           "template_name": {
             "type": "string",
-            "enum": ["health_plan_reminder", "hello_world"],
+            "enum": [
+              "health_plan_reminder",
+              "hello_world"
+            ],
             "description": "Approved WhatsApp template name. Use hello_world for dev/test only."
           },
-          "followup_enabled": {
-            "$ref": "#/$defs/followup_enabled",
-            "description": "Copied verbatim from the weekly slot when this dated delivery is materialized. Read by Workflow B to decide which Content Template to send. Blank on a source nudge means the clinician has not turned the flow on."
+          "status": {
+            "$ref": "#/$defs/nudge_status"
           },
-          "followup_delay_hours": {
-            "$ref": "#/$defs/followup_delay_hours",
-            "description": "Copied verbatim from the weekly slot at materialization. Workflow B anchors followup_due_at to the delivery timestamp plus this many hours."
+          "sent_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
           },
-          "status":      { "$ref": "#/$defs/nudge_status" },
-          "sent_at":     { "type": ["string", "null"], "format": "date-time" },
           "reviewed_at": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "date-time",
-            "description": "Set by the human review page (Workflow E) when a clinician approves or rejects this nudge. Null until reviewed. Audit trail for the thesis."
+            "description": "Set by the clinician portal when a nudge is approved or rejected."
           },
-          "week_number": { "type": "integer", "minimum": 1 }
+          "week_number": {
+            "type": "integer",
+            "minimum": 1
+          }
         }
       }
     },
-
     "weekly_schedule": {
       "type": "array",
       "description": "Canonical recurring schedule. One durable row per patient slot; inactive rows are retained as deletion tombstones so delivery history can never recreate a removed weekday.",
       "items": {
         "type": "object",
         "required": [
-          "schedule_slot_id", "user_id", "source_nudge_id", "prescription_id",
-          "day", "scheduled_time", "nudge_type", "pillar", "action_text", "tone_variant",
-          "message_body", "template_name", "status", "start_date", "end_date",
-          "created_at", "updated_at"
+          "schedule_slot_id",
+          "user_id",
+          "source_nudge_id",
+          "prescription_id",
+          "day",
+          "scheduled_time",
+          "nudge_type",
+          "pillar",
+          "action_text",
+          "tone_variant",
+          "message_body",
+          "template_name",
+          "status",
+          "start_date",
+          "end_date",
+          "created_at",
+          "updated_at"
         ],
         "additionalProperties": false,
         "properties": {
-          "schedule_slot_id": { "type": "string" },
-          "user_id": { "type": "string" },
-          "source_nudge_id": { "type": "string" },
-          "prescription_id": { "type": "string" },
-          "day": { "type": "string", "enum": ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"] },
-          "scheduled_time": { "type": "string", "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$" },
-          "nudge_type": { "$ref": "#/$defs/nudge_type" },
+          "schedule_slot_id": {
+            "type": "string"
+          },
+          "user_id": {
+            "type": "string"
+          },
+          "source_nudge_id": {
+            "type": "string"
+          },
+          "prescription_id": {
+            "type": "string"
+          },
+          "day": {
+            "type": "string",
+            "enum": [
+              "sunday",
+              "monday",
+              "tuesday",
+              "wednesday",
+              "thursday",
+              "friday",
+              "saturday"
+            ]
+          },
+          "scheduled_time": {
+            "type": "string",
+            "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+          },
+          "nudge_type": {
+            "$ref": "#/$defs/nudge_type"
+          },
           "pillar": {
             "$ref": "#/$defs/pillar",
             "description": "Authoritative pillar for this recurring slot, part of the behaviour triple with category and action_text. Two slots under one prescription may sit in different pillars."
@@ -350,160 +521,190 @@
             "$ref": "#/$defs/action_text",
             "description": "Authoritative action for this recurring slot. Two slots under the same prescription may carry different actions. Copied to every dated nudge materialized from the slot."
           },
-          "tone_variant": { "$ref": "#/$defs/tone_variant" },
-          "followup_enabled": {
-            "$ref": "#/$defs/followup_enabled",
-            "description": "Authoritative clinician setting for this recurring slot, alongside action_text. Two slots under one prescription may differ. Copied to every dated nudge materialized from the slot; changing it never rewrites an already-sent message's promise, because schedule_state snapshots the value at send time."
+          "tone_variant": {
+            "$ref": "#/$defs/tone_variant"
           },
-          "followup_delay_hours": {
-            "$ref": "#/$defs/followup_delay_hours",
-            "description": "Authoritative delay for this recurring slot. Required when followup_enabled is TRUE, blank otherwise."
+          "message_body": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024
           },
-          "message_body": { "type": "string", "minLength": 1, "maxLength": 1024 },
-          "message_body_alt": { "type": ["string", "null"], "maxLength": 1024 },
-          "template_name": { "type": "string", "enum": ["health_plan_reminder", "hello_world"] },
-          "status": { "type": "string", "enum": ["active", "inactive"] },
-          "start_date": { "type": "string", "format": "date" },
-          "end_date": { "type": "string", "format": "date" },
-          "created_at": { "type": "string", "format": "date-time" },
-          "updated_at": { "type": "string", "format": "date-time" }
+          "message_body_alt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 1024
+          },
+          "template_name": {
+            "type": "string",
+            "enum": [
+              "health_plan_reminder",
+              "hello_world"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "active",
+              "inactive"
+            ]
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
         }
       }
     },
-
     "schedule_state": {
       "type": "array",
-      "description": "Delivery and feedback state for each nudge. Written by Workflow B (send + wa_message_id) and Workflow C (response, barrier, streak counters). Consumed by Workflow D for weekly adaptation.",
+      "description": "Current outbound delivery state for each approved nudge. Twilio acceptance and signed status callbacks update this row.",
       "items": {
         "type": "object",
         "required": [
-          "schedule_id", "nudge_id", "user_id",
-          "status", "done_count", "skip_count",
-          "current_streak", "consecutive_skips", "last_updated"
+          "schedule_id",
+          "nudge_id",
+          "user_id",
+          "status",
+          "last_updated"
         ],
         "additionalProperties": false,
         "properties": {
-          "schedule_id":       { "type": "string" },
-          "nudge_id":          { "type": "string" },
-          "user_id":           { "type": "string" },
-          "parent_nudge_id":   {
-            "type": ["string", "null"],
-            "description": "The clinician-approved delivery nudge this feedback event belongs to. The delayed outcome check is a feedback event, not a new approved nudge, so it reuses this row rather than creating one in `nudges`; parent_nudge_id therefore equals nudge_id on every row the two-stage flow writes. It exists so an export can group both stages by their originating nudge without parsing IDs, and so a future design that does split stages across rows has the anchor already in place."
+          "schedule_id": {
+            "type": "string"
           },
-          "status":            { "$ref": "#/$defs/nudge_status" },
-          "sent_at":           { "type": ["string", "null"], "format": "date-time" },
-          "delivered_at":      {
-            "type": ["string", "null"],
+          "nudge_id": {
+            "type": "string"
+          },
+          "user_id": {
+            "type": "string"
+          },
+          "parent_nudge_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The clinician-approved delivery nudge represented by this state row; normally equal to nudge_id."
+          },
+          "status": {
+            "$ref": "#/$defs/nudge_status"
+          },
+          "sent_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "delivered_at": {
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "date-time",
             "description": "Twilio-reported delivery timestamp for the initial message. The follow-up due time anchors to this when present and falls back to sent_at otherwise. Populated only once delivery-status callbacks are implemented (build order step 3); blank until then, so today the anchor is always sent_at."
           },
-          "wa_message_id":     {
-            "type": ["string", "null"],
-            "description": "Outbound WhatsApp message ID. Stored by Workflow B and matched to Twilio OriginalRepliedMessageSid in Workflow C."
+          "wa_message_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Outbound Twilio Message SID stored by Workflow B and matched by signed delivery-status callbacks."
           },
-          "response_wa_id":    {
-            "type": ["string", "null"],
-            "description": "Most recently processed inbound Twilio MessageSid. Used to make webhook retries idempotent."
-          },
-          "barrier_followup_wa_id": {
-            "type": ["string", "null"],
-            "description": "Message ID of the barrier follow-up question sent by Workflow C after a SKIP. Stored so the next message from the user with context.id matching this value is classified as a barrier reply, not an unknown."
-          },
-          "tone_sent":         {
+          "tone_sent": {
             "$ref": "#/$defs/tone_variant",
-            "description": "Tone variant that was actually delivered. Null until sent. Workflow D reads this to personalise future tone selection per user."
+            "description": "Tone variant submitted for delivery. Null until sent."
           },
-          "response":          { "$ref": "#/$defs/user_response" },
-          "responded_at":      { "type": ["string", "null"], "format": "date-time" },
-          "followup_enabled":  {
-            "$ref": "#/$defs/followup_enabled",
-            "description": "Snapshot taken by Workflow B at send time from the dated nudge. Frozen deliberately: re-planning the weekly slot afterwards must not change what an already-delivered message asked."
-          },
-          "followup_delay_hours": {
-            "$ref": "#/$defs/followup_delay_hours",
-            "description": "Snapshot taken by Workflow B at send time, for the same reason as followup_enabled."
-          },
-          "commitment_response":     { "$ref": "#/$defs/commitment_response" },
-          "commitment_responded_at": { "type": ["string", "null"], "format": "date-time" },
-          "followup_due_at":   {
-            "type": ["string", "null"],
-            "format": "date-time",
-            "description": "When the outcome check becomes eligible to send: delivered_at (or sent_at) + followup_delay_hours, computed once by Workflow B at delivery. A YES arriving before this waits for it; a YES arriving after it is immediately eligible, because the comparison is due <= now rather than a countdown started by the reply. Cleared on NO and on STOP so no scheduler pass can pick the row up. ISO 8601 with an explicit offset — compared through Date.parse, never string-compared, because Melbourne offsets shift between +10:00 and +11:00."
-          },
-          "followup_sent_at":  {
-            "type": ["string", "null"],
-            "format": "date-time",
-            "description": "Set the moment the outcome check is accepted by Twilio. Its emptiness is the scheduler's claim check: a duplicate scheduler execution finds it populated and skips the row, so the follow-up is sent exactly once."
-          },
-          "followup_wa_id":    {
-            "type": ["string", "null"],
-            "description": "Outbound Twilio Message SID of the delayed outcome check. Workflow C matches an inbound OriginalRepliedMessageSid against this to know the reply is a stage-2 answer rather than a stage-1 commitment."
-          },
-          "outcome_response":        { "$ref": "#/$defs/outcome_response" },
-          "outcome_responded_at":    { "type": ["string", "null"], "format": "date-time" },
-          "last_response_at":  {
-            "type": ["string", "null"],
-            "format": "date-time",
-            "description": "Timestamp of the most recent reply (any keyword). Convenience copy for Workflow D aggregation."
-          },
-          "barrier_tag":       { "$ref": "#/$defs/barrier_tag" },
-          "done_count":        {
-            "type": "integer",
-            "minimum": 0,
-            "description": "Cumulative DONE responses for this user × prescription. Written by Workflow C. Feeds evaluation metrics."
-          },
-          "skip_count":        {
-            "type": "integer",
-            "minimum": 0,
-            "description": "Cumulative SKIP responses. Written by Workflow C."
-          },
-          "current_streak":    {
-            "type": "integer",
-            "minimum": 0,
-            "description": "Consecutive DONE count. Reset to 0 on SKIP/no-response. Workflow B sends reflective variant when this breaks after ≥7."
-          },
-          "consecutive_skips": {
-            "type": "integer",
-            "minimum": 0,
-            "description": "Consecutive SKIP or no-response count. At 3, Workflow B applies frequency back-off until Workflow D re-plans."
-          },
-          "last_updated":      { "type": "string", "format": "date-time" }
+          "last_updated": {
+            "type": "string",
+            "format": "date-time"
+          }
         }
       }
     },
-
-    "inbound_messages": {
+    "delivery_events": {
       "type": "array",
-      "description": "Append-only event log of every inbound WhatsApp message, written BEFORE the reply is interpreted. This is a log, not state: schedule_state remains the state machine and the only thing the schedulers read. Its purpose is twofold — a reply that cannot be resolved still leaves a record (so 'did the message even arrive?' is answerable from the study data rather than a vendor console), and response latency for the evaluation chapter is received_at minus the delivery's sent_at. Rows are never updated except to fill in how the message was resolved.",
+      "description": "Append-only provider callback log. It records what the messaging system observed and does not represent patient adherence.",
       "items": {
         "type": "object",
-        "required": ["inbound_id", "received_at", "from_phone", "wa_message_id"],
         "additionalProperties": false,
+        "required": [
+          "event_id",
+          "event_at",
+          "wa_message_id",
+          "nudge_id",
+          "user_id",
+          "status"
+        ],
         "properties": {
-          "inbound_id": { "type": "string", "description": "Server-generated. Unique per webhook hit, including retries of the same MessageSid." },
-          "received_at": {
+          "event_id": {
+            "type": "string"
+          },
+          "event_at": {
             "type": "string",
-            "description": "ISO 8601 with an explicit offset. Compared through Date.parse, never string-compared: Melbourne moves between +10:00 and +11:00 and a naive sort would mis-order a DST-straddling pair."
+            "format": "date-time"
           },
-          "from_phone": { "type": "string", "description": "E.164, 'whatsapp:' prefix stripped." },
-          "to_phone": { "type": ["string", "null"] },
-          "wa_message_id": { "type": "string", "description": "Twilio MessageSid of the inbound message. The idempotency key: a replayed SID is logged again but applied once." },
-          "context_wa_id": { "type": ["string", "null"], "description": "Twilio OriginalRepliedMessageSid — the outbound message this reply answers. What makes a reply resolvable to one nudge and one stage." },
-          "body": { "type": ["string", "null"] },
-          "button_text": { "type": ["string", "null"] },
-          "button_payload": { "type": ["string", "null"] },
-          "opt_out_type": { "type": ["string", "null"], "description": "Set when Twilio Advanced Opt-Out already handled the keyword and has already replied to the patient." },
-          "user_id": { "type": ["string", "null"], "description": "Resolved patient. Blank when the sender matches no patient." },
-          "matched_nudge_id": { "type": ["string", "null"], "description": "Blank when the reply resolved to no row." },
-          "stage": {
-            "type": ["string", "null"],
-            "enum": ["commitment", "outcome", "progress", "barrier", "", null],
-            "description": "Which question this reply answered. Decided by what the message ASKED, not by where the row has since moved."
+          "wa_message_id": {
+            "type": "string"
           },
-          "classification": { "type": ["string", "null"], "description": "The reply_type the resolver assigned, e.g. commit_yes, done, not_yet, barrier, stop, duplicate, unknown." },
-          "applied": { "type": ["string", "boolean", "null"], "description": "TRUE when this message changed schedule_state. Stored as text because Sheets returns FORMATTED_VALUE." },
-          "note": { "type": ["string", "null"], "description": "Why it was not applied: duplicate, no_match, unknown_patient, or the error text when interpretation threw." },
-          "raw_payload": { "type": ["string", "null"], "description": "The inbound form fields as JSON, truncated. Lets a mis-parsed message be reprocessed without asking the vendor." }
+          "nudge_id": {
+            "type": "string"
+          },
+          "user_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "accepted",
+              "queued",
+              "sending",
+              "sent",
+              "delivered",
+              "read",
+              "failed",
+              "undelivered",
+              "canceled",
+              "unknown"
+            ]
+          },
+          "error_code": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "error_message": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "channel_to": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "raw_payload": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
         }
       }
     }

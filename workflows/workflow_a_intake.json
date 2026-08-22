@@ -4,7 +4,7 @@
   "nodes": [
     {
       "parameters": {
-        "content": "## Workflow A — Prescription Intake (the single intake LLM call)\n\nTurns a landing-page submission into canonical `prescriptions` + a dated **week-1** `nudges` schedule, then seeds `schedule_state`.\n\n### Trigger\nPOST webhook at `/webhook/intake`. Body = the landing page payload:\n```\n{ user:{...}, questionnaire:{...}, prescription_input:{ doctor_id, issued_date, prescription_raw_text, prescription_image_base64, prescription_image_mimetype } }\n```\n\n### Flow\nWebhook → Extract Input → Build Gemini Prompt (adds the Rx image as inline_data) → **Call Gemini Vision** → **Validation Gate** → Is Valid? →\n- **valid:** write user → questionnaire → prescriptions → nudges → schedule_state → 200 OK\n- **invalid:** 422 with the enum errors (nothing written — safe fallback)\n\n### Design decisions (thesis-documentable)\n- **One LLM call**, batch-only, at intake. Never in the delivery/reply path.\n- **Week-1 only.** Intake generates the first week; Workflow D re-plans each later week. Bounds the call and matches the closed-loop design.\n- **Validation gate is mandatory** — rejects the whole batch on any enum violation; no partial writes.\n- Both tone bodies (`message_body` + `message_body_alt`) generated at intake for the tone-variant evaluation.\n- `schedule_id = sch_<nudge_id>` so Workflow B/C update these seeded rows rather than appending duplicates.\n\n### Env vars\n`GOOGLE_SHEETS_SPREADSHEET_ID`, `GEMINI_API_KEY`\n\n### Setup\n- `responseMode` is already **responseNode**. Register `…/webhook/intake` as the landing page POST target.\n- Assign the *Google Sheets OAuth2* credential to all five Write nodes.\n- Gemini model: `gemini-2.5-flash` (vision-capable; 1.5 is retired and 404s). `thinkingConfig.thinkingBudget=0` set so thinking tokens don't truncate the JSON.\n- Nudges default to `template_name: health_plan_reminder`. Until Meta approves it, switch rows to `hello_world` for send tests (Workflow B).",
+        "content": "## Workflow A — Prescription Intake (the single intake LLM call)\n\nTurns a landing-page submission into canonical `prescriptions` + a dated **week-1** `nudges` schedule, then seeds `schedule_state`.\n\n### Trigger\nPOST webhook at `/webhook/intake`. Body = the landing page payload:\n```\n{ user:{...}, questionnaire:{...}, prescription_input:{ doctor_id, issued_date, prescription_raw_text, prescription_image_base64, prescription_image_mimetype } }\n```\n\n### Flow\nWebhook → Extract Input → Build Gemini Prompt (adds the Rx image as inline_data) → **Call Gemini Vision** → **Validation Gate** → Is Valid? →\n- **valid:** write user → questionnaire → prescriptions → nudges → schedule_state → 200 OK\n- **invalid:** 422 with the enum errors (nothing written — safe fallback)\n\n### Design decisions (thesis-documentable)\n- **One LLM call**, batch-only, at intake. Never in the delivery/reply path.\n- **Week-1 only.** Intake generates the first week; The clinician owns later schedule changes. This keeps generation bounded and reviewable.\n- **Validation gate is mandatory** — rejects the whole batch on any enum violation; no partial writes.\n- Both tone bodies (`message_body` + `message_body_alt`) generated at intake for the tone-variant evaluation.\n- `schedule_id = sch_<nudge_id>` so Workflow B and signed delivery callbacks update the seeded row rather than appending duplicate state.\n\n### Env vars\n`GOOGLE_SHEETS_SPREADSHEET_ID`, `GEMINI_API_KEY`\n\n### Setup\n- `responseMode` is already **responseNode**. Register `…/webhook/intake` as the landing page POST target.\n- Assign the *Google Sheets OAuth2* credential to all five Write nodes.\n- Gemini model: `gemini-2.5-flash` (vision-capable; 1.5 is retired and 404s). `thinkingConfig.thinkingBudget=0` set so thinking tokens don't truncate the JSON.\n- Nudges default to `template_name: health_plan_reminder`. Until Meta approves it, switch rows to `hello_world` for send tests (Workflow B).",
         "height": 760,
         "width": 620,
         "color": 7
@@ -45,26 +45,53 @@
       "name": "Authorize Proxy",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [340, 420]
+      "position": [
+        340,
+        420
+      ]
     },
     {
       "parameters": {
-        "conditions": { "conditions": [{ "leftValue": "={{ $json.proxy_authorized }}", "rightValue": true, "operator": { "type": "boolean", "operation": "true" } }], "combinator": "and" },
+        "conditions": {
+          "conditions": [
+            {
+              "leftValue": "={{ $json.proxy_authorized }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
         "options": {}
       },
       "id": "e0000001-0000-0000-0000-000000000021",
       "name": "Proxy Authorized?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
-      "position": [440, 420]
+      "position": [
+        440,
+        420
+      ]
     },
     {
-      "parameters": { "respondWith": "json", "responseBody": "={{ { error: 'Unauthorized' } }}", "options": { "responseCode": 401 } },
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { error: 'Unauthorized' } }}",
+        "options": {
+          "responseCode": 401
+        }
+      },
       "id": "e0000001-0000-0000-0000-000000000022",
       "name": "Respond Unauthorized",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
-      "position": [560, 600]
+      "position": [
+        560,
+        600
+      ]
     },
     {
       "parameters": {
@@ -126,7 +153,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Validation gate (mandatory design decision): parse the LLM JSON, validate every\n// prescription and nudge against the enumerations, assign IDs, resolve nudge->\n// prescription refs, and seed schedule_state. Any violation rejects the WHOLE\n// batch (no partial writes) and returns the errors to the webhook caller.\n//\n// action_text is deliberately NOT enumerated: it is the clinician-owned execution\n// step. It is still gated on presence and length so no unbounded or empty action\n// can reach the Sheet, and target_behavior is written blank now that the fixed\n// action catalogue is retired.\n\nconst ctx = $('Extract Input').first().json;\nconst resp = items[0].json;\nconst now = new Date().toISOString();\n\nconst PILLARS = ['nutrition','physical_activity','sleep','stress_management','substance_use','social_connection'];\nconst CATS = ['increase','reduce','maintain','avoid','establish'];\nconst NTYPE = ['reminder','reflection','challenge','affirmation'];\nconst TONE = ['encouraging','neutral_informational'];\nconst TEMPL = ['health_plan_reminder','hello_world'];\nconst ACTION_MAX = 1024;\nconst DATE_RE = /^\\d{4}-\\d{2}-\\d{2}$/;\nconst TIME_RE = /^([01]\\d|2[0-3]):[0-5]\\d$/;\nconst crypto = (function(){ try { return require('crypto'); } catch(e){ return { randomUUID: function(){ return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c){ var r = Math.random()*16|0; return (c==='x'?r:(r&3|8)).toString(16); }); } }; } })(); const uid = () => crypto.randomUUID();\n\nlet parsed;\ntry {\n  const text = resp.candidates[0].content.parts[0].text;\n  parsed = typeof text === 'string' ? JSON.parse(text) : text;\n} catch (e) {\n  return [{ json: { validation_passed: false, stage: 'parse', error: String(e) } }];\n}\n\nconst P = parsed && parsed.prescriptions;\nconst N = parsed && parsed.nudges;\nif (!Array.isArray(P) || !Array.isArray(N) || P.length === 0 || N.length === 0) {\n  return [{ json: { validation_passed: false, stage: 'shape', error: 'prescriptions and nudges must be non-empty arrays' } }];\n}\n\nconst errors = [];\nconst refMap = {};\nconst pillarByPrescription = {};\n\nconst prescriptions = P.map((p, i) => {\n  const prescription_id = 'rx_' + uid();\n  if (p.ref) refMap[p.ref] = prescription_id;\n  pillarByPrescription[prescription_id] = p.pillar;\n  if (!PILLARS.includes(p.pillar)) errors.push('rx[' + i + '] pillar: ' + p.pillar);\n  if (!CATS.includes(p.category)) errors.push('rx[' + i + '] category: ' + p.category);\n  const freq = parseInt(p.frequency_per_week, 10);\n  const dur = parseInt(p.duration_weeks, 10);\n  if (!(freq >= 1 && freq <= 7)) errors.push('rx[' + i + '] frequency_per_week: ' + p.frequency_per_week);\n  if (!(dur >= 1 && dur <= 52)) errors.push('rx[' + i + '] duration_weeks: ' + p.duration_weeks);\n  return {\n    prescription_id,\n    user_id: ctx.user.user_id,\n    doctor_id: ctx.prescription_input.doctor_id || '',\n    issued_date: ctx.prescription_input.issued_date || '',\n    pillar: p.pillar, category: p.category, target_behavior: '',\n    frequency_per_week: freq, duration_weeks: dur,\n    prescription_raw_text: ctx.prescription_input.prescription_raw_text || '',\n    status: 'active'\n  };\n});\n\nconst nudges = N.map((n, i) => {\n  const nudge_id = 'ndg_' + uid();\n  const prescription_id = refMap[n.prescription_ref] || (prescriptions[0] && prescriptions[0].prescription_id);\n  if (!prescription_id) errors.push('ndg[' + i + '] unresolved prescription_ref: ' + n.prescription_ref);\n  const action_text = String(n.action_text == null ? '' : n.action_text).trim();\n  if (!NTYPE.includes(n.nudge_type)) errors.push('ndg[' + i + '] nudge_type: ' + n.nudge_type);\n  if (!PILLARS.includes(n.pillar)) errors.push('ndg[' + i + '] pillar: ' + n.pillar);\n  if (prescription_id && pillarByPrescription[prescription_id] && n.pillar !== pillarByPrescription[prescription_id]) {\n    errors.push('ndg[' + i + '] pillar does not match its prescription: ' + n.pillar);\n  }\n  if (!action_text) errors.push('ndg[' + i + '] action_text is required');\n  else if (action_text.length > ACTION_MAX) errors.push('ndg[' + i + '] action_text is longer than ' + ACTION_MAX + ' characters');\n  if (n.tone_variant && !TONE.includes(n.tone_variant)) errors.push('ndg[' + i + '] tone_variant: ' + n.tone_variant);\n  if (n.template_name && !TEMPL.includes(n.template_name)) errors.push('ndg[' + i + '] template_name: ' + n.template_name);\n  if (!DATE_RE.test(n.scheduled_date || '')) errors.push('ndg[' + i + '] scheduled_date: ' + n.scheduled_date);\n  if (!TIME_RE.test(n.scheduled_time || '')) errors.push('ndg[' + i + '] scheduled_time: ' + n.scheduled_time);\n  if (!n.message_body || n.message_body.length > 1024) errors.push('ndg[' + i + '] message_body missing or too long');\n  if (n.message_body_alt && n.message_body_alt.length > 1024) errors.push('ndg[' + i + '] message_body_alt too long');\n  return {\n    nudge_id, prescription_id, user_id: ctx.user.user_id,\n    nudge_type: n.nudge_type, pillar: n.pillar, action_text,\n    scheduled_date: n.scheduled_date, scheduled_time: n.scheduled_time,\n    message_body: n.message_body || '', message_body_alt: n.message_body_alt || '',\n    tone_variant: n.tone_variant || 'neutral_informational',\n    template_name: (n.template_name || 'health_plan_reminder'), status: 'needs_review', sent_at: '', reviewed_at: '', week_number: 1, schedule_slot_id: ''\n  };\n});\n\nif (errors.length) {\n  return [{ json: { validation_passed: false, stage: 'enum', errors } }];\n}\n\nconst schedule_state = nudges.map(n => ({\n  schedule_id: 'sch_' + n.nudge_id, nudge_id: n.nudge_id, user_id: n.user_id, status: 'needs_review',\n  sent_at: '', wa_message_id: '', barrier_followup_wa_id: '', tone_sent: '', response: '',\n  responded_at: '', last_response_at: '', barrier_tag: '', done_count: 0, skip_count: 0,\n  current_streak: 0, consecutive_skips: 0, last_updated: now\n}));\n\nconst uq = ctx.questionnaire || {};\nconst questionnaire = {\n  questionnaire_id: 'qn_' + uid(), user_id: ctx.user.user_id, completed_at: now,\n  age: parseInt(uq.age, 10), gender: uq.gender, activity_level: uq.activity_level,\n  primary_goal: uq.primary_goal, preferred_nudge_time: uq.preferred_nudge_time,\n  opt_in_whatsapp: !!uq.opt_in_whatsapp\n};\n\nconst user = {\n  user_id: ctx.user.user_id, name: ctx.user.name, phone: ctx.user.phone, email: ctx.user.email,\n  created_at: ctx.user.created_at || now, user_status: ctx.user.user_status || 'active'\n};\n\nreturn [{ json: { validation_passed: true, user, questionnaire, prescriptions, nudges, schedule_state } }];"
+        "jsCode": "// Validation gate (mandatory design decision): parse the LLM JSON, validate every\n// prescription and nudge against the enumerations, assign IDs, resolve nudge->\n// prescription refs, and seed schedule_state. Any violation rejects the WHOLE\n// batch (no partial writes) and returns the errors to the webhook caller.\n//\n// action_text is deliberately NOT enumerated: it is the clinician-owned execution\n// step. It is still gated on presence and length so no unbounded or empty action\n// can reach the Sheet, and target_behavior is written blank now that the fixed\n// action catalogue is retired.\n\nconst ctx = $('Extract Input').first().json;\nconst resp = items[0].json;\nconst now = new Date().toISOString();\n\nconst PILLARS = ['nutrition','physical_activity','sleep','stress_management','substance_use','social_connection'];\nconst CATS = ['increase','reduce','maintain','avoid','establish'];\nconst NTYPE = ['reminder','reflection','challenge','affirmation'];\nconst TONE = ['encouraging','neutral_informational'];\nconst TEMPL = ['health_plan_reminder','hello_world'];\nconst ACTION_MAX = 1024;\nconst DATE_RE = /^\\d{4}-\\d{2}-\\d{2}$/;\nconst TIME_RE = /^([01]\\d|2[0-3]):[0-5]\\d$/;\nconst crypto = (function(){ try { return require('crypto'); } catch(e){ return { randomUUID: function(){ return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c){ var r = Math.random()*16|0; return (c==='x'?r:(r&3|8)).toString(16); }); } }; } })(); const uid = () => crypto.randomUUID();\n\nlet parsed;\ntry {\n  const text = resp.candidates[0].content.parts[0].text;\n  parsed = typeof text === 'string' ? JSON.parse(text) : text;\n} catch (e) {\n  return [{ json: { validation_passed: false, stage: 'parse', error: String(e) } }];\n}\n\nconst P = parsed && parsed.prescriptions;\nconst N = parsed && parsed.nudges;\nif (!Array.isArray(P) || !Array.isArray(N) || P.length === 0 || N.length === 0) {\n  return [{ json: { validation_passed: false, stage: 'shape', error: 'prescriptions and nudges must be non-empty arrays' } }];\n}\n\nconst errors = [];\nconst refMap = {};\nconst pillarByPrescription = {};\n\nconst prescriptions = P.map((p, i) => {\n  const prescription_id = 'rx_' + uid();\n  if (p.ref) refMap[p.ref] = prescription_id;\n  pillarByPrescription[prescription_id] = p.pillar;\n  if (!PILLARS.includes(p.pillar)) errors.push('rx[' + i + '] pillar: ' + p.pillar);\n  if (!CATS.includes(p.category)) errors.push('rx[' + i + '] category: ' + p.category);\n  const freq = parseInt(p.frequency_per_week, 10);\n  const dur = parseInt(p.duration_weeks, 10);\n  if (!(freq >= 1 && freq <= 7)) errors.push('rx[' + i + '] frequency_per_week: ' + p.frequency_per_week);\n  if (!(dur >= 1 && dur <= 52)) errors.push('rx[' + i + '] duration_weeks: ' + p.duration_weeks);\n  return {\n    prescription_id,\n    user_id: ctx.user.user_id,\n    doctor_id: ctx.prescription_input.doctor_id || '',\n    issued_date: ctx.prescription_input.issued_date || '',\n    pillar: p.pillar, category: p.category, target_behavior: '',\n    frequency_per_week: freq, duration_weeks: dur,\n    prescription_raw_text: ctx.prescription_input.prescription_raw_text || '',\n    status: 'active'\n  };\n});\n\nconst nudges = N.map((n, i) => {\n  const nudge_id = 'ndg_' + uid();\n  const prescription_id = refMap[n.prescription_ref] || (prescriptions[0] && prescriptions[0].prescription_id);\n  if (!prescription_id) errors.push('ndg[' + i + '] unresolved prescription_ref: ' + n.prescription_ref);\n  const action_text = String(n.action_text == null ? '' : n.action_text).trim();\n  if (!NTYPE.includes(n.nudge_type)) errors.push('ndg[' + i + '] nudge_type: ' + n.nudge_type);\n  if (!PILLARS.includes(n.pillar)) errors.push('ndg[' + i + '] pillar: ' + n.pillar);\n  if (prescription_id && pillarByPrescription[prescription_id] && n.pillar !== pillarByPrescription[prescription_id]) {\n    errors.push('ndg[' + i + '] pillar does not match its prescription: ' + n.pillar);\n  }\n  if (!action_text) errors.push('ndg[' + i + '] action_text is required');\n  else if (action_text.length > ACTION_MAX) errors.push('ndg[' + i + '] action_text is longer than ' + ACTION_MAX + ' characters');\n  if (n.tone_variant && !TONE.includes(n.tone_variant)) errors.push('ndg[' + i + '] tone_variant: ' + n.tone_variant);\n  if (n.template_name && !TEMPL.includes(n.template_name)) errors.push('ndg[' + i + '] template_name: ' + n.template_name);\n  if (!DATE_RE.test(n.scheduled_date || '')) errors.push('ndg[' + i + '] scheduled_date: ' + n.scheduled_date);\n  if (!TIME_RE.test(n.scheduled_time || '')) errors.push('ndg[' + i + '] scheduled_time: ' + n.scheduled_time);\n  if (!n.message_body || n.message_body.length > 1024) errors.push('ndg[' + i + '] message_body missing or too long');\n  if (n.message_body_alt && n.message_body_alt.length > 1024) errors.push('ndg[' + i + '] message_body_alt too long');\n  return {\n    nudge_id, prescription_id, user_id: ctx.user.user_id,\n    nudge_type: n.nudge_type, pillar: n.pillar, action_text,\n    scheduled_date: n.scheduled_date, scheduled_time: n.scheduled_time,\n    message_body: n.message_body || '', message_body_alt: n.message_body_alt || '',\n    tone_variant: n.tone_variant || 'neutral_informational',\n    template_name: (n.template_name || 'health_plan_reminder'), status: 'needs_review', sent_at: '', reviewed_at: '', week_number: 1, schedule_slot_id: ''\n  };\n});\n\nif (errors.length) {\n  return [{ json: { validation_passed: false, stage: 'enum', errors } }];\n}\n\nconst schedule_state = nudges.map(n => ({\n  schedule_id: 'sch_' + n.nudge_id, nudge_id: n.nudge_id, user_id: n.user_id,\n  parent_nudge_id: n.nudge_id, status: 'needs_review', sent_at: '', delivered_at: '',\n  wa_message_id: '', tone_sent: '', last_updated: now\n}));\n\nconst uq = ctx.questionnaire || {};\nconst questionnaire = {\n  questionnaire_id: 'qn_' + uid(), user_id: ctx.user.user_id, completed_at: now,\n  age: parseInt(uq.age, 10), gender: uq.gender, activity_level: uq.activity_level,\n  primary_goal: uq.primary_goal, preferred_nudge_time: uq.preferred_nudge_time,\n  opt_in_whatsapp: !!uq.opt_in_whatsapp\n};\n\nconst user = {\n  user_id: ctx.user.user_id, name: ctx.user.name, phone: ctx.user.phone, email: ctx.user.email,\n  created_at: ctx.user.created_at || now, user_status: ctx.user.user_status || 'active'\n};\n\nreturn [{ json: { validation_passed: true, user, questionnaire, prescriptions, nudges, schedule_state } }];"
       },
       "id": "e0000001-0000-0000-0000-000000000006",
       "name": "Validation Gate",
@@ -467,12 +494,32 @@
       ]
     },
     "Authorize Proxy": {
-      "main": [[{"node": "Proxy Authorized?", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Proxy Authorized?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Proxy Authorized?": {
       "main": [
-        [{"node": "Extract Input", "type": "main", "index": 0}],
-        [{"node": "Respond Unauthorized", "type": "main", "index": 0}]
+        [
+          {
+            "node": "Extract Input",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond Unauthorized",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Extract Input": {

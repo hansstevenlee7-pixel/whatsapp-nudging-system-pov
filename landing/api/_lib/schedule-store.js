@@ -4,14 +4,13 @@ const crypto = require("node:crypto");
 const { httpError } = require("./http");
 const { loadClinicalData, batchWrite, operation, isArchivedPrescription } = require("./clinical-data");
 const { PILLARS, CATEGORIES, NUDGE_TYPES: TYPES, assertAction } = require("./taxonomy");
-const { assertFollowup } = require("./followup");
 
 const DAYS = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 const TONES = new Set(["encouraging", "neutral_informational", "custom"]);
 const TEMPLATES = new Set(["health_plan_reminder", "hello_world"]);
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const TIME_RE = /^([01]\d|2[0-3]):[0-5]\d$/;
-const VERIFY_FIELDS = ["schedule_slot_id", "user_id", "source_nudge_id", "prescription_id", "day", "scheduled_time", "nudge_type", "pillar", "category", "action_text", "tone_variant", "message_body", "message_body_alt", "template_name", "status", "start_date", "end_date", "followup_enabled", "followup_delay_hours"];
+const VERIFY_FIELDS = ["schedule_slot_id", "user_id", "source_nudge_id", "prescription_id", "day", "scheduled_time", "nudge_type", "pillar", "category", "action_text", "tone_variant", "message_body", "message_body_alt", "template_name", "status", "start_date", "end_date"];
 
 function token(value) {
   return String(value || "").replace(/[^A-Za-z0-9_-]/g, "").slice(-60);
@@ -76,9 +75,6 @@ function validate(body, decision) {
     // bounded and non-empty, but never checked against an enumeration. Rejection
     // writes no taxonomy, so it must stay possible on a legacy plan that has none.
     if (decision !== "reject") assertAction(slot.action_text, `slots[${index}].action_text`);
-    // Same reasoning as action: rejection writes no configuration, so a legacy
-    // slot carrying a nonsensical follow-up setting must still be rejectable.
-    if (decision !== "reject") assertFollowup(slot, `slots[${index}]`, slot.nudge_type);
     if (!String(slot.message_body || "").trim() || String(slot.message_body).length > 1024) throw httpError(400, `slots[${index}].message_body is invalid`);
   });
   if (decision === "approve") {
@@ -103,37 +99,18 @@ function historicalNudge(row) {
   return String(row.status) === "sent" || Boolean(row.sent_at);
 }
 
-// Any two-stage progress is history too: a row that has asked for a commitment,
-// received one, or already sent its outcome check must never be reset to
-// "approved" by a later re-save of the same week.
 function historicalState(row) {
-  return String(row.status) === "sent" ||
-    ["awaiting_commitment", "declined", "awaiting_followup", "done", "not_yet", "no_feedback", "opted_out"].includes(String(row.status)) ||
-    Boolean(row.sent_at || row.wa_message_id || row.response || row.responded_at ||
-      row.commitment_response || row.followup_sent_at || row.outcome_response);
+  return ["accepted", "queued", "sending", "sent", "delivered", "read", "failed", "undelivered", "canceled"].includes(String(row.status)) ||
+    Boolean(row.sent_at || row.wa_message_id);
 }
 
 function stateRow(nudge, prior, now) {
   return Object.assign({}, prior || {}, {
     schedule_id: `sch_${nudge.nudge_id}`, nudge_id: nudge.nudge_id, user_id: nudge.user_id,
-    // Self-anchoring: the delayed outcome check is a feedback event on this row,
-    // not a second approved nudge, so the parent is the row's own delivery.
     parent_nudge_id: nudge.nudge_id,
     status: "approved", sent_at: prior && prior.sent_at || "", delivered_at: prior && prior.delivered_at || "",
     wa_message_id: prior && prior.wa_message_id || "",
-    response_wa_id: prior && prior.response_wa_id || "", barrier_followup_wa_id: prior && prior.barrier_followup_wa_id || "",
-    tone_sent: prior && prior.tone_sent || "", response: prior && prior.response || "", responded_at: prior && prior.responded_at || "",
-    last_response_at: prior && prior.last_response_at || "", barrier_tag: prior && prior.barrier_tag || "",
-    // Config is left blank here on purpose. Workflow B snapshots it from the dated
-    // nudge at send time, so an approval that happens after a plan change cannot
-    // rewrite what an already-delivered message promised.
-    followup_enabled: prior && prior.followup_enabled || "", followup_delay_hours: prior && prior.followup_delay_hours || "",
-    commitment_response: prior && prior.commitment_response || "", commitment_responded_at: prior && prior.commitment_responded_at || "",
-    followup_due_at: prior && prior.followup_due_at || "", followup_sent_at: prior && prior.followup_sent_at || "",
-    followup_wa_id: prior && prior.followup_wa_id || "",
-    outcome_response: prior && prior.outcome_response || "", outcome_responded_at: prior && prior.outcome_responded_at || "",
-    done_count: prior && prior.done_count || 0, skip_count: prior && prior.skip_count || 0,
-    current_streak: prior && prior.current_streak || 0, consecutive_skips: prior && prior.consecutive_skips || 0,
+    tone_sent: prior && prior.tone_sent || "",
     last_updated: now
   });
 }
@@ -193,9 +170,6 @@ async function saveSchedule(body, decision = "approve", snapshot) {
     if (usedIds.has(scheduleSlotId)) throw httpError(400, `duplicate schedule_slot_id: ${scheduleSlotId}`);
     usedIds.add(scheduleSlotId);
     const prior = existingWeeklyById.get(scheduleSlotId);
-    // The slot is authoritative for the follow-up exactly as it is for the action:
-    // two slots under one prescription may legitimately differ.
-    const followup = assertFollowup(slot, "slot", slot.nudge_type);
     // A slot saved before this column existed sends no category; it inherits the
     // prescription's default here, which is what persists the migration's blanks
     // on the clinician's first save. A slot that names one always wins.
@@ -207,7 +181,6 @@ async function saveSchedule(body, decision = "approve", snapshot) {
       nudge_type: String(slot.nudge_type), pillar: String(slot.pillar), category,
       action_text: assertAction(slot.action_text, "action_text"),
       tone_variant: slot.tone_variant === "custom" ? "neutral_informational" : String(slot.tone_variant),
-      followup_enabled: followup.followup_enabled, followup_delay_hours: followup.followup_delay_hours,
       message_body: String(slot.message_body).trim(), message_body_alt: String(slot.message_body_alt || ""),
       template_name: String(slot.template_name || "health_plan_reminder"), status: "active",
       start_date: startDate, end_date: endDate, created_at: prior && prior.created_at || now, updated_at: now
@@ -229,10 +202,6 @@ async function saveSchedule(body, decision = "approve", snapshot) {
         schedule_slot_id: slot.schedule_slot_id, prescription_id: slot.prescription_id, user_id: userId,
         // The whole behaviour triple travels with the delivery, not just the action.
         nudge_type: slot.nudge_type, pillar: slot.pillar, category: slot.category, action_text: slot.action_text,
-        // Copied verbatim from the slot, exactly like action_text: Workflow B reads
-        // the dated row, so the delivery must carry its own instructions rather
-        // than re-deriving them from a plan that may have changed since.
-        followup_enabled: slot.followup_enabled, followup_delay_hours: slot.followup_delay_hours,
         scheduled_date: iso, scheduled_time: slot.scheduled_time,
         message_body: slot.message_body, message_body_alt: slot.message_body_alt, tone_variant: slot.tone_variant,
         template_name: slot.template_name, status: "approved", sent_at: "", reviewed_at: now,

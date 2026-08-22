@@ -1,29 +1,14 @@
 "use strict";
 
-// Inbound WhatsApp replies. Replaces Workflow C.
-//
-// Necessarily public — Twilio cannot present a Supabase token — so the request
-// signature IS the authentication. Nothing reaches a Sheet before it verifies.
-//
-// Shape: ingest, then interpret. The raw message is banked in inbound_messages
-// on its own round trip, and only then resolved and applied. If interpretation
-// fails, the log row survives saying the message arrived and why it did not take
-// effect. That is the property the n8n version lacked, and it is what made
-// diagnosing a missing reply require the Twilio console.
+// Safety-only inbound path. This send-and-observe project does not collect
+// progress, barriers, commitments, or outcomes. The sole accepted instruction is
+// STOP, which immediately opts the patient out and cancels future unsent nudges.
 
 const { method, formBody, sendJson, apiError } = require("./_lib/http");
-const { loadClinicalData, batchWrite } = require("./_lib/clinical-data");
-const { verifySignature, requestUrl, sendMessage } = require("./_lib/twilio");
-const { melbourneTimestamp } = require("./_lib/followup");
-const {
-  parseInbound, resolveReply, applyReply, barrierPromptOperation, confirmationFor
-} = require("./_lib/feedback-store");
-const { recordInbound, reloadLog, resolutionOperation } = require("./_lib/inbound-log");
+const { verifySignature, requestUrl, stripChannel } = require("./_lib/twilio");
+const { loadClinicalData, batchWrite, operation } = require("./_lib/clinical-data");
 
-// Twilio treats any 2xx as delivered and stops retrying. Returning 200 once the
-// message is banked is deliberate: a retry would append a second log row and be
-// rejected as a duplicate anyway, so there is nothing to gain by asking for one.
-function ok(res) {
+function twiml(res) {
   res.statusCode = 200;
   res.setHeader("content-type", "text/xml; charset=utf-8");
   res.setHeader("cache-control", "no-store");
@@ -33,77 +18,25 @@ function ok(res) {
 module.exports = async function handler(req, res) {
   if (!method(req, res, ["POST"])) return;
   try {
-    const { raw, fields } = await formBody(req);
-
-    if (!verifySignature({
-      signature: req.headers["x-twilio-signature"],
-      url: requestUrl(req),
-      fields
-    })) {
-      // Nothing is logged: an unverified request is not evidence a patient sent
-      // anything, and writing it would let anyone append to the study record.
+    const { fields } = await formBody(req);
+    if (!verifySignature({ signature: req.headers["x-twilio-signature"], url: requestUrl(req), fields })) {
       return sendJson(res, 403, { error: "invalid_signature" });
     }
+    const instruction = String(fields.OptOutType || fields.Body || "").trim().toUpperCase();
+    if (instruction !== "STOP") return twiml(res);
 
-    const receivedAt = melbourneTimestamp();
-    const parsed = parseInbound(fields, receivedAt);
-    // A malformed sender or a missing SID cannot be correlated to anything and
-    // cannot be replayed usefully. Accepted and dropped, never retried.
-    if (!parsed.valid) return ok(res);
-
-    const data = await loadClinicalData(["inbound_messages", "user", "schedule_state"]);
-
-    // --- Ingest -------------------------------------------------------------
-    const logRow = await recordInbound(data.inbound_messages, parsed, fields);
-
-    // --- Interpret ----------------------------------------------------------
-    let resolution = null;
-    let applied = false;
-    let note = "";
-    let operations = [];
-    try {
-      resolution = resolveReply({ parsed, users: data.user.rows, states: data.schedule_state.rows });
-      const result = applyReply({
-        resolution,
-        stateTable: data.schedule_state,
-        userTable: data.user,
-        now: receivedAt
-      });
-      operations = result.operations;
-      applied = result.applied;
-      note = result.note;
-    } catch (error) {
-      // The log row still lands with the reason. Re-throwing here would lose the
-      // only record that the patient replied at all.
-      console.error("whatsapp-inbound interpretation failed", error);
-      note = String((error && error.message) || "interpretation_failed").slice(0, 240);
-    }
-
-    const logTable = await reloadLog();
-    operations.push(resolutionOperation({ logRow, logTable, resolution, applied, note }));
+    const phone = stripChannel(fields.From);
+    const data = await loadClinicalData(["user", "nudges", "schedule_state"]);
+    const user = data.user.rows.find(row => stripChannel(row.phone) === phone);
+    if (!user) return twiml(res);
+    const now = new Date().toISOString();
+    const operations = [operation("user", data.user, Object.assign({}, user, { user_status: "opted_out" }), user)];
+    data.nudges.rows.filter(row => String(row.user_id) === String(user.user_id) && String(row.status) === "approved" && !row.sent_at)
+      .forEach(row => operations.push(operation("nudges", data.nudges, Object.assign({}, row, { status: "canceled" }), row)));
+    data.schedule_state.rows.filter(row => String(row.user_id) === String(user.user_id) && !row.sent_at && !row.wa_message_id)
+      .forEach(row => operations.push(operation("schedule_state", data.schedule_state, Object.assign({}, row, { status: "canceled", last_updated: now }), row)));
     await batchWrite(operations);
-
-    // --- Acknowledge --------------------------------------------------------
-    // After the writes, never before: a confirmation the patient can see must not
-    // promise something the Sheet does not record.
-    const body = resolution && applied ? confirmationFor(resolution) : null;
-    if (body) {
-      try {
-        const sent = await sendMessage({ to: parsed.from_phone, body });
-        // A "not yet" acknowledgement IS the barrier question, so its SID becomes
-        // the handle that recognises the patient's next message as the answer.
-        const barrierOp = barrierPromptOperation({
-          resolution, stateTable: data.schedule_state, messageSid: sent.sid, now: receivedAt
-        });
-        if (barrierOp) await batchWrite([barrierOp]);
-      } catch (error) {
-        // The state is already correct; only the acknowledgement failed. Surfacing
-        // a 500 to Twilio would trigger a retry that re-sends nothing useful.
-        console.error("whatsapp-inbound confirmation send failed", error);
-      }
-    }
-
-    return ok(res);
+    return twiml(res);
   } catch (error) {
     return apiError(res, error);
   }

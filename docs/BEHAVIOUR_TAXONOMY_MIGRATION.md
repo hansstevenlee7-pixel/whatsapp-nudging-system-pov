@@ -42,14 +42,8 @@ blank.**
 | `nudges` | `category` |
 | `weekly_schedule` | `category` |
 
-Verify before deploying — read-only, writes nothing:
-
-```bash
-node scripts/verify-followup-migration.mjs
-```
-
-It runs the real `loadClinicalData()`, which is the same header assert every live
-handler runs. If it passes, the Monitor will load.
+Verify the two headers directly in the copied Sheet before deploying. The real
+`loadClinicalData()` header assertion is also exercised by the local test suite.
 
 `clinical-data.js` asserts these headers, so **the columns must exist before the
 deploy** or every request 500s naming them. That loud failure is deliberate:
@@ -137,10 +131,8 @@ Sheets deletion. Future work.
 ## Verification
 
 ```bash
-cd landing && npm test        # 147 tests
+cd landing && npm test
 cd landing && npm run check
-node scripts/verify-followup-migration.mjs
-node local/dev-server.js      # http://127.0.0.1:4010/monitor.html
 ```
 
 The DOM is what the tests cannot reach — there is no jsdom. In the browser:

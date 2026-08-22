@@ -82,6 +82,7 @@ test("Twilio delivery is scheduled in Melbourne and sends only generated rows in
   const trigger = workflow.nodes.find(item => item.name === "Melbourne Schedule Trigger");
   const dedupe = workflow.nodes.find(item => item.name === "Deduplicate Generated Schedule");
   const due = workflow.nodes.find(item => item.name === "Prepare Due Nudges");
+  const build = workflow.nodes.find(item => item.name === "Build Twilio Requests");
   assert.equal(workflow.active, true);
   assert.equal(workflow.settings.timezone, "Australia/Melbourne");
   assert.deepEqual(trigger.parameters.rule.interval[0], { field: "minutes", minutesInterval: 5 });
@@ -89,6 +90,10 @@ test("Twilio delivery is scheduled in Melbourne and sends only generated rows in
   assert.match(dedupe.parameters.jsCode, /most recently reviewed approved row/);
   assert.match(due.parameters.jsCode, /startsWith\('schd_'\)/);
   assert.match(due.parameters.jsCode, /ageMinutes >= 5/);
+  assert.match(build.parameters.jsCode, /TWILIO_SEND_ONLY_CONTENT_SID/);
+  assert.match(build.parameters.jsCode, /StatusCallback/);
+  assert.match(build.parameters.jsCode, /\/api\/whatsapp-status/);
+  assert.doesNotMatch(build.parameters.jsCode, /TWILIO_COMMITMENT_CONTENT_SID|two_stage|quick_reply/);
 });
 
 test("canonical weekly schedule ignores sent history and inactive deleted weekdays", () => {

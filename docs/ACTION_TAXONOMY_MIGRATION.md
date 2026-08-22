@@ -96,6 +96,5 @@ Only for a Sheet that predates the weekly-schedule migration entirely:
 - **Materialization** copies the slot action to every dated delivery it generates.
   Already-sent rows are never rewritten, so audit history keeps the action that was
   actually delivered.
-- **Workflow D** receives `action_text` as read-only context and its validation gate
-  restores the stored value before anything is written; the Sheets update node does
-  not map the column at all.
+- Later clinician schedule edits retain `action_text`; no automated adaptation
+  workflow is active in this project.

@@ -112,22 +112,13 @@ async function createPrescription(userId, doctorId, fields) {
     nudge_type: nudgeType, pillar, category, action_text: action,
     scheduled_date: issuedDate, scheduled_time: time,
     message_body: message, message_body_alt: messageAlt, tone_variant: tone,
-    // A brand-new prescription starts single-stage. The two-stage flow is a
-    // per-slot clinical decision made during weekly review, not a create-time one.
-    followup_enabled: "FALSE", followup_delay_hours: "",
     template_name: template, status: "needs_review", sent_at: "", reviewed_at: "",
     week_number: 1, schedule_slot_id: ""
   };
   const state = {
     schedule_id: `sch_${nudgeId}`, nudge_id: nudgeId, user_id: String(userId), parent_nudge_id: nudgeId,
     status: "needs_review",
-    sent_at: "", delivered_at: "", wa_message_id: "", response_wa_id: "", barrier_followup_wa_id: "", tone_sent: "",
-    response: "", responded_at: "", last_response_at: "", barrier_tag: "",
-    followup_enabled: "", followup_delay_hours: "",
-    commitment_response: "", commitment_responded_at: "",
-    followup_due_at: "", followup_sent_at: "", followup_wa_id: "",
-    outcome_response: "", outcome_responded_at: "",
-    done_count: 0, skip_count: 0, current_streak: 0, consecutive_skips: 0,
+    sent_at: "", delivered_at: "", wa_message_id: "", tone_sent: "",
     last_updated: new Date().toISOString()
   };
 

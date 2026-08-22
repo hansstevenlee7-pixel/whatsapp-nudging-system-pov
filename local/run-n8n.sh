@@ -5,7 +5,7 @@
 #
 # - Docker image bundles its own Node, so the host Node version is irrelevant.
 # - `start --tunnel` gives a temporary public HTTPS URL that forwards to the
-#   local instance, so Meta/WhatsApp and the landing page can reach your
+#   local instance, so Twilio and the landing page can reach your
 #   webhooks during testing. The tunnel URL CHANGES on every restart.
 # - Data (DB, credentials) persists in the named volume `n8n_data`.
 set -euo pipefail

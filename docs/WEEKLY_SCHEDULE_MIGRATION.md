@@ -1,6 +1,6 @@
 # Weekly schedule migration
 
-The Monitoring API requires a Google Sheets tab named `weekly_schedule`. This tab is the recurring-plan source of truth; `nudges` and `schedule_state` remain delivery and response history. Workflow E is no longer used for portal CRUD.
+The Monitoring API requires a Google Sheets tab named `weekly_schedule`. This tab is the recurring-plan source of truth; `nudges`, `schedule_state`, and `delivery_events` retain outbound delivery history. The portal uses direct server-side Sheets access.
 
 Create the tab with this header row, in order:
 

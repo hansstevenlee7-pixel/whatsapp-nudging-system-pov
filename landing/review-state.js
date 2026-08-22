@@ -262,51 +262,6 @@
     return { ok: true, value: value, error: "" };
   }
 
-  // ---- Outcome follow-up (client mirror of api/_lib/followup.js) ----------
-  // The two-stage flow turns the initial nudge into a commitment question and
-  // arms one delayed outcome check. The clinician owns both the switch and the
-  // delay, so this validates them before a round trip; the server re-checks
-  // identically and stays authoritative.
-  var FOLLOWUP_MIN_HOURS = 1;
-  var FOLLOWUP_MAX_HOURS = 72;
-  var FOLLOWUP_PRESET_HOURS = [1, 2, 4, 8, 12, 24];
-  // "Will you do this?" only makes sense for a nudge that asks the patient to act.
-  var ACTIONABLE_NUDGE_TYPES = ["reminder", "challenge"];
-
-  function isFollowupEnabled(value) {
-    var clean = String(value == null ? "" : value).trim().toLowerCase();
-    return clean === "true" || clean === "yes" || clean === "1" || clean === "on";
-  }
-
-  function isActionableNudgeType(value) {
-    return ACTIONABLE_NUDGE_TYPES.indexOf(String(value == null ? "" : value).trim()) >= 0;
-  }
-
-  // Returns what should be sent on the wire plus a message the slot editor can
-  // show inline. Delay is forced blank while the switch is off so a stale value
-  // can never be mistaken for a live setting.
-  function validateFollowup(input) {
-    input = input || {};
-    if (!isFollowupEnabled(input.enabled)) {
-      return { ok: true, enabled: false, hours: "", error: "" };
-    }
-    if (!isActionableNudgeType(input.nudgeType)) {
-      return { ok: false, enabled: true, hours: "",
-        error: "An outcome follow-up only fits an actionable nudge (reminder or challenge)." };
-    }
-    var raw = String(input.hours == null ? "" : input.hours).trim();
-    if (!raw) return { ok: false, enabled: true, hours: "", error: "Set how many hours later to ask." };
-    if (!/^\d+$/.test(raw)) {
-      return { ok: false, enabled: true, hours: raw, error: "Use a whole number of hours." };
-    }
-    var hours = Number(raw);
-    if (hours < FOLLOWUP_MIN_HOURS || hours > FOLLOWUP_MAX_HOURS) {
-      return { ok: false, enabled: true, hours: raw,
-        error: "Choose between " + FOLLOWUP_MIN_HOURS + " and " + FOLLOWUP_MAX_HOURS + " hours." };
-    }
-    return { ok: true, enabled: true, hours: String(hours), error: "" };
-  }
-
   // ---- Message options -----------------------------------------------------
   // Workflow A writes one `nudges` row per frequency_per_week, all sharing an
   // action and differing only in wording. The clinician should not be choosing
@@ -526,13 +481,6 @@
     applyActionRename: applyActionRename,
     validateActionEdit: validateActionEdit,
     validatePrescriptionDraft: validatePrescriptionDraft,
-    FOLLOWUP_MIN_HOURS: FOLLOWUP_MIN_HOURS,
-    FOLLOWUP_MAX_HOURS: FOLLOWUP_MAX_HOURS,
-    FOLLOWUP_PRESET_HOURS: FOLLOWUP_PRESET_HOURS,
-    ACTIONABLE_NUDGE_TYPES: ACTIONABLE_NUDGE_TYPES,
-    isFollowupEnabled: isFollowupEnabled,
-    isActionableNudgeType: isActionableNudgeType,
-    validateFollowup: validateFollowup,
     MESSAGE_TONES: MESSAGE_TONES,
     messageTextKey: messageTextKey,
     oppositeTone: oppositeTone,

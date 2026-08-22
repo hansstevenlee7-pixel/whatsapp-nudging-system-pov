@@ -11,7 +11,7 @@
        recurring weekly schedule (Mon–Sun, MULTIPLE nudges/day, reused from the
        LLM's nudges) bounded by start/stop dates → approve.
        Apple-light tokens, consistent with index.html + input.html.
-       Patients load automatically from Google Sheets through Workflow E.
+       Patients load automatically from Google Sheets through Vercel APIs.
        ============================================================================ */
     :root {
       color-scheme: light;
@@ -185,22 +185,6 @@
     .actionpick.bad { border-color:var(--danger); }
     .slottax { display:flex; gap:6px; flex-wrap:wrap; font-size:12px; color:var(--secondary); }
     .slothint { font-size:12px; color:var(--placeholder); }
-    /* Outcome follow-up: the doctor's two-stage switch and its delay */
-    .fu { border:1px solid var(--border); border-radius:10px; padding:9px 10px; display:flex; flex-direction:column; gap:7px; }
-    .futop { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
-    .fuswitch { display:flex; align-items:center; gap:7px; font-size:13px; font-weight:600; color:var(--text); cursor:pointer; }
-    .fuswitch input { width:16px; height:16px; accent-color:var(--accent); cursor:pointer; }
-    .fuswitch input:disabled { cursor:not-allowed; }
-    .fuswitch.off { color:var(--secondary); }
-    .furow { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
-    .furow label { font-size:11px; font-weight:700; letter-spacing:.3px; text-transform:uppercase; color:var(--secondary); }
-    .fudelay, .fucustom { font:inherit; font-size:14px; color:var(--text); background:var(--card);
-      border:1px solid var(--border); border-radius:8px; padding:6px 9px; }
-    .fudelay:focus, .fucustom:focus { outline:none; border-color:var(--accent); box-shadow:var(--ring); }
-    .fudelay.bad, .fucustom.bad { border-color:var(--danger); }
-    .fucustom { width:84px; }
-    .fuerr { font-size:12px; color:var(--danger); }
-    .funote { font-size:12px; color:var(--placeholder); }
     .empty { font-size:13px; color:var(--placeholder); padding:4px 2px; }
 
     /* Sticky action bar */
@@ -298,6 +282,7 @@
     .dialog-body h2 { margin:0 0 8px; font-size:21px; }
     .dialog-body p { margin:0; color:var(--secondary); font-size:15px; }
     .dialog-actions { display:flex; justify-content:flex-end; gap:10px; padding:16px 24px; background:#f7f7fa; border-top:1px solid var(--border); }
+    .delivery-list{display:grid;gap:12px;margin-top:18px}.delivery-item{border:1px solid var(--border);border-radius:14px;padding:16px;background:#fff}.delivery-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.delivery-title{font-weight:750;color:var(--ink)}.delivery-meta{font-size:12px;color:var(--muted);margin-top:4px}.delivery-message{margin:12px 0;padding:12px 14px;border-radius:10px;background:#f7f7fa;white-space:pre-wrap}.delivery-events{display:flex;flex-wrap:wrap;gap:7px}.delivery-event{font-size:12px;padding:5px 8px;border-radius:999px;background:#edf1f7;color:#344054}.delivery-event.current{background:#dff3e8;color:#17663a}.delivery-event.failed{background:#fde7e7;color:#9b1c1c}.delivery-error{font-size:12px;color:#9b1c1c;margin-top:8px}.delivery-empty{padding:20px;border:1px dashed var(--border);border-radius:12px;color:var(--muted);text-align:center}
     @media (max-width:860px){ .workspace{grid-template-columns:1fr;} .detail-card,.detail-placeholder{position:static;} }
     @media (max-width:620px){
       .hero{align-items:flex-start;flex-direction:column}.hero h1{font-size:34px}.summary-grid{grid-template-columns:1fr 1fr}.summary-card:last-child{grid-column:1/-1}
@@ -379,6 +364,11 @@
       <div class="hint" id="patientEditStatus"></div>
     </section>
     </div>
+
+    <section class="card hidden" id="deliveryCard">
+      <div class="card-head"><div><h2>System delivery view</h2><p class="sub">An auditable view of what was scheduled, submitted, delivered, read, or failed. These are system events—not patient adherence outcomes.</p></div></div>
+      <div class="delivery-list" id="deliveryList"></div>
+    </section>
 
     <!-- Explainability trace -->
     <section class="card hidden" id="traceCard">
@@ -589,6 +579,7 @@
       el("summaryGrid").classList.remove("hidden");
       el("tableCard").classList.remove("hidden");
       el("patientCard").classList.add("hidden");
+      el("deliveryCard").classList.add("hidden");
       el("patientPlaceholder").classList.remove("hidden");
       el("traceCard").classList.add("hidden");
       el("reviewCard").classList.add("hidden");
@@ -693,11 +684,62 @@
       initPeriod();
       el("traceCard").classList.remove("hidden");
       el("reviewCard").classList.remove("hidden");
+      renderDeliveryTimeline(p);
+      el("deliveryCard").classList.remove("hidden");
       el("rejectBtn").classList.toggle("hidden", recordStatus !== "active");
       el("approveBtn").classList.toggle("hidden", recordStatus !== "active");
       el("approveBtn").textContent = isApprovedPatient(p) ? "Save schedule changes" : "Approve & schedule";
       renderWeek(); refreshValidity();
       el(scrollTarget || "patientCard").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function formatEventTime(value) {
+      var parsed = Date.parse(String(value || ""));
+      return Number.isFinite(parsed) ? new Date(parsed).toLocaleString("en-AU", { timeZone: "Australia/Melbourne" }) : "time unavailable";
+    }
+    function renderDeliveryTimeline(patient) {
+      var root = el("deliveryList");
+      root.innerHTML = "";
+      var nudges = (patient.schedule_nudges || []).slice();
+      var nudgeById = new Map(nudges.map(function (n) { return [String(n.nudge_id), n]; }));
+      var states = (patient.schedule_state || []).slice().sort(function (a, b) {
+        return String(b.sent_at || b.last_updated || "").localeCompare(String(a.sent_at || a.last_updated || ""));
+      });
+      var events = patient.delivery_events || [];
+      if (!states.length) {
+        root.innerHTML = '<div class="delivery-empty">No outbound delivery activity has been recorded for this patient yet.</div>';
+        return;
+      }
+      states.forEach(function (stateRow) {
+        var nudge = nudgeById.get(String(stateRow.nudge_id)) || {};
+        var matching = events.filter(function (event) { return String(event.wa_message_id) === String(stateRow.wa_message_id || ""); })
+          .sort(function (a, b) { return String(a.event_at || "").localeCompare(String(b.event_at || "")); });
+        var item = document.createElement("article"); item.className = "delivery-item";
+        var status = String(stateRow.status || "approved").toLowerCase();
+        var head = document.createElement("div"); head.className = "delivery-top";
+        head.innerHTML = '<div><div class="delivery-title">' + esc(nudge.action_text || nudge.nudge_type || "Scheduled nudge") + '</div>' +
+          '<div class="delivery-meta">Scheduled ' + esc((nudge.scheduled_date || "—") + " " + (nudge.scheduled_time || "")) +
+          (stateRow.wa_message_id ? " · SID " + esc(stateRow.wa_message_id) : "") + '</div></div>' +
+          '<span class="chip ' + (["failed", "undelivered", "canceled"].includes(status) ? "warn" : "ok") + '">' + esc(status) + '</span>';
+        item.appendChild(head);
+        var message = document.createElement("div"); message.className = "delivery-message";
+        message.textContent = nudge.message_body || "Message text unavailable";
+        item.appendChild(message);
+        var trail = document.createElement("div"); trail.className = "delivery-events";
+        var scheduled = document.createElement("span"); scheduled.className = "delivery-event";
+        scheduled.textContent = "scheduled · " + (nudge.scheduled_date || "—") + " " + (nudge.scheduled_time || ""); trail.appendChild(scheduled);
+        if (stateRow.sent_at) { var submitted = document.createElement("span"); submitted.className = "delivery-event"; submitted.textContent = "submitted · " + formatEventTime(stateRow.sent_at); trail.appendChild(submitted); }
+        matching.forEach(function (event, index) {
+          var node = document.createElement("span");
+          var eventStatus = String(event.status || "unknown").toLowerCase();
+          node.className = "delivery-event" + (index === matching.length - 1 ? " current" : "") + (["failed", "undelivered", "canceled"].includes(eventStatus) ? " failed" : "");
+          node.textContent = eventStatus + " · " + formatEventTime(event.event_at); trail.appendChild(node);
+        });
+        item.appendChild(trail);
+        var latestError = matching.slice().reverse().find(function (event) { return event.error_code || event.error_message; });
+        if (latestError) { var error = document.createElement("div"); error.className = "delivery-error"; error.textContent = [latestError.error_code, latestError.error_message].filter(Boolean).join(" — "); item.appendChild(error); }
+        root.appendChild(item);
+      });
     }
 
     // ---- Patient update / reversible archive -----------------------------
@@ -1259,10 +1301,6 @@
         action_text: action, nudge_type: n.nudge_type || TAX.nudge_types[0],
         template_name: n.template_name || "health_plan_reminder",
         time: TIME_RE.test(n.scheduled_time || "") ? n.scheduled_time : preferredTime(),
-        // Survives save → reload → edit: the saved slot carries both fields, so
-        // reseeding from weekly_schedule restores exactly what was approved.
-        followup_enabled: ReviewState.isFollowupEnabled(n.followup_enabled),
-        followup_delay_hours: String(n.followup_delay_hours == null ? "" : n.followup_delay_hours).trim(),
         // Frozen at creation. Re-deriving on every render would silently discard
         // whatever the doctor typed into the custom option.
         options: built.options, selected: built.selected, expanded: false
@@ -1348,92 +1386,6 @@
       return sel;
     }
 
-    // ---- Outcome follow-up control (two-stage feedback) -------------------
-    // Off, the nudge keeps the single Done/In progress/Not yet prompt. On, the
-    // initial message asks "Will you do this?" and a Yes arms exactly one delayed
-    // "Were you able to complete it?" this many hours after delivery. The delay is
-    // therefore only meaningful while the switch is on, and is required there.
-    function followupControls(slot) {
-      var wrap = document.createElement("div"); wrap.className = "fu";
-      var actionable = ReviewState.isActionableNudgeType(slot.nudge_type);
-      var enabled = slot.followup_enabled === true && actionable;
-
-      var top = document.createElement("div"); top.className = "futop";
-      var sw = document.createElement("label"); sw.className = "fuswitch" + (enabled ? "" : " off");
-      var box = document.createElement("input"); box.type = "checkbox"; box.checked = enabled;
-      box.disabled = !actionable;
-      var swText = document.createElement("span"); swText.textContent = "Send outcome follow-up";
-      sw.appendChild(box); sw.appendChild(swText);
-      top.appendChild(sw);
-      wrap.appendChild(top);
-
-      var err = document.createElement("div"); err.className = "fuerr hidden";
-      var note = document.createElement("div"); note.className = "funote";
-
-      if (!actionable) {
-        note.textContent = "Only a reminder or challenge can ask for a commitment — " +
-          pretty(slot.nudge_type) + " messages are informational.";
-        wrap.appendChild(note);
-        return wrap;
-      }
-
-      var row = document.createElement("div"); row.className = "furow hidden";
-      var rlabel = document.createElement("label"); rlabel.textContent = "Ask after";
-      var preset = document.createElement("select"); preset.className = "fudelay";
-      ReviewState.FOLLOWUP_PRESET_HOURS.forEach(function (h) {
-        preset.appendChild(new Option(h + (h === 1 ? " hour" : " hours"), String(h)));
-      });
-      preset.appendChild(new Option("Custom…", "custom"));
-      var custom = document.createElement("input"); custom.type = "number"; custom.className = "fucustom hidden";
-      custom.min = ReviewState.FOLLOWUP_MIN_HOURS; custom.max = ReviewState.FOLLOWUP_MAX_HOURS; custom.step = 1;
-      custom.placeholder = "hrs";
-      row.appendChild(rlabel); row.appendChild(preset); row.appendChild(custom);
-      wrap.appendChild(row); wrap.appendChild(err); wrap.appendChild(note);
-
-      // A value the presets cannot express (say 5) must still round-trip, so the
-      // custom field opens itself when the stored delay is not a preset.
-      var stored = String(slot.followup_delay_hours || "");
-      var isPreset = ReviewState.FOLLOWUP_PRESET_HOURS.indexOf(Number(stored)) >= 0;
-      preset.value = stored && isPreset ? stored : (stored ? "custom" : "4");
-      custom.value = stored && !isPreset ? stored : "";
-
-      function currentHours() {
-        return preset.value === "custom" ? custom.value : preset.value;
-      }
-      function sync(rerender) {
-        var on = box.checked;
-        slot.followup_enabled = on;
-        slot.followup_delay_hours = on ? String(currentHours() || "").trim() : "";
-        sw.className = "fuswitch" + (on ? "" : " off");
-        row.classList.toggle("hidden", !on);
-        custom.classList.toggle("hidden", preset.value !== "custom");
-        var check = ReviewState.validateFollowup({
-          enabled: on, hours: slot.followup_delay_hours, nudgeType: slot.nudge_type
-        });
-        err.classList.toggle("hidden", !check.error);
-        err.textContent = check.error;
-        preset.className = "fudelay" + (check.error && preset.value !== "custom" ? " bad" : "");
-        custom.className = "fucustom" + (preset.value === "custom" ? "" : " hidden") + (check.error && preset.value === "custom" ? " bad" : "");
-        note.textContent = on
-          ? "Asks “Will you do this?” first. A Yes schedules one check " + (slot.followup_delay_hours || "—") +
-            " hour(s) after the message is delivered. No reply is recorded as no feedback, never as “not yet”."
-          : "Keeps the single Done / In progress / Not yet prompt.";
-        state.scheduleDirty = true;
-        if (rerender) renderWeek();
-        refreshValidity();
-      }
-
-      box.addEventListener("change", function () { sync(false); markScheduleDirty(); });
-      preset.addEventListener("change", function () { sync(false); markScheduleDirty(); });
-      custom.addEventListener("input", function () { sync(false); });
-      custom.addEventListener("change", function () { sync(false); markScheduleDirty(); });
-      // Paint the initial state without marking the week dirty.
-      var wasDirty = state.scheduleDirty;
-      sync(false);
-      state.scheduleDirty = wasDirty;
-      return wrap;
-    }
-
     function renderWeek() {
       var root = el("weekEditor"); root.innerHTML = "";
       DAYS.forEach(function (day) {
@@ -1456,11 +1408,7 @@
           // Derived from the selected option rather than a slot flag, so it stays
           // accurate after a reload — the old slot.source was never persisted.
           var customBadge = act.generated === false ? '<span class="cbadge">custom</span>' : "";
-          // Visible while collapsed so a two-stage nudge is obvious when scanning
-          // the week, not only once the slot is expanded.
-          var fuBadge = ReviewState.validateFollowup({ enabled: slot.followup_enabled, hours: slot.followup_delay_hours, nudgeType: slot.nudge_type }).enabled
-            ? '<span class="cbadge">+' + esc(String(slot.followup_delay_hours || "?")) + 'h check</span>' : "";
-          lbl.innerHTML = '<div class="b">' + esc(headLabel + " · " + slot.nudge_type) + customBadge + fuBadge + ' <span class="tw">' + (slot.expanded ? "▲ edit" : "▾ edit") + '</span></div>' +
+          lbl.innerHTML = '<div class="b">' + esc(headLabel + " · " + slot.nudge_type) + customBadge + ' <span class="tw">' + (slot.expanded ? "▲ edit" : "▾ edit") + '</span></div>' +
                           '<div class="m">' + esc(pretty(act.tone) + " · " + (act.text ? act.text.slice(0, 60) : "(empty — edit)")) + '</div>';
           lbl.addEventListener("click", function () { slot.expanded = !slot.expanded; renderWeek(); });
           var time = document.createElement("input"); time.type = "time"; time.value = slot.time;
@@ -1494,7 +1442,6 @@
             ahint.textContent = "Reword or re-file this behaviour in the trace card above — the change follows every nudge that uses it.";
             af.appendChild(alabel); af.appendChild(apick); af.appendChild(atax); af.appendChild(ahint);
             body.appendChild(af);
-            body.appendChild(followupControls(slot));
             var opts = document.createElement("div"); opts.className = "opts";
             slot.options.forEach(function (o, oi) {
               var b = document.createElement("button"); b.type = "button"; b.className = "optpill" + (oi === slot.selected ? " on" : "");
@@ -1694,10 +1641,7 @@
         pillar: behaviour.pillar || "", category: behaviour.category || "",
         tone_variant: tone, scheduled_time: time,
         message_body: mode === "custom" ? message : "",
-        template_name: "health_plan_reminder",
-        // Starts single-stage like every other new slot; the doctor turns the
-        // follow-up on by expanding it, so the choice is always deliberate.
-        followup_enabled: false, followup_delay_hours: ""
+        template_name: "health_plan_reminder"
       };
       var slot = slotFromNudge(seed, nextOrdinalFor(prescriptionId, action));
       slot.schedule_slot_id = newSlotId(seed.source_nudge_id);
@@ -1871,28 +1815,18 @@
     function badTimes() { return DAYS.some(function (d) { return state.week[d].some(function (s) { return !TIME_RE.test(s.time || ""); }); }); }
     function emptyMsgs() { return DAYS.some(function (d) { return state.week[d].some(function (s) { return !(activeOpt(s).text || "").trim(); }); }); }
     function emptyActions() { return DAYS.some(function (d) { return state.week[d].some(function (s) { return !String(s.action_text || "").trim(); }); }); }
-    // A follow-up switched on with no usable delay is the one new way to make the
-    // week unsavable, so it blocks approval the same way an empty action does.
-    function badFollowups() {
-      return DAYS.some(function (d) {
-        return state.week[d].some(function (s) {
-          return !ReviewState.validateFollowup({ enabled: s.followup_enabled, hours: s.followup_delay_hours, nudgeType: s.nudge_type }).ok;
-        });
-      });
-    }
     function refreshValidity() {
       var total = totalSlots();
       var bad = badTimes();
       var noMsg = emptyMsgs();
       var noAction = emptyActions();
-      var badFollowup = badFollowups();
       var pStart = state.period.start, pEnd = state.period.end;
       var periodMissing = !pStart || !pEnd, periodOrder = pStart && pEnd && pEnd < pStart;
       el("periodErr").classList.toggle("hidden", !periodOrder);
       refreshPrescriptionControls();
       var active = state.selected && (state.selected.user_status || "active") === "active";
       var approved = isApprovedPatient(state.selected);
-      var ok = active && total > 0 && !bad && !noAction && !noMsg && !badFollowup && !periodMissing && !periodOrder &&
+      var ok = active && total > 0 && !bad && !noAction && !noMsg && !periodMissing && !periodOrder &&
         !state.scheduleSaving && (!approved || state.scheduleDirty);
       el("approveBtn").disabled = !ok;
       var s = el("statusMsg");
@@ -1910,7 +1844,6 @@
       else if (bad) { s.className = "status err"; s.textContent = "Every nudge needs a valid time."; }
       else if (noAction) { s.className = "status err"; s.textContent = "Every nudge needs an action (expand it to edit)."; }
       else if (noMsg) { s.className = "status err"; s.textContent = "Every nudge needs a non-empty message (expand it to edit)."; }
-      else if (badFollowup) { s.className = "status err"; s.textContent = "A nudge has the outcome follow-up on with an invalid delay — use 1 to 72 whole hours."; }
       else if (periodMissing) { s.className = "status err"; s.textContent = "Set a start and stop date."; }
       else if (periodOrder) { s.className = "status err"; s.textContent = "Stop date must be on/after the start date."; }
       else if (state.scheduleSaving) { s.className = "status"; s.textContent = "Saving schedule…"; }
@@ -1925,16 +1858,11 @@
         state.week[day].forEach(function (s) {
           var act = activeOpt(s);
           s.schedule_slot_id = s.schedule_slot_id || newSlotId(s.source_nudge_id);
-          // Normalized here rather than at edit time so the wire value always
-          // matches what the server will store: delay blank whenever the switch
-          // is off, and the switch itself off on a non-actionable nudge type.
-          var fu = ReviewState.validateFollowup({ enabled: s.followup_enabled, hours: s.followup_delay_hours, nudgeType: s.nudge_type });
           slots.push({ schedule_slot_id: s.schedule_slot_id, day: day, time: s.time, nudge_type: s.nudge_type,
             // The whole behaviour triple, so a slot filed under a different pillar
             // from its prescription persists as filed.
             pillar: s.pillar, category: s.category || "",
             action_text: String(s.action_text || "").trim(),
-            followup_enabled: fu.enabled, followup_delay_hours: fu.hours,
             // The opposite-tone counterpart of the body actually being sent, and
             // blank once the doctor has edited it — a stale pairing would claim a
             // rewrite that no longer matches.
