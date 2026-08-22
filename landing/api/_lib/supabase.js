@@ -1,5 +1,6 @@
 "use strict";
 
+const crypto = require("node:crypto");
 const { httpError } = require("./http");
 
 function env(name) {

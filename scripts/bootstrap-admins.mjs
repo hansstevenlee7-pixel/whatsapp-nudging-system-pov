@@ -5,8 +5,7 @@ const base = process.env.SUPABASE_URL.replace(/\/$/, "");
 const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const redirectTo = `${process.env.PUBLIC_APP_URL.replace(/\/$/, "")}/set-password.html`;
 const admins = [
-  { display_name: "Hans Lee", email: "hlee0189@student.monash.edu" },
-  { display_name: "David Taniar", email: "david.taniar@monash.edu" }
+  { display_name: "Hans Lee", email: "hlee0189@student.monash.edu" }
 ];
 
 async function request(path, options = {}) {

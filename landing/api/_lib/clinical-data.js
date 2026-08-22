@@ -10,6 +10,18 @@ const DELIVERY_EVENT_HEADERS = [
   "event_id", "event_at", "wa_message_id", "nudge_id", "user_id", "status",
   "error_code", "error_message", "channel_to", "raw_payload"
 ];
+const INTERACTION_EVENT_HEADERS = [
+  "interaction_id", "event_at", "inbound_message_sid", "user_id", "from_phone",
+  "reply_to_wa_message_id", "nudge_id", "body", "media_count", "correlation_method", "ack_status"
+];
+const MEDIA_ASSIGNMENT_HEADERS = [
+  "assignment_id", "assigned_at", "user_id", "nudge_id", "behaviour_key", "media_asset_id",
+  "adaptation_decision_id", "media_kind", "source_url", "tracked_url"
+];
+const ADAPTATION_DECISION_HEADERS = [
+  "decision_id", "decided_at", "user_id", "behaviour_key", "interaction_id", "signal_type",
+  "rule_applied", "outcome", "reason", "selected_asset_id", "interpretation", "previous_state", "next_state"
+];
 
 async function loadClinicalData(names = TAB_NAMES) {
   const data = await readTabs(names);
@@ -24,16 +36,21 @@ async function loadClinicalData(names = TAB_NAMES) {
   // until a clinician saves; the read path falls back to the prescription's default.
   if (data.nudges) assertHeaders(data.nudges, [
     "nudge_id", "user_id", "status", "scheduled_date", "scheduled_time", "message_body", "schedule_slot_id", "action_text",
-    "category"
+    "category", "media_asset_id", "adaptation_decision_id"
   ], "nudges");
   if (data.weekly_schedule) assertHeaders(data.weekly_schedule, [
     "schedule_slot_id", "user_id", "source_nudge_id", "prescription_id", "day", "scheduled_time", "nudge_type", "pillar", "action_text",
-    "category", "tone_variant", "message_body", "message_body_alt", "template_name", "status", "start_date", "end_date", "created_at", "updated_at"
+    "category", "tone_variant", "message_body", "message_body_alt", "template_name", "status", "start_date", "end_date", "created_at", "updated_at",
+    "media_asset_id", "adaptation_decision_id"
   ], "weekly_schedule");
   if (data.schedule_state) assertHeaders(data.schedule_state, [
-    "schedule_id", "nudge_id", "user_id", "status", "sent_at", "wa_message_id", "delivered_at", "last_updated"
+    "schedule_id", "nudge_id", "user_id", "status", "sent_at", "wa_message_id", "delivered_at", "last_updated",
+    "read_at", "interacted_at", "last_inbound_message_sid"
   ], "schedule_state");
   if (data.delivery_events) assertHeaders(data.delivery_events, DELIVERY_EVENT_HEADERS, "delivery_events");
+  if (data.interaction_events) assertHeaders(data.interaction_events, INTERACTION_EVENT_HEADERS, "interaction_events");
+  if (data.media_assignments) assertHeaders(data.media_assignments, MEDIA_ASSIGNMENT_HEADERS, "media_assignments");
+  if (data.adaptation_decisions) assertHeaders(data.adaptation_decisions, ADAPTATION_DECISION_HEADERS, "adaptation_decisions");
   return data;
 }
 
@@ -126,5 +143,5 @@ async function updateUser(userId, changes) {
 
 module.exports = {
   loadClinicalData, buildPatients, allPatients, updateUser, isArchivedPrescription,
-  batchWrite, operation, DELIVERY_EVENT_HEADERS
+  batchWrite, operation, DELIVERY_EVENT_HEADERS, INTERACTION_EVENT_HEADERS, MEDIA_ASSIGNMENT_HEADERS, ADAPTATION_DECISION_HEADERS
 };

@@ -36,3 +36,5 @@ npm run check
 ```
 
 See `docs/SYSTEM_POV_MIGRATION.md` before connecting a Sheet, Twilio account, Railway service, or Vercel project.
+
+Taxonomy-driven media discovery and bounded adaptation are documented in `docs/ADAPTIVE_MEDIA_MIGRATION.md`. Apply both Supabase migrations and the idempotent Sheet migration before setting `ADAPTIVE_MEDIA_ENABLED=true`.

@@ -5,6 +5,7 @@ const { requireUser } = require("./_lib/auth");
 const { assertPatientAccess } = require("./_lib/policy");
 const { loadClinicalData, buildPatients } = require("./_lib/clinical-data");
 const { saveSchedule } = require("./_lib/schedule-store");
+const { queuePatientBehaviours } = require("./_lib/adaptive-service");
 
 module.exports = async function handler(req, res) {
   if (!method(req, res, ["PUT"])) return;
@@ -16,6 +17,7 @@ module.exports = async function handler(req, res) {
     const patient = assertPatientAccess(profile, patients, body.user_id);
     if (patient.user_status === "disabled") throw httpError(409, "Reactivate this patient before changing their schedule");
     const result = await saveSchedule(Object.assign({}, body, { decision: "approve" }), "approve", data);
+    await queuePatientBehaviours(body.user_id, result.weekly_schedule, data.prescriptions.rows).catch(error => console.error("media search queue failed", error));
     sendJson(res, 200, result);
   } catch (error) { apiError(res, error); }
 };

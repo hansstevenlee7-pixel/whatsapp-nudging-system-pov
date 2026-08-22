@@ -4,7 +4,7 @@
 
 Do not reuse the adaptive prototype's live Sheet or Vercel project. Copy the spreadsheet, use a dedicated sheet-scoped service account, and connect a new Vercel project only after local validation.
 
-Add a `delivery_events` tab with this exact header row:
+Add a `delivery_events` tab with this exact header row, then run the adaptive Sheet migration described in `ADAPTIVE_MEDIA_MIGRATION.md`:
 
 ```text
 event_id,event_at,wa_message_id,nudge_id,user_id,status,error_code,error_message,channel_to,raw_payload
@@ -26,6 +26,12 @@ The fork tolerates legacy feedback columns already present in copied tabs, but i
 - `TWILIO_ACCOUNT_SID`
 - `TWILIO_AUTH_TOKEN`
 - `TWILIO_WHATSAPP_FROM`
+- `ADAPTIVE_MEDIA_ENABLED`
+- `YOUTUBE_API_KEY`
+- `YOUTUBE_TRUSTED_CHANNEL_IDS`
+- `GEMINI_API_KEY`
+- `GEMINI_SUMMARY_MODEL`
+- `GEMINI_CLASSIFIER_MODEL`
 
 ## Railway/n8n variables
 
@@ -35,6 +41,7 @@ The fork tolerates legacy feedback columns already present in copied tabs, but i
 - `TWILIO_WHATSAPP_FROM`
 - `TWILIO_SEND_ONLY_CONTENT_SID`
 - `PORTAL_BASE_URL` — the new Vercel origin, without a trailing slash
+- `N8N_PROXY_SECRET` — the same secret configured in Vercel
 
 Workflow B sends `StatusCallback=<PORTAL_BASE_URL>/api/whatsapp-status` on every Twilio request. Create and approve a send-only WhatsApp Content Template with two variables: recipient name and clinician-approved message text. Do not reuse the quick-reply or commitment templates from the adaptive prototype.
 
@@ -46,7 +53,7 @@ Point the WhatsApp inbound webhook to:
 https://NEW_PROJECT_ORIGIN/api/whatsapp-inbound
 ```
 
-The endpoint validates `X-Twilio-Signature`, ignores ordinary replies, and processes only `STOP` by setting `user.user_status=opted_out` and cancelling future unsent rows.
+The endpoint validates `X-Twilio-Signature`. It processes `STOP` immediately by setting `user.user_status=opted_out` and cancelling future unsent rows. Other replies are stored exactly once, acknowledged, and queued for asynchronous adaptation; the webhook never calls an LLM.
 
 ## Acceptance test
 

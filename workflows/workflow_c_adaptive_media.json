@@ -1,0 +1,66 @@
+{
+  "name": "Workflow C — Adaptive Media Workers",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Workflow C — Adaptive media workers\n\nPolls the signed Vercel worker endpoints every two minutes. Media discovery searches trusted YouTube channels and Europe PMC; interaction processing applies explainable decisions inside the approved envelope. Neither worker sits in the Twilio callback path.\n\nRequired Railway variables: PORTAL_BASE_URL, N8N_PROXY_SECRET. Search and Gemini credentials remain server-side in Vercel."
+      },
+      "id": "c2000001-0000-0000-0000-000000000001",
+      "name": "Setup Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [260, 160]
+    },
+    {
+      "parameters": {
+        "rule": { "interval": [{ "field": "minutes", "minutesInterval": 2 }] }
+      },
+      "id": "c2000001-0000-0000-0000-000000000002",
+      "name": "Worker Schedule",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [340, 360]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ String($env.PORTAL_BASE_URL || '').replace(/\\/$/, '') + '/api/internal/media-worker' }}",
+        "sendHeaders": true,
+        "headerParameters": { "parameters": [{ "name": "X-N8N-Proxy-Secret", "value": "={{ $env.N8N_PROXY_SECRET }}" }] },
+        "options": {}
+      },
+      "id": "c2000001-0000-0000-0000-000000000003",
+      "name": "Run Media Discovery",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [580, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ String($env.PORTAL_BASE_URL || '').replace(/\\/$/, '') + '/api/internal/adaptation-worker' }}",
+        "sendHeaders": true,
+        "headerParameters": { "parameters": [{ "name": "X-N8N-Proxy-Secret", "value": "={{ $env.N8N_PROXY_SECRET }}" }] },
+        "options": {}
+      },
+      "id": "c2000001-0000-0000-0000-000000000004",
+      "name": "Run Adaptation",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [580, 440]
+    }
+  ],
+  "connections": {
+    "Worker Schedule": {
+      "main": [[
+        { "node": "Run Media Discovery", "type": "main", "index": 0 },
+        { "node": "Run Adaptation", "type": "main", "index": 0 }
+      ]]
+    }
+  },
+  "settings": { "executionOrder": "v1", "timezone": "Australia/Melbourne" },
+  "active": false,
+  "versionId": "c2000001-0000-0000-0000-000000000099",
+  "meta": { "templateCredsSetupCompleted": true },
+  "tags": []
+}

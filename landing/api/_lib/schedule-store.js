@@ -10,7 +10,7 @@ const TONES = new Set(["encouraging", "neutral_informational", "custom"]);
 const TEMPLATES = new Set(["health_plan_reminder", "hello_world"]);
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const TIME_RE = /^([01]\d|2[0-3]):[0-5]\d$/;
-const VERIFY_FIELDS = ["schedule_slot_id", "user_id", "source_nudge_id", "prescription_id", "day", "scheduled_time", "nudge_type", "pillar", "category", "action_text", "tone_variant", "message_body", "message_body_alt", "template_name", "status", "start_date", "end_date"];
+const VERIFY_FIELDS = ["schedule_slot_id", "user_id", "source_nudge_id", "prescription_id", "day", "scheduled_time", "nudge_type", "pillar", "category", "action_text", "tone_variant", "message_body", "message_body_alt", "template_name", "status", "start_date", "end_date", "media_asset_id", "adaptation_decision_id"];
 
 function token(value) {
   return String(value || "").replace(/[^A-Za-z0-9_-]/g, "").slice(-60);
@@ -183,6 +183,7 @@ async function saveSchedule(body, decision = "approve", snapshot) {
       tone_variant: slot.tone_variant === "custom" ? "neutral_informational" : String(slot.tone_variant),
       message_body: String(slot.message_body).trim(), message_body_alt: String(slot.message_body_alt || ""),
       template_name: String(slot.template_name || "health_plan_reminder"), status: "active",
+      media_asset_id: prior && prior.media_asset_id || "", adaptation_decision_id: prior && prior.adaptation_decision_id || "",
       start_date: startDate, end_date: endDate, created_at: prior && prior.created_at || now, updated_at: now
     });
   });
@@ -205,7 +206,8 @@ async function saveSchedule(body, decision = "approve", snapshot) {
         scheduled_date: iso, scheduled_time: slot.scheduled_time,
         message_body: slot.message_body, message_body_alt: slot.message_body_alt, tone_variant: slot.tone_variant,
         template_name: slot.template_name, status: "approved", sent_at: "", reviewed_at: now,
-        week_number: Math.floor((datesBetween(effectiveStart, iso).length - 1) / 7) + 1
+        week_number: Math.floor((datesBetween(effectiveStart, iso).length - 1) / 7) + 1,
+        media_asset_id: slot.media_asset_id || "", adaptation_decision_id: slot.adaptation_decision_id || ""
       });
     }
   }

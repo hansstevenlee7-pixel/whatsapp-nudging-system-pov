@@ -3,6 +3,7 @@
 const crypto = require("node:crypto");
 const { httpError } = require("./http");
 const { loadClinicalData, batchWrite, operation } = require("./clinical-data");
+const adaptiveStore = require("./adaptive-store");
 
 const ALLOWED_STATUSES = new Set(["accepted", "queued", "sending", "sent", "delivered", "read", "failed", "undelivered", "canceled"]);
 
@@ -48,12 +49,17 @@ async function recordDeliveryStatus(fields, now = new Date().toISOString()) {
   const nextState = Object.assign({}, state, {
     status,
     delivered_at: ["delivered", "read"].includes(status) ? (state.delivered_at || now) : state.delivered_at,
+    read_at: status === "read" ? (state.read_at || now) : state.read_at,
     last_updated: now
   });
   await batchWrite([
     operation("delivery_events", data.delivery_events, event),
     operation("schedule_state", data.schedule_state, nextState, state)
   ]);
+  await adaptiveStore.optional("recordInteraction", {
+    interaction_id: id, event_at: now, event_type: "delivery_status", user_id: state.user_id,
+    nudge_id: state.nudge_id, wa_message_id: sid, status, correlation_method: "twilio_message_sid", raw_payload: fields
+  });
   return { duplicate: false, status, nudge_id: state.nudge_id };
 }
 

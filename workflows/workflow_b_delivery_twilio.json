@@ -1,10 +1,10 @@
 {
   "id": "bTwilioB20260727",
-  "name": "Workflow B — Send-only Delivery (Twilio)",
+  "name": "Workflow B — Adaptive Delivery (Twilio)",
   "nodes": [
     {
       "parameters": {
-        "content": "## Workflow B — Send-only Nudge Delivery (Twilio)\n\n### Delivery contract\n- Polls every 5 minutes in Australia/Melbourne.\n- Sends only approved generated schedule rows due in the current five-minute window.\n- Uses one approved outbound Content Template with no progress or commitment buttons.\n- Stores Twilio's Message SID and initial status in schedule_state.\n- Supplies the Vercel /api/whatsapp-status callback so delivered, read, failed and undelivered states are recorded in delivery_events.\n\n### Required environment variables\nGOOGLE_SHEETS_SPREADSHEET_ID, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_WHATSAPP_FROM, TWILIO_SEND_ONLY_CONTENT_SID, PORTAL_BASE_URL.\n\n### Safety\nThe narrow delivery window prevents activation from flushing old rows. Typed STOP remains handled by the Vercel safety-only inbound endpoint.",
+        "content": "## Workflow B — Adaptive Nudge Delivery (Twilio)\n\n### Delivery contract\n- Polls every 5 minutes in Australia/Melbourne.\n- Sends only approved generated schedule rows due in the current five-minute window.\n- Calls the signed prepare-delivery endpoint first; it returns either the original text or one approved, rotated media resource.\n- Uses one approved outbound Content Template with no progress or commitment buttons.\n- Stores Twilio's Message SID and initial status in schedule_state.\n- Supplies the Vercel /api/whatsapp-status callback so provider delivery states are recorded.\n\n### Required environment variables\nGOOGLE_SHEETS_SPREADSHEET_ID, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_WHATSAPP_FROM, TWILIO_SEND_ONLY_CONTENT_SID, PORTAL_BASE_URL, N8N_PROXY_SECRET.\n\n### Safety\nThe narrow delivery window prevents activation from flushing old rows. Typed STOP remains immediate; media selection never changes adherence state.",
         "height": 820,
         "width": 600,
         "color": 7
@@ -134,6 +134,47 @@
       "typeVersion": 2,
       "position": [
         1120,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ String($env.PORTAL_BASE_URL || '').replace(/\\/$/, '') + '/api/internal/prepare-delivery' }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-N8N-Proxy-Secret",
+              "value": "={{ $env.N8N_PROXY_SECRET }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({ nudge_id: $json.nudge_id }) }}",
+        "options": {}
+      },
+      "id": "b1000001-0000-0000-0000-000000000013",
+      "name": "Prepare Adaptive Media",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1300,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Restore delivery context after the adaptive API response. The API may return the original message when no approved media plan exists.\nconst due = $('Prepare Due Nudges').all();\nreturn items.map((item, i) => {\n  const original = due[i] ? due[i].json : {};\n  const prepared = item.json || {};\n  return { json: { ...original, ...prepared, message_body: String(prepared.message_body || original.message_body || '') } };\n});"
+      },
+      "id": "b1000001-0000-0000-0000-000000000014",
+      "name": "Merge Adaptive Media",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1480,
         380
       ]
     },
@@ -339,6 +380,28 @@
       ]
     },
     "Prepare Due Nudges": {
+      "main": [
+        [
+          {
+            "node": "Prepare Adaptive Media",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Adaptive Media": {
+      "main": [
+        [
+          {
+            "node": "Merge Adaptive Media",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Adaptive Media": {
       "main": [
         [
           {

@@ -40,15 +40,20 @@ test("signed STOP opts out the patient and cancels unsent rows", async t => {
   assert.equal(fx.tables.schedule_state.rows[0].status, "canceled");
 });
 
-test("ordinary signed replies are ignored and do not become study data", async t => {
+test("ordinary signed replies are stored exactly once and acknowledged", async t => {
   const token = "test-auth-token";
   const previous = process.env.TWILIO_AUTH_TOKEN;
   process.env.TWILIO_AUTH_TOKEN = token;
   t.after(() => { if (previous == null) delete process.env.TWILIO_AUTH_TOKEN; else process.env.TWILIO_AUTH_TOKEN = previous; });
   const fx = fixture({ user: [{ user_id: "patient-1", phone: "+61411111111", user_status: "active", doctor_id: "doc-1" }] });
   t.after(() => fx.restore());
-  const res = await call({ From: "whatsapp:+61411111111", Body: "Done", MessageSid: "SM" + "d".repeat(32) }, token);
+  const fields = { From: "whatsapp:+61411111111", Body: "I prefer videos", MessageSid: "SM" + "d".repeat(32) };
+  const res = await call(fields, token);
   assert.equal(res.statusCode, 200);
   assert.equal(fx.tables.user.rows[0].user_status, "active");
-  assert.equal(fx.tables.delivery_events.rows.length, 0);
+  assert.match(res.body, /reply has been received/);
+  assert.equal(fx.tables.interaction_events.rows.length, 1);
+  assert.equal(fx.tables.interaction_events.rows[0].body, "I prefer videos");
+  await call(fields, token);
+  assert.equal(fx.tables.interaction_events.rows.length, 1);
 });

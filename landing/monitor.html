@@ -283,6 +283,7 @@
     .dialog-body p { margin:0; color:var(--secondary); font-size:15px; }
     .dialog-actions { display:flex; justify-content:flex-end; gap:10px; padding:16px 24px; background:#f7f7fa; border-top:1px solid var(--border); }
     .delivery-list{display:grid;gap:12px;margin-top:18px}.delivery-item{border:1px solid var(--border);border-radius:14px;padding:16px;background:#fff}.delivery-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.delivery-title{font-weight:750;color:var(--ink)}.delivery-meta{font-size:12px;color:var(--muted);margin-top:4px}.delivery-message{margin:12px 0;padding:12px 14px;border-radius:10px;background:#f7f7fa;white-space:pre-wrap}.delivery-events{display:flex;flex-wrap:wrap;gap:7px}.delivery-event{font-size:12px;padding:5px 8px;border-radius:999px;background:#edf1f7;color:#344054}.delivery-event.current{background:#dff3e8;color:#17663a}.delivery-event.failed{background:#fde7e7;color:#9b1c1c}.delivery-error{font-size:12px;color:#9b1c1c;margin-top:8px}.delivery-empty{padding:20px;border:1px dashed var(--border);border-radius:12px;color:var(--muted);text-align:center}
+    .adaptive-list{display:grid;gap:14px;margin-top:18px}.adaptive-plan{border:1px solid var(--border);border-radius:14px;padding:16px;background:#fff}.adaptive-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.adaptive-title{font-weight:780}.adaptive-tax{font-size:12px;color:var(--muted);margin-top:4px}.media-pool{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-top:14px}.media-item{border:1px solid #e3e7ee;border-radius:10px;padding:12px;background:#f9fafb}.media-kind{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}.media-title{font-weight:700;margin:5px 0}.media-item a{font-size:12px}.adaptive-trace{margin-top:14px;padding-top:12px;border-top:1px solid var(--border);font-size:12px;color:var(--muted)}
     @media (max-width:860px){ .workspace{grid-template-columns:1fr;} .detail-card,.detail-placeholder{position:static;} }
     @media (max-width:620px){
       .hero{align-items:flex-start;flex-direction:column}.hero h1{font-size:34px}.summary-grid{grid-template-columns:1fr 1fr}.summary-card:last-child{grid-column:1/-1}
@@ -375,6 +376,11 @@
       <h2>How the AI read this prescription</h2>
       <p class="sub">Doctor's words → what the LLM parsed → the target behaviours you own. Each behaviour carries its own pillar and category, so one prescription can span several pillars. The message text is edited on each nudge in the weekly schedule below, where the action is picked from this list.</p>
       <div class="trace" id="traceRoot"></div>
+    </section>
+
+    <section class="card hidden" id="adaptiveCard">
+      <div class="card-head"><div><h2>Adaptive media plan</h2><p class="sub">Trusted resources are searched from each behaviour’s action, pillar, and category. Approve the proposed pool once; later selections stay inside that envelope and every reason is recorded.</p></div></div>
+      <div class="adaptive-list" id="adaptiveRoot"><div class="delivery-empty">Loading adaptive media…</div></div>
     </section>
 
     <!-- Weekly schedule -->
@@ -496,6 +502,7 @@
       // holds nothing but the clinician's unsaved additions and suppressions and
       // is discarded on every reseed.
       actions: {},
+      adaptive: null,
       period: { start: "", end: "" },
       scheduleDirty: false,
       scheduleSaving: false
@@ -580,6 +587,7 @@
       el("tableCard").classList.remove("hidden");
       el("patientCard").classList.add("hidden");
       el("deliveryCard").classList.add("hidden");
+      el("adaptiveCard").classList.add("hidden");
       el("patientPlaceholder").classList.remove("hidden");
       el("traceCard").classList.add("hidden");
       el("reviewCard").classList.add("hidden");
@@ -683,6 +691,8 @@
       renderTrace();
       initPeriod();
       el("traceCard").classList.remove("hidden");
+      el("adaptiveCard").classList.remove("hidden");
+      loadAdaptivePlan(p);
       el("reviewCard").classList.remove("hidden");
       renderDeliveryTimeline(p);
       el("deliveryCard").classList.remove("hidden");
@@ -691,6 +701,68 @@
       el("approveBtn").textContent = isApprovedPatient(p) ? "Save schedule changes" : "Approve & schedule";
       renderWeek(); refreshValidity();
       el(scrollTarget || "patientCard").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function loadAdaptivePlan(patient) {
+      var selectedId = patient.user_id;
+      var root = el("adaptiveRoot");
+      root.innerHTML = '<div class="delivery-empty">Loading trusted media and adaptation history…</div>';
+      Auth.api("/api/adaptive-plan?user_id=" + encodeURIComponent(selectedId))
+        .then(function (data) {
+          if (!state.selected || state.selected.user_id !== selectedId) return;
+          state.adaptive = data; renderAdaptivePlan();
+        })
+        .catch(function (error) {
+          if (!state.selected || state.selected.user_id !== selectedId) return;
+          root.innerHTML = '<div class="delivery-empty">Adaptive media is not ready: ' + esc(error.message || "configuration unavailable") + '</div>';
+        });
+    }
+
+    function renderAdaptivePlan() {
+      var root = el("adaptiveRoot"); root.innerHTML = "";
+      var data = state.adaptive || {}; var envelopes = data.envelopes || [];
+      if (!envelopes.length) {
+        root.innerHTML = '<div class="delivery-empty">Save or approve a schedule to queue automatic media searches for its behaviours.</div>';
+        return;
+      }
+      envelopes.forEach(function (env) {
+        var card = document.createElement("article"); card.className = "adaptive-plan";
+        var head = document.createElement("div"); head.className = "adaptive-head";
+        head.innerHTML = '<div><div class="adaptive-title">' + esc(env.action_text) + '</div><div class="adaptive-tax">' +
+          esc(pretty(env.pillar) + " · " + pretty(env.category)) + '</div></div><span class="chip ' +
+          (env.status === "approved" ? "ok" : "warn") + '">' + esc(env.status || "draft") + '</span>';
+        card.appendChild(head);
+        var candidates = (env.status === "approved" ? (data.assets || []) : (data.candidates || []))
+          .filter(function (item) { return item.behaviour_key === env.behaviour_key; }).slice(0, 3);
+        var pool = document.createElement("div"); pool.className = "media-pool";
+        if (!candidates.length) pool.innerHTML = '<div class="delivery-empty">Automatic trusted-source search is still processing.</div>';
+        candidates.forEach(function (item) {
+          var media = document.createElement("div"); media.className = "media-item";
+          media.innerHTML = '<div class="media-kind">' + esc(item.media_kind) + '</div><div class="media-title">' + esc(item.title) +
+            '</div><div class="delivery-meta">' + esc(item.source_name) + '</div>' +
+            (item.short_summary ? '<p>' + esc(item.short_summary) + '</p>' : '') +
+            '<a href="' + esc(item.source_url) + '" target="_blank" rel="noopener noreferrer">Open original source</a>';
+          pool.appendChild(media);
+        });
+        card.appendChild(pool);
+        if (env.status !== "approved" && candidates.length) {
+          var approve = document.createElement("button"); approve.type = "button"; approve.className = "btn small";
+          approve.textContent = "Approve adaptive plan";
+          approve.addEventListener("click", function () {
+            approve.disabled = true; approve.textContent = "Approving…";
+            Auth.api("/api/adaptive-plan", { method: "POST", body: JSON.stringify({ user_id: state.selected.user_id,
+              behaviour_key: env.behaviour_key, envelope: env }) })
+              .then(function () { loadAdaptivePlan(state.selected); })
+              .catch(function (error) { approve.disabled = false; approve.textContent = "Approve adaptive plan"; window.alert(error.message); });
+          });
+          card.appendChild(approve);
+        }
+        var latest = (data.decisions || []).find(function (decision) { return decision.behaviour_key === env.behaviour_key; });
+        var trace = document.createElement("div"); trace.className = "adaptive-trace";
+        trace.textContent = latest ? "Latest decision: " + latest.rule_applied + " → " + latest.outcome + " · " + latest.reason :
+          "No adaptation decision yet. Silence rotates approved resources and is never treated as adherence.";
+        card.appendChild(trace); root.appendChild(card);
+      });
     }
 
     function formatEventTime(value) {
