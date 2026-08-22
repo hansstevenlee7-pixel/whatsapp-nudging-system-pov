@@ -6,10 +6,12 @@
   "rewrites": [
     { "source": "/api/admin/assign", "destination": "/api/admin/users?op=assign" },
     { "source": "/api/admin/user", "destination": "/api/admin/users?op=user" },
+    { "source": "/api/patient-dictionary", "destination": "/api/patients?op=dictionary" },
     { "source": "/api/adaptive-plan", "destination": "/api/adaptive?op=plan" },
     { "source": "/api/internal/media-worker", "destination": "/api/adaptive?op=media" },
     { "source": "/api/internal/adaptation-worker", "destination": "/api/adaptive?op=adaptation" },
     { "source": "/api/internal/prepare-delivery", "destination": "/api/adaptive?op=delivery" },
+    { "source": "/api/media-upload", "destination": "/api/adaptive?op=upload" },
     { "source": "/api/r/:token", "destination": "/api/adaptive?op=link&token=:token" }
   ],
   "headers": [

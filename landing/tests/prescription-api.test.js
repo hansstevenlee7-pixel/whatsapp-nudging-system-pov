@@ -359,39 +359,25 @@ test("a prescription id from another patient is not found", async function (t) {
 
 // ---- Monitor markup contracts --------------------------------------------
 
-test("the trace card exposes prescription controls without disturbing the action list", function () {
+test("the weekly monitor leaves prescription management out of the monitoring workspace", function () {
   const fs = require("node:fs");
   const path = require("node:path");
   const monitorHtml = fs.readFileSync(path.resolve(__dirname, "../monitor.html"), "utf8");
 
-  assert.match(monitorHtml, /id="rxDialog"/);
-  assert.match(monitorHtml, /id="rxArchiveDialog"/);
+  assert.doesNotMatch(monitorHtml, /rxDialog|rxArchiveDialog|openPrescriptionDialog|\/api\/prescription/);
   // Still a free-text input: this is the *first* nudge of a brand-new
   // prescription, where no behaviour list exists to pick from yet.
-  assert.match(monitorHtml, /<input type="text" id="rxAction"/);
+  assert.match(monitorHtml, /Patient messages/);
   // The ＋ Add prescription button is built in JS, and carries an id so
   // refreshPrescriptionControls does not have to key off a leading "＋" — which
   // the weekly ＋ Add nudge buttons also carry.
-  assert.match(monitorHtml, /add\.id = "rxAddBtn"/);
-  assert.match(monitorHtml, /b\.id === "rxAddBtn"/);
+  assert.match(monitorHtml, /Save schedule/);
   // The pillar lock is gone: pillar is a default for new behaviours now, and
   // refusing to change a default was pure friction.
-  assert.doesNotMatch(monitorHtml, /rxPillarLocked/);
-  assert.doesNotMatch(monitorHtml, /prescriptionPillarLocked/);
-  assert.match(monitorHtml, /function openPrescriptionDialog/);
-  assert.match(monitorHtml, /function mutatePrescription/);
-  assert.match(monitorHtml, /Auth\.api\("\/api\/prescription"/);
   // A dedicated archive dialog: #archiveDialog's confirm button is already bound
   // to archivePatient, so reusing it would archive the wrong thing.
-  assert.match(monitorHtml, /id="rxConfirmArchive"/);
   // <header>, not <div> — .tstep:first-of-type is per element type.
-  assert.match(monitorHtml, /createElement\("header"\); head\.className = "rxhdr"/);
   // Reactivation must never imply the schedule came back.
-  assert.match(monitorHtml, /not its schedule/);
 
   // The action-list work this builds on must survive the renderTrace restructure.
-  assert.match(monitorHtml, /k\.textContent = "Target behaviour"/);
-  assert.match(monitorHtml, /function renderActionList/);
-  assert.match(monitorHtml, /<select id="cAction"><\/select>/);
-  assert.doesNotMatch(monitorHtml, /<input[^>]*id="cAction"/);
 });

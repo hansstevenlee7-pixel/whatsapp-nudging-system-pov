@@ -1,6 +1,7 @@
 "use strict";
 
 const { behaviourKey, defaultEnvelope, decide, explicitInterpretation } = require("./adaptive-core");
+const { httpError } = require("./http");
 const store = require("./adaptive-store");
 const { classifyReply } = require("./reply-classifier");
 
@@ -26,7 +27,16 @@ async function queuePatientBehaviours(userId, slots, prescriptions) {
 }
 
 async function processInteraction(event) {
-  if (!event || !event.behaviour_key) return null;
+  if (!event) return null;
+  if (!event.behaviour_key) {
+    const state = await store.call("globalAdaptationState", event.user_id);
+    const envelope = { formats: ["video", "paper", "reading"], summary_lengths: ["short", "detailed"],
+      tones: ["encouraging", "neutral_informational"], earliest_time: "00:00", latest_time: "23:59",
+      frequency_min: 1, frequency_max: 7, action_alternatives: [] };
+    const interpretation = event.event_type === "inbound_reply" ? await classifyReply(event.body, envelope) : undefined;
+    const decision = decide({ event_type: event.event_type, body: event.body, state, envelope, assets: [], interpretation });
+    return store.call("saveGlobalDecision", event, decision);
+  }
   const envelope = await store.call("envelopeFor", event.user_id, event.behaviour_key);
   if (!envelope) {
     const decision = { outcome: "outside_envelope", rule: "no_approved_envelope", reason: "No approved adaptive plan",
@@ -42,4 +52,21 @@ async function processInteraction(event) {
   return store.call("saveDecision", event, decision);
 }
 
-module.exports = { queuePatientBehaviours, processInteraction };
+async function validateMediaSelections(userId, slots, prescriptions) {
+  const overrides = (slots || []).filter(slot => String(slot.media_selection_mode || "automatic") === "clinician_selected");
+  if (!overrides.length) return;
+  if (!store.configured()) throw httpError(503, "Adaptive media database is not configured");
+  const prescriptionById = new Map((prescriptions || []).map(row => [String(row.prescription_id), row]));
+  for (const slot of overrides) {
+    const prescription = prescriptionById.get(String(slot.prescription_id)) || {};
+    const key = behaviourKey(Object.assign({}, slot, { category: slot.category || prescription.category }));
+    const envelope = await store.call("envelopeFor", userId, key);
+    if (!envelope) throw httpError(409, "The selected media pool is not approved");
+    const assets = await store.call("assetsFor", key, envelope.approved_asset_ids || []);
+    if (!assets.some(asset => String(asset.asset_id) === String(slot.media_override_asset_id))) {
+      throw httpError(400, "The selected media resource is not in this behaviour's approved pool");
+    }
+  }
+}
+
+module.exports = { queuePatientBehaviours, processInteraction, validateMediaSelections };

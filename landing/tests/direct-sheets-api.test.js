@@ -8,6 +8,9 @@ const patientsHandler = require("../api/patients");
 // entry point the rewrite produces.
 const adminHandler = require("../api/admin/users");
 const approveHandler = require("../api/approve");
+const patientsRoute = require("../api/patients");
+const adaptiveStore = require("../api/_lib/adaptive-store");
+const { behaviourKey } = require("../api/_lib/adaptive-core");
 const { fixture, baseSeed } = require("./sheets-fixture");
 
 function responseRecorder() {
@@ -44,6 +47,22 @@ test("GET patients builds the canonical Monitoring payload directly from Sheets"
   assert.equal(patient.user_id, "patient-1");
   assert.equal(patient.has_canonical_schedule, true);
   assert.deepEqual(patient.weekly_schedule.map(row => row.day), ["wednesday"]);
+});
+
+test("patient dictionary route returns scoped summary and timeline without taxonomy labels", async function (t) {
+  const store = fixture(baseSeed());
+  const key = behaviourKey({ action_text: "Be in bed by 10pm", pillar: "sleep", category: "establish" });
+  adaptiveStore._setTestAdapter({ plansForUser: async () => ({ global_state: { preferred_format: "video" }, states: [{ behaviour_key: key, preferred_format: "paper" }], assets: [], events: [], decisions: [] }) });
+  t.after(() => { store.restore(); adaptiveStore._setTestAdapter(null); });
+  environment(t, { auth_user_id: "auth-1", role: "doctor", doctor_id: "doc-1", status: "active" });
+  const res = responseRecorder();
+  await patientsRoute({ method: "GET", url: "/api/patients?op=dictionary&user_id=patient-1", headers: { authorization: "Bearer token" } }, res);
+  assert.equal(res.statusCode, 200);
+  const body = JSON.parse(res.body);
+  assert.equal(body.patient.user_id, "patient-1");
+  assert.equal(body.behaviour_states[0].media.preference, "paper");
+  assert.equal(body.global_state.preferred_format, "video");
+  assert.ok(!JSON.stringify(body).includes("Pillar"));
 });
 
 test("administrator assignment writes doctor_id directly to the user row", async function (t) {

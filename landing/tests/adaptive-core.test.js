@@ -12,6 +12,8 @@ test("taxonomy queries use only the behaviour triple and are stable", () => {
   assert.equal(first.behaviour_key, second.behaviour_key);
   assert.match(first.video, /Walk for 20 minutes/);
   assert.match(first.video, /physical activity/);
+  assert.match(first.paper_fallback, /walk OR for OR minutes/);
+  assert.match(first.paper_fallback, /increase OR improve OR more/);
   assert.doesNotMatch(first.video, /Ada|61400000000/);
 });
 

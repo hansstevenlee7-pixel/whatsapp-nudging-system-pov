@@ -14,12 +14,14 @@ const auth = new JWT({
 });
 const base = `https://sheets.googleapis.com/v4/spreadsheets/${encodeURIComponent(spreadsheetId)}`;
 const headers = {
-  nudges: ["media_asset_id", "adaptation_decision_id"],
-  weekly_schedule: ["media_asset_id", "adaptation_decision_id"],
+  nudges: ["media_selection_mode", "media_override_asset_id", "media_asset_id", "adaptation_decision_id"],
+  weekly_schedule: ["media_selection_mode", "media_override_asset_id", "media_asset_id", "adaptation_decision_id"],
   schedule_state: ["read_at", "interacted_at", "last_inbound_message_sid"],
-  media_assignments: ["assignment_id", "assigned_at", "user_id", "nudge_id", "behaviour_key", "media_asset_id", "adaptation_decision_id", "media_kind", "source_url", "tracked_url"],
+  media_assignments: ["assignment_id", "assigned_at", "user_id", "nudge_id", "behaviour_key", "media_asset_id", "adaptation_decision_id", "media_kind", "selection_mode", "source_url", "tracked_url", "planned_frequency", "scheduled_at", "sent_at", "delivered_at", "read_at", "visited_at", "replied_at", "send_to_read_hours", "send_to_visit_hours", "send_to_reply_hours"],
   interaction_events: ["interaction_id", "event_at", "inbound_message_sid", "user_id", "from_phone", "reply_to_wa_message_id", "nudge_id", "body", "media_count", "correlation_method", "ack_status"],
-  adaptation_decisions: ["decision_id", "decided_at", "user_id", "behaviour_key", "interaction_id", "signal_type", "rule_applied", "outcome", "reason", "selected_asset_id", "interpretation", "previous_state", "next_state"]
+  adaptation_decisions: ["decision_id", "decided_at", "user_id", "behaviour_key", "interaction_id", "signal_type", "rule_applied", "outcome", "reason", "selected_asset_id", "interpretation", "previous_state", "next_state", "scope", "decision_source", "effective_at", "state_version", "changed_fields", "frequency_before", "frequency_after", "media_mode_before", "media_mode_after", "media_kind_before", "media_kind_after", "nudge_id"],
+  patient_adaptation_state: ["user_id", "scope", "behaviour_key", "state_version", "preferred_format", "preferred_frequency", "planned_frequency", "delivered_frequency", "observed_frequency", "last_change_at", "updated_at"],
+  patient_adaptation_timeline: ["user_id", "event_id", "event_at", "event_type", "source", "scope", "behaviour_key", "signal", "rule_applied", "outcome", "reason", "previous_state", "new_state", "changed_fields", "selected_asset_id", "selected_media_kind", "nudge_id", "interaction_id"]
 };
 
 async function request(url, options = {}) {

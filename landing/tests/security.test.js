@@ -134,9 +134,9 @@ test("a canonical tombstone prevents legacy delivery rows from recreating a dele
 
 test("monitor saves approved edits without reloading delivery history", () => {
   const text = fs.readFileSync(path.resolve(__dirname, "../monitor.html"), "utf8");
-  assert.match(text, /Save schedule changes/);
+  assert.match(text, /Save schedule/);
   assert.match(text, /Auth\.api\(endpoint/);
-  assert.match(text, /endpoint = approved \? "\/api\/schedule"/);
+  assert.match(text, /endpoint=canonical\?"\/api\/schedule":"\/api\/approve"/);
   assert.doesNotMatch(text, /Auth\.api\("\/api\/patients"\)\.then\(function \(data\)/);
   assert.match(text, /beforeunload/);
 });
@@ -159,13 +159,12 @@ test("intake submits directly and handles duplicate phones without downloading J
   assert.match(text, /monitor\.html\?user_id=/);
 });
 
-test("monitor mutations use the verified canonical response without an immediate collection reload", () => {
+test("monitor schedule save uses the verified canonical response without an immediate collection reload", () => {
   const text = fs.readFileSync(path.resolve(__dirname, "../monitor.html"), "utf8");
-  const mutation = text.match(/function mutatePatient[\s\S]*?\n    function savePatient/)[0];
-  assert.match(mutation, /out\.persisted/);
-  assert.match(mutation, /out && out\.patient/);
+  const mutation = text.match(/async function save\(\)[\s\S]*?async function boot/)[0];
+  assert.match(mutation, /out\.weekly_schedule/);
   assert.doesNotMatch(mutation, /Auth\.api\("\/api\/patients"/);
-  assert.match(text, /<option value="active" selected>Active patients<\/option>/);
+  assert.match(text, /id="patientSelect"/);
 });
 
 test("all protected pages enforce the authentication guard", () => {
@@ -203,6 +202,7 @@ test("the merged admin function routes each public path to its own operation", f
   const rewrites = Object.fromEntries((config.rewrites || []).map(r => [r.source, r.destination]));
   assert.equal(rewrites["/api/admin/assign"], "/api/admin/users?op=assign");
   assert.equal(rewrites["/api/admin/user"], "/api/admin/users?op=user");
+  assert.equal(rewrites["/api/patient-dictionary"], "/api/patients?op=dictionary");
 
   // Under the cap, with headroom.
   const fnCount = fs.readdirSync(path.join(root, "landing/api"), { recursive: true })

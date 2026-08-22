@@ -5,6 +5,7 @@ const assert = require("node:assert/strict");
 const handler = require("../api/schedule");
 const { melbourneIso } = require("../api/_lib/schedule-store");
 const { fixture, baseSeed } = require("./sheets-fixture");
+const adaptiveStore = require("../api/_lib/adaptive-store");
 
 function responseRecorder() {
   return { statusCode: 0, headers: {}, body: "", setHeader(name, value) { this.headers[name] = value; }, end(value) { this.body = value || ""; } };
@@ -84,6 +85,33 @@ test("repeated saves are idempotent and do not duplicate delivery rows", async f
   assert.equal((await save(slots)).statusCode, 200);
   const secondIds = store.tables.nudges.rows.filter(row => row.schedule_slot_id === "slot-sun").map(row => row.nudge_id).sort();
   assert.deepEqual(secondIds, firstIds);
+});
+
+test("planning one week changes only that week's unsent occurrences", async function (t) {
+  installAuth(t);
+  const store = fixture(baseSeed());
+  t.after(() => store.restore());
+  const baseline = [slot("slot-wed", "wednesday", "source-wed"), slot("slot-fri", "friday", "source-fri")];
+  assert.equal((await save(baseline)).statusCode, 200);
+  const earlierIds = store.tables.nudges.rows.filter(row => row.scheduled_date < "2099-08-10").map(row => row.nudge_id).sort();
+
+  const week = [
+    Object.assign({}, baseline[0], { message_body: "This message is only for the selected week", media_selection_mode: "text_only" }),
+    Object.assign({}, baseline[1], { day: "sunday", message_body: "Sunday in this selected week" })
+  ];
+  const planned = await save(week, { start_date: "2099-08-01", end_date: "2099-08-31", scope_week_start: "2099-08-10" });
+  assert.equal(planned.statusCode, 200);
+  const output = JSON.parse(planned.body);
+  assert.equal(output.scope_week_start, "2099-08-10");
+  assert.equal(output.dated_nudges.length, 2);
+
+  const recurring = store.tables.weekly_schedule.rows.filter(row => row.status === "active");
+  assert.equal(recurring.find(row => row.schedule_slot_id === "slot-wed").message_body, "wednesday reminder");
+  assert.equal(recurring.find(row => row.schedule_slot_id === "slot-fri").day, "friday");
+  const selectedWeek = store.tables.nudges.rows.filter(row => row.scheduled_date >= "2099-08-10" && row.scheduled_date <= "2099-08-16" && row.status === "approved");
+  assert.equal(selectedWeek.find(row => row.schedule_slot_id === "slot-wed").message_body, "This message is only for the selected week");
+  assert.equal(selectedWeek.find(row => row.schedule_slot_id === "slot-fri").scheduled_date, "2099-08-16");
+  assert.deepEqual(store.tables.nudges.rows.filter(row => row.scheduled_date < "2099-08-10").map(row => row.nudge_id).sort(), earlierIds);
 });
 
 test("sent history survives removal of its recurring slot", async function (t) {
@@ -172,5 +200,39 @@ test("a clinician cannot attach another patient's source row to an owned schedul
   const res = await save([slot("slot-foreign", "sunday", "foreign-source")]);
   assert.equal(res.statusCode, 400);
   assert.match(JSON.parse(res.body).error, /does not belong to this patient/);
+  assert.equal(store.tables.weekly_schedule.rows.length, 0);
+});
+
+test("text-only selection persists to recurring and dated rows", async function (t) {
+  installAuth(t);
+  const store = fixture(baseSeed());
+  t.after(() => store.restore());
+  const chosen = Object.assign(slot("slot-text", "sunday", "source-sun"), { media_selection_mode: "text_only" });
+  const res = await save([chosen]);
+  assert.equal(res.statusCode, 200);
+  assert.equal(store.tables.weekly_schedule.rows[0].media_selection_mode, "text_only");
+  assert.ok(store.tables.nudges.rows.filter(row => row.schedule_slot_id === "slot-text")
+    .every(row => row.media_selection_mode === "text_only" && !row.media_override_asset_id));
+});
+
+test("clinician media override must belong to the approved behaviour pool", async function (t) {
+  installAuth(t);
+  const store = fixture(baseSeed());
+  const previousEnabled = process.env.ADAPTIVE_MEDIA_ENABLED;
+  process.env.ADAPTIVE_MEDIA_ENABLED = "true";
+  adaptiveStore._setTestAdapter({
+    envelopeFor: async () => ({ approved_asset_ids: ["asset-approved"] }),
+    assetsFor: async () => [{ asset_id: "asset-approved" }]
+  });
+  t.after(() => {
+    store.restore(); adaptiveStore._setTestAdapter(null);
+    if (previousEnabled == null) delete process.env.ADAPTIVE_MEDIA_ENABLED; else process.env.ADAPTIVE_MEDIA_ENABLED = previousEnabled;
+  });
+  const chosen = Object.assign(slot("slot-media", "sunday", "source-sun"), {
+    media_selection_mode: "clinician_selected", media_override_asset_id: "asset-other"
+  });
+  const res = await save([chosen]);
+  assert.equal(res.statusCode, 400);
+  assert.match(JSON.parse(res.body).error, /not in this behaviour's approved pool/);
   assert.equal(store.tables.weekly_schedule.rows.length, 0);
 });

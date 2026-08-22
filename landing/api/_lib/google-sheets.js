@@ -84,6 +84,34 @@ async function sheetIds() {
   return Object.fromEntries((body.sheets || []).map(sheet => [sheet.properties.title, sheet.properties.sheetId]));
 }
 
+async function ensureTabs(tabs, headersByTab = {}) {
+  if (testAdapter) {
+    if (typeof testAdapter.ensureTabs === "function") return testAdapter.ensureTabs(tabs);
+    return {};
+  }
+  const ids = await sheetIds();
+  const missing = tabs.filter(tab => ids[tab] == null);
+  if (missing.length) {
+    await request(":batchUpdate", { method: "POST", body: JSON.stringify({
+      requests: missing.map(title => ({ addSheet: { properties: { title } } }))
+    }) });
+  }
+  for (const tab of tabs) {
+    const desired = Array.isArray(headersByTab[tab]) ? headersByTab[tab] : [];
+    if (!desired.length) continue;
+    const range = `${quoteSheet(tab)}!1:1`;
+    const body = await request(`/values/${encodeURIComponent(range)}?majorDimension=ROWS`);
+    const current = (body.values && body.values[0] || []).map(value => String(value).trim()).filter(Boolean);
+    const next = current.concat(desired.filter(header => !current.includes(header)));
+    if (JSON.stringify(next) !== JSON.stringify(current)) {
+      await request(`/values/${encodeURIComponent(range)}?valueInputOption=RAW`, {
+        method: "PUT", body: JSON.stringify({ range, majorDimension: "ROWS", values: [next] })
+      });
+    }
+  }
+  return sheetIds();
+}
+
 async function batchWrite(operations) {
   if (!operations.length) return { replies: [] };
   if (testAdapter) return testAdapter.batchWrite(operations);
@@ -108,6 +136,21 @@ function assertHeaders(table, requiredHeaders, tab) {
   if (missing.length) throw httpError(500, `${tab} is missing required columns: ${missing.join(", ")}`);
 }
 
+async function ensureHeaders(tab, table, additions) {
+  const missing = additions.filter(header => !table.headers.includes(header));
+  if (!missing.length) return [];
+  const nextHeaders = table.headers.concat(missing);
+  if (!testAdapter) {
+    const range = `${quoteSheet(tab)}!1:1`;
+    await request(`/values/${encodeURIComponent(range)}?valueInputOption=RAW`, {
+      method: "PUT", body: JSON.stringify({ range, majorDimension: "ROWS", values: [nextHeaders] })
+    });
+  }
+  table.headers = nextHeaders;
+  table.rows.forEach(row => missing.forEach(header => { if (row[header] == null) row[header] = ""; }));
+  return missing;
+}
+
 function operation(tab, table, row, existing) {
   return { tab, headers: table.headers, row, rowNumber: existing && existing.row_number || null };
 }
@@ -117,4 +160,4 @@ function _setTestAdapter(adapter) {
   authClient = null;
 }
 
-module.exports = { readTabs, batchWrite, assertHeaders, operation, _setTestAdapter };
+module.exports = { readTabs, batchWrite, assertHeaders, ensureHeaders, ensureTabs, operation, _setTestAdapter };

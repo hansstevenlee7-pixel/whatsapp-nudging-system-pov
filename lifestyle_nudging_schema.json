@@ -13,7 +13,9 @@
     "delivery_events",
     "media_assignments",
     "interaction_events",
-    "adaptation_decisions"
+    "adaptation_decisions",
+    "patient_adaptation_state",
+    "patient_adaptation_timeline"
   ],
   "additionalProperties": false,
   "$defs": {
@@ -452,6 +454,13 @@
             "type": "integer",
             "minimum": 1
           },
+          "media_selection_mode": {
+            "type": ["string", "null"],
+            "enum": ["automatic", "text_only", "clinician_selected", null]
+          },
+          "media_override_asset_id": {
+            "type": ["string", "null"]
+          },
           "media_asset_id": {
             "type": ["string", "null"]
           },
@@ -574,6 +583,13 @@
           "updated_at": {
             "type": "string",
             "format": "date-time"
+          },
+          "media_selection_mode": {
+            "type": ["string", "null"],
+            "enum": ["automatic", "text_only", "clinician_selected", null]
+          },
+          "media_override_asset_id": {
+            "type": ["string", "null"]
           },
           "media_asset_id": {
             "type": ["string", "null"]
@@ -748,6 +764,57 @@
       "type": "array",
       "description": "Append-only explainability export: signal, rule, bounded outcome, reason, and before/after state.",
       "items": { "type": "object" }
+    },
+    "patient_adaptation_state": {
+      "type": "array",
+      "description": "Current patient adaptation state for the global fallback and each behaviour-specific scope.",
+      "items": {
+        "type": "object",
+        "required": ["user_id", "scope", "behaviour_key", "state_version", "updated_at"],
+        "additionalProperties": false,
+        "properties": {
+          "user_id": { "type": "string" },
+          "scope": { "type": "string", "enum": ["global", "behaviour"] },
+          "behaviour_key": { "type": "string" },
+          "state_version": { "type": ["integer", "string"] },
+          "preferred_format": { "type": "string" },
+          "preferred_frequency": { "type": ["integer", "string", "null"] },
+          "planned_frequency": { "type": ["integer", "string", "null"] },
+          "delivered_frequency": { "type": ["integer", "string", "null"] },
+          "observed_frequency": { "type": ["integer", "string", "null"] },
+          "last_change_at": { "type": "string" },
+          "updated_at": { "type": "string" }
+        }
+      }
+    },
+    "patient_adaptation_timeline": {
+      "type": "array",
+      "description": "Append-only patient adaptation timeline for research export and clinician drill-down.",
+      "items": {
+        "type": "object",
+        "required": ["user_id", "event_id", "event_at", "event_type"],
+        "additionalProperties": false,
+        "properties": {
+          "user_id": { "type": "string" },
+          "event_id": { "type": "string" },
+          "event_at": { "type": "string" },
+          "event_type": { "type": "string" },
+          "source": { "type": "string" },
+          "scope": { "type": "string", "enum": ["global", "behaviour"] },
+          "behaviour_key": { "type": "string" },
+          "signal": { "type": "string" },
+          "rule_applied": { "type": "string" },
+          "outcome": { "type": "string" },
+          "reason": { "type": "string" },
+          "previous_state": { "type": "string" },
+          "new_state": { "type": "string" },
+          "changed_fields": { "type": "string" },
+          "selected_asset_id": { "type": "string" },
+          "selected_media_kind": { "type": "string" },
+          "nudge_id": { "type": "string" },
+          "interaction_id": { "type": "string" }
+        }
+      }
     }
   }
 }

@@ -4,11 +4,15 @@ This project searches media from the behaviour-owned triple `(action_text, pilla
 
 ## Data migration
 
-1. Apply `supabase/migrations/001_clinician_auth.sql`, then `002_adaptive_media.sql` to the new Sydney Supabase project.
-2. Run `node scripts/migrate-adaptive-sheet.mjs` with the new Sheet service-account variables. The script is idempotent: it appends missing columns to `nudges`, `weekly_schedule`, and `schedule_state`, then creates the three append-only audit tabs.
-3. Set `ADAPTIVE_MEDIA_ENABLED=true` only after both migrations succeed.
+1. Apply `supabase/migrations/001_clinician_auth.sql`, `002_adaptive_media.sql`, `003_clinician_media_uploads.sql`, and `004_patient_adaptation_dictionary.sql` to the new Sydney Supabase project. The third migration creates the private clinician-media bucket; the fourth adds global fallback state and longitudinal decision snapshots.
+2. Run `node scripts/migrate-adaptive-sheet.mjs` with the new Sheet service-account variables. The script is idempotent: it appends missing columns to the operational and audit tabs, then creates `patient_adaptation_state` and `patient_adaptation_timeline` for the dictionary export.
+3. Set `ADAPTIVE_MEDIA_ENABLED=true` only after all migrations succeed.
 
-Supabase is authoritative for search jobs, candidate metadata, approved envelopes, interaction processing, link tokens, and current adaptive state. Google Sheets remains the clinical schedule and receives append-only media-assignment, interaction, and decision exports.
+The monitor opens on the current Melbourne Monday-to-Sunday week. Saving from a selected week sends `scope_week_start`; this updates only that week's unsent dated occurrences while the intake-generated recurring rows remain the baseline for later weeks. Any occurrence with delivery history stays immutable. Clinician uploads are private, must belong to an approved media envelope, and are attached only through signed URLs and tracked redirects. `CLINICIAN_MEDIA_BUCKET` is optional and defaults to `clinician-media`.
+
+The clinician header includes `Populate media`. It queues one trusted search per behaviour triple. The Railway media worker then searches allowlisted YouTube channels and Europe PMC, and Gemini prepares validated plain-language paper summaries asynchronously. The button never sends patient identifiers or raw prescription text to search providers, and the proposed pool still requires one clinician approval.
+
+Supabase is authoritative for search jobs, candidate metadata, approved envelopes, interaction processing, link tokens, and current adaptive state. Google Sheets remains the clinical schedule, receives append-only media-assignment, interaction, and decision exports, and maintains a current patient-state dictionary plus append-only timeline for research analysis.
 
 ## Trusted source configuration
 

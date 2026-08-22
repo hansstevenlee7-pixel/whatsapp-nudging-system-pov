@@ -8,9 +8,10 @@ const { PILLARS, CATEGORIES, NUDGE_TYPES: TYPES, assertAction } = require("./tax
 const DAYS = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 const TONES = new Set(["encouraging", "neutral_informational", "custom"]);
 const TEMPLATES = new Set(["health_plan_reminder", "hello_world"]);
+const MEDIA_SELECTION_MODES = new Set(["automatic", "text_only", "clinician_selected"]);
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const TIME_RE = /^([01]\d|2[0-3]):[0-5]\d$/;
-const VERIFY_FIELDS = ["schedule_slot_id", "user_id", "source_nudge_id", "prescription_id", "day", "scheduled_time", "nudge_type", "pillar", "category", "action_text", "tone_variant", "message_body", "message_body_alt", "template_name", "status", "start_date", "end_date", "media_asset_id", "adaptation_decision_id"];
+const VERIFY_FIELDS = ["schedule_slot_id", "user_id", "source_nudge_id", "prescription_id", "day", "scheduled_time", "nudge_type", "pillar", "category", "action_text", "tone_variant", "message_body", "message_body_alt", "template_name", "status", "start_date", "end_date", "media_selection_mode", "media_override_asset_id", "media_asset_id", "adaptation_decision_id"];
 
 function token(value) {
   return String(value || "").replace(/[^A-Za-z0-9_-]/g, "").slice(-60);
@@ -76,6 +77,11 @@ function validate(body, decision) {
     // writes no taxonomy, so it must stay possible on a legacy plan that has none.
     if (decision !== "reject") assertAction(slot.action_text, `slots[${index}].action_text`);
     if (!String(slot.message_body || "").trim() || String(slot.message_body).length > 1024) throw httpError(400, `slots[${index}].message_body is invalid`);
+    const mediaMode = String(slot.media_selection_mode || "automatic");
+    const overrideId = String(slot.media_override_asset_id || "").trim();
+    if (!MEDIA_SELECTION_MODES.has(mediaMode)) throw httpError(400, `slots[${index}].media_selection_mode is invalid`);
+    if (mediaMode === "clinician_selected" && !overrideId) throw httpError(400, `slots[${index}].media_override_asset_id is required`);
+    if (mediaMode !== "clinician_selected" && overrideId) throw httpError(400, `slots[${index}].media_override_asset_id is only allowed for clinician_selected mode`);
   });
   if (decision === "approve") {
     if (!DATE_RE.test(String(body.start_date || "")) || !DATE_RE.test(String(body.end_date || ""))) {
@@ -160,10 +166,18 @@ async function saveSchedule(body, decision = "approve", snapshot) {
 
   const startDate = String(body.start_date);
   const endDate = String(body.end_date);
+  const scopeWeekStart = String(body.scope_week_start || "");
+  if (scopeWeekStart && (!DATE_RE.test(scopeWeekStart) || DAYS[new Date(`${scopeWeekStart}T00:00:00Z`).getUTCDay()] !== "monday")) {
+    throw httpError(400, "scope_week_start must be a Monday in YYYY-MM-DD format");
+  }
+  if (scopeWeekStart && !existingWeekly.some(row => String(row.status) === "active")) {
+    throw httpError(409, "Approve the recurring intake schedule before planning an individual week");
+  }
   const todayIso = melbourneIso();
   const nowTime = melbourneTime();
-  const effectiveStart = [startDate, todayIso].sort().at(-1);
-  if (effectiveStart > endDate) throw httpError(400, "The schedule range must end on or after today in Melbourne");
+  const effectiveStart = [scopeWeekStart || startDate, startDate, todayIso].sort().at(-1);
+  const generationEnd = scopeWeekStart ? [addDays(scopeWeekStart, 6), endDate].sort().at(0) : endDate;
+  if (effectiveStart > generationEnd) throw httpError(400, "The selected week is outside the active future schedule range");
   const usedIds = new Set();
   const active = slots.map((slot, index) => {
     const scheduleSlotId = stableSlotId(slot, index);
@@ -183,15 +197,17 @@ async function saveSchedule(body, decision = "approve", snapshot) {
       tone_variant: slot.tone_variant === "custom" ? "neutral_informational" : String(slot.tone_variant),
       message_body: String(slot.message_body).trim(), message_body_alt: String(slot.message_body_alt || ""),
       template_name: String(slot.template_name || "health_plan_reminder"), status: "active",
-      media_asset_id: prior && prior.media_asset_id || "", adaptation_decision_id: prior && prior.adaptation_decision_id || "",
+      media_selection_mode: String(slot.media_selection_mode || "automatic"),
+      media_override_asset_id: String(slot.media_override_asset_id || ""),
+      media_asset_id: "", adaptation_decision_id: "",
       start_date: startDate, end_date: endDate, created_at: prior && prior.created_at || now, updated_at: now
     });
   });
-  const inactive = existingWeekly.filter(row => !usedIds.has(String(row.schedule_slot_id)) && String(row.status) !== "inactive")
+  const inactive = scopeWeekStart ? [] : existingWeekly.filter(row => !usedIds.has(String(row.schedule_slot_id)) && String(row.status) !== "inactive")
     .map(row => Object.assign({}, row, { status: "inactive", updated_at: now }));
 
   const desiredNudges = [];
-  for (const iso of datesBetween(effectiveStart, endDate)) {
+  for (const iso of datesBetween(effectiveStart, generationEnd)) {
     const weekday = DAYS[new Date(`${iso}T00:00:00Z`).getUTCDay()];
     for (const slot of active.filter(item => item.day === weekday)) {
       // Today's slots are materialized only while their time is still ahead in
@@ -207,7 +223,8 @@ async function saveSchedule(body, decision = "approve", snapshot) {
         message_body: slot.message_body, message_body_alt: slot.message_body_alt, tone_variant: slot.tone_variant,
         template_name: slot.template_name, status: "approved", sent_at: "", reviewed_at: now,
         week_number: Math.floor((datesBetween(effectiveStart, iso).length - 1) / 7) + 1,
-        media_asset_id: slot.media_asset_id || "", adaptation_decision_id: slot.adaptation_decision_id || ""
+        media_selection_mode: slot.media_selection_mode || "automatic", media_override_asset_id: slot.media_override_asset_id || "",
+        media_asset_id: "", adaptation_decision_id: ""
       });
     }
   }
@@ -218,10 +235,17 @@ async function saveSchedule(body, decision = "approve", snapshot) {
   const existingNudgesById = new Map(data.nudges.rows.map(row => [String(row.nudge_id), row]));
   const existingStatesByNudge = new Map(data.schedule_state.rows.map(row => [String(row.nudge_id), row]));
   const staleNudges = data.nudges.rows.filter(row => String(row.user_id) === userId && String(row.nudge_id).startsWith("schd_") &&
-    String(row.scheduled_date) >= effectiveStart && String(row.status) === "approved" && !desiredIds.has(String(row.nudge_id)) && !historicalNudge(row));
+    String(row.scheduled_date) >= effectiveStart && String(row.scheduled_date) <= generationEnd && String(row.status) === "approved" &&
+    !desiredIds.has(String(row.nudge_id)) && !historicalNudge(row));
 
   const operations = [];
-  for (const row of active) operations.push(operation("weekly_schedule", data.weekly_schedule, row, existingWeeklyById.get(String(row.schedule_slot_id))));
+  if (scopeWeekStart) {
+    for (const row of existingWeekly.filter(item => String(item.status) === "active")) {
+      operations.push(operation("weekly_schedule", data.weekly_schedule, Object.assign({}, row, { start_date: startDate, end_date: endDate, updated_at: now }), row));
+    }
+  } else {
+    for (const row of active) operations.push(operation("weekly_schedule", data.weekly_schedule, row, existingWeeklyById.get(String(row.schedule_slot_id))));
+  }
   for (const row of inactive) operations.push(operation("weekly_schedule", data.weekly_schedule, row, row));
 
   // Backfill only: a legacy source nudge with no action_text (or, since the
@@ -230,14 +254,16 @@ async function saveSchedule(body, decision = "approve", snapshot) {
   // rewritten and sibling slots keep differing behaviours. Pillar is deliberately
   // absent — it is populated on every row and rewriting it would resurrect the
   // cascade this change removed.
-  const sourceBehaviours = new Map();
-  for (const row of active) if (!sourceBehaviours.has(String(row.source_nudge_id))) sourceBehaviours.set(String(row.source_nudge_id), row);
-  for (const source of data.nudges.rows.filter(row => sourceBehaviours.has(String(row.nudge_id)) && !String(row.nudge_id).startsWith("schd_"))) {
-    const slot = sourceBehaviours.get(String(source.nudge_id));
-    const changes = { status: "approved", reviewed_at: now };
-    if (!String(source.action_text || "").trim()) changes.action_text = slot.action_text;
-    if (!String(source.category || "").trim()) changes.category = slot.category;
-    operations.push(operation("nudges", data.nudges, Object.assign({}, source, changes), source));
+  if (!scopeWeekStart) {
+    const sourceBehaviours = new Map();
+    for (const row of active) if (!sourceBehaviours.has(String(row.source_nudge_id))) sourceBehaviours.set(String(row.source_nudge_id), row);
+    for (const source of data.nudges.rows.filter(row => sourceBehaviours.has(String(row.nudge_id)) && !String(row.nudge_id).startsWith("schd_"))) {
+      const slot = sourceBehaviours.get(String(source.nudge_id));
+      const changes = { status: "approved", reviewed_at: now };
+      if (!String(source.action_text || "").trim()) changes.action_text = slot.action_text;
+      if (!String(source.category || "").trim()) changes.category = slot.category;
+      operations.push(operation("nudges", data.nudges, Object.assign({}, source, changes), source));
+    }
   }
   for (const nudge of desiredNudges) {
     const prior = existingNudgesById.get(nudge.nudge_id);
@@ -256,15 +282,19 @@ async function saveSchedule(body, decision = "approve", snapshot) {
   await batchWrite(operations);
   const verified = await loadClinicalData(["weekly_schedule"]);
   const saved = verified.weekly_schedule.rows.filter(row => String(row.user_id) === userId && String(row.status) === "active");
-  const expectedNormalized = active.map(normalized).sort((a, b) => a.schedule_slot_id.localeCompare(b.schedule_slot_id));
-  const actualNormalized = saved.map(normalized).sort((a, b) => a.schedule_slot_id.localeCompare(b.schedule_slot_id));
-  if (JSON.stringify(actualNormalized) !== JSON.stringify(expectedNormalized)) {
-    throw httpError(409, "The schedule update was not confirmed in Google Sheets. Please retry.");
+  if (!scopeWeekStart) {
+    const expectedNormalized = active.map(normalized).sort((a, b) => a.schedule_slot_id.localeCompare(b.schedule_slot_id));
+    const actualNormalized = saved.map(normalized).sort((a, b) => a.schedule_slot_id.localeCompare(b.schedule_slot_id));
+    if (JSON.stringify(actualNormalized) !== JSON.stringify(expectedNormalized)) {
+      throw httpError(409, "The schedule update was not confirmed in Google Sheets. Please retry.");
+    }
+  } else if (saved.some(row => String(row.start_date) !== startDate || String(row.end_date) !== endDate)) {
+    throw httpError(409, "The schedule date range was not confirmed in Google Sheets. Please retry.");
   }
   return {
     status: "ok", decision: "approve", persisted: true, user_id: userId, count: desiredNudges.length,
     active_slot_count: saved.length, inactive_slot_count: inactive.length, cancelled_future_count: staleNudges.length,
-    effective_start_date: effectiveStart,
+    effective_start_date: effectiveStart, scope_week_start: scopeWeekStart || "", dated_nudges: scopeWeekStart ? desiredNudges : [],
     weekly_schedule: saved.map(row => { const copy = Object.assign({}, row); delete copy.row_number; return copy; })
   };
 }

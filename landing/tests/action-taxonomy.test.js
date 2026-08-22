@@ -253,20 +253,17 @@ test("a custom nudge cannot borrow a source row from another prescription", asyn
   assert.equal(saved.action_text, "Add a side salad at lunch");
 });
 
-test("the custom-nudge dialog picks a prescription instead of guessing the closest one", function () {
-  assert.match(monitorHtml, /id="cPrescription"/);
-  assert.match(monitorHtml, /id="cPillarLocked"/);
-  assert.match(monitorHtml, /id="cCategoryLocked"/);
-  assert.doesNotMatch(monitorHtml, /pickCustomAnchor/);
-  assert.doesNotMatch(monitorHtml, /x_target_behaviors/);
-  // Every slot carries an editable action, and the save gate refuses empty ones.
-  assert.match(monitorHtml, /action_text: String\(s\.action_text \|\| ""\)\.trim\(\)/);
-  assert.match(monitorHtml, /Every nudge needs an action/);
+test("the monitoring screen removes nudge and prescription creation", function () {
+  assert.doesNotMatch(monitorHtml, /Add nudge|customDialog|rxDialog|Add prescription/);
+  assert.match(monitorHtml, /intake-generated nudges/);
+  assert.match(monitorHtml, /source_nudge_id:s\.source_nudge_id/);
 });
 
-test("a custom nudge picks a target behaviour from its prescription, never free text", function () {
-  assert.match(monitorHtml, /<select id="cAction"><\/select>/);
-  assert.doesNotMatch(monitorHtml, /<input[^>]*id="cAction"/);
+test("the monitor opens on the current Monday-to-Sunday week", function () {
+  assert.match(monitorHtml, /function currentMonday/);
+  assert.match(monitorHtml, /id="prevWeek"/);
+  assert.match(monitorHtml, /id="nextWeek"/);
+  assert.match(monitorHtml, /Plan next week/);
 });
 
 test("a doctor's own wording survives save, reload and re-edit", async function (t) {
@@ -321,62 +318,51 @@ test("a doctor's own wording survives save, reload and re-edit", async function 
   assert.equal(reselected.options[reselected.generatedCount].text, "");
 });
 
-test("adding a nudge has exactly one entry point", function () {
-  // The old pair asked the clinician to choose between N near-identical
-  // generated rows or start from scratch. Both were the same act.
-  assert.match(monitorHtml, /＋ Add nudge/);
-  assert.match(monitorHtml, /className = "addnudge"/);
-  assert.doesNotMatch(monitorHtml, /Add generated nudge/);
-  assert.doesNotMatch(monitorHtml, /Custom nudge"/);
-  assert.doesNotMatch(monitorHtml, /addcustom/);
-  // The picker and its dedupe are gone, not merely hidden.
-  assert.doesNotMatch(monitorHtml, /function catalog/);
-  assert.doesNotMatch(monitorHtml, /function nudgeShort/);
-  assert.doesNotMatch(monitorHtml, /function isActionRemoved/);
+test("the weekly editor exposes no add or remove entry point", function () {
+  assert.doesNotMatch(monitorHtml, /Add nudge|addnudge|Remove message|className="rm"/);
+  assert.match(monitorHtml, /No nudge scheduled/);
 });
 
-test("the add dialog offers a generated wording or the doctor's own", function () {
-  assert.match(monitorHtml, /id="cMessageMode"/);
-  assert.match(monitorHtml, /id="cMessagePreview"/);
-  assert.match(monitorHtml, /id="cMessageField"/);
-  assert.match(monitorHtml, /function refreshMessagePreview/);
-  // One slot constructor: the dialog seeds slotFromNudge rather than hand-rolling
-  // a structurally poorer slot with a single option.
-  assert.match(monitorHtml, /slotFromNudge\(seed, nextOrdinalFor\(/);
+test("clinicians can drag approved uploads onto an existing nudge", function () {
+  assert.match(monitorHtml, /Drop a clinician video or file here/);
+  assert.match(monitorHtml, /\/api\/media-upload/);
+  assert.match(monitorHtml, /dataTransfer\.files\[0\]/);
+  assert.match(monitorHtml, /100 MB maximum/);
 });
 
-test("the weekly editor derives its message options instead of storing them", function () {
-  assert.match(monitorHtml, /ReviewState\.buildMessageOptions/);
-  assert.match(monitorHtml, /message_body_alt: ReviewState\.altForOption\(act\)/);
-  // message_options was written to the wire and read by nothing.
-  assert.doesNotMatch(monitorHtml, /message_options/);
-  // The custom badge is derived from the selected option, because slot.source
-  // was never persisted and therefore lied after every reload.
-  assert.doesNotMatch(monitorHtml, /source: "custom"/);
-  assert.match(monitorHtml, /act\.generated === false/);
+test("the monitor exposes a clinician-controlled media population action", function () {
+  assert.match(monitorHtml, /id="populateMedia"/);
+  assert.match(monitorHtml, /operation:"populate"/);
+  assert.match(monitorHtml, /paper summary will be prepared asynchronously/);
 });
 
-test("the trace card owns the whole behaviour, taxonomy included", function () {
-  assert.match(monitorHtml, /k\.textContent = "Target behaviour"/);
-  assert.doesNotMatch(monitorHtml, /Actions drafted/);
-  assert.match(monitorHtml, /className = "actionlist"/);
-  assert.match(monitorHtml, /function renderActionList/);
+test("the weekly editor supports automatic, text-only and clinician-selected media", function () {
+  assert.match(monitorHtml, /value="automatic"/);
+  assert.match(monitorHtml, /value="text_only"/);
+  assert.match(monitorHtml, /value="clinician_selected"/);
+  assert.match(monitorHtml, /media_override_asset_id:s\.media_override_asset_id/);
+});
+
+test("the monitor hides clinical filing while preserving it in the save payload", function () {
+  assert.doesNotMatch(monitorHtml, />Pillar<|>Behaviour category<|How the AI read|Adaptive media plan/);
+  assert.doesNotMatch(monitorHtml, /actionpick|actiontax|renderTrace/);
   // Each behaviour row carries its own pillar and category selects: the separate
   // "Taxonomy" trace step is gone, because it described the prescription rather
   // than the behaviour and could name only one of several pillars.
-  assert.match(monitorHtml, /tax\.className = "actiontax"/);
-  assert.match(monitorHtml, /ReviewState\.applyActionTaxonomy/);
-  assert.doesNotMatch(monitorHtml, /<div class="k">Taxonomy<\/div>/);
+  assert.match(monitorHtml, /pillar:s\.pillar,category:s\.category,action_text:s\.action_text/);
   // The weekly editor now PICKS a behaviour rather than retyping its wording.
   // The previous free-text input let one behaviour exist under three spellings
   // and gave the slot no way to inherit a pillar the clinician had set once;
   // rewording in place moved to the trace card, where it follows every slot.
-  assert.match(monitorHtml, /className = "actionpick"/);
-  assert.doesNotMatch(monitorHtml, /"actionedit"/);
-  assert.match(monitorHtml, /function buildActionPicker/);
   // A stored action missing from the list is pinned verbatim, or the <select>
   // would snap to its first option and silently change what the slot sends.
-  assert.match(monitorHtml, /not in this prescription/);
+});
+
+test("the monitor exposes the patient adaptation summary and time-ordered drill-down", function () {
+  assert.match(monitorHtml, /id="adaptSummary"/);
+  assert.match(monitorHtml, /patient-dictionary/);
+  assert.match(monitorHtml, /Change over time/);
+  assert.match(monitorHtml, /Requested /);
 });
 
 // ---- Legacy rows keep working ------------------------------------------

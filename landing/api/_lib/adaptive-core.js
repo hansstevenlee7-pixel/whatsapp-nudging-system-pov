@@ -16,6 +16,13 @@ const PILLAR_TERMS = {
   substance_use: "substance use smoking alcohol cessation",
   social_connection: "social connection loneliness relationships"
 };
+const CATEGORY_TERMS = {
+  increase: "increase improve more",
+  reduce: "reduce lower less",
+  maintain: "maintain sustain ongoing",
+  avoid: "avoid prevention prevent",
+  establish: "establish routine habit"
+};
 
 function clean(value) { return String(value == null ? "" : value).trim(); }
 function unique(values) { return Array.from(new Set(values)); }
@@ -38,10 +45,15 @@ function behaviourKey(input) {
 function querySet(input) {
   const value = behaviour(input);
   const anchor = PILLAR_TERMS[value.pillar];
+  const actionTerms = unique(value.action_text.toLowerCase().replace(/[^a-z0-9\s]/g, " ").split(/\s+/).filter(token => token.length > 2));
+  const categoryTerms = CATEGORY_TERMS[value.category] || value.category;
+  const broadAction = actionTerms.join(" OR ");
   return {
     behaviour_key: behaviourKey(value),
     video: `\"${value.action_text}\" ${anchor} patient education ${value.category}`,
+    video_fallback: `(${broadAction}) ${anchor} patient education (${categoryTerms})`,
     paper: `\"${value.action_text}\" AND (${anchor.split(" ").join(" OR ")})`,
+    paper_fallback: `(${broadAction}) AND (${anchor.split(" ").join(" OR ")}) AND (${categoryTerms.split(" ").join(" OR ")})`,
     terms: unique([value.action_text.toLowerCase(), value.pillar.replace(/_/g, " "), value.category])
   };
 }
@@ -196,5 +208,5 @@ function decide(input) {
     scores_before: state.format_scores, scores_after: scores };
 }
 
-module.exports = { FORMATS, SUMMARY_LENGTHS, TONES, PILLAR_TERMS, behaviour, behaviourKey, querySet,
+module.exports = { FORMATS, SUMMARY_LENGTHS, TONES, PILLAR_TERMS, CATEGORY_TERMS, behaviour, behaviourKey, querySet,
   rankCandidate, selectPool, validateSummary, defaultEnvelope, validateEnvelope, explicitInterpretation, insideEnvelope, decide };

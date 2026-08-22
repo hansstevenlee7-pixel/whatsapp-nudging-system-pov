@@ -1,10 +1,10 @@
 "use strict";
 
-const { readTabs, batchWrite, assertHeaders, operation } = require("./google-sheets");
+const { readTabs, batchWrite, assertHeaders, ensureHeaders, operation } = require("./google-sheets");
 const { httpError } = require("./http");
 const { resolveActionText } = require("./taxonomy");
 
-const TAB_NAMES = ["user", "questionnaire", "prescriptions", "nudges", "weekly_schedule", "schedule_state", "delivery_events"];
+const TAB_NAMES = ["user", "questionnaire", "prescriptions", "nudges", "weekly_schedule", "schedule_state", "delivery_events", "interaction_events"];
 
 const DELIVERY_EVENT_HEADERS = [
   "event_id", "event_at", "wa_message_id", "nudge_id", "user_id", "status",
@@ -16,15 +16,36 @@ const INTERACTION_EVENT_HEADERS = [
 ];
 const MEDIA_ASSIGNMENT_HEADERS = [
   "assignment_id", "assigned_at", "user_id", "nudge_id", "behaviour_key", "media_asset_id",
-  "adaptation_decision_id", "media_kind", "source_url", "tracked_url"
+  "adaptation_decision_id", "media_kind", "selection_mode", "source_url", "tracked_url", "planned_frequency",
+  "scheduled_at", "sent_at", "delivered_at", "read_at", "visited_at", "replied_at", "send_to_read_hours", "send_to_visit_hours", "send_to_reply_hours"
 ];
 const ADAPTATION_DECISION_HEADERS = [
   "decision_id", "decided_at", "user_id", "behaviour_key", "interaction_id", "signal_type",
-  "rule_applied", "outcome", "reason", "selected_asset_id", "interpretation", "previous_state", "next_state"
+  "rule_applied", "outcome", "reason", "selected_asset_id", "interpretation", "previous_state", "next_state",
+  "scope", "decision_source", "effective_at", "state_version", "changed_fields", "frequency_before", "frequency_after",
+  "media_mode_before", "media_mode_after", "media_kind_before", "media_kind_after", "nudge_id"
+];
+const PATIENT_ADAPTATION_STATE_HEADERS = [
+  "user_id", "scope", "behaviour_key", "state_version", "preferred_format", "preferred_frequency", "planned_frequency",
+  "delivered_frequency", "observed_frequency", "last_change_at", "updated_at"
+];
+const PATIENT_ADAPTATION_TIMELINE_HEADERS = [
+  "user_id", "event_id", "event_at", "event_type", "source", "scope", "behaviour_key", "signal", "rule_applied",
+  "outcome", "reason", "previous_state", "new_state", "changed_fields", "selected_asset_id", "selected_media_kind", "nudge_id", "interaction_id"
 ];
 
 async function loadClinicalData(names = TAB_NAMES) {
   const data = await readTabs(names);
+  // These columns were introduced after the original Sheet was provisioned.
+  // Add only the missing headers on first authenticated access so a production
+  // deployment can self-heal an older isolated Sheet without exporting secrets
+  // or requiring a manual CLI migration step.
+  if (data.nudges) await ensureHeaders("nudges", data.nudges, ["media_selection_mode", "media_override_asset_id", "media_asset_id", "adaptation_decision_id"]);
+  if (data.weekly_schedule) await ensureHeaders("weekly_schedule", data.weekly_schedule, ["media_selection_mode", "media_override_asset_id", "media_asset_id", "adaptation_decision_id"]);
+  if (data.schedule_state) await ensureHeaders("schedule_state", data.schedule_state, ["read_at", "interacted_at", "last_inbound_message_sid"]);
+  if (data.interaction_events) await ensureHeaders("interaction_events", data.interaction_events, INTERACTION_EVENT_HEADERS);
+  if (data.media_assignments) await ensureHeaders("media_assignments", data.media_assignments, MEDIA_ASSIGNMENT_HEADERS);
+  if (data.adaptation_decisions) await ensureHeaders("adaptation_decisions", data.adaptation_decisions, ADAPTATION_DECISION_HEADERS);
   if (data.user) assertHeaders(data.user, ["user_id", "name", "phone", "email", "user_status", "doctor_id"], "user");
   if (data.questionnaire) assertHeaders(data.questionnaire, ["questionnaire_id", "user_id"], "questionnaire");
   if (data.prescriptions) assertHeaders(data.prescriptions, [
@@ -36,12 +57,12 @@ async function loadClinicalData(names = TAB_NAMES) {
   // until a clinician saves; the read path falls back to the prescription's default.
   if (data.nudges) assertHeaders(data.nudges, [
     "nudge_id", "user_id", "status", "scheduled_date", "scheduled_time", "message_body", "schedule_slot_id", "action_text",
-    "category", "media_asset_id", "adaptation_decision_id"
+    "category", "media_selection_mode", "media_override_asset_id", "media_asset_id", "adaptation_decision_id"
   ], "nudges");
   if (data.weekly_schedule) assertHeaders(data.weekly_schedule, [
     "schedule_slot_id", "user_id", "source_nudge_id", "prescription_id", "day", "scheduled_time", "nudge_type", "pillar", "action_text",
     "category", "tone_variant", "message_body", "message_body_alt", "template_name", "status", "start_date", "end_date", "created_at", "updated_at",
-    "media_asset_id", "adaptation_decision_id"
+    "media_selection_mode", "media_override_asset_id", "media_asset_id", "adaptation_decision_id"
   ], "weekly_schedule");
   if (data.schedule_state) assertHeaders(data.schedule_state, [
     "schedule_id", "nudge_id", "user_id", "status", "sent_at", "wa_message_id", "delivered_at", "last_updated",
@@ -88,6 +109,7 @@ function buildPatients(data) {
   const questionnaires = data.questionnaire ? data.questionnaire.rows.filter(row => row.user_id) : [];
   const states = data.schedule_state ? data.schedule_state.rows.filter(row => row.nudge_id && row.user_id) : [];
   const events = data.delivery_events ? data.delivery_events.rows.filter(row => row.wa_message_id) : [];
+  const interactions = data.interaction_events ? data.interaction_events.rows.filter(row => row.interaction_id && row.user_id) : [];
   // Source rows of an archived prescription are withheld from the portal: they
   // feed the add picker, the custom-nudge anchor, and seedWeekFromNudges' last
   // fallback, which would otherwise rebuild a whole week from an archived plan.
@@ -114,6 +136,7 @@ function buildPatients(data) {
       nudges, schedule_nudges: scheduleNudges,
       schedule_state: states.filter(row => String(row.user_id) === String(user.user_id)).map(numberFields),
       delivery_events: events.filter(row => String(row.user_id) === String(user.user_id)).map(numberFields),
+      interaction_events: interactions.filter(row => String(row.user_id) === String(user.user_id)).map(numberFields),
       weekly_schedule: scheduleRows.filter(row => String(row.status) === "active"),
       has_canonical_schedule: scheduleRows.length > 0
     };
@@ -143,5 +166,6 @@ async function updateUser(userId, changes) {
 
 module.exports = {
   loadClinicalData, buildPatients, allPatients, updateUser, isArchivedPrescription,
-  batchWrite, operation, DELIVERY_EVENT_HEADERS, INTERACTION_EVENT_HEADERS, MEDIA_ASSIGNMENT_HEADERS, ADAPTATION_DECISION_HEADERS
+  batchWrite, operation, DELIVERY_EVENT_HEADERS, INTERACTION_EVENT_HEADERS, MEDIA_ASSIGNMENT_HEADERS, ADAPTATION_DECISION_HEADERS,
+  PATIENT_ADAPTATION_STATE_HEADERS, PATIENT_ADAPTATION_TIMELINE_HEADERS
 };

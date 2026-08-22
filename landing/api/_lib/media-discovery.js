@@ -12,35 +12,49 @@ async function youtubeCandidates(job, fetchImpl = fetch) {
   if (!key || !channels.length) return [];
   const query = querySet(job);
   const results = [];
-  for (const channelId of channels) {
-    const url = new URL("https://www.googleapis.com/youtube/v3/search");
-    Object.entries({ part: "snippet", type: "video", maxResults: "5", order: "relevance", safeSearch: "strict",
-      relevanceLanguage: "en", regionCode: "AU", channelId, q: query.video, key }).forEach(([name, value]) => url.searchParams.set(name, value));
-    const response = await fetchImpl(url);
-    if (!response.ok) throw httpError(502, `YouTube search failed (${response.status})`);
-    const payload = await response.json();
-    for (const item of payload.items || []) {
-      if (!item.id || !item.id.videoId) continue;
-      results.push(rankCandidate({ media_kind: "video", title: text(item.snippet && item.snippet.title),
-        description: text(item.snippet && item.snippet.description), source_name: text(item.snippet && item.snippet.channelTitle),
-        source_id: item.id.videoId, source_url: `https://www.youtube.com/watch?v=${encodeURIComponent(item.id.videoId)}`,
-        published_at: item.snippet && item.snippet.publishedAt || null, open_access: true, trusted: true, patient_suitable: true,
-        metadata: { channel_id: channelId, thumbnail: item.snippet && item.snippet.thumbnails && item.snippet.thumbnails.medium && item.snippet.thumbnails.medium.url }
-      }, query));
+  async function runSearch(searchText) {
+    for (const channelId of channels) {
+      const url = new URL("https://www.googleapis.com/youtube/v3/search");
+      Object.entries({ part: "snippet", type: "video", maxResults: "5", order: "relevance", safeSearch: "strict",
+        relevanceLanguage: "en", regionCode: "AU", channelId, q: searchText, key }).forEach(([name, value]) => url.searchParams.set(name, value));
+      const response = await fetchImpl(url);
+      if (!response.ok) throw httpError(502, `YouTube search failed (${response.status})`);
+      const payload = await response.json();
+      for (const item of payload.items || []) {
+        if (!item.id || !item.id.videoId) continue;
+        results.push(rankCandidate({ media_kind: "video", title: text(item.snippet && item.snippet.title),
+          description: text(item.snippet && item.snippet.description), source_name: text(item.snippet && item.snippet.channelTitle),
+          source_id: item.id.videoId, source_url: `https://www.youtube.com/watch?v=${encodeURIComponent(item.id.videoId)}`,
+          published_at: item.snippet && item.snippet.publishedAt || null, open_access: true, trusted: true, patient_suitable: true,
+          metadata: { channel_id: channelId, thumbnail: item.snippet && item.snippet.thumbnails && item.snippet.thumbnails.medium && item.snippet.thumbnails.medium.url }
+        }, query));
+      }
     }
   }
+  await runSearch(query.video);
+  if (!results.length && query.video_fallback) await runSearch(query.video_fallback);
   return results;
 }
 
 async function paperCandidates(job, fetchImpl = fetch) {
   const query = querySet(job);
-  const url = new URL("https://www.ebi.ac.uk/europepmc/webservices/rest/search");
-  url.searchParams.set("query", `(${query.paper}) AND OPEN_ACCESS:y AND HAS_ABSTRACT:y`);
-  url.searchParams.set("format", "json"); url.searchParams.set("resultType", "core"); url.searchParams.set("pageSize", "10");
-  const response = await fetchImpl(url);
-  if (!response.ok) throw httpError(502, `Europe PMC search failed (${response.status})`);
-  const payload = await response.json();
-  return ((payload.resultList && payload.resultList.result) || []).map(item => {
+  async function runSearch(searchText) {
+    const url = new URL("https://www.ebi.ac.uk/europepmc/webservices/rest/search");
+    url.searchParams.set("query", `(${searchText}) AND OPEN_ACCESS:y AND HAS_ABSTRACT:y`);
+    url.searchParams.set("format", "json"); url.searchParams.set("resultType", "core"); url.searchParams.set("pageSize", "10");
+    const response = await fetchImpl(url);
+    if (!response.ok) throw httpError(502, `Europe PMC search failed (${response.status})`);
+    const payload = await response.json();
+    return (payload.resultList && payload.resultList.result) || [];
+  }
+  const primary = await runSearch(query.paper);
+  const fallback = primary.length ? [] : await runSearch(query.paper_fallback);
+  const seen = new Set();
+  return primary.concat(fallback).filter(item => {
+    const id = text(item.pmcid || item.pmid || item.id);
+    if (!id || seen.has(id)) return false;
+    seen.add(id); return true;
+  }).map(item => {
     const id = text(item.pmcid || item.pmid || item.id);
     const sourceUrl = item.pmcid ? `https://europepmc.org/articles/${encodeURIComponent(item.pmcid)}` : `https://europepmc.org/article/MED/${encodeURIComponent(id)}`;
     return rankCandidate({ media_kind: "paper", title: text(item.title), abstract: text(item.abstractText), description: text(item.abstractText),
