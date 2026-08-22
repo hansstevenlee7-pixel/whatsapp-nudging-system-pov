@@ -157,6 +157,11 @@ function decide(input) {
   const state = Object.assign({ format_scores: {}, asset_history: [] }, input.state || {});
   const envelope = validateEnvelope(input.envelope);
   const interpretation = input.interpretation || explicitInterpretation(input.body);
+  if (input.event_type === "delivery_status") {
+    return { outcome: "no_change", rule: "exposure_only", reason: "delivery and read states are evidence of exposure only",
+      interpretation, previous_state: state, next_state: state, selected_asset: null,
+      scores_before: state.format_scores, scores_after: state.format_scores };
+  }
   const check = insideEnvelope(interpretation, envelope, state);
   if (!check.allowed) return { outcome: "outside_envelope", rule: "explicit_request_guarded", reason: check.reason,
     interpretation, previous_state: state, next_state: state, scores_before: state.format_scores, scores_after: state.format_scores };
@@ -174,8 +179,12 @@ function decide(input) {
   const scoredFormat = Object.entries(scores).sort((a, b) => Number(b[1]) - Number(a[1]))[0];
   const preferred = interpretation.format || next.preferred_format || (scoredFormat && Number(scoredFormat[1]) > 0 ? scoredFormat[0] : null);
   const eligible = preferred ? assets.filter(asset => asset.media_kind === preferred) : assets;
-  const used = new Set((state.asset_history || []).map(String));
-  const selected = eligible.find(asset => !used.has(String(asset.asset_id))) || eligible[0] || assets[0] || null;
+  const history = (state.asset_history || []).map(String);
+  const selected = eligible.slice().sort((left, right) => {
+    const leftIndex = history.lastIndexOf(String(left.asset_id));
+    const rightIndex = history.lastIndexOf(String(right.asset_id));
+    return leftIndex - rightIndex;
+  })[0] || assets[0] || null;
   if (selected) {
     next.last_asset_id = selected.asset_id;
     next.asset_history = (state.asset_history || []).concat(selected.asset_id).slice(-20);

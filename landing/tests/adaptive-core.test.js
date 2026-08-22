@@ -60,6 +60,14 @@ test("silence rotates least recently used media and never changes frequency", ()
   assert.equal(decision.next_state.preferred_frequency, 3);
 });
 
+test("rotation remains least-recently-used after every approved resource has appeared", () => {
+  const envelope = core.defaultEnvelope(Object.assign({}, behaviour, { scheduled_time: "09:00", frequency_per_week: 3 }));
+  const assets = [{ asset_id: "v1", media_kind: "video" }, { asset_id: "v2", media_kind: "video" }];
+  const decision = core.decide({ event_type: "scheduled_selection", envelope, assets,
+    state: { asset_history: ["v1", "v2", "v1"], preferred_format: "video", preferred_frequency: 3 } });
+  assert.equal(decision.selected_asset.asset_id, "v2");
+});
+
 test("a link visit raises that format score while a read state does not", () => {
   const envelope = core.defaultEnvelope(Object.assign({}, behaviour, { scheduled_time: "09:00", frequency_per_week: 3 }));
   const assets = [{ asset_id: "v1", media_kind: "video" }, { asset_id: "p1", media_kind: "paper" }];
@@ -68,4 +76,7 @@ test("a link visit raises that format score while a read state does not", () => 
   assert.equal(clicked.selected_asset.asset_id, "p1");
   const read = core.decide({ event_type: "delivery_status", envelope, assets, state: {} });
   assert.deepEqual(read.scores_after, {});
+  assert.equal(read.outcome, "no_change");
+  assert.equal(read.rule, "exposure_only");
+  assert.equal(read.selected_asset, null);
 });

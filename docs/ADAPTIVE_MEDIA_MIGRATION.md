@@ -30,3 +30,5 @@ Europe PMC search requires no project API key. Only open-access results with abs
 ## Acceptance boundary
 
 `read` means Twilio reported a provider read state; missing means unknown. Link visits and replies are interactions. None of these fields is adherence or a health outcome. An automatic change is allowed only inside the clinician-approved envelope; an outside-envelope request is recorded without changing the plan.
+
+Run `node scripts/generate-adaptation-fixture.js` from the repository root to produce a deterministic, synthetic interaction trace for UI and adaptation testing. The fixture is labelled synthetic, performs no database writes, and covers read exposure, explicit format and length requests, an allowed later time, link visits, silence rotation, and guarded outside-envelope requests.
