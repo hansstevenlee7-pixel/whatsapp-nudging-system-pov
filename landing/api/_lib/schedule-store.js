@@ -51,6 +51,85 @@ function stableSlotId(slot, index) {
   return `slot_${crypto.createHash("sha256").update(seed).digest("hex").slice(0, 20)}`;
 }
 
+function safeBehaviourKey(row) {
+  try {
+    const { behaviourKey } = require("./adaptive-core");
+    return behaviourKey(row);
+  } catch (_) { return ""; }
+}
+
+function dayDistance(left, right) {
+  const raw = Math.abs(left - right);
+  return Math.min(raw, 7 - raw);
+}
+
+function evenlySpacedRows(rows, target) {
+  const sorted = rows.slice().sort((left, right) => DAYS.indexOf(left.day) - DAYS.indexOf(right.day) ||
+    String(left.scheduled_time).localeCompare(String(right.scheduled_time)));
+  if (target >= sorted.length) return sorted;
+  if (target <= 1) return [sorted[Math.floor((sorted.length - 1) / 2)]];
+  const selected = [];
+  for (let index = 0; index < target; index += 1) {
+    selected.push(sorted[Math.round(index * (sorted.length - 1) / (target - 1))]);
+  }
+  return Array.from(new Map(selected.map(row => [String(row.schedule_slot_id), row])).values());
+}
+
+function addFrequencyRows(rows, target, input) {
+  const result = rows.slice();
+  const used = new Set(result.map(row => DAYS.indexOf(String(row.day))));
+  while (result.length < target) {
+    const candidates = DAYS.map((day, index) => ({ day, index })).filter(item => !used.has(item.index));
+    if (!candidates.length) break;
+    candidates.sort((left, right) => {
+      const leftDistance = used.size ? Math.min(...Array.from(used).map(index => dayDistance(left.index, index))) : 7;
+      const rightDistance = used.size ? Math.min(...Array.from(used).map(index => dayDistance(right.index, index))) : 7;
+      return rightDistance - leftDistance || left.index - right.index;
+    });
+    const selected = candidates[0]; const base = result[result.length % rows.length] || rows[0];
+    const suffix = crypto.createHash("sha256").update([input.user_id, input.behaviour_key, selected.day].join("|")).digest("hex").slice(0, 16);
+    result.push(Object.assign({}, base, { schedule_slot_id: `slot_auto_${suffix}`, day: selected.day, created_at: input.now, updated_at: input.now }));
+    used.add(selected.index);
+  }
+  return result;
+}
+
+function slotInput(row) {
+  return {
+    schedule_slot_id: row.schedule_slot_id, source_nudge_id: row.source_nudge_id, prescription_id: row.prescription_id,
+    day: row.day, time: row.scheduled_time, nudge_type: row.nudge_type, pillar: row.pillar, category: row.category,
+    action_text: row.action_text, tone_variant: row.tone_variant, message_body: row.message_body,
+    message_body_alt: row.message_body_alt || "", template_name: row.template_name || "health_plan_reminder",
+    media_selection_mode: row.media_selection_mode || "automatic", media_override_asset_id: row.media_override_asset_id || ""
+  };
+}
+
+async function applyAdaptiveSchedule(input, snapshot) {
+  const data = snapshot || await loadClinicalData();
+  const userId = String(input.user_id || ""); const key = String(input.behaviour_key || "");
+  const active = data.weekly_schedule.rows.filter(row => String(row.user_id) === userId && String(row.status || "active") === "active");
+  const current = active.filter(row => safeBehaviourKey(row) === key);
+  if (!current.length) return { applied: false, reason: "no_active_schedule_for_behaviour", weekly_schedule: active };
+  const target = Math.max(1, Math.min(3, Math.round(Number(input.target_frequency) || current.length)));
+  let adapted = target < current.length ? evenlySpacedRows(current, target) : addFrequencyRows(current, target, {
+    user_id: userId, behaviour_key: key, now: input.now || new Date().toISOString()
+  });
+  const targetTime = TIME_RE.test(String(input.target_time || "")) ? String(input.target_time) : null;
+  if (targetTime) adapted = adapted.map(row => Object.assign({}, row, { scheduled_time: targetTime, updated_at: input.now || new Date().toISOString() }));
+  const retainedIds = new Set(current.map(row => String(row.schedule_slot_id)));
+  const combined = active.filter(row => !retainedIds.has(String(row.schedule_slot_id))).concat(adapted);
+  const beforeShape = current.map(row => `${row.schedule_slot_id}|${row.day}|${row.scheduled_time}`).sort();
+  const afterShape = adapted.map(row => `${row.schedule_slot_id}|${row.day}|${row.scheduled_time}`).sort();
+  if (JSON.stringify(beforeShape) === JSON.stringify(afterShape)) {
+    return { applied: false, reason: "schedule_already_matches_policy", weekly_schedule: active, before: current, after: adapted };
+  }
+  const starts = active.map(row => String(row.start_date || "")).filter(DATE_RE.test.bind(DATE_RE)).sort();
+  const ends = active.map(row => String(row.end_date || "")).filter(DATE_RE.test.bind(DATE_RE)).sort();
+  const startDate = starts[0] || melbourneIso(); const endDate = ends.at(-1) || addDays(startDate, 84);
+  const result = await saveSchedule({ user_id: userId, start_date: startDate, end_date: endDate, slots: combined.map(slotInput) }, "approve", data);
+  return Object.assign({ applied: true, reason: "future_unsent_schedule_updated", before: current, after: adapted }, result);
+}
+
 function validate(body, decision) {
   const userId = String(body.user_id || "").trim();
   const slots = Array.isArray(body.slots) ? body.slots : [];
@@ -117,7 +196,7 @@ function stateRow(nudge, prior, now) {
     status: "approved", sent_at: prior && prior.sent_at || "", delivered_at: prior && prior.delivered_at || "",
     wa_message_id: prior && prior.wa_message_id || "",
     tone_sent: prior && prior.tone_sent || "",
-    last_updated: now
+    last_updated: now, delivery_attempt_id: "", submission_started_at: ""
   });
 }
 
@@ -300,7 +379,8 @@ async function saveSchedule(body, decision = "approve", snapshot) {
 }
 
 module.exports = {
-  saveSchedule, validate, melbourneIso, melbourneTime, addDays, datesBetween, stableSlotId,
+  saveSchedule, applyAdaptiveSchedule, validate, melbourneIso, melbourneTime, addDays, datesBetween, stableSlotId,
+  evenlySpacedRows, addFrequencyRows,
   // One definition of "this row is history and must never be rewritten", shared
   // with the prescription archive cascade.
   historicalNudge, historicalState

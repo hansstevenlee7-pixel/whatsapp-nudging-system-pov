@@ -57,3 +57,14 @@ test("ordinary signed replies are stored exactly once and acknowledged", async t
   await call(fields, token);
   assert.equal(fx.tables.interaction_events.rows.length, 1);
 });
+
+test("an invalid inbound signature is rejected before patient data is read or changed", async t => {
+  const previous = process.env.TWILIO_AUTH_TOKEN; process.env.TWILIO_AUTH_TOKEN = "real-token";
+  t.after(() => { if (previous == null) delete process.env.TWILIO_AUTH_TOKEN; else process.env.TWILIO_AUTH_TOKEN = previous; });
+  const fx = fixture({ user: [{ user_id: "patient-1", phone: "+61411111111", user_status: "active" }] });
+  t.after(() => fx.restore());
+  const fields = { From: "whatsapp:+61411111111", Body: "STOP", MessageSid: "SM" + "e".repeat(32) };
+  const res = await call(fields, "wrong-token");
+  assert.equal(res.statusCode, 403); assert.equal(JSON.parse(res.body).error, "invalid_signature");
+  assert.equal(fx.tables.user.rows[0].user_status, "active"); assert.equal(fx.tables.interaction_events.rows.length, 0);
+});

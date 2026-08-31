@@ -13,11 +13,22 @@ This dictionary is the operational and research contract for the patient adaptat
 
 Sent counts and read counts are retained separately. A missing read callback is `unknown`, never `unread`.
 
+After 24 hours, each confirmed delivery is classified as either `ordinary_interaction` (tracked visit or ordinary typed reply) or `no_observable_interaction`. The second label describes only missing system evidence; it is not a preference, adherence, or health-behaviour label.
+
 ## Media and time fields
 
 Each dated occurrence preserves `media_selection_mode` (`automatic`, `text_only`, or `clinician_selected`), the actual `media_asset_id` and `media_kind`, and the original source URL. It also retains scheduled, sent, delivered, read, visited, and replied timestamps plus send-to-read/visit/reply latencies.
 
 All stored event timestamps are UTC. The monitor renders them in `Australia/Melbourne`.
+
+The derived passive-evidence view includes read-known/read-unknown counts, first visit and reply times, send-to-read/visit/reply latency, interaction window (`morning`, `afternoon`, or `evening`), and the number of open and closed 24-hour outcome windows. WhatsApp reading duration and external video completion are not collected.
+
+## Applied communication policy
+
+- Frequency uses the frozen regularised logistic-regression artifact and a deterministic safety layer.
+- Delivery time moves by at most one approved window after at least two ordinary interactions support the same window.
+- Explicit media requests override implicit evidence; otherwise tracked visits score approved formats and weak evidence falls back to least-recently-used rotation.
+- Changes affect future unsent occurrences only. The audit timeline retains the model recommendation, policy outcome, previous state, next state, changed fields, and application mode.
 
 ## Adaptation scopes
 

@@ -63,6 +63,10 @@ function firstTimestamp(values) {
 function latestTimestamp(values) {
   return values.map(value => text(value)).filter(Boolean).sort().pop() || "";
 }
+function median(values) {
+  const sorted = values.filter(value => Number.isFinite(value)).slice().sort((a, b) => a - b);
+  return sorted.length ? sorted[Math.floor((sorted.length - 1) / 2)] : null;
+}
 function latencyHours(start, end) {
   const a = parseDate(start); const b = parseDate(end);
   if (a == null || b == null || b < a) return null;
@@ -126,6 +130,27 @@ function scheduleRowsFor(patient) {
   const canonical = (patient.weekly_schedule || []).filter(row => text(row.status || "active") === "active");
   if (canonical.length) return canonical;
   return (patient.nudges || []).filter(row => !String(row.nudge_id || "").startsWith("schd_") && text(row.status) !== "rejected");
+}
+
+function passiveEvidence(rows, now) {
+  const nowMs = parseDate(now); const delivered = (rows || []).filter(row => row.delivered_at || DELIVERED.has(row.status));
+  const closed = delivered.filter(row => parseDate(row.delivered_at) != null && nowMs != null && parseDate(row.delivered_at) + 86400000 <= nowMs);
+  const latest = delivered.slice().sort((a, b) => text(b.delivered_at).localeCompare(text(a.delivered_at))).slice(0, 5).map(row => ({
+    nudge_id: row.nudge_id, delivered_at: row.delivered_at, read_at: row.read_at, visited_at: row.visited_at, replied_at: row.replied_at,
+    read_status: row.read_at ? "read" : "unknown", media_kind: row.media_kind, scheduled_time: row.scheduled_time,
+    send_to_read_hours: row.send_to_read_hours, send_to_visit_hours: row.send_to_visit_hours, send_to_reply_hours: row.send_to_reply_hours,
+    outcome_24h: parseDate(row.delivered_at) + 86400000 > nowMs ? "window_open" : row.visited_at || row.replied_at ? "ordinary_interaction" : "no_observable_interaction"
+  }));
+  return {
+    delivered_count: delivered.length, read_count: delivered.filter(row => row.read_at).length,
+    read_unknown_count: delivered.filter(row => !row.read_at).length,
+    visit_count: delivered.filter(row => row.visited_at).length, reply_count: delivered.filter(row => row.replied_at).length,
+    no_observable_interaction_count: closed.filter(row => !row.visited_at && !row.replied_at).length,
+    open_24h_count: delivered.length - closed.length,
+    median_send_to_read_hours: median(delivered.map(row => row.send_to_read_hours)),
+    median_send_to_visit_hours: median(delivered.map(row => row.send_to_visit_hours)),
+    median_send_to_reply_hours: median(delivered.map(row => row.send_to_reply_hours)), latest
+  };
 }
 
 function buildPatientDictionary(input = {}) {
@@ -228,6 +253,7 @@ function buildPatientDictionary(input = {}) {
     const behaviourWeeks = Array.from(weekKeys).sort().map(week => weekSummary(week, key));
     const last = timeline.slice().reverse().find(item => item.behaviour_key === key);
     const latestOccurrence = occurrences.filter(item => item.behaviour_key === key).sort((a, b) => text(b.scheduled_at).localeCompare(text(a.scheduled_at)))[0] || null;
+    const behaviourOccurrences = occurrences.filter(item => item.behaviour_key === key).sort((a, b) => text(a.scheduled_at).localeCompare(text(b.scheduled_at)));
     return { behaviour_key: key, current_state: state, effective_state: effective, frequency: {
       requested_frequency: number(state.preferred_frequency) || number(globalState.preferred_frequency),
       planned_frequency: behaviourWeeks.reduce((sum, item) => sum + Number(item.frequency.planned_frequency || 0), 0),
@@ -236,18 +262,33 @@ function buildPatientDictionary(input = {}) {
     }, media: { preference: effective.preferred_format || "automatic", summary_length: effective.preferred_summary_length || null,
       last_asset_id: state.last_asset_id || null, last_media_kind: latestOccurrence && latestOccurrence.media_kind || null },
       last_change_at: last && last.at || null, latest_occurrence: latestOccurrence,
-      occurrences: occurrences.filter(item => item.behaviour_key === key).sort((a, b) => text(a.scheduled_at).localeCompare(text(b.scheduled_at))), weekly: behaviourWeeks };
+      passive_evidence: passiveEvidence(behaviourOccurrences, now), occurrences: behaviourOccurrences, weekly: behaviourWeeks };
   });
   const current = weekly.find(item => item.week_start === currentWeek) || weekSummary(currentWeek);
   const timelineOutput = (requestedFrom || requestedTo) ? timeline.filter(item => inDateRange(item.at, from, to)) : timeline;
   const preferences = behaviourEntries.map(item => item.media.preference).filter(Boolean);
   const uniquePreferences = Array.from(new Set(preferences));
   const latestChange = timeline.slice().reverse().find(item => item.event_type === "adaptation_decision") || null;
+  const latestFrequencyDecision = decisions.slice().reverse().find(item => text(item.signal_type) === "frequency_policy_shadow" || text(item.signal_type).startsWith("adaptive_policy_")) || null;
+  const frequencyInterpretation = latestFrequencyDecision ? json(latestFrequencyDecision.interpretation, {}) : {};
+  const aggregateEvidence = passiveEvidence(occurrences, now);
+  const latestPolicyState = latestFrequencyDecision ? { mode: text(frequencyInterpretation.mode) || (text(latestFrequencyDecision.signal_type).endsWith("shadow") ? "shadow" : "apply"),
+    outcome: text(latestFrequencyDecision.outcome), changed_fields: json(latestFrequencyDecision.changed_fields, []),
+    previous_state: json(latestFrequencyDecision.previous_state, {}), next_state: json(latestFrequencyDecision.next_state, {}),
+    reason: text(latestFrequencyDecision.reason), evaluated_at: text(latestFrequencyDecision.effective_at || latestFrequencyDecision.decided_at),
+    time_recommendation: frequencyInterpretation.time_recommendation || null,
+    media_recommendation: frequencyInterpretation.media_recommendation || null } : null;
   return {
     patient: { user_id: text(patient.user_id), name: text(patient.name), user_status: text(patient.user_status) || "active", timezone: "Australia/Melbourne" },
     summary: { planned_frequency: current.frequency.planned_frequency, delivered_frequency: current.frequency.delivered_frequency,
       requested_frequency: current.frequency.requested_frequency, observed_frequency: current.frequency.observed_frequency,
       media_preference: uniquePreferences.length === 1 ? uniquePreferences[0] : uniquePreferences.length ? "mixed" : "automatic",
+      frequency_model: latestFrequencyDecision ? { mode: text(frequencyInterpretation.mode) || "shadow", model_id: text(frequencyInterpretation.model_id),
+        current_frequency: number(latestFrequencyDecision.frequency_before), recommended_frequency: number(frequencyInterpretation.recommended_frequency),
+        direction: text(frequencyInterpretation.direction) || "hold", reason: text(frequencyInterpretation.policy_reason),
+        evaluated_at: text(latestFrequencyDecision.effective_at || latestFrequencyDecision.decided_at) } : null,
+      delivery_time: latestPolicyState && latestPolicyState.next_state.preferred_time || behaviourEntries.map(item => item.effective_state.preferred_time).filter(Boolean)[0] || null,
+      passive_evidence: aggregateEvidence, latest_policy: latestPolicyState,
       latest_change_at: latestChange && latestChange.at || null, latest_change_reason: latestChange && latestChange.reason || null,
       read_status_note: "A missing read receipt is unknown, not unread." },
     global_state: globalState, behaviour_states: behaviourEntries, occurrences, weekly, timeline: timelineOutput,

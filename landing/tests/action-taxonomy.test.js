@@ -336,6 +336,13 @@ test("the monitor exposes a clinician-controlled media population action", funct
   assert.match(monitorHtml, /paper summary will be prepared asynchronously/);
 });
 
+test("the monitor can add a resource manually without waiting for Gemini", function () {
+  assert.match(monitorHtml, /Add resource manually/);
+  assert.match(monitorHtml, /operation:"manual_resource"/);
+  assert.match(monitorHtml, /Save to media pool/);
+  assert.match(monitorHtml, /Manual resource saved\. Review and approve the media set\./);
+});
+
 test("the weekly editor supports automatic, text-only and clinician-selected media", function () {
   assert.match(monitorHtml, /value="automatic"/);
   assert.match(monitorHtml, /value="text_only"/);
@@ -360,6 +367,9 @@ test("the monitor hides clinical filing while preserving it in the save payload"
 
 test("the monitor exposes the patient adaptation summary and time-ordered drill-down", function () {
   assert.match(monitorHtml, /id="adaptSummary"/);
+  assert.match(monitorHtml, /id="adaptModel"/);
+  assert.match(monitorHtml, /Frequency model/);
+  assert.match(monitorHtml, /shadow/);
   assert.match(monitorHtml, /patient-dictionary/);
   assert.match(monitorHtml, /Change over time/);
   assert.match(monitorHtml, /Requested /);

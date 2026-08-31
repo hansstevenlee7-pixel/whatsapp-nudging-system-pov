@@ -1,36 +1,61 @@
-# System POV project handoff
+# System POV research handoff
+
+Read `INSTRUCTIONS.md` before changing code, infrastructure, data, research language, or the clinician workflow. It is the canonical operating contract for this repository; this file is the short entry point for Claude Code and other coding agents.
 
 ## Purpose
 
-This is the independent system-POV fork of the WhatsApp nudging prototype. Preserve the existing clinician workflow and UI. It adds taxonomy-driven media discovery and explainable adaptation inside a clinician-approved envelope. Delivery, reads, links, and replies are observable system events, never adherence outcomes.
+This is the isolated **System POV** implementation of Hans Lee's Monash Master's research prototype. It converts clinician-approved lifestyle prescriptions into scheduled WhatsApp messages, supplies approved media, observes delivery and interaction events, and makes bounded, auditable changes to later messages.
 
-## Architecture
+The research acceptance outcome is **request fulfilled**:
 
-1. Workflow A creates prescription and draft nudge rows.
-2. The authenticated Vercel Monitor reads and writes Google Sheets directly.
-3. The clinician edits and approves a recurring schedule.
-4. Workflow B selects due generated rows and submits a send-only Content Template to Twilio.
-5. Twilio calls the signed public `/api/whatsapp-status` endpoint.
-6. The endpoint appends `delivery_events` and updates the matching `schedule_state` row.
-7. Workflow C searches trusted media and processes queued interaction events outside the callback path.
-8. Workflow B asks the signed preparation endpoint for one approved, rotated resource immediately before sending.
-9. The Monitor presents delivery, media, and request-fulfilment traces.
+```text
+patient or clinician signal
+  -> structured interpretation
+  -> deterministic envelope validation
+  -> recorded decision
+  -> observable change to a subsequent message
+```
 
-`POST /api/whatsapp-inbound` validates signed Twilio requests, processes `STOP` immediately, and stores ordinary replies exactly once for asynchronous interpretation.
+Delivery, reads, link visits, replies, and their latencies are system exposure or interaction evidence. They are never adherence, behaviour completion, or clinical improvement.
 
-## Non-negotiable boundaries
+## Hard boundaries
 
-- No patient response data is an adherence outcome.
-- `delivered` and `read` are provider states, not evidence a behaviour occurred.
-- Do not add an LLM to delivery or callback paths; Gemini is allowed only in asynchronous discovery/classification workers.
-- Never adapt outside a clinician-approved envelope or infer adherence from system events.
-- Do not restore the old commitment, barrier, or outcome workflows. Workflow C in this fork is adaptive media only.
-- Do not point this fork at the current production Vercel project or Sheet.
-- Never commit credentials, `.env` files, `.vercel`, service-account JSON, or local n8n state.
-- Preserve sent records and append-only delivery events.
+- Preserve the original `../Whatsapp Nudging System` project unchanged and paused for later PhD work.
+- Work only in this isolated repository unless the user explicitly changes scope.
+- Never expose taxonomy, prescription interpretation, or internal behaviour labels in the simplified Monitoring UI.
+- Never run an LLM in delivery, status-callback, redirect, or immediate inbound-webhook paths.
+- Never adapt outside the clinician-approved envelope.
+- Missing read evidence is `unknown`, never `unread`.
+- Silence can rotate approved media; it cannot reduce frequency or imply failure/non-adherence.
+- `STOP` is immediate and prevents future sends and adaptation.
+- Preserve sent history and append-only events. Edits affect future unsent occurrences only.
+- Never commit credentials, `.env*`, `.vercel`, service-account JSON, or copied n8n state.
 
-## Verification
+## Runtime map
 
-Run `npm test` and `npm run check` from `landing`. Local success does not establish live delivery. Live verification requires one controlled message and evidence across Workflow B, Twilio SID/status, `schedule_state`, `delivery_events`, and the Monitor timeline.
+- **Vercel:** clinician portal and APIs at `https://whatsapp-nudging-system-pov.vercel.app`.
+- **Railway/n8n:** isolated intake, delivery, discovery, and adaptation workers.
+- **Supabase (Sydney):** authentication plus operational media/adaptation state.
+- **Google Sheets:** clinical schedule and idempotent research/audit exports.
+- **Twilio Sandbox:** controlled WhatsApp delivery, signed callbacks, and inbound replies.
 
-Deployment and migration details are in `docs/SYSTEM_POV_MIGRATION.md`.
+Deploy from `landing`, never from the repository root. A root deployment can be `READY` while omitting the API functions. For `/api/internal/media-worker`, an unauthenticated `403 invalid_worker_secret` proves that the route exists; a `404` indicates the wrong deployment root.
+
+## Before editing
+
+1. Read `INSTRUCTIONS.md` and the relevant migration document.
+2. Run `git status --short` and preserve unrelated or user-owned changes.
+3. Confirm whether the claim being made is local, deployed, or live WhatsApp evidence.
+4. Keep schema, migration, fixture, API, UI, workflow, and export changes aligned.
+
+## Validation
+
+```sh
+cd landing
+npm test
+npm run check
+```
+
+Also run `git diff --check` from the repository root. Local tests do not prove live delivery. A live claim requires correlated evidence across the scheduled row, Twilio Message SID/status, Supabase/Sheets events, and the Monitor.
+
+See `INSTRUCTIONS.md`, `docs/SYSTEM_POV_MIGRATION.md`, `docs/ADAPTIVE_MEDIA_MIGRATION.md`, and `docs/PATIENT_ADAPTATION_DATA_DICTIONARY.md`.

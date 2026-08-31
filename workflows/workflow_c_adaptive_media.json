@@ -3,7 +3,7 @@
   "nodes": [
     {
       "parameters": {
-        "content": "## Workflow C — Adaptive media workers\n\nPolls the signed Vercel worker endpoints every two minutes. Media discovery searches trusted YouTube channels and Europe PMC; interaction processing applies explainable decisions inside the approved envelope. Neither worker sits in the Twilio callback path.\n\nRequired Railway variables: PORTAL_BASE_URL, N8N_PROXY_SECRET. Search and Gemini credentials remain server-side in Vercel."
+        "content": "## Workflow C — Adaptive policy workers\n\nPolls the signed Vercel worker endpoints every two minutes. Media discovery searches trusted sources; interaction processing records explicit requests and visits; the frequency worker closes 24-hour outcomes and evaluates bounded frequency, delivery-window, media, and novelty rules. Apply mode requires both the environment switch and a per-behaviour database flag. None of these workers sits in the Twilio callback path.\n\nRequired Railway variables: PORTAL_BASE_URL, N8N_PROXY_SECRET. Search and Gemini credentials remain server-side in Vercel."
       },
       "id": "c2000001-0000-0000-0000-000000000001",
       "name": "Setup Note",
@@ -48,13 +48,28 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [580, 440]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ String($env.PORTAL_BASE_URL || '').replace(/\\/$/, '') + '/api/internal/frequency-worker' }}",
+        "sendHeaders": true,
+        "headerParameters": { "parameters": [{ "name": "X-N8N-Proxy-Secret", "value": "={{ $env.N8N_PROXY_SECRET }}" }] },
+        "options": {}
+      },
+      "id": "c2000001-0000-0000-0000-000000000005",
+      "name": "Run Adaptive Policy",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [580, 580]
     }
   ],
   "connections": {
     "Worker Schedule": {
       "main": [[
         { "node": "Run Media Discovery", "type": "main", "index": 0 },
-        { "node": "Run Adaptation", "type": "main", "index": 0 }
+        { "node": "Run Adaptation", "type": "main", "index": 0 },
+        { "node": "Run Adaptive Policy", "type": "main", "index": 0 }
       ]]
     }
   },

@@ -10,6 +10,7 @@
     { "source": "/api/adaptive-plan", "destination": "/api/adaptive?op=plan" },
     { "source": "/api/internal/media-worker", "destination": "/api/adaptive?op=media" },
     { "source": "/api/internal/adaptation-worker", "destination": "/api/adaptive?op=adaptation" },
+    { "source": "/api/internal/frequency-worker", "destination": "/api/adaptive?op=frequency" },
     { "source": "/api/internal/prepare-delivery", "destination": "/api/adaptive?op=delivery" },
     { "source": "/api/media-upload", "destination": "/api/adaptive?op=upload" },
     { "source": "/api/r/:token", "destination": "/api/adaptive?op=link&token=:token" }

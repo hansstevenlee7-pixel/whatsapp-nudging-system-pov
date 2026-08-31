@@ -7,6 +7,7 @@
 // Anything that fails validation is rejected before it can reach a Sheet.
 
 const crypto = require("node:crypto");
+const twilio = require("twilio");
 const { httpError } = require("./http");
 
 const PHONE_RE = /^\+[1-9]\d{7,14}$/;
@@ -36,21 +37,11 @@ function expectedSignature(authToken, url, fields) {
   return crypto.createHmac("sha1", authToken).update(Buffer.from(payload, "utf8")).digest("base64");
 }
 
-// timingSafeEqual throws on a length mismatch, so the lengths are compared first
-// and the result folded in — a wrong-length signature must not be distinguishable
-// from a wrong-value one by how long the check took.
-function safeEqual(a, b) {
-  const left = Buffer.from(String(a || ""), "utf8");
-  const right = Buffer.from(String(b || ""), "utf8");
-  if (left.length !== right.length) return false;
-  return crypto.timingSafeEqual(left, right);
-}
-
 function verifySignature({ signature, url, fields, authToken }) {
   const token = text(authToken) || credentials().authToken;
   if (!token) throw httpError(500, "TWILIO_AUTH_TOKEN is not configured");
   if (!text(signature)) return false;
-  return safeEqual(signature, expectedSignature(token, url, fields));
+  return twilio.validateRequest(token, text(signature), String(url), fields || {});
 }
 
 // Vercel terminates TLS upstream, so req.url is a path and the protocol arrives

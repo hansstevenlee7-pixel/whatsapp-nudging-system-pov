@@ -51,7 +51,10 @@ function fixture() {
       ],
       decisions: [{ decision_id: "dec-1", decided_at: "2026-08-13T12:05:00Z", effective_at: "2026-08-13T12:05:00Z", user_id: "p1", behaviour_key: sleepKey,
         signal_type: "inbound_reply", decision_source: "patient", scope: "behaviour", rule_applied: "explicit_request", outcome: "applied", reason: "explicit request fitted approved envelope",
-        previous_state: { preferred_format: "video", preferred_frequency: 3 }, next_state: { preferred_format: "paper", preferred_frequency: 2 }, changed_fields: ["preferred_format", "preferred_frequency"], state_version: 2 }]
+        previous_state: { preferred_format: "video", preferred_frequency: 3 }, next_state: { preferred_format: "paper", preferred_frequency: 2 }, changed_fields: ["preferred_format", "preferred_frequency"], state_version: 2 },
+      { decision_id: "dec-frequency", decided_at: "2026-08-16T12:00:00Z", effective_at: "2026-08-16T12:00:00Z", user_id: "p1", behaviour_key: sleepKey,
+        signal_type: "frequency_policy_shadow", decision_source: "ml_plus_policy", scope: "behaviour", rule_applied: "shadow_only", outcome: "shadow_recommendation", reason: "lowest near-best safe frequency",
+        frequency_before: 2, frequency_after: 2, interpretation: { model_id: "frequency-logistic-v1", recommended_frequency: 1, direction: "decrease", policy_reason: "lowest near-best safe frequency" } }]
     }
   };
 }
@@ -73,6 +76,10 @@ test("dictionary derives frequency, media, timestamps, latency, and scoped fallb
   assert.equal(readOccurrence.send_to_read_hours, 1.5);
   assert.equal(dictionary.behaviour_states.find(item => item.behaviour_key === nutritionKey).latest_occurrence.read_status, "unknown");
   assert.equal(dictionary.timeline.find(item => item.id === "dec-1").new_state.preferred_frequency, 2);
+  assert.equal(dictionary.summary.frequency_model.mode, "shadow");
+  assert.equal(dictionary.summary.frequency_model.current_frequency, 2);
+  assert.equal(dictionary.summary.frequency_model.recommended_frequency, 1);
+  assert.equal(dictionary.summary.frequency_model.direction, "decrease");
   assert.equal(stateExportRows(dictionary).length, 3);
   assert.ok(timelineExportRows(dictionary).some(row => row.event_id === "dec-1"));
 });

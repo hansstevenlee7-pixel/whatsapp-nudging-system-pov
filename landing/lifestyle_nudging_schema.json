@@ -673,6 +673,14 @@
           },
           "last_inbound_message_sid": {
             "type": ["string", "null"]
+          },
+          "delivery_attempt_id": {
+            "type": ["string", "null"],
+            "description": "Unique reservation created before the Twilio submission. A non-empty value prevents an uncertain request from being sent again automatically."
+          },
+          "submission_started_at": {
+            "type": ["string", "null"],
+            "format": "date-time"
           }
         }
       }

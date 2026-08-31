@@ -247,6 +247,23 @@ const operations = {
       method: "POST", headers: { prefer: "return=representation" }, body: JSON.stringify(payload)
     }, true))[0];
   },
+  async saveShadowFrequencyDecisions(decisions) {
+    if (!Array.isArray(decisions) || decisions.length !== 2) throw new Error("A shadow frequency evaluation requires recommendation and policy rows");
+    return rows(await request("/rest/v1/adaptation_decisions", {
+      method: "POST", headers: { prefer: "return=representation" }, body: JSON.stringify(decisions)
+    }, true));
+  },
+  async savePolicyEvaluation(decisions, stateUpdate) {
+    if (!Array.isArray(decisions) || decisions.length !== 2) throw new Error("An adaptive evaluation requires recommendation and policy rows");
+    if (stateUpdate && stateUpdate.user_id && stateUpdate.behaviour_key) {
+      await request("/rest/v1/user_adaptation_state?on_conflict=user_id,behaviour_key", {
+        method: "POST", headers: { prefer: "resolution=merge-duplicates" }, body: JSON.stringify(stateUpdate)
+      }, true);
+    }
+    return rows(await request("/rest/v1/adaptation_decisions", {
+      method: "POST", headers: { prefer: "return=representation" }, body: JSON.stringify(decisions)
+    }, true));
+  },
   async createTrackedLink(input) {
     const token = crypto.randomBytes(24).toString("base64url");
     const expires = new Date(Date.now() + 180 * 86400000).toISOString();

@@ -42,7 +42,8 @@ async function loadClinicalData(names = TAB_NAMES) {
   // or requiring a manual CLI migration step.
   if (data.nudges) await ensureHeaders("nudges", data.nudges, ["media_selection_mode", "media_override_asset_id", "media_asset_id", "adaptation_decision_id"]);
   if (data.weekly_schedule) await ensureHeaders("weekly_schedule", data.weekly_schedule, ["media_selection_mode", "media_override_asset_id", "media_asset_id", "adaptation_decision_id"]);
-  if (data.schedule_state) await ensureHeaders("schedule_state", data.schedule_state, ["read_at", "interacted_at", "last_inbound_message_sid"]);
+  if (data.schedule_state) await ensureHeaders("schedule_state", data.schedule_state,
+    ["read_at", "interacted_at", "last_inbound_message_sid", "delivery_attempt_id", "submission_started_at"]);
   if (data.interaction_events) await ensureHeaders("interaction_events", data.interaction_events, INTERACTION_EVENT_HEADERS);
   if (data.media_assignments) await ensureHeaders("media_assignments", data.media_assignments, MEDIA_ASSIGNMENT_HEADERS);
   if (data.adaptation_decisions) await ensureHeaders("adaptation_decisions", data.adaptation_decisions, ADAPTATION_DECISION_HEADERS);
@@ -66,7 +67,7 @@ async function loadClinicalData(names = TAB_NAMES) {
   ], "weekly_schedule");
   if (data.schedule_state) assertHeaders(data.schedule_state, [
     "schedule_id", "nudge_id", "user_id", "status", "sent_at", "wa_message_id", "delivered_at", "last_updated",
-    "read_at", "interacted_at", "last_inbound_message_sid"
+    "read_at", "interacted_at", "last_inbound_message_sid", "delivery_attempt_id", "submission_started_at"
   ], "schedule_state");
   if (data.delivery_events) assertHeaders(data.delivery_events, DELIVERY_EVENT_HEADERS, "delivery_events");
   if (data.interaction_events) assertHeaders(data.interaction_events, INTERACTION_EVENT_HEADERS, "interaction_events");
@@ -131,6 +132,7 @@ function buildPatients(data) {
       // Default slot timing falls back to the patient's stated preference; the
       // retired fixed-action catalogue no longer supplies a per-behaviour time.
       preferred_nudge_time: questionnaire && questionnaire.preferred_nudge_time || "",
+      opt_in_whatsapp: questionnaire && ([true, 1, "1", "true", "TRUE", "yes", "YES"].includes(questionnaire.opt_in_whatsapp)) || false,
       prescriptions: prescriptions.filter(row => String(row.user_id) === String(user.user_id)),
       archived_prescriptions: archivedPrescriptions.filter(row => String(row.user_id) === String(user.user_id)),
       nudges, schedule_nudges: scheduleNudges,

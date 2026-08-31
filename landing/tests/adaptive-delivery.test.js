@@ -23,6 +23,16 @@ function nudge(overrides) {
     media_selection_mode: "automatic", media_override_asset_id: "", media_asset_id: "", adaptation_decision_id: "" }, overrides || {});
 }
 
+function deliverySeed(row, overrides = {}) {
+  return Object.assign({
+    user: [{ user_id: "patient-1", user_status: "active" }],
+    questionnaire: [{ questionnaire_id: "q-1", user_id: "patient-1", opt_in_whatsapp: true }],
+    nudges: [row],
+    schedule_state: [{ schedule_id: `sch_${row.nudge_id}`, nudge_id: row.nudge_id, user_id: row.user_id,
+      status: "approved", sent_at: "", delivered_at: "", wa_message_id: "", last_updated: "" }]
+  }, overrides);
+}
+
 function setup(t, seed, adapter) {
   const fx = fixture(seed); const previous = process.env.N8N_PROXY_SECRET;
   process.env.N8N_PROXY_SECRET = "worker-test"; adaptiveStore._setTestAdapter(adapter);
@@ -31,7 +41,7 @@ function setup(t, seed, adapter) {
 }
 
 test("text-only preparation records one decision and never attaches media", async function (t) {
-  const fx = setup(t, { nudges: [nudge({ media_selection_mode: "text_only" })] }, {
+  const fx = setup(t, deliverySeed(nudge({ media_selection_mode: "text_only" })), {
     adaptationState: async () => ({ format_scores: {} }),
     saveSelectionDecision: async () => ({ decision_id: "decision-text", decided_at: "2026-08-22T00:00:00Z" })
   });
@@ -41,15 +51,18 @@ test("text-only preparation records one decision and never attaches media", asyn
   assert.equal(fx.tables.nudges.rows[0].media_asset_id, "");
   assert.equal(fx.tables.nudges.rows[0].adaptation_decision_id, "decision-text");
   assert.equal(fx.tables.adaptation_decisions.rows.length, 1);
+  assert.equal(fx.tables.schedule_state.rows[0].status, "sending");
+  assert.match(fx.tables.schedule_state.rows[0].delivery_attempt_id, /^att_/);
   const second = await prepare("n-1");
-  assert.equal(JSON.parse(second.body).idempotent, true);
+  assert.equal(second.statusCode, 409);
+  assert.match(JSON.parse(second.body).error, /already reserved/);
   assert.equal(fx.tables.adaptation_decisions.rows.length, 1);
 });
 
 test("clinician override attaches the exact approved asset through a tracked link", async function (t) {
   const asset = { asset_id: "asset-video", media_kind: "video", title: "Walking video", source_name: "Trusted channel",
     source_url: "https://example.test/video", short_summary: "A short walking guide." };
-  const fx = setup(t, { nudges: [nudge({ media_selection_mode: "clinician_selected", media_override_asset_id: asset.asset_id })] }, {
+  const fx = setup(t, deliverySeed(nudge({ media_selection_mode: "clinician_selected", media_override_asset_id: asset.asset_id })), {
     envelopeFor: async () => ({ approved_asset_ids: [asset.asset_id], formats: ["video"], summary_lengths: ["short"], tones: ["encouraging"],
       earliest_time: "09:00", latest_time: "09:00", frequency_min: 1, frequency_max: 1, action_alternatives: [] }),
     assetsFor: async () => [asset], adaptationState: async () => ({ format_scores: {} }),
@@ -63,4 +76,21 @@ test("clinician override attaches the exact approved asset through a tracked lin
   assert.match(body.message_body, /\/api\/r\/t{24}/);
   assert.equal(fx.tables.media_assignments.rows[0].media_asset_id, asset.asset_id);
   assert.equal(fx.tables.adaptation_decisions.rows[0].rule_applied, "clinician_media_override");
+  assert.equal(fx.tables.schedule_state.rows[0].status, "sending");
+});
+
+test("preparation fails closed without active WhatsApp consent", async function (t) {
+  const row = nudge({ media_selection_mode: "text_only" });
+  const seed = deliverySeed(row); seed.questionnaire[0].opt_in_whatsapp = false;
+  const fx = setup(t, seed, {}); const res = await prepare(row.nudge_id);
+  assert.equal(res.statusCode, 409); assert.match(JSON.parse(res.body).error, /consent/);
+  assert.equal(fx.tables.schedule_state.rows[0].status, "approved");
+});
+
+test("preparation refuses an existing send reservation", async function (t) {
+  const row = nudge({ media_selection_mode: "text_only" }); const seed = deliverySeed(row);
+  seed.schedule_state[0].status = "sending"; seed.schedule_state[0].delivery_attempt_id = "att_existing";
+  const fx = setup(t, seed, {}); const res = await prepare(row.nudge_id);
+  assert.equal(res.statusCode, 409); assert.match(JSON.parse(res.body).error, /already reserved/);
+  assert.equal(fx.tables.adaptation_decisions.rows.length, 0);
 });
