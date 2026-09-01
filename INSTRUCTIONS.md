@@ -1,5 +1,15 @@
 # Research and implementation instructions
 
+## Current handoff
+
+For the thesis-writing continuation, begin with:
+
+- `docs/HANDOFF_THESIS_WRITING.md` for the exact implementation, evidence, deployment, and pending-work boundary;
+- `docs/THESIS_WRITING_PLAN.md` for the Part 2 outline, word budget, evidence map, and claim language; and
+- `../THESIS_SCOPE_LOCK_2026-08-28.md` for the frozen research scope.
+
+The implementation baseline is local commit `2961495`. It was not pushed or deployed in the final implementation turn. At the handoff, `origin/main` remained at `929a81d`; the updated Workflow C JSON had not been applied to live n8n; and no live automatic schedule change had been demonstrated. Do not push or deploy from a thesis-writing session without a separate explicit instruction because the prepared Vercel and Supabase demo gates could enable future schedule application after deployment.
+
 ## 1. Research identity
 
 This repository is the independent **System POV** version of Hans Lee's Monash Master's research prototype. The artifact is evaluated using a Design Science Research perspective: build a traceable messaging system, demonstrate that it behaves safely and reliably, and evaluate whether bounded requests are fulfilled.
@@ -364,6 +374,8 @@ Do not generalise this synthetic result into participant, clinical, or end-to-en
 ## 13. Reference documents
 
 - `README.md`
+- `docs/HANDOFF_THESIS_WRITING.md`
+- `docs/THESIS_WRITING_PLAN.md`
 - `docs/SYSTEM_POV_MIGRATION.md`
 - `docs/ADAPTIVE_MEDIA_MIGRATION.md`
 - `docs/PATIENT_ADAPTATION_DATA_DICTIONARY.md`

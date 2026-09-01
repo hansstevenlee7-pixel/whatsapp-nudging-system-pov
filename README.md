@@ -2,6 +2,8 @@
 
 Monash Master's research prototype for converting clinician-approved lifestyle prescriptions into scheduled WhatsApp nudges and observing the delivery system's behaviour.
 
+For a new thesis-writing session, start with `docs/HANDOFF_THESIS_WRITING.md` and `docs/THESIS_WRITING_PLAN.md`. They record the frozen research question, evidence levels, deployment boundary, paper structure, and copy-ready continuation prompt.
+
 ## Scope
 
 ```text
