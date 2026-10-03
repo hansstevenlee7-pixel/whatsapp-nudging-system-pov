@@ -60,7 +60,24 @@ Its infrastructure must remain separate:
 - Production alias `https://whatsapp-nudging-system-pov.vercel.app`.
 - Railway project `whatsapp-nudging-system-pov`; n8n service at `https://n8n-production-db630.up.railway.app`.
 - Supabase project ref `dmvfudxhqcbusyircmsq` in the Sydney region.
-- Google Sheet `Patient Database`: `https://docs.google.com/spreadsheets/d/1Z0FKM3bVxM1wiDrli3wperdmZmj9b0nFDjecTbVmqzo/edit`.
+- Google Sheet reference: `https://docs.google.com/spreadsheets/d/1Z0FKM3bVxM1wiDrli3wperdmZmj9b0nFDjecTbVmqzo/edit`.
+  **Isolation warning:** this exact ID is also referenced by the paused legacy
+  `../Whatsapp Nudging System` project, so it is not verified as an isolated
+  System POV patient database. Provision a separate copy, update the deployed
+  Vercel/Railway `GOOGLE_SHEETS_SPREADSHEET_ID` values, and complete a
+  non-participant read/write check before using it for participant data.
+- Backup made before the September 4, 2026 cleanup attempt:
+  `https://docs.google.com/spreadsheets/d/1QFRCY38IjMdJ_gBVFcdwCMjxDdVVVpJUaXLmEnLZxgc/edit`.
+- The current code contract requires the tabs `user`, `questionnaire`,
+  `prescriptions`, `nudges`, `weekly_schedule`, `schedule_state`,
+  `delivery_events`, `media_assignments`, `interaction_events`,
+  `adaptation_decisions`, `patient_adaptation_state`, and
+  `patient_adaptation_timeline`. `media_pool` and `inbound_messages` are
+  legacy cleanup candidates, not current code dependencies.
+- The 4 September 2026 eye-check found `media_pool` and `inbound_messages`
+  present, but the required `questionnaire` and `delivery_events` tabs absent;
+  provision and header-check the two required tabs before deleting the legacy
+  candidates.
 
 Do not reconnect any paused PhD resource. Never copy credentials into documentation, source, tests, logs, prompts, or commits.
 

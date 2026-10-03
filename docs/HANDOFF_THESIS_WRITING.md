@@ -17,7 +17,7 @@ Read these sources in order:
 4. `docs/FREQUENCY_MODEL_PROTOCOL.md` - model, validation, policy, and frozen results.
 5. `INSTRUCTIONS.md` - implementation and safety contract.
 6. `../Thesis Instructions - 24-S2.pdf` - binding submission instructions and rubric.
-7. `../Part 1 - Semester 3 /Research Lit Review Submissions/33292280-HansLee-DavidTaniar-LitReviewProposal_SUBMIT.pdf` - the submitted Part 1 context only.
+7. `../33292280_HansLee_LitReview_Proposal_REVISED_2026-09-12.pdf` - the AUTHORITATIVE literature review and proposal as of 12 September 2026. The older `...LitReviewProposal_SUBMIT.pdf` is superseded and is historical context only.
 
 The Monash instructions require Part 2 to be a conference-style research paper of no more than 8,000 words excluding references. Part 2 must be written afresh: do not copy text from the submitted literature review. The paper must clearly distinguish Hans's work from third-party services, libraries, sources, and supervisory input.
 

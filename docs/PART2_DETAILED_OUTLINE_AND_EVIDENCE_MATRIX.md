@@ -252,11 +252,11 @@ Status vocabulary:
 | C15 | Their interactions/message were 0.23708/0.26008/0.26842 and messages/interaction were 4.2179/3.84497/3.72549. | Frozen model JSON | Frozen-artifact | Describe as simulated interaction efficiency and burden. |
 | C16 | All three replays recorded zero defined constraint violations. | Frozen model JSON; simulator definition in training script | Frozen-artifact | Say zero **defined replay violations**; do not claim real-world safety. |
 | C17 | The model policy had 157 direction reversals versus 35 for the deterministic policy. | Frozen model JSON | Frozen-artifact | Present prominently as a stability limitation supporting shadow mode. |
-| C18 | The current checkout passes 177 automated tests. | Local Node test run on 1 September 2026 at `869cbe4`; 177 passed, 0 failed | Verified-local | Cite as local automated test coverage only; simulated error traces are intentional failure-path tests. |
-| C19 | JavaScript syntax checks and `git diff --check` pass. | Local checks on 1 September 2026 | Verified-local | Suitable for appendix/reproducibility notes, not evidence of live integration. |
+| C18 | The current checkout passes 178 automated tests. | Local `npm test` run on 9 September 2026; 178 passed, 0 failed | Verified-local | Cite as local automated test coverage only; simulated error traces are intentional failure-path tests. |
+| C19 | JavaScript syntax checks and `git diff --check` pass. | Local checks on 9 September 2026 | Verified-local | Suitable for appendix/reproducibility notes, not evidence of live integration. |
 | C20 | Duplicate reservation, signed callbacks, ordinary-reply idempotency, and STOP behaviour are implemented and locally tested. | `adaptive-handlers.js`; `whatsapp-inbound.js`; Twilio/status tests | Verified-local | “Implemented and locally verified.” |
 | C21 | Missing read evidence remains unknown. | `behaviour-policy.js`; `patient-dictionary.js`; tests | Verified-local | Never convert missing callbacks to “unread.” |
-| C22 | Only future unsent schedule occurrences are changed; sent history is preserved. | `schedule-store.js`; `clinical-data.js`; schedule/adaptation tests | Verified-local | “Implemented and locally verified.” |
+| C22 | Only future unsent schedule occurrences are changed; sent history is preserved. | `landing/api/_lib/schedule-store.js`; `landing/tests/adaptive-schedule.test.js`; `docs/MODEL_DRIVEN_SCHEDULE_CHANGE_EXPERIMENT_2026-09-09.md` | Verified-local | “Implemented and locally verified”; report the experiment separately and do not generalise to live data. |
 | C23 | Automatic application requires an environment switch and a per-behaviour database flag; default is shadow mode. | `adaptive-handlers.js`; migration `006_bounded_schedule_apply.sql`; model JSON | Verified-local | Explain both gates. Live gate state is dated and must be reverified before any current claim. |
 | C24 | Earlier controlled Twilio Sandbox text delivery was observed. | Handoff/runbook evidence | Dated-live | Say “previously observed in a controlled Sandbox test”; `TODO-EVIDENCE`: attach redacted correlation record and date. |
 | C25 | Earlier tracked-media delivery and visit correlation were observed. | Handoff/runbook evidence | Dated-live | Say “previously observed”; do not imply final-baseline deployment. `TODO-EVIDENCE`: attach redacted chain. |
@@ -269,6 +269,7 @@ Status vocabulary:
 | C32 | Interaction traces are incomplete proxies for digital intervention engagement. | Perski et al. (2017); Yardley et al. (2016), discovered via Part 1 | Citation-needed | `TODO-CITATION`: verify exact support; retain the system-level proxy limitation. |
 | C33 | Temporal evaluation, Brier score, calibration, and PR-AUC are appropriate choices. | Protocol and implementation; scholarly support not yet verified | Citation-needed | `TODO-CITATION`: add primary methodological sources. |
 | C34 | The system satisfies current ethics, privacy, and data-retention requirements. | Security controls are implemented; formal current requirements not verified here | Unverified | Describe implemented privacy controls only. `TODO-CITATION` and `TODO-EVIDENCE`: verify Monash/HREC requirements and any applicable approval before stronger wording. |
+| C35 | In a fixed-seed synthetic scenario, the frozen model recommended reducing frequency from 2 to 1 per week; the bounded policy applied that change to the future schedule while preserving delivered state. | `scripts/experiment-modelled-schedule-change.js`; `docs/evidence/modelled-schedule-change-2026-09-09.json`; `docs/MODEL_DRIVEN_SCHEDULE_CHANGE_EXPERIMENT_2026-09-09.md` | Verified-local-synthetic | Report as a reproducible model-to-policy-to-schedule demonstration; do not describe it as an adherence, causal, patient, or live result. |
 
 ## 3. Evidence still needed before the Results section is final
 
@@ -282,7 +283,7 @@ Status vocabulary:
 
 ## 4. Part 1 citation-discovery ledger
 
-These references were located in the submitted Part 1 PDF. They are leads only and must be checked against the original publications before use in Part 2.
+**SUPERSEDED 12 September 2026.** This ledger was built from the older `...LitReviewProposal_SUBMIT.pdf`. The authoritative source is now `../33292280_HansLee_LitReview_Proposal_REVISED_2026-09-12.pdf`, whose reference list carries full DOIs and can be cited directly rather than rediscovered. One entry in it is incorrect - see `SOURCE_OF_TRUTH_REVIEW_2026-09-12.md`. The table below is retained only as a record of earlier discovery work.
 
 | Part 2 purpose | Discovery candidates | Verification state |
 | --- | --- | --- |
@@ -292,4 +293,3 @@ These references were located in the submitted Part 1 PDF. They are leads only a
 | Interaction/engagement proxy | Perski et al. (2017); Yardley et al. (2016); Eysenbach (2005) | `TODO-CITATION` |
 | Digital intervention design | Michie et al. (2017); Webb et al. (2010) | `TODO-CITATION` |
 | Behavioural background only | Michie et al. (2011); Deci and Ryan (2000); Teixeira et al. (2012) | `TODO-CITATION`; include only if needed for a narrow design constraint |
-

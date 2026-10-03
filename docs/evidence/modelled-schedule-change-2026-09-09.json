@@ -1,0 +1,53 @@
+{
+  "experiment_id": "modelled-schedule-change-2026-09-09",
+  "evidence_level": "verified-local-synthetic",
+  "model_id": "frequency-logistic-v1",
+  "model_artifact_sha256": "971e347d95f2d2eaf207db7d0d9978defe97df871eeb94068903eb989321aaa2",
+  "runtime": "Node.js v24.19.0",
+  "behaviour_key": "085911262764f34d2832fdf8cb9785d3",
+  "evaluation_time": "2026-08-27T00:00:00.000Z",
+  "initial_recurring_slots": [
+    { "schedule_slot_id": "slot-mon", "day": "monday", "scheduled_time": "09:00" },
+    { "schedule_slot_id": "slot-thu", "day": "thursday", "scheduled_time": "09:00" }
+  ],
+  "closed_delivery_count": 2,
+  "features": {
+    "recent_interaction_rate": 0,
+    "noninteraction_streak": 2,
+    "has_previous_interaction": false,
+    "has_recent_interaction": false
+  },
+  "candidate_scores": { "1": 0.1901798842561066, "2": 0.1472630357473584, "3": 0.11268339200742673 },
+  "model_recommended_frequency": 1,
+  "policy_recommended_frequency": 1,
+  "schedule_application": {
+    "applied": true,
+    "reason": "future_unsent_schedule_updated",
+    "active_slots_after": [ { "schedule_slot_id": "slot-mon", "day": "monday", "scheduled_time": "09:00" } ]
+  },
+  "sent_history": {
+    "message_sids": ["SM-past-1", "SM-past-2"],
+    "schedule_state_unchanged": true
+  },
+  "audit_rows": [
+    {
+      "signal_type": "frequency_model_recommendation",
+      "outcome": "no_change",
+      "frequency_before": 2,
+      "frequency_after": 1,
+      "rule_applied": "regularized_logistic_regression"
+    },
+    {
+      "signal_type": "adaptive_policy_applied",
+      "outcome": "applied",
+      "frequency_before": 2,
+      "frequency_after": 1,
+      "rule_applied": "bounded_frequency_time_media_policy"
+    }
+  ],
+  "limitations": [
+    "synthetic rows only",
+    "no live Sheet or WhatsApp write",
+    "no adherence or clinical outcome claim"
+  ]
+}
