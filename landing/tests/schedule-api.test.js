@@ -128,6 +128,19 @@ test("sent history survives removal of its recurring slot", async function (t) {
   assert.equal(store.tables.nudges.rows.find(row => row.nudge_id === sent.nudge_id).status, "sent");
 });
 
+test("a sent source nudge is never rewritten when its recurring slot is saved", async function (t) {
+  installAuth(t);
+  const store = fixture(baseSeed());
+  t.after(() => store.restore());
+  const source = store.tables.nudges.rows.find(row => row.nudge_id === "source-wed");
+  Object.assign(source, { status: "sent", sent_at: "2026-07-29T09:00:00Z" });
+  const before = Object.assign({}, source);
+
+  assert.equal((await save([slot("slot-wed", "wednesday", "source-wed")])).statusCode, 200);
+  assert.deepEqual(store.tables.nudges.rows.find(row => row.nudge_id === "source-wed"), before);
+  assert.equal(store.tables.nudges.rows.find(row => row.nudge_id === "source-fri").status, "needs_review");
+});
+
 test("a failed Sheets batch never reports a successful save", async function (t) {
   installAuth(t);
   const store = fixture(baseSeed());

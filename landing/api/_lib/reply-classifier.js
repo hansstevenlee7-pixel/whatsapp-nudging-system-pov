@@ -9,8 +9,8 @@ async function classifyReply(body, envelope, fetchImpl = fetch) {
   if (deterministic.explicit || !text(process.env.GEMINI_API_KEY)) return deterministic;
   const model = text(process.env.GEMINI_CLASSIFIER_MODEL || process.env.GEMINI_SUMMARY_MODEL) || "gemini-2.5-flash";
   const schema = { type: "object", required: ["explicit", "format", "summary_length", "tone", "time", "frequency_delta", "action"], properties: {
-    explicit: { type: "boolean" }, format: { type: ["string", "null"] }, summary_length: { type: ["string", "null"] },
-    tone: { type: ["string", "null"] }, time: { type: ["string", "null"] }, frequency_delta: { type: "integer" }, action: { type: ["string", "null"] }
+    explicit: { type: "boolean" }, format: { type: "string", nullable: true }, summary_length: { type: "string", nullable: true },
+    tone: { type: "string", nullable: true }, time: { type: "string", nullable: true }, frequency_delta: { type: "integer" }, action: { type: "string", nullable: true }
   } };
   const prompt = [
     "Extract only an explicit patient request about future WhatsApp nudges. Do not infer health adherence or intent from silence.",

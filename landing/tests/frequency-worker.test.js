@@ -91,4 +91,7 @@ test("enabled bounded policy applies a model decision to future unsent schedule 
   assert.equal(JSON.parse(response.body).mode, "apply");
   assert.equal(saved[1].signal_type, "adaptive_policy_applied");
   assert.equal(fx.tables.weekly_schedule.rows.filter(row => row.status === "active").length, 1);
+  // The changed recurring schedule names the persisted policy decision that changed it.
+  assert.match(saved[1].decision_id, /^[0-9a-f-]{36}$/);
+  assert.ok(fx.tables.weekly_schedule.rows.every(row => row.adaptation_decision_id === saved[1].decision_id));
 });

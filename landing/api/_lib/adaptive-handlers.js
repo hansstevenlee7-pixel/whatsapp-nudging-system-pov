@@ -202,14 +202,16 @@ async function frequencyWorker(req, res) {
         });
         if (duplicate) continue;
         let schedule = { applied: false, reason: mode === "apply" ? "schedule_already_matches_policy" : "shadow_mode" };
+        // Assigned before the schedule write so changed slots can name this policy decision.
+        const policyDecisionId = crypto.randomUUID();
         if (mode === "apply" && (result.recommended_frequency !== result.current_frequency ||
             result.time_recommendation.recommended_time && result.time_recommendation.recommended_time !== result.current_time)) {
           schedule = await applyAdaptiveSchedule({ user_id: patient.user_id, behaviour_key: envelope.behaviour_key,
             target_frequency: result.recommended_frequency, target_time: result.time_recommendation.recommended_time,
-            now: body.now || new Date().toISOString() });
+            adaptation_decision_id: policyDecisionId, now: body.now || new Date().toISOString() });
         }
         const now = body.now || new Date().toISOString();
-        const decisions = policyRows({ user_id: patient.user_id, result, mode, schedule_applied: schedule.applied, now });
+        const decisions = policyRows({ user_id: patient.user_id, result, mode, schedule_applied: schedule.applied, now, policy_decision_id: policyDecisionId });
         const stateUpdate = policyStateUpdate(result, decisions[1], now);
         const saved = await store.call("savePolicyEvaluation", decisions, stateUpdate);
         try {

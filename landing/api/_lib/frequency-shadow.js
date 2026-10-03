@@ -162,7 +162,8 @@ function policyRows(input) {
       changed_fields: result.model_recommended_frequency === result.current_frequency ? [] : ["planned_frequency"],
       frequency_before: result.current_frequency, frequency_after: result.model_recommended_frequency,
       outcome: "no_change", reason: `Model recommendation: ${result.model_recommended_frequency} per week`, fulfilled_at: null }),
-    Object.assign({}, shared, { signal_type: applied ? "adaptive_policy_applied" : mode === "apply" ? "adaptive_policy_no_change" : "adaptive_policy_shadow",
+    Object.assign({}, shared, input.policy_decision_id ? { decision_id: input.policy_decision_id } : {}, {
+      signal_type: applied ? "adaptive_policy_applied" : mode === "apply" ? "adaptive_policy_no_change" : "adaptive_policy_shadow",
       interpretation, scores_before: result.candidate_scores, scores_after: result.candidate_scores,
       rule_applied: "bounded_frequency_time_media_policy", previous_state: previousState,
       next_state: applied ? nextState : previousState, changed_fields: applied ? changedFields : [],

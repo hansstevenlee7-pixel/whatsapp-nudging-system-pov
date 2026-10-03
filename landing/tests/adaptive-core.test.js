@@ -54,6 +54,17 @@ test("time and frequency changes outside the envelope are not applied", () => {
   assert.equal(frequency.outcome, "outside_envelope");
 });
 
+test("negated frequency wording requests no frequency change", () => {
+  for (const body of ["Do not send more often; keep the current frequency.", "Please don't send more messages", "No more messages like this", "never fewer than two"]) {
+    const result = core.explicitInterpretation(body);
+    assert.equal(result.frequency_delta, 0, body);
+    assert.equal(result.explicit, false, body);
+  }
+  assert.equal(core.explicitInterpretation("Send fewer messages").frequency_delta, -1);
+  assert.equal(core.explicitInterpretation("No, send fewer messages").frequency_delta, -1);
+  assert.equal(core.explicitInterpretation("Please message me more often").frequency_delta, 1);
+});
+
 test("silence rotates least recently used media and never changes frequency", () => {
   const envelope = core.defaultEnvelope(Object.assign({}, behaviour, { scheduled_time: "09:00", frequency_per_week: 3 }));
   const assets = [{ asset_id: "v1", media_kind: "video" }, { asset_id: "p1", media_kind: "paper" }];

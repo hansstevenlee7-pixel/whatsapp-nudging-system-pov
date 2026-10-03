@@ -367,7 +367,7 @@ test("the weekly monitor leaves prescription management out of the monitoring wo
   assert.doesNotMatch(monitorHtml, /rxDialog|rxArchiveDialog|openPrescriptionDialog|\/api\/prescription/);
   // Still a free-text input: this is the *first* nudge of a brand-new
   // prescription, where no behaviour list exists to pick from yet.
-  assert.match(monitorHtml, /Patient messages/);
+  assert.match(monitorHtml, /Patient overview/);
   // The ＋ Add prescription button is built in JS, and carries an id so
   // refreshPrescriptionControls does not have to key off a leading "＋" — which
   // the weekly ＋ Add nudge buttons also carry.

@@ -220,12 +220,12 @@
   </style>
 </head>
 <body>
-  <div class="session-bar"><span id="identity"></span><a id="adminLink" href="admin.html" hidden>Admin</a><a href="monitor.html">Monitor</a><button id="logoutBtn" type="button">Sign out</button></div>
+  <div class="session-bar"><span id="identity"></span><a id="adminLink" href="admin.html" hidden>Admin</a><a href="monitor.html">Patient summaries</a><button id="logoutBtn" type="button">Sign out</button></div>
   <main class="page">
     <a class="home" href="index.html">← Home</a>
     <header class="hero">
-      <h1>Patient Intake</h1>
-      <p>Register a patient and submit their doctor’s lifestyle prescription to begin their personalised nudge plan.</p>
+      <h1>Provide a prescription</h1>
+      <p>Add the patient and drop in the clinician’s prescription. The system prepares a message plan for your approval.</p>
     </header>
 
     <form id="intakeForm" novalidate>
@@ -281,7 +281,7 @@
               </svg>
             </span>
             <span class="primary"><b>Upload</b> a scan or photo</span>
-            <span class="sub">Image or PDF · up to 5 MB · read by the AI parser at intake</span>
+            <span class="sub">Drop an image or PDF here · up to 5 MB</span>
             <input type="file" id="fileInput" accept="image/*,application/pdf" hidden />
           </div>
 
@@ -317,7 +317,7 @@
       </section>
 
       <div class="actions">
-        <button type="submit" class="btn-primary" id="submitBtn">Create intake</button>
+        <button type="submit" class="btn-primary" id="submitBtn">Prepare message plan</button>
         <button type="reset" class="btn-text">Clear form</button>
         <div class="submit-status" id="submitStatus" role="status" aria-live="polite"></div>
       </div>
@@ -499,7 +499,7 @@
 
     function setSubmitting(active) {
       submitBtn.disabled = active;
-      submitBtn.textContent = active ? "Creating patient…" : "Create intake";
+      submitBtn.textContent = active ? "Creating patient…" : "Prepare message plan";
     }
 
     function closeDuplicateDialog() {

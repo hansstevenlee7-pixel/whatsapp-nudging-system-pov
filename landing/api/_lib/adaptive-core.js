@@ -149,9 +149,20 @@ function explicitInterpretation(body) {
     if (time[3] === "am" && hour === 12) hour = 0;
     result.explicit = true; result.time = `${String(hour).padStart(2, "0")}:${minute}`;
   }
-  if (/\b(less often|fewer|too many)\b/.test(value)) { result.explicit = true; result.frequency_delta = -1; }
-  if (/\b(more often|more messages)\b/.test(value)) { result.explicit = true; result.frequency_delta = 1; }
+  if (affirmedPhrase(value, /\b(less often|fewer|too many)\b/g)) { result.explicit = true; result.frequency_delta = -1; }
+  if (affirmedPhrase(value, /\b(more often|more messages)\b/g)) { result.explicit = true; result.frequency_delta = 1; }
   return result;
+}
+
+// A frequency phrase counts only when no negation precedes it in the same
+// clause: "Do not send more often" and "no more messages" request no increase.
+// Negated or ambiguous wording infers nothing (benchmark finding, 2 Oct 2026).
+function affirmedPhrase(value, pattern) {
+  for (const match of value.matchAll(pattern)) {
+    const clause = value.slice(0, match.index).split(/[.;,!?]/).at(-1);
+    if (!/\b(don'?t|do not|not|no|never)\b/.test(clause)) return true;
+  }
+  return false;
 }
 
 function insideEnvelope(change, envelope, current = {}) {

@@ -105,6 +105,8 @@ function slotInput(row) {
 }
 
 async function applyAdaptiveSchedule(input, snapshot) {
+  const evaluationTime = new Date(input.now || Date.now());
+  if (!Number.isFinite(evaluationTime.getTime())) throw httpError(400, "Invalid evaluation time");
   const data = snapshot || await loadClinicalData();
   const userId = String(input.user_id || ""); const key = String(input.behaviour_key || "");
   const active = data.weekly_schedule.rows.filter(row => String(row.user_id) === userId && String(row.status || "active") === "active");
@@ -112,10 +114,10 @@ async function applyAdaptiveSchedule(input, snapshot) {
   if (!current.length) return { applied: false, reason: "no_active_schedule_for_behaviour", weekly_schedule: active };
   const target = Math.max(1, Math.min(3, Math.round(Number(input.target_frequency) || current.length)));
   let adapted = target < current.length ? evenlySpacedRows(current, target) : addFrequencyRows(current, target, {
-    user_id: userId, behaviour_key: key, now: input.now || new Date().toISOString()
+    user_id: userId, behaviour_key: key, now: evaluationTime.toISOString()
   });
   const targetTime = TIME_RE.test(String(input.target_time || "")) ? String(input.target_time) : null;
-  if (targetTime) adapted = adapted.map(row => Object.assign({}, row, { scheduled_time: targetTime, updated_at: input.now || new Date().toISOString() }));
+  if (targetTime) adapted = adapted.map(row => Object.assign({}, row, { scheduled_time: targetTime, updated_at: evaluationTime.toISOString() }));
   const retainedIds = new Set(current.map(row => String(row.schedule_slot_id)));
   const combined = active.filter(row => !retainedIds.has(String(row.schedule_slot_id))).concat(adapted);
   const beforeShape = current.map(row => `${row.schedule_slot_id}|${row.day}|${row.scheduled_time}`).sort();
@@ -125,8 +127,12 @@ async function applyAdaptiveSchedule(input, snapshot) {
   }
   const starts = active.map(row => String(row.start_date || "")).filter(DATE_RE.test.bind(DATE_RE)).sort();
   const ends = active.map(row => String(row.end_date || "")).filter(DATE_RE.test.bind(DATE_RE)).sort();
-  const startDate = starts[0] || melbourneIso(); const endDate = ends.at(-1) || addDays(startDate, 84);
-  const result = await saveSchedule({ user_id: userId, start_date: startDate, end_date: endDate, slots: combined.map(slotInput) }, "approve", data);
+  const startDate = starts[0] || melbourneIso(evaluationTime); const endDate = ends.at(-1) || addDays(startDate, 84);
+  // The deciding policy decision is stamped on every slot of this behaviour it
+  // changed or removed, so a schedule row names its cause (RQ1 traceability).
+  const decisionLink = String(input.adaptation_decision_id || "").trim();
+  const links = decisionLink ? { decision_id: decisionLink, slot_ids: new Set(current.concat(adapted).map(row => String(row.schedule_slot_id))) } : {};
+  const result = await saveSchedule({ user_id: userId, start_date: startDate, end_date: endDate, slots: combined.map(slotInput) }, "approve", data, evaluationTime, links);
   return Object.assign({ applied: true, reason: "future_unsent_schedule_updated", before: current, after: adapted }, result);
 }
 
@@ -180,6 +186,12 @@ function normalized(row) {
   return Object.fromEntries(VERIFY_FIELDS.map(key => [key, String(row[key] == null ? "" : row[key])]));
 }
 
+function slotDecisionLink(scheduleSlotId, slot, prior, links) {
+  if (links.slot_ids && links.slot_ids.has(scheduleSlotId)) return links.decision_id;
+  const unchanged = prior && String(prior.day) === String(slot.day) && String(prior.scheduled_time) === String(slot.time);
+  return unchanged ? String(prior.adaptation_decision_id || "") : "";
+}
+
 function historicalNudge(row) {
   return String(row.status) === "sent" || Boolean(row.sent_at);
 }
@@ -200,7 +212,9 @@ function stateRow(nudge, prior, now) {
   });
 }
 
-async function saveSchedule(body, decision = "approve", snapshot) {
+async function saveSchedule(body, decision = "approve", snapshot, evaluationTime = new Date(), links = {}) {
+  // Internal clock and decision-link injection keep synthetic replay consistent
+  // and provenance trustworthy; neither is ever read from the HTTP body.
   const { userId, slots } = validate(body, decision);
   const data = snapshot || await loadClinicalData();
   const user = data.user.rows.find(row => String(row.user_id) === userId);
@@ -227,7 +241,7 @@ async function saveSchedule(body, decision = "approve", snapshot) {
       throw httpError(400, `slots[${index}].source_nudge_id belongs to a different prescription`);
     }
   });
-  const now = new Date().toISOString();
+  const now = evaluationTime.toISOString();
   const existingWeekly = data.weekly_schedule.rows.filter(row => String(row.user_id) === userId && row.schedule_slot_id);
   const existingWeeklyById = new Map(existingWeekly.map(row => [String(row.schedule_slot_id), row]));
 
@@ -252,8 +266,8 @@ async function saveSchedule(body, decision = "approve", snapshot) {
   if (scopeWeekStart && !existingWeekly.some(row => String(row.status) === "active")) {
     throw httpError(409, "Approve the recurring intake schedule before planning an individual week");
   }
-  const todayIso = melbourneIso();
-  const nowTime = melbourneTime();
+  const todayIso = melbourneIso(evaluationTime);
+  const nowTime = melbourneTime(evaluationTime);
   const effectiveStart = [scopeWeekStart || startDate, startDate, todayIso].sort().at(-1);
   const generationEnd = scopeWeekStart ? [addDays(scopeWeekStart, 6), endDate].sort().at(0) : endDate;
   if (effectiveStart > generationEnd) throw httpError(400, "The selected week is outside the active future schedule range");
@@ -278,12 +292,13 @@ async function saveSchedule(body, decision = "approve", snapshot) {
       template_name: String(slot.template_name || "health_plan_reminder"), status: "active",
       media_selection_mode: String(slot.media_selection_mode || "automatic"),
       media_override_asset_id: String(slot.media_override_asset_id || ""),
-      media_asset_id: "", adaptation_decision_id: "",
+      media_asset_id: "", adaptation_decision_id: slotDecisionLink(scheduleSlotId, slot, prior, links),
       start_date: startDate, end_date: endDate, created_at: prior && prior.created_at || now, updated_at: now
     });
   });
   const inactive = scopeWeekStart ? [] : existingWeekly.filter(row => !usedIds.has(String(row.schedule_slot_id)) && String(row.status) !== "inactive")
-    .map(row => Object.assign({}, row, { status: "inactive", updated_at: now }));
+    .map(row => Object.assign({}, row, { status: "inactive", updated_at: now },
+      links.slot_ids && links.slot_ids.has(String(row.schedule_slot_id)) ? { adaptation_decision_id: links.decision_id } : {}));
 
   const desiredNudges = [];
   for (const iso of datesBetween(effectiveStart, generationEnd)) {
@@ -332,11 +347,12 @@ async function saveSchedule(body, decision = "approve", snapshot) {
   // from it. Slots stay authoritative, so a source that already has one is never
   // rewritten and sibling slots keep differing behaviours. Pillar is deliberately
   // absent — it is populated on every row and rewriting it would resurrect the
-  // cascade this change removed.
+  // cascade this change removed. A source that has already been sent is history
+  // and is never rewritten, not even its status (benchmark finding, 2 Oct 2026).
   if (!scopeWeekStart) {
     const sourceBehaviours = new Map();
     for (const row of active) if (!sourceBehaviours.has(String(row.source_nudge_id))) sourceBehaviours.set(String(row.source_nudge_id), row);
-    for (const source of data.nudges.rows.filter(row => sourceBehaviours.has(String(row.nudge_id)) && !String(row.nudge_id).startsWith("schd_"))) {
+    for (const source of data.nudges.rows.filter(row => sourceBehaviours.has(String(row.nudge_id)) && !String(row.nudge_id).startsWith("schd_") && !historicalNudge(row))) {
       const slot = sourceBehaviours.get(String(source.nudge_id));
       const changes = { status: "approved", reviewed_at: now };
       if (!String(source.action_text || "").trim()) changes.action_text = slot.action_text;
