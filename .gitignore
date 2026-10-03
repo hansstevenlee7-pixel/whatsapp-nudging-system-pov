@@ -33,3 +33,10 @@ node_modules/
 
 # Claude Code personal settings
 .claude/settings.local.json
+
+# Python bytecode
+__pycache__/
+*.pyc
+
+# Microsoft Office lock files
+~$*
