@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-10-03T15:00:05.993Z",
-  "git_commit": "869cbe4efbbdeb4ad2eaa08ee180ddcd53801adf",
-  "git_last_commit_date": "2026-09-01",
-  "git_changed_or_untracked_entries": 1139,
+  "generated_at": "2026-10-03T15:11:27.675Z",
+  "git_commit": "42935b3f4982bc105472115bf5d12ad144450b09",
+  "git_last_commit_date": "2026-10-04",
+  "git_changed_or_untracked_entries": 1,
   "node": "v24.13.1",
   "os": "27.2",
   "runtime_dependencies": {
@@ -47,8 +47,8 @@
       "bytes": 5982338
     },
     "output/appendix_screenshots_2026-10-04": {
-      "files": 12,
-      "bytes": 1187157
+      "files": 13,
+      "bytes": 1187385
     },
     "output/data": {
       "files": 2,
@@ -80,16 +80,16 @@
       "group": "Clinician web pages and browser scripts",
       "files": 11,
       "lines": 1646,
-      "committed_unchanged": 7,
-      "committed_modified": 3,
-      "not_committed": 1
+      "committed_unchanged": 11,
+      "committed_modified": 0,
+      "not_committed": 0
     },
     {
       "group": "Server API handlers and libraries",
       "files": 38,
       "lines": 3966,
-      "committed_unchanged": 33,
-      "committed_modified": 5,
+      "committed_unchanged": 38,
+      "committed_modified": 0,
       "not_committed": 0
     },
     {
@@ -104,9 +104,9 @@
       "group": "Automated tests and fixtures",
       "files": 36,
       "lines": 3742,
-      "committed_unchanged": 22,
-      "committed_modified": 5,
-      "not_committed": 9
+      "committed_unchanged": 36,
+      "committed_modified": 0,
+      "not_committed": 0
     },
     {
       "group": "n8n workflow definitions",
@@ -128,17 +128,17 @@
       "group": "Evaluation, simulation and evidence scripts",
       "files": 38,
       "lines": 4537,
-      "committed_unchanged": 7,
+      "committed_unchanged": 38,
       "committed_modified": 0,
-      "not_committed": 31
+      "not_committed": 0
     },
     {
       "group": "Protocols and method notes for scripts",
       "files": 6,
       "lines": 343,
-      "committed_unchanged": 0,
+      "committed_unchanged": 6,
       "committed_modified": 0,
-      "not_committed": 6
+      "not_committed": 0
     }
   ],
   "tests": {
