@@ -1,0 +1,713 @@
+{
+  "id": "FJZheryKloU0MIbk",
+  "name": "Workflow A — Prescription Intake",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Workflow A — Prescription Intake (the single intake LLM call)\n\nTurns a landing-page submission into canonical `prescriptions` + a dated **week-1** `nudges` schedule, then seeds `schedule_state`.\n\n### Trigger\nPOST webhook at `/webhook/intake`. Body = the landing page payload:\n```\n{ user:{...}, questionnaire:{...}, prescription_input:{ doctor_id, issued_date, prescription_raw_text, prescription_image_base64, prescription_image_mimetype } }\n```\n\n### Flow\nWebhook → Extract Input → Build Gemini Prompt (adds the Rx image as inline_data) → **Call Gemini Vision** → **Validation Gate** → Is Valid? →\n- **valid:** write user → questionnaire → prescriptions → nudges → schedule_state → 200 OK\n- **invalid:** 422 with the enum errors (nothing written — safe fallback)\n\n### Design decisions (thesis-documentable)\n- **One LLM call**, batch-only, at intake. Never in the delivery/reply path.\n- **Week-1 only.** Intake generates the first week; The clinician owns later schedule changes. This keeps generation bounded and reviewable.\n- **Validation gate is mandatory** — rejects the whole batch on any enum violation; no partial writes.\n- Both tone bodies (`message_body` + `message_body_alt`) generated at intake for the tone-variant evaluation.\n- `schedule_id = sch_<nudge_id>` so Workflow B and signed delivery callbacks update the seeded row rather than appending duplicate state.\n\n### Env vars\n`GOOGLE_SHEETS_SPREADSHEET_ID`, `GEMINI_API_KEY`, `N8N_PROXY_SECRET`\n\n### Setup\n- `responseMode` is already **responseNode**. Publish the workflow to register `…/webhook/intake` as the portal's POST target.\n- Assign the *Google Service Account* credential to all five Write nodes.\n- Gemini model: `gemini-2.5-flash` (vision-capable; 1.5 is retired and 404s). `thinkingConfig.thinkingBudget=0` set so thinking tokens don't truncate the JSON.\n- Workflow B ignores legacy `template_name` values and selects the isolated Twilio Sandbox or approved send-only route from Railway configuration.",
+        "height": 760,
+        "width": 620,
+        "color": 7
+      },
+      "id": "e0000001-0000-0000-0000-000000000001",
+      "name": "Setup Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        220,
+        -620
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "intake",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "id": "e0000001-0000-0000-0000-000000000002",
+      "name": "Intake Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        240,
+        420
+      ],
+      "webhookId": "prescription-intake-webhook"
+    },
+    {
+      "parameters": {
+        "jsCode": "const expected = String($env.N8N_PROXY_SECRET || '');\nconst supplied = String(($json.headers || {})['x-n8n-proxy-secret'] || '');\nreturn [{ json: { ...$json, proxy_authorized: Boolean(expected && supplied === expected) } }];"
+      },
+      "id": "e0000001-0000-0000-0000-000000000020",
+      "name": "Authorize Proxy",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        340,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "leftValue": "={{ $json.proxy_authorized }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "e0000001-0000-0000-0000-000000000021",
+      "name": "Proxy Authorized?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        440,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { error: 'Unauthorized' } }}",
+        "options": {
+          "responseCode": 401
+        }
+      },
+      "id": "e0000001-0000-0000-0000-000000000022",
+      "name": "Respond Unauthorized",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        560,
+        600
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Unwrap the POST body and compute the 7 dates of week 1 (starting today).\n// The landing page enforces field presence; we stay defensive with fallbacks.\n\nconst p = $json.body || $json;\nconst dates = [];\nfor (let i = 0; i < 7; i++) dates.push($now.plus({ days: i }).toISODate());\n\nreturn [{ json: {\n  user: p.user || {},\n  questionnaire: p.questionnaire || {},\n  prescription_input: p.prescription_input || {},\n  week1_dates: dates,\n  week1_start: dates[0],\n  week1_end: dates[6]\n} }];"
+      },
+      "id": "e0000001-0000-0000-0000-000000000003",
+      "name": "Extract Input",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Build the Gemini vision request: instruction text + enums + context, plus the\n// prescription image as inline_data when present. Output is a JSON string the\n// HTTP node posts verbatim. No apostrophes/backticks in code strings (escaping).\n//\n// Taxonomy split: pillar and category stay locked enums on the prescription; the\n// concrete execution step is action_text, drafted per nudge and freely revised by\n// the clinician at review. There is no fixed action catalogue any more.\n\nconst c = $json;\nconst q = c.questionnaire || {};\nconst pi = c.prescription_input || {};\n\nconst ENUMS = {\n  pillar: ['nutrition','physical_activity','sleep','stress_management','substance_use','social_connection'],\n  category: ['increase','reduce','maintain','avoid','establish'],\n  nudge_type: ['reminder','reflection','challenge','affirmation'],\n  tone_variant: ['encouraging','neutral_informational'],\n  template_name: ['health_plan_reminder','hello_world']\n};\n\nconst context = {\n  patient: { age: q.age, gender: q.gender, activity_level: q.activity_level, primary_goal: q.primary_goal, preferred_nudge_time: q.preferred_nudge_time },\n  prescription_free_text: pi.prescription_raw_text || '',\n  has_prescription_image: !!pi.prescription_image_base64,\n  week1_dates: c.week1_dates\n};\n\nconst rules = [\n  'Read the doctor prescription from the free text AND the attached image if present. The image is authoritative when present.',\n  'Extract one or more canonical prescription objects using the exact enum tokens for pillar and category.',\n  'Give each prescription a temporary ref (p1, p2, ...). Each nudge links to its prescription via prescription_ref.',\n  'For EACH prescription generate WEEK 1 nudges only: exactly frequency_per_week nudges, each on a distinct date from week1_dates.',\n  'Every nudge needs action_text: the concrete step the patient performs, in plain clinical English, 120 chars or fewer, e.g. Walk for 20 minutes after dinner. It is free text, NOT an enum, and must be specific enough to act on without reading the message.',\n  'action_text describes WHAT the patient does; message_body describes HOW it is communicated. Never put the whole message in action_text.',\n  'Nudges under one prescription may carry different action_text when the doctor described different steps for the same behaviour.',\n  'scheduled_time defaults to the patient preferred_nudge_time in HH:MM 24h.',\n  'Write TWO bodies per nudge: message_body (tone equals tone_variant) and message_body_alt (the opposite tone). Each 180 chars or fewer, plain WhatsApp-safe text.',\n  'A nudge pillar MUST equal its prescription pillar.',\n  'template_name must be health_plan_reminder for every nudge.',\n  'Output STRICT JSON only, no markdown: { prescriptions: [...], nudges: [...] }.',\n  'prescription fields: ref, pillar, category, frequency_per_week (int 1-7), duration_weeks (int 1-52).',\n  'nudge fields: prescription_ref, pillar, nudge_type, action_text, scheduled_date (a value from week1_dates), scheduled_time (HH:MM), tone_variant, message_body, message_body_alt, template_name.'\n];\n\nconst promptText =\n  'You convert a real doctor lifestyle prescription into a structured, dated first-week nudge schedule.\\n\\n' +\n  'ALLOWED ENUMS (use these tokens verbatim):\\n' + JSON.stringify(ENUMS) + '\\n\\n' +\n  'CONTEXT:\\n' + JSON.stringify(context) + '\\n\\n' +\n  'RULES:\\n' + rules.map((r, i) => (i + 1) + '. ' + r).join('\\n') + '\\n\\nReturn JSON only.';\n\nconst parts = [{ text: promptText }];\nif (pi.prescription_image_base64) {\n  parts.push({ inline_data: { mime_type: pi.prescription_image_mimetype || 'image/jpeg', data: pi.prescription_image_base64 } });\n}\n\nconst body = {\n  contents: [{ parts }],\n  generationConfig: { responseMimeType: 'application/json', temperature: 0.4, maxOutputTokens: 8192, thinkingConfig: { thinkingBudget: 0 } }\n};\n\nreturn [{ json: { gemini_body: JSON.stringify(body) } }];"
+      },
+      "id": "e0000001-0000-0000-0000-000000000004",
+      "name": "Build Gemini Prompt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        640,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={{ $env.GEMINI_API_KEY }}",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ $json.gemini_body }}",
+        "options": {}
+      },
+      "id": "e0000001-0000-0000-0000-000000000005",
+      "name": "Call Gemini Vision",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        840,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Gemini occasionally returns a category that is not one of the five allowed\n// tokens. Correct only that known, deterministic mismatch: case/spacing drift,\n// and the retired fixed-action tokens it still emits from pre-change habits.\n// action_text is clinician free text and is never rewritten here. The downstream\n// validation gate still rejects every other invalid value and prevents partial writes.\nconst resp = items[0].json;\nconst allowed = new Set(['increase','reduce','maintain','avoid','establish']);\nconst pillars = new Set(['nutrition','physical_activity','sleep','stress_management','substance_use','social_connection']);\nconst tidy = v => String(v == null ? '' : v).trim().toLowerCase().replace(/[\\s-]+/g, '_');\n// Retired target_behavior enum, kept only as a drift map: a leftover action token\n// in category still resolves to the category that token always implied.\nconst categoryByBehavior = {\n  daily_steps_10000: 'increase', daily_steps_7500: 'increase', daily_steps_5000: 'increase',\n  aerobic_exercise_30min: 'increase', aerobic_exercise_20min: 'increase',\n  resistance_training_2x_week: 'increase', resistance_training_3x_week: 'increase',\n  vegetable_servings_5_per_day: 'increase', fruit_servings_2_per_day: 'increase',\n  water_intake_2L_per_day: 'increase', social_activity_1x_week: 'increase', social_activity_2x_week: 'increase',\n  sugar_intake_reduction: 'reduce', processed_food_reduction: 'reduce', alcohol_reduction: 'reduce',\n  smoking_reduction: 'reduce', screen_time_reduction_before_bed: 'reduce',\n  alcohol_elimination: 'avoid', smoking_cessation: 'avoid',\n  sleep_7_to_9_hours: 'establish', sleep_onset_consistency: 'establish',\n  mindfulness_10min_daily: 'establish', mindfulness_5min_daily: 'establish',\n  stress_journaling_daily: 'establish', deep_breathing_daily: 'establish'\n};\ntry {\n  const part = resp.candidates[0].content.parts[0];\n  const parsed = typeof part.text === 'string' ? JSON.parse(part.text) : part.text;\n  for (const rx of (parsed.prescriptions || [])) {\n    if (pillars.has(tidy(rx.pillar))) rx.pillar = tidy(rx.pillar);\n    const category = tidy(rx.category);\n    if (allowed.has(category)) rx.category = category;\n    else if (categoryByBehavior[category]) rx.category = categoryByBehavior[category];\n    else if (categoryByBehavior[tidy(rx.target_behavior)]) rx.category = categoryByBehavior[tidy(rx.target_behavior)];\n  }\n  part.text = JSON.stringify(parsed);\n} catch (e) {\n  // Leave malformed output untouched so Validation Gate returns the parse error.\n}\nreturn [{ json: resp }];"
+      },
+      "id": "e0000001-0000-0000-0000-000000000021",
+      "name": "Normalize Known Enum Drift",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        940,
+        600
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Validation gate (mandatory design decision): parse the LLM JSON, validate every\n// prescription and nudge against the enumerations, assign IDs, resolve nudge->\n// prescription refs, and seed schedule_state. Any violation rejects the WHOLE\n// batch (no partial writes) and returns the errors to the webhook caller.\n//\n// action_text is deliberately NOT enumerated: it is the clinician-owned execution\n// step. It is still gated on presence and length so no unbounded or empty action\n// can reach the Sheet, and target_behavior is written blank now that the fixed\n// action catalogue is retired.\n\nconst ctx = $('Extract Input').first().json;\nconst resp = items[0].json;\nconst now = new Date().toISOString();\n\nconst PILLARS = ['nutrition','physical_activity','sleep','stress_management','substance_use','social_connection'];\nconst CATS = ['increase','reduce','maintain','avoid','establish'];\nconst NTYPE = ['reminder','reflection','challenge','affirmation'];\nconst TONE = ['encouraging','neutral_informational'];\nconst TEMPL = ['health_plan_reminder','hello_world'];\nconst ACTION_MAX = 1024;\nconst DATE_RE = /^\\d{4}-\\d{2}-\\d{2}$/;\nconst TIME_RE = /^([01]\\d|2[0-3]):[0-5]\\d$/;\nconst crypto = (function(){ try { return require('crypto'); } catch(e){ return { randomUUID: function(){ return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c){ var r = Math.random()*16|0; return (c==='x'?r:(r&3|8)).toString(16); }); } }; } })(); const uid = () => crypto.randomUUID();\n\nlet parsed;\ntry {\n  const text = resp.candidates[0].content.parts[0].text;\n  parsed = typeof text === 'string' ? JSON.parse(text) : text;\n} catch (e) {\n  return [{ json: { validation_passed: false, stage: 'parse', error: String(e) } }];\n}\n\nconst P = parsed && parsed.prescriptions;\nconst N = parsed && parsed.nudges;\nif (!Array.isArray(P) || !Array.isArray(N) || P.length === 0 || N.length === 0) {\n  return [{ json: { validation_passed: false, stage: 'shape', error: 'prescriptions and nudges must be non-empty arrays' } }];\n}\n\nconst errors = [];\nconst refMap = {};\nconst pillarByPrescription = {};\n\nconst prescriptions = P.map((p, i) => {\n  const prescription_id = 'rx_' + uid();\n  if (p.ref) refMap[p.ref] = prescription_id;\n  pillarByPrescription[prescription_id] = p.pillar;\n  if (!PILLARS.includes(p.pillar)) errors.push('rx[' + i + '] pillar: ' + p.pillar);\n  if (!CATS.includes(p.category)) errors.push('rx[' + i + '] category: ' + p.category);\n  const freq = parseInt(p.frequency_per_week, 10);\n  const dur = parseInt(p.duration_weeks, 10);\n  if (!(freq >= 1 && freq <= 7)) errors.push('rx[' + i + '] frequency_per_week: ' + p.frequency_per_week);\n  if (!(dur >= 1 && dur <= 52)) errors.push('rx[' + i + '] duration_weeks: ' + p.duration_weeks);\n  return {\n    prescription_id,\n    user_id: ctx.user.user_id,\n    doctor_id: ctx.prescription_input.doctor_id || '',\n    issued_date: ctx.prescription_input.issued_date || '',\n    pillar: p.pillar, category: p.category, target_behavior: '',\n    frequency_per_week: freq, duration_weeks: dur,\n    prescription_raw_text: ctx.prescription_input.prescription_raw_text || '',\n    status: 'active'\n  };\n});\n\nconst nudges = N.map((n, i) => {\n  const nudge_id = 'ndg_' + uid();\n  const prescription_id = refMap[n.prescription_ref] || (prescriptions[0] && prescriptions[0].prescription_id);\n  if (!prescription_id) errors.push('ndg[' + i + '] unresolved prescription_ref: ' + n.prescription_ref);\n  const action_text = String(n.action_text == null ? '' : n.action_text).trim();\n  if (!NTYPE.includes(n.nudge_type)) errors.push('ndg[' + i + '] nudge_type: ' + n.nudge_type);\n  if (!PILLARS.includes(n.pillar)) errors.push('ndg[' + i + '] pillar: ' + n.pillar);\n  if (prescription_id && pillarByPrescription[prescription_id] && n.pillar !== pillarByPrescription[prescription_id]) {\n    errors.push('ndg[' + i + '] pillar does not match its prescription: ' + n.pillar);\n  }\n  if (!action_text) errors.push('ndg[' + i + '] action_text is required');\n  else if (action_text.length > ACTION_MAX) errors.push('ndg[' + i + '] action_text is longer than ' + ACTION_MAX + ' characters');\n  if (n.tone_variant && !TONE.includes(n.tone_variant)) errors.push('ndg[' + i + '] tone_variant: ' + n.tone_variant);\n  if (n.template_name && !TEMPL.includes(n.template_name)) errors.push('ndg[' + i + '] template_name: ' + n.template_name);\n  if (!DATE_RE.test(n.scheduled_date || '')) errors.push('ndg[' + i + '] scheduled_date: ' + n.scheduled_date);\n  if (!TIME_RE.test(n.scheduled_time || '')) errors.push('ndg[' + i + '] scheduled_time: ' + n.scheduled_time);\n  if (!n.message_body || n.message_body.length > 1024) errors.push('ndg[' + i + '] message_body missing or too long');\n  if (n.message_body_alt && n.message_body_alt.length > 1024) errors.push('ndg[' + i + '] message_body_alt too long');\n  return {\n    nudge_id, prescription_id, user_id: ctx.user.user_id,\n    nudge_type: n.nudge_type, pillar: n.pillar, action_text,\n    scheduled_date: n.scheduled_date, scheduled_time: n.scheduled_time,\n    message_body: n.message_body || '', message_body_alt: n.message_body_alt || '',\n    tone_variant: n.tone_variant || 'neutral_informational',\n    template_name: (n.template_name || 'health_plan_reminder'), status: 'needs_review', sent_at: '', reviewed_at: '', week_number: 1, schedule_slot_id: ''\n  };\n});\n\nif (errors.length) {\n  return [{ json: { validation_passed: false, stage: 'enum', errors } }];\n}\n\nconst schedule_state = nudges.map(n => ({\n  schedule_id: 'sch_' + n.nudge_id, nudge_id: n.nudge_id, user_id: n.user_id,\n  parent_nudge_id: n.nudge_id, status: 'needs_review', sent_at: '', delivered_at: '',\n  wa_message_id: '', tone_sent: '', last_updated: now\n}));\n\nconst uq = ctx.questionnaire || {};\nconst questionnaire = {\n  questionnaire_id: 'qn_' + uid(), user_id: ctx.user.user_id, completed_at: now,\n  age: parseInt(uq.age, 10), gender: uq.gender, activity_level: uq.activity_level,\n  primary_goal: uq.primary_goal, preferred_nudge_time: uq.preferred_nudge_time,\n  opt_in_whatsapp: !!uq.opt_in_whatsapp\n};\n\nconst user = {\n  user_id: ctx.user.user_id, name: ctx.user.name, phone: ctx.user.phone, email: ctx.user.email,\n  created_at: ctx.user.created_at || now, user_status: ctx.user.user_status || 'active'\n};\n\nreturn [{ json: { validation_passed: true, user, questionnaire, prescriptions, nudges, schedule_state } }];"
+      },
+      "id": "e0000001-0000-0000-0000-000000000006",
+      "name": "Validation Gate",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1040,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {},
+          "conditions": [
+            {
+              "leftValue": "={{ $json.validation_passed }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "e0000001-0000-0000-0000-000000000007",
+      "name": "Is Valid?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1240,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ JSON.stringify({ status: 'rejected', stage: $json.stage, errors: $json.errors || $json.error }) }}",
+        "options": {
+          "responseCode": 422,
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "content-type",
+                "value": "application/json"
+              }
+            ]
+          }
+        }
+      },
+      "id": "e0000001-0000-0000-0000-000000000008",
+      "name": "Respond Rejected",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1240,
+        680
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const user = $('Validation Gate').first().json.user;\nuser.doctor_id = $('Extract Input').first().json.prescription_input.doctor_id || '';\nreturn [{ json: user }];"
+      },
+      "id": "e0000001-0000-0000-0000-000000000009",
+      "name": "Prep User",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "user",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "e0000001-0000-0000-0000-000000000010",
+      "name": "Write User",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        1640,
+        300
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_AFTER_IMPORT",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{ json: $('Validation Gate').first().json.questionnaire }];"
+      },
+      "id": "e0000001-0000-0000-0000-000000000011",
+      "name": "Prep Questionnaire",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1820,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "questionnaire",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "e0000001-0000-0000-0000-000000000012",
+      "name": "Write Questionnaire",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        2000,
+        300
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_AFTER_IMPORT",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return $('Validation Gate').first().json.prescriptions.map(r => ({ json: r }));"
+      },
+      "id": "e0000001-0000-0000-0000-000000000013",
+      "name": "Prep Prescriptions",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2180,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "prescriptions",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "e0000001-0000-0000-0000-000000000014",
+      "name": "Write Prescriptions",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        2360,
+        300
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_AFTER_IMPORT",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return $('Validation Gate').first().json.nudges.map(r => ({ json: r }));"
+      },
+      "id": "e0000001-0000-0000-0000-000000000015",
+      "name": "Prep Nudges",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2540,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "nudges",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "e0000001-0000-0000-0000-000000000016",
+      "name": "Write Nudges",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        2720,
+        300
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_AFTER_IMPORT",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return $('Validation Gate').first().json.schedule_state.map(r => ({ json: r }));"
+      },
+      "id": "e0000001-0000-0000-0000-000000000017",
+      "name": "Prep Schedule State",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2900,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "schedule_state",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "e0000001-0000-0000-0000-000000000018",
+      "name": "Write Schedule State",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        3080,
+        300
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_AFTER_IMPORT",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ JSON.stringify({ status: 'ok', user_id: $('Validation Gate').first().json.user.user_id, prescriptions: $('Validation Gate').first().json.prescriptions.length, nudges: $('Validation Gate').first().json.nudges.length }) }}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "content-type",
+                "value": "application/json"
+              }
+            ]
+          }
+        }
+      },
+      "id": "e0000001-0000-0000-0000-000000000019",
+      "name": "Respond Success",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        3260,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Intake Webhook": {
+      "main": [
+        [
+          {
+            "node": "Authorize Proxy",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Authorize Proxy": {
+      "main": [
+        [
+          {
+            "node": "Proxy Authorized?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Proxy Authorized?": {
+      "main": [
+        [
+          {
+            "node": "Extract Input",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond Unauthorized",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Input": {
+      "main": [
+        [
+          {
+            "node": "Build Gemini Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Gemini Prompt": {
+      "main": [
+        [
+          {
+            "node": "Call Gemini Vision",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Gemini Vision": {
+      "main": [
+        [
+          {
+            "node": "Normalize Known Enum Drift",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Known Enum Drift": {
+      "main": [
+        [
+          {
+            "node": "Validation Gate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validation Gate": {
+      "main": [
+        [
+          {
+            "node": "Is Valid?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Valid?": {
+      "main": [
+        [
+          {
+            "node": "Prep User",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond Rejected",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prep User": {
+      "main": [
+        [
+          {
+            "node": "Write User",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write User": {
+      "main": [
+        [
+          {
+            "node": "Prep Questionnaire",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prep Questionnaire": {
+      "main": [
+        [
+          {
+            "node": "Write Questionnaire",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write Questionnaire": {
+      "main": [
+        [
+          {
+            "node": "Prep Prescriptions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prep Prescriptions": {
+      "main": [
+        [
+          {
+            "node": "Write Prescriptions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write Prescriptions": {
+      "main": [
+        [
+          {
+            "node": "Prep Nudges",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prep Nudges": {
+      "main": [
+        [
+          {
+            "node": "Write Nudges",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write Nudges": {
+      "main": [
+        [
+          {
+            "node": "Prep Schedule State",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prep Schedule State": {
+      "main": [
+        [
+          {
+            "node": "Write Schedule State",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write Schedule State": {
+      "main": [
+        [
+          {
+            "node": "Respond Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

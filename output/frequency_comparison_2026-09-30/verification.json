@@ -1,0 +1,23 @@
+{
+  "verified_at": "2026-09-29T14:35:11.310Z",
+  "tests_passed": 196,
+  "tests_failed": 0,
+  "test_log": "test-suite.log",
+  "javascript_syntax": "passed",
+  "npm_run_check": "passed",
+  "git_diff_check": "passed",
+  "trajectory_audit": "audit.json",
+  "unchanged_local_results_vs_pilot": 20,
+  "auxiliary_source_sha256": {
+    "scripts/frequency-comparison/audit.js": "e6dacf0710e7fe105990c35e3eb2e62fc3e8b8aa1cadf0ab75fa057f5d9b105b",
+    "scripts/frequency-comparison/plot.py": "3cdbd2f5c4f4c4890bcddca89d028a042e0551b75e948bc3f60ebcdd1c6c282d",
+    "scripts/frequency-comparison/README.md": "f7915cd36baa53df51df8ebe8c5bf6e697588a0b33a7e6821e535ce9d51bbdca",
+    "landing/tests/frequency-comparison.test.js": "cf97b1a80ff44399e655be156096644259d7d1284b2ee6950695f541434090a4"
+  },
+  "figure_visually_inspected": true,
+  "automation_id": "resume-synthetic-frequency-comparison",
+  "resume_schedule": "Daily 17:10 Australia/Melbourne, next 2026-09-30",
+  "remaining_gemini_weekly_tables": 31,
+  "daily_quota": 20,
+  "minute_quota": 5
+}

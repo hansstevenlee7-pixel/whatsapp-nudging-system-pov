@@ -1,0 +1,6800 @@
+{
+  "config_sha256": "2e2154e17ed33e9c392bf6890d76d678f5dce1aa7c8d3e454ee7192cd7a8fabb",
+  "seed": 2,
+  "policy": "contextual_thompson",
+  "next_week": 13,
+  "completed": true,
+  "users": [
+    {
+      "id": "syn_271",
+      "outcomes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "current": 1,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_272",
+      "outcomes": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "current": 1,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_273",
+      "outcomes": [
+        1,
+        0,
+        0,
+        1,
+        1,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      "current": 2,
+      "previous_direction": "increase"
+    },
+    {
+      "id": "syn_274",
+      "outcomes": [
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "current": 1,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_275",
+      "outcomes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "current": 1,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_276",
+      "outcomes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "current": 1,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_277",
+      "outcomes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "current": 1,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_278",
+      "outcomes": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "current": 1,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_279",
+      "outcomes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "current": 1,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_280",
+      "outcomes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "current": 1,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_281",
+      "outcomes": [
+        1,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "current": 1,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_282",
+      "outcomes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "current": 1,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_283",
+      "outcomes": [
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        0,
+        1,
+        1
+      ],
+      "current": 1,
+      "previous_direction": "decrease"
+    },
+    {
+      "id": "syn_284",
+      "outcomes": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "current": 3,
+      "previous_direction": "increase"
+    },
+    {
+      "id": "syn_285",
+      "outcomes": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "current": 1,
+      "previous_direction": "decrease"
+    },
+    {
+      "id": "syn_286",
+      "outcomes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "current": 1,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_287",
+      "outcomes": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "current": 1,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_288",
+      "outcomes": [
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "current": 1,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_289",
+      "outcomes": [
+        1,
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "current": 1,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_290",
+      "outcomes": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "current": 1,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_291",
+      "outcomes": [
+        0,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "current": 1,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_292",
+      "outcomes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "current": 1,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_293",
+      "outcomes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "current": 1,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_294",
+      "outcomes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "current": 1,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_295",
+      "outcomes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "current": 1,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_296",
+      "outcomes": [
+        0,
+        0,
+        1,
+        1,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "current": 1,
+      "previous_direction": "decrease"
+    },
+    {
+      "id": "syn_297",
+      "outcomes": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "current": 1,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_298",
+      "outcomes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "current": 1,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_299",
+      "outcomes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "current": 1,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_300",
+      "outcomes": [
+        1,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        1,
+        0,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1
+      ],
+      "current": 3,
+      "previous_direction": "hold"
+    }
+  ],
+  "online_rows": [
+    {
+      "synthetic_user_id": "syn_271",
+      "week": 9,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_272",
+      "week": 9,
+      "message_index": 1,
+      "current_frequency": 3,
+      "candidate_frequency": 2,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_272",
+      "week": 9,
+      "message_index": 2,
+      "current_frequency": 3,
+      "candidate_frequency": 2,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_273",
+      "week": 9,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.25,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_274",
+      "week": 9,
+      "message_index": 1,
+      "current_frequency": 2,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.25,
+      "noninteraction_streak": 1,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_275",
+      "week": 9,
+      "message_index": 1,
+      "current_frequency": 3,
+      "candidate_frequency": 2,
+      "recent_interaction_rate": 0.25,
+      "noninteraction_streak": 3,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_275",
+      "week": 9,
+      "message_index": 2,
+      "current_frequency": 3,
+      "candidate_frequency": 2,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_276",
+      "week": 9,
+      "message_index": 1,
+      "current_frequency": 2,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_277",
+      "week": 9,
+      "message_index": 1,
+      "current_frequency": 2,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.5,
+      "noninteraction_streak": 1,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_278",
+      "week": 9,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.5,
+      "noninteraction_streak": 1,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_279",
+      "week": 9,
+      "message_index": 1,
+      "current_frequency": 2,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_280",
+      "week": 9,
+      "message_index": 1,
+      "current_frequency": 2,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_281",
+      "week": 9,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.25,
+      "noninteraction_streak": 2,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_282",
+      "week": 9,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_283",
+      "week": 9,
+      "message_index": 1,
+      "current_frequency": 3,
+      "candidate_frequency": 2,
+      "recent_interaction_rate": 0.25,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_283",
+      "week": 9,
+      "message_index": 2,
+      "current_frequency": 3,
+      "candidate_frequency": 2,
+      "recent_interaction_rate": 0.5,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_284",
+      "week": 9,
+      "message_index": 1,
+      "current_frequency": 3,
+      "candidate_frequency": 2,
+      "recent_interaction_rate": 0.5,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_284",
+      "week": 9,
+      "message_index": 2,
+      "current_frequency": 3,
+      "candidate_frequency": 2,
+      "recent_interaction_rate": 0.5,
+      "noninteraction_streak": 1,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_285",
+      "week": 9,
+      "message_index": 1,
+      "current_frequency": 2,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.25,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_286",
+      "week": 9,
+      "message_index": 1,
+      "current_frequency": 2,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.5,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_287",
+      "week": 9,
+      "message_index": 1,
+      "current_frequency": 3,
+      "candidate_frequency": 2,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_287",
+      "week": 9,
+      "message_index": 2,
+      "current_frequency": 3,
+      "candidate_frequency": 2,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_288",
+      "week": 9,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_289",
+      "week": 9,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.25,
+      "noninteraction_streak": 3,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_290",
+      "week": 9,
+      "message_index": 1,
+      "current_frequency": 3,
+      "candidate_frequency": 2,
+      "recent_interaction_rate": 0.25,
+      "noninteraction_streak": 2,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_290",
+      "week": 9,
+      "message_index": 2,
+      "current_frequency": 3,
+      "candidate_frequency": 2,
+      "recent_interaction_rate": 0.25,
+      "noninteraction_streak": 3,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_291",
+      "week": 9,
+      "message_index": 1,
+      "current_frequency": 2,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_292",
+      "week": 9,
+      "message_index": 1,
+      "current_frequency": 3,
+      "candidate_frequency": 2,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_292",
+      "week": 9,
+      "message_index": 2,
+      "current_frequency": 3,
+      "candidate_frequency": 2,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_293",
+      "week": 9,
+      "message_index": 1,
+      "current_frequency": 2,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_294",
+      "week": 9,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_295",
+      "week": 9,
+      "message_index": 1,
+      "current_frequency": 3,
+      "candidate_frequency": 2,
+      "recent_interaction_rate": 0.25,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_295",
+      "week": 9,
+      "message_index": 2,
+      "current_frequency": 3,
+      "candidate_frequency": 2,
+      "recent_interaction_rate": 0.25,
+      "noninteraction_streak": 1,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_296",
+      "week": 9,
+      "message_index": 1,
+      "current_frequency": 3,
+      "candidate_frequency": 3,
+      "recent_interaction_rate": 0.75,
+      "noninteraction_streak": 1,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_296",
+      "week": 9,
+      "message_index": 2,
+      "current_frequency": 3,
+      "candidate_frequency": 3,
+      "recent_interaction_rate": 0.75,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_296",
+      "week": 9,
+      "message_index": 3,
+      "current_frequency": 3,
+      "candidate_frequency": 3,
+      "recent_interaction_rate": 0.75,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_297",
+      "week": 9,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_298",
+      "week": 9,
+      "message_index": 1,
+      "current_frequency": 2,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.5,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_299",
+      "week": 9,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.25,
+      "noninteraction_streak": 1,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_300",
+      "week": 9,
+      "message_index": 1,
+      "current_frequency": 2,
+      "candidate_frequency": 3,
+      "recent_interaction_rate": 0.5,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_300",
+      "week": 9,
+      "message_index": 2,
+      "current_frequency": 2,
+      "candidate_frequency": 3,
+      "recent_interaction_rate": 0.5,
+      "noninteraction_streak": 1,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_300",
+      "week": 9,
+      "message_index": 3,
+      "current_frequency": 2,
+      "candidate_frequency": 3,
+      "recent_interaction_rate": 0.75,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_271",
+      "week": 10,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_272",
+      "week": 10,
+      "message_index": 1,
+      "current_frequency": 2,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.25,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_273",
+      "week": 10,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.5,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_274",
+      "week": 10,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.25,
+      "noninteraction_streak": 2,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_275",
+      "week": 10,
+      "message_index": 1,
+      "current_frequency": 2,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_276",
+      "week": 10,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_277",
+      "week": 10,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.25,
+      "noninteraction_streak": 2,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_278",
+      "week": 10,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.25,
+      "noninteraction_streak": 2,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_279",
+      "week": 10,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_280",
+      "week": 10,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_281",
+      "week": 10,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.25,
+      "noninteraction_streak": 3,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_282",
+      "week": 10,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_283",
+      "week": 10,
+      "message_index": 1,
+      "current_frequency": 2,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.75,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_284",
+      "week": 10,
+      "message_index": 1,
+      "current_frequency": 2,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.5,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_285",
+      "week": 10,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.25,
+      "noninteraction_streak": 1,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_286",
+      "week": 10,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.5,
+      "noninteraction_streak": 1,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_287",
+      "week": 10,
+      "message_index": 1,
+      "current_frequency": 2,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_288",
+      "week": 10,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_289",
+      "week": 10,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_290",
+      "week": 10,
+      "message_index": 1,
+      "current_frequency": 2,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_291",
+      "week": 10,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_292",
+      "week": 10,
+      "message_index": 1,
+      "current_frequency": 2,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_293",
+      "week": 10,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_294",
+      "week": 10,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_295",
+      "week": 10,
+      "message_index": 1,
+      "current_frequency": 2,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.25,
+      "noninteraction_streak": 2,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_296",
+      "week": 10,
+      "message_index": 1,
+      "current_frequency": 3,
+      "candidate_frequency": 3,
+      "recent_interaction_rate": 0.5,
+      "noninteraction_streak": 1,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_296",
+      "week": 10,
+      "message_index": 2,
+      "current_frequency": 3,
+      "candidate_frequency": 3,
+      "recent_interaction_rate": 0.5,
+      "noninteraction_streak": 2,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_296",
+      "week": 10,
+      "message_index": 3,
+      "current_frequency": 3,
+      "candidate_frequency": 3,
+      "recent_interaction_rate": 0.5,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_297",
+      "week": 10,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_298",
+      "week": 10,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.5,
+      "noninteraction_streak": 1,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_299",
+      "week": 10,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.25,
+      "noninteraction_streak": 2,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_300",
+      "week": 10,
+      "message_index": 1,
+      "current_frequency": 3,
+      "candidate_frequency": 3,
+      "recent_interaction_rate": 0.75,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_300",
+      "week": 10,
+      "message_index": 2,
+      "current_frequency": 3,
+      "candidate_frequency": 3,
+      "recent_interaction_rate": 0.75,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_300",
+      "week": 10,
+      "message_index": 3,
+      "current_frequency": 3,
+      "candidate_frequency": 3,
+      "recent_interaction_rate": 1,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_271",
+      "week": 11,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_272",
+      "week": 11,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.25,
+      "noninteraction_streak": 1,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_273",
+      "week": 11,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.75,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_274",
+      "week": 11,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.25,
+      "noninteraction_streak": 3,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_275",
+      "week": 11,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_276",
+      "week": 11,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_277",
+      "week": 11,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.25,
+      "noninteraction_streak": 3,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_278",
+      "week": 11,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.25,
+      "noninteraction_streak": 3,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_279",
+      "week": 11,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_280",
+      "week": 11,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_281",
+      "week": 11,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_282",
+      "week": 11,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_283",
+      "week": 11,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 2,
+      "recent_interaction_rate": 1,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_283",
+      "week": 11,
+      "message_index": 2,
+      "current_frequency": 1,
+      "candidate_frequency": 2,
+      "recent_interaction_rate": 0.75,
+      "noninteraction_streak": 1,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_284",
+      "week": 11,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 2,
+      "recent_interaction_rate": 0.75,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_284",
+      "week": 11,
+      "message_index": 2,
+      "current_frequency": 1,
+      "candidate_frequency": 2,
+      "recent_interaction_rate": 0.75,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_285",
+      "week": 11,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 2,
+      "recent_interaction_rate": 0.5,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_285",
+      "week": 11,
+      "message_index": 2,
+      "current_frequency": 1,
+      "candidate_frequency": 2,
+      "recent_interaction_rate": 0.5,
+      "noninteraction_streak": 1,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_286",
+      "week": 11,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.5,
+      "noninteraction_streak": 2,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_287",
+      "week": 11,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_288",
+      "week": 11,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_289",
+      "week": 11,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_290",
+      "week": 11,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_291",
+      "week": 11,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.25,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_292",
+      "week": 11,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_293",
+      "week": 11,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_294",
+      "week": 11,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_295",
+      "week": 11,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.25,
+      "noninteraction_streak": 3,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_296",
+      "week": 11,
+      "message_index": 1,
+      "current_frequency": 3,
+      "candidate_frequency": 2,
+      "recent_interaction_rate": 0.25,
+      "noninteraction_streak": 1,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_296",
+      "week": 11,
+      "message_index": 2,
+      "current_frequency": 3,
+      "candidate_frequency": 2,
+      "recent_interaction_rate": 0.5,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_297",
+      "week": 11,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_298",
+      "week": 11,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.5,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_299",
+      "week": 11,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.25,
+      "noninteraction_streak": 3,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_300",
+      "week": 11,
+      "message_index": 1,
+      "current_frequency": 3,
+      "candidate_frequency": 3,
+      "recent_interaction_rate": 0.75,
+      "noninteraction_streak": 1,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_300",
+      "week": 11,
+      "message_index": 2,
+      "current_frequency": 3,
+      "candidate_frequency": 3,
+      "recent_interaction_rate": 0.75,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_300",
+      "week": 11,
+      "message_index": 3,
+      "current_frequency": 3,
+      "candidate_frequency": 3,
+      "recent_interaction_rate": 0.75,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_271",
+      "week": 12,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_272",
+      "week": 12,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.5,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_273",
+      "week": 12,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 2,
+      "recent_interaction_rate": 1,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_273",
+      "week": 12,
+      "message_index": 2,
+      "current_frequency": 1,
+      "candidate_frequency": 2,
+      "recent_interaction_rate": 1,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_274",
+      "week": 12,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_275",
+      "week": 12,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_276",
+      "week": 12,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_277",
+      "week": 12,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.25,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_278",
+      "week": 12,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_279",
+      "week": 12,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_280",
+      "week": 12,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_281",
+      "week": 12,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_282",
+      "week": 12,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_283",
+      "week": 12,
+      "message_index": 1,
+      "current_frequency": 2,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.75,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_284",
+      "week": 12,
+      "message_index": 1,
+      "current_frequency": 2,
+      "candidate_frequency": 3,
+      "recent_interaction_rate": 1,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_284",
+      "week": 12,
+      "message_index": 2,
+      "current_frequency": 2,
+      "candidate_frequency": 3,
+      "recent_interaction_rate": 1,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_284",
+      "week": 12,
+      "message_index": 3,
+      "current_frequency": 2,
+      "candidate_frequency": 3,
+      "recent_interaction_rate": 1,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_285",
+      "week": 12,
+      "message_index": 1,
+      "current_frequency": 2,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.5,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_286",
+      "week": 12,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.25,
+      "noninteraction_streak": 3,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_287",
+      "week": 12,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_288",
+      "week": 12,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_289",
+      "week": 12,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_290",
+      "week": 12,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.25,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_291",
+      "week": 12,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.25,
+      "noninteraction_streak": 1,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_292",
+      "week": 12,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_293",
+      "week": 12,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_294",
+      "week": 12,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_295",
+      "week": 12,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_296",
+      "week": 12,
+      "message_index": 1,
+      "current_frequency": 2,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.5,
+      "noninteraction_streak": 1,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_297",
+      "week": 12,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 4,
+      "has_previous_interaction": 0,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_298",
+      "week": 12,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.5,
+      "noninteraction_streak": 1,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_299",
+      "week": 12,
+      "message_index": 1,
+      "current_frequency": 1,
+      "candidate_frequency": 1,
+      "recent_interaction_rate": 0.25,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 0
+    },
+    {
+      "synthetic_user_id": "syn_300",
+      "week": 12,
+      "message_index": 1,
+      "current_frequency": 3,
+      "candidate_frequency": 3,
+      "recent_interaction_rate": 0.5,
+      "noninteraction_streak": 1,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_300",
+      "week": 12,
+      "message_index": 2,
+      "current_frequency": 3,
+      "candidate_frequency": 3,
+      "recent_interaction_rate": 0.75,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    },
+    {
+      "synthetic_user_id": "syn_300",
+      "week": 12,
+      "message_index": 3,
+      "current_frequency": 3,
+      "candidate_frequency": 3,
+      "recent_interaction_rate": 0.75,
+      "noninteraction_streak": 0,
+      "has_previous_interaction": 1,
+      "interacted_within_24h": 1
+    }
+  ],
+  "decisions": [
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 9,
+      "user_id": "syn_271",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "5b3ebf71691ea190b84c09e66fa0961a57704a7112e0788a9351e96f5561f999",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.10198382162073896
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 9,
+      "user_id": "syn_272",
+      "context": {
+        "current_frequency": 3,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        2,
+        3
+      ],
+      "cells_sha256": "5b3ebf71691ea190b84c09e66fa0961a57704a7112e0788a9351e96f5561f999",
+      "proposed_frequency": 2,
+      "scores": [
+        {
+          "frequency": 2,
+          "score": 0.09215961723836519
+        },
+        {
+          "frequency": 3,
+          "score": 0.054137343666361436
+        }
+      ],
+      "applied_frequency": 2,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0,
+        1
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 9,
+      "user_id": "syn_273",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.25,
+        "noninteraction_streak": 0,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "5b3ebf71691ea190b84c09e66fa0961a57704a7112e0788a9351e96f5561f999",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.39161754733259607
+        },
+        {
+          "frequency": 2,
+          "score": 0.33655435531108213
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        1
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 9,
+      "user_id": "syn_274",
+      "context": {
+        "current_frequency": 2,
+        "recent_interaction_rate": 0.25,
+        "noninteraction_streak": 1,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2,
+        3
+      ],
+      "cells_sha256": "5b3ebf71691ea190b84c09e66fa0961a57704a7112e0788a9351e96f5561f999",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.3277846014775978
+        },
+        {
+          "frequency": 2,
+          "score": 0.264790729265975
+        },
+        {
+          "frequency": 3,
+          "score": 0.2101189438769781
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 9,
+      "user_id": "syn_275",
+      "context": {
+        "current_frequency": 3,
+        "recent_interaction_rate": 0.25,
+        "noninteraction_streak": 3,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        2,
+        3
+      ],
+      "cells_sha256": "5b3ebf71691ea190b84c09e66fa0961a57704a7112e0788a9351e96f5561f999",
+      "proposed_frequency": 2,
+      "scores": [
+        {
+          "frequency": 2,
+          "score": 0.16905500888116806
+        },
+        {
+          "frequency": 3,
+          "score": 0.14741631063789665
+        }
+      ],
+      "applied_frequency": 2,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0,
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 9,
+      "user_id": "syn_276",
+      "context": {
+        "current_frequency": 2,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "5b3ebf71691ea190b84c09e66fa0961a57704a7112e0788a9351e96f5561f999",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.10025988186554352
+        },
+        {
+          "frequency": 2,
+          "score": 0.07167186894624583
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 9,
+      "user_id": "syn_277",
+      "context": {
+        "current_frequency": 2,
+        "recent_interaction_rate": 0.5,
+        "noninteraction_streak": 1,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2,
+        3
+      ],
+      "cells_sha256": "5b3ebf71691ea190b84c09e66fa0961a57704a7112e0788a9351e96f5561f999",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.3569393683237475
+        },
+        {
+          "frequency": 2,
+          "score": 0.3480284493713214
+        },
+        {
+          "frequency": 3,
+          "score": 0.3392226396093291
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 9,
+      "user_id": "syn_278",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.5,
+        "noninteraction_streak": 1,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "5b3ebf71691ea190b84c09e66fa0961a57704a7112e0788a9351e96f5561f999",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.35965883682681643
+        },
+        {
+          "frequency": 2,
+          "score": 0.33845232531887987
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 9,
+      "user_id": "syn_279",
+      "context": {
+        "current_frequency": 2,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "5b3ebf71691ea190b84c09e66fa0961a57704a7112e0788a9351e96f5561f999",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.10615565882893273
+        },
+        {
+          "frequency": 2,
+          "score": 0.07807311493357834
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 9,
+      "user_id": "syn_280",
+      "context": {
+        "current_frequency": 2,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "5b3ebf71691ea190b84c09e66fa0961a57704a7112e0788a9351e96f5561f999",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.08987805931979737
+        },
+        {
+          "frequency": 2,
+          "score": 0.0666512682897052
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 9,
+      "user_id": "syn_281",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.25,
+        "noninteraction_streak": 2,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "5b3ebf71691ea190b84c09e66fa0961a57704a7112e0788a9351e96f5561f999",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.24321532043208152
+        },
+        {
+          "frequency": 2,
+          "score": 0.20433213796700506
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 9,
+      "user_id": "syn_282",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "5b3ebf71691ea190b84c09e66fa0961a57704a7112e0788a9351e96f5561f999",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.08688172446212349
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 9,
+      "user_id": "syn_283",
+      "context": {
+        "current_frequency": 3,
+        "recent_interaction_rate": 0.25,
+        "noninteraction_streak": 0,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        2,
+        3
+      ],
+      "cells_sha256": "5b3ebf71691ea190b84c09e66fa0961a57704a7112e0788a9351e96f5561f999",
+      "proposed_frequency": 2,
+      "scores": [
+        {
+          "frequency": 2,
+          "score": 0.36490968145022845
+        },
+        {
+          "frequency": 3,
+          "score": 0.2833856607072124
+        }
+      ],
+      "applied_frequency": 2,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        1,
+        1
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 9,
+      "user_id": "syn_284",
+      "context": {
+        "current_frequency": 3,
+        "recent_interaction_rate": 0.5,
+        "noninteraction_streak": 0,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        2,
+        3
+      ],
+      "cells_sha256": "5b3ebf71691ea190b84c09e66fa0961a57704a7112e0788a9351e96f5561f999",
+      "proposed_frequency": 2,
+      "scores": [
+        {
+          "frequency": 2,
+          "score": 0.43366938745283995
+        },
+        {
+          "frequency": 3,
+          "score": 0.40341396272748453
+        }
+      ],
+      "applied_frequency": 2,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0,
+        1
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 9,
+      "user_id": "syn_285",
+      "context": {
+        "current_frequency": 2,
+        "recent_interaction_rate": 0.25,
+        "noninteraction_streak": 0,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2,
+        3
+      ],
+      "cells_sha256": "5b3ebf71691ea190b84c09e66fa0961a57704a7112e0788a9351e96f5561f999",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.4198842141053912
+        },
+        {
+          "frequency": 2,
+          "score": 0.33945056933207346
+        },
+        {
+          "frequency": 3,
+          "score": 0.2673247165011428
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 9,
+      "user_id": "syn_286",
+      "context": {
+        "current_frequency": 2,
+        "recent_interaction_rate": 0.5,
+        "noninteraction_streak": 0,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2,
+        3
+      ],
+      "cells_sha256": "5b3ebf71691ea190b84c09e66fa0961a57704a7112e0788a9351e96f5561f999",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.3925632954605924
+        },
+        {
+          "frequency": 2,
+          "score": 0.38340973147803026
+        },
+        {
+          "frequency": 3,
+          "score": 0.3743380723129356
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 9,
+      "user_id": "syn_287",
+      "context": {
+        "current_frequency": 3,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        2,
+        3
+      ],
+      "cells_sha256": "5b3ebf71691ea190b84c09e66fa0961a57704a7112e0788a9351e96f5561f999",
+      "proposed_frequency": 2,
+      "scores": [
+        {
+          "frequency": 2,
+          "score": 0.09630944956199883
+        },
+        {
+          "frequency": 3,
+          "score": 0.07054970458294793
+        }
+      ],
+      "applied_frequency": 2,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0,
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 9,
+      "user_id": "syn_288",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "5b3ebf71691ea190b84c09e66fa0961a57704a7112e0788a9351e96f5561f999",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.10858134260861116
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 9,
+      "user_id": "syn_289",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.25,
+        "noninteraction_streak": 3,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "5b3ebf71691ea190b84c09e66fa0961a57704a7112e0788a9351e96f5561f999",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.16835845075640657
+        },
+        {
+          "frequency": 2,
+          "score": 0.1514337291706018
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 9,
+      "user_id": "syn_290",
+      "context": {
+        "current_frequency": 3,
+        "recent_interaction_rate": 0.25,
+        "noninteraction_streak": 2,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        2,
+        3
+      ],
+      "cells_sha256": "5b3ebf71691ea190b84c09e66fa0961a57704a7112e0788a9351e96f5561f999",
+      "proposed_frequency": 2,
+      "scores": [
+        {
+          "frequency": 2,
+          "score": 0.22810287634552104
+        },
+        {
+          "frequency": 3,
+          "score": 0.18207015020566805
+        }
+      ],
+      "applied_frequency": 2,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0,
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 9,
+      "user_id": "syn_291",
+      "context": {
+        "current_frequency": 2,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "5b3ebf71691ea190b84c09e66fa0961a57704a7112e0788a9351e96f5561f999",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.15195939753454923
+        },
+        {
+          "frequency": 2,
+          "score": 0.08644381813898222
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 9,
+      "user_id": "syn_292",
+      "context": {
+        "current_frequency": 3,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        2,
+        3
+      ],
+      "cells_sha256": "5b3ebf71691ea190b84c09e66fa0961a57704a7112e0788a9351e96f5561f999",
+      "proposed_frequency": 2,
+      "scores": [
+        {
+          "frequency": 2,
+          "score": 0.0720087715146253
+        },
+        {
+          "frequency": 3,
+          "score": 0.05907052736668577
+        }
+      ],
+      "applied_frequency": 2,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0,
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 9,
+      "user_id": "syn_293",
+      "context": {
+        "current_frequency": 2,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "5b3ebf71691ea190b84c09e66fa0961a57704a7112e0788a9351e96f5561f999",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.08775282768072347
+        },
+        {
+          "frequency": 2,
+          "score": 0.0702316159096567
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 9,
+      "user_id": "syn_294",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "5b3ebf71691ea190b84c09e66fa0961a57704a7112e0788a9351e96f5561f999",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.11508521489515976
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 9,
+      "user_id": "syn_295",
+      "context": {
+        "current_frequency": 3,
+        "recent_interaction_rate": 0.25,
+        "noninteraction_streak": 0,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        2,
+        3
+      ],
+      "cells_sha256": "5b3ebf71691ea190b84c09e66fa0961a57704a7112e0788a9351e96f5561f999",
+      "proposed_frequency": 2,
+      "scores": [
+        {
+          "frequency": 2,
+          "score": 0.34058940066351756
+        },
+        {
+          "frequency": 3,
+          "score": 0.28922992011538584
+        }
+      ],
+      "applied_frequency": 2,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0,
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 9,
+      "user_id": "syn_296",
+      "context": {
+        "current_frequency": 3,
+        "recent_interaction_rate": 0.75,
+        "noninteraction_streak": 1,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        2,
+        3
+      ],
+      "cells_sha256": "5b3ebf71691ea190b84c09e66fa0961a57704a7112e0788a9351e96f5561f999",
+      "proposed_frequency": 3,
+      "scores": [
+        {
+          "frequency": 3,
+          "score": 0.4651240200420151
+        },
+        {
+          "frequency": 2,
+          "score": 0.44796252862289504
+        }
+      ],
+      "applied_frequency": 3,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 9,
+      "user_id": "syn_297",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "5b3ebf71691ea190b84c09e66fa0961a57704a7112e0788a9351e96f5561f999",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.0990556098138936
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 9,
+      "user_id": "syn_298",
+      "context": {
+        "current_frequency": 2,
+        "recent_interaction_rate": 0.5,
+        "noninteraction_streak": 0,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2,
+        3
+      ],
+      "cells_sha256": "5b3ebf71691ea190b84c09e66fa0961a57704a7112e0788a9351e96f5561f999",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.4912803880965197
+        },
+        {
+          "frequency": 2,
+          "score": 0.42702533874703497
+        },
+        {
+          "frequency": 3,
+          "score": 0.3651421700147923
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 9,
+      "user_id": "syn_299",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.25,
+        "noninteraction_streak": 1,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "5b3ebf71691ea190b84c09e66fa0961a57704a7112e0788a9351e96f5561f999",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.28359730792918036
+        },
+        {
+          "frequency": 2,
+          "score": 0.23821526449371
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 9,
+      "user_id": "syn_300",
+      "context": {
+        "current_frequency": 2,
+        "recent_interaction_rate": 0.5,
+        "noninteraction_streak": 0,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2,
+        3
+      ],
+      "cells_sha256": "5b3ebf71691ea190b84c09e66fa0961a57704a7112e0788a9351e96f5561f999",
+      "proposed_frequency": 3,
+      "scores": [
+        {
+          "frequency": 3,
+          "score": 0.38364591848667184
+        },
+        {
+          "frequency": 2,
+          "score": 0.3740832861135672
+        },
+        {
+          "frequency": 1,
+          "score": 0.3646180045397364
+        }
+      ],
+      "applied_frequency": 3,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 10,
+      "user_id": "syn_271",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "615bf2a45c479d09ed4e1879ac8d9b685b7e3d5ef107378cc9b47c54f569d2b7",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.11284324601590717
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 10,
+      "user_id": "syn_272",
+      "context": {
+        "current_frequency": 2,
+        "recent_interaction_rate": 0.25,
+        "noninteraction_streak": 0,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2,
+        3
+      ],
+      "cells_sha256": "615bf2a45c479d09ed4e1879ac8d9b685b7e3d5ef107378cc9b47c54f569d2b7",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.3765879232445868
+        },
+        {
+          "frequency": 2,
+          "score": 0.3469300520376622
+        },
+        {
+          "frequency": 3,
+          "score": 0.3184148859926141
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 10,
+      "user_id": "syn_273",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.5,
+        "noninteraction_streak": 0,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "615bf2a45c479d09ed4e1879ac8d9b685b7e3d5ef107378cc9b47c54f569d2b7",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.4445887137711732
+        },
+        {
+          "frequency": 2,
+          "score": 0.4210460296039754
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        1
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 10,
+      "user_id": "syn_274",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.25,
+        "noninteraction_streak": 2,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "615bf2a45c479d09ed4e1879ac8d9b685b7e3d5ef107378cc9b47c54f569d2b7",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.20530017421594107
+        },
+        {
+          "frequency": 2,
+          "score": 0.19660698044176902
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 10,
+      "user_id": "syn_275",
+      "context": {
+        "current_frequency": 2,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "615bf2a45c479d09ed4e1879ac8d9b685b7e3d5ef107378cc9b47c54f569d2b7",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.09977644472690503
+        },
+        {
+          "frequency": 2,
+          "score": 0.0718712545250006
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 10,
+      "user_id": "syn_276",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "615bf2a45c479d09ed4e1879ac8d9b685b7e3d5ef107378cc9b47c54f569d2b7",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.07753601035974508
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 10,
+      "user_id": "syn_277",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.25,
+        "noninteraction_streak": 2,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "615bf2a45c479d09ed4e1879ac8d9b685b7e3d5ef107378cc9b47c54f569d2b7",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.2657127937672911
+        },
+        {
+          "frequency": 2,
+          "score": 0.2062976067979969
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 10,
+      "user_id": "syn_278",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.25,
+        "noninteraction_streak": 2,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "615bf2a45c479d09ed4e1879ac8d9b685b7e3d5ef107378cc9b47c54f569d2b7",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.2633289188690977
+        },
+        {
+          "frequency": 2,
+          "score": 0.21896165693774625
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 10,
+      "user_id": "syn_279",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "615bf2a45c479d09ed4e1879ac8d9b685b7e3d5ef107378cc9b47c54f569d2b7",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.11922919169358168
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 10,
+      "user_id": "syn_280",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "615bf2a45c479d09ed4e1879ac8d9b685b7e3d5ef107378cc9b47c54f569d2b7",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.07743600677089815
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 10,
+      "user_id": "syn_281",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.25,
+        "noninteraction_streak": 3,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "615bf2a45c479d09ed4e1879ac8d9b685b7e3d5ef107378cc9b47c54f569d2b7",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.19132156022645005
+        },
+        {
+          "frequency": 2,
+          "score": 0.17771622338961762
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 10,
+      "user_id": "syn_282",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "615bf2a45c479d09ed4e1879ac8d9b685b7e3d5ef107378cc9b47c54f569d2b7",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.08974450323944151
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 10,
+      "user_id": "syn_283",
+      "context": {
+        "current_frequency": 2,
+        "recent_interaction_rate": 0.75,
+        "noninteraction_streak": 0,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2,
+        3
+      ],
+      "cells_sha256": "615bf2a45c479d09ed4e1879ac8d9b685b7e3d5ef107378cc9b47c54f569d2b7",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.5160570725078532
+        },
+        {
+          "frequency": 2,
+          "score": 0.5075390814596502
+        },
+        {
+          "frequency": 3,
+          "score": 0.4990167111108771
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        1
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 10,
+      "user_id": "syn_284",
+      "context": {
+        "current_frequency": 2,
+        "recent_interaction_rate": 0.5,
+        "noninteraction_streak": 0,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2,
+        3
+      ],
+      "cells_sha256": "615bf2a45c479d09ed4e1879ac8d9b685b7e3d5ef107378cc9b47c54f569d2b7",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.46051755791906923
+        },
+        {
+          "frequency": 2,
+          "score": 0.4263278553609678
+        },
+        {
+          "frequency": 3,
+          "score": 0.39282817306997064
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        1
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 10,
+      "user_id": "syn_285",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.25,
+        "noninteraction_streak": 1,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "615bf2a45c479d09ed4e1879ac8d9b685b7e3d5ef107378cc9b47c54f569d2b7",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.2949084109786735
+        },
+        {
+          "frequency": 2,
+          "score": 0.25972412014744123
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        1
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 10,
+      "user_id": "syn_286",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.5,
+        "noninteraction_streak": 1,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "615bf2a45c479d09ed4e1879ac8d9b685b7e3d5ef107378cc9b47c54f569d2b7",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.33917108097225424
+        },
+        {
+          "frequency": 2,
+          "score": 0.3168415047945038
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 10,
+      "user_id": "syn_287",
+      "context": {
+        "current_frequency": 2,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "615bf2a45c479d09ed4e1879ac8d9b685b7e3d5ef107378cc9b47c54f569d2b7",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.07596177700905345
+        },
+        {
+          "frequency": 2,
+          "score": 0.06424654831222328
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 10,
+      "user_id": "syn_288",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "615bf2a45c479d09ed4e1879ac8d9b685b7e3d5ef107378cc9b47c54f569d2b7",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.07414710469960382
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 10,
+      "user_id": "syn_289",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "615bf2a45c479d09ed4e1879ac8d9b685b7e3d5ef107378cc9b47c54f569d2b7",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.12674037404820548
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 10,
+      "user_id": "syn_290",
+      "context": {
+        "current_frequency": 2,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "615bf2a45c479d09ed4e1879ac8d9b685b7e3d5ef107378cc9b47c54f569d2b7",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.09574616244082496
+        },
+        {
+          "frequency": 2,
+          "score": 0.07811494986541749
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 10,
+      "user_id": "syn_291",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "615bf2a45c479d09ed4e1879ac8d9b685b7e3d5ef107378cc9b47c54f569d2b7",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.07628657453309924
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        1
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 10,
+      "user_id": "syn_292",
+      "context": {
+        "current_frequency": 2,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "615bf2a45c479d09ed4e1879ac8d9b685b7e3d5ef107378cc9b47c54f569d2b7",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.09740557863985348
+        },
+        {
+          "frequency": 2,
+          "score": 0.07489410195717479
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 10,
+      "user_id": "syn_293",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "615bf2a45c479d09ed4e1879ac8d9b685b7e3d5ef107378cc9b47c54f569d2b7",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.06688601518015184
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 10,
+      "user_id": "syn_294",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "615bf2a45c479d09ed4e1879ac8d9b685b7e3d5ef107378cc9b47c54f569d2b7",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.1120480516760877
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 10,
+      "user_id": "syn_295",
+      "context": {
+        "current_frequency": 2,
+        "recent_interaction_rate": 0.25,
+        "noninteraction_streak": 2,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2,
+        3
+      ],
+      "cells_sha256": "615bf2a45c479d09ed4e1879ac8d9b685b7e3d5ef107378cc9b47c54f569d2b7",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.2726169903174317
+        },
+        {
+          "frequency": 2,
+          "score": 0.22666661859053353
+        },
+        {
+          "frequency": 3,
+          "score": 0.18647574708551537
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 10,
+      "user_id": "syn_296",
+      "context": {
+        "current_frequency": 3,
+        "recent_interaction_rate": 0.5,
+        "noninteraction_streak": 1,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        2,
+        3
+      ],
+      "cells_sha256": "615bf2a45c479d09ed4e1879ac8d9b685b7e3d5ef107378cc9b47c54f569d2b7",
+      "proposed_frequency": 3,
+      "scores": [
+        {
+          "frequency": 3,
+          "score": 0.4274634640060661
+        },
+        {
+          "frequency": 2,
+          "score": 0.4101337244131229
+        }
+      ],
+      "applied_frequency": 3,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 10,
+      "user_id": "syn_297",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "615bf2a45c479d09ed4e1879ac8d9b685b7e3d5ef107378cc9b47c54f569d2b7",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.09909460084740956
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 10,
+      "user_id": "syn_298",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.5,
+        "noninteraction_streak": 1,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "615bf2a45c479d09ed4e1879ac8d9b685b7e3d5ef107378cc9b47c54f569d2b7",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.31142451015906353
+        },
+        {
+          "frequency": 2,
+          "score": 0.2983969672402614
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        1
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 10,
+      "user_id": "syn_299",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.25,
+        "noninteraction_streak": 2,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "615bf2a45c479d09ed4e1879ac8d9b685b7e3d5ef107378cc9b47c54f569d2b7",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.23503681339436083
+        },
+        {
+          "frequency": 2,
+          "score": 0.19186909575483702
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 10,
+      "user_id": "syn_300",
+      "context": {
+        "current_frequency": 3,
+        "recent_interaction_rate": 0.75,
+        "noninteraction_streak": 0,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        2,
+        3
+      ],
+      "cells_sha256": "615bf2a45c479d09ed4e1879ac8d9b685b7e3d5ef107378cc9b47c54f569d2b7",
+      "proposed_frequency": 3,
+      "scores": [
+        {
+          "frequency": 3,
+          "score": 0.5373340644494925
+        },
+        {
+          "frequency": 2,
+          "score": 0.5135206454864314
+        }
+      ],
+      "applied_frequency": 3,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 11,
+      "user_id": "syn_271",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "7c84faf9e146ac91122885a669a1b47ecc019d35f6bb1f7206cfc503d4601e99",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.08223140839572562
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 11,
+      "user_id": "syn_272",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.25,
+        "noninteraction_streak": 1,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "7c84faf9e146ac91122885a669a1b47ecc019d35f6bb1f7206cfc503d4601e99",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.3161411406146319
+        },
+        {
+          "frequency": 2,
+          "score": 0.2681708555739941
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        1
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 11,
+      "user_id": "syn_273",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.75,
+        "noninteraction_streak": 0,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "7c84faf9e146ac91122885a669a1b47ecc019d35f6bb1f7206cfc503d4601e99",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.556423990186604
+        },
+        {
+          "frequency": 2,
+          "score": 0.5007541368053662
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        1
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 11,
+      "user_id": "syn_274",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.25,
+        "noninteraction_streak": 3,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "7c84faf9e146ac91122885a669a1b47ecc019d35f6bb1f7206cfc503d4601e99",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.17084442110590706
+        },
+        {
+          "frequency": 2,
+          "score": 0.1655941367176493
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 11,
+      "user_id": "syn_275",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "7c84faf9e146ac91122885a669a1b47ecc019d35f6bb1f7206cfc503d4601e99",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.08039345880447055
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 11,
+      "user_id": "syn_276",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "7c84faf9e146ac91122885a669a1b47ecc019d35f6bb1f7206cfc503d4601e99",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.07927548076320354
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 11,
+      "user_id": "syn_277",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.25,
+        "noninteraction_streak": 3,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "7c84faf9e146ac91122885a669a1b47ecc019d35f6bb1f7206cfc503d4601e99",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.20821904719376869
+        },
+        {
+          "frequency": 2,
+          "score": 0.1689261554417112
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        1
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 11,
+      "user_id": "syn_278",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.25,
+        "noninteraction_streak": 3,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "7c84faf9e146ac91122885a669a1b47ecc019d35f6bb1f7206cfc503d4601e99",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.17090636574935375
+        },
+        {
+          "frequency": 2,
+          "score": 0.15018340922357445
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 11,
+      "user_id": "syn_279",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "7c84faf9e146ac91122885a669a1b47ecc019d35f6bb1f7206cfc503d4601e99",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.08290313620738231
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 11,
+      "user_id": "syn_280",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "7c84faf9e146ac91122885a669a1b47ecc019d35f6bb1f7206cfc503d4601e99",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.08344226082064563
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 11,
+      "user_id": "syn_281",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "7c84faf9e146ac91122885a669a1b47ecc019d35f6bb1f7206cfc503d4601e99",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.0858546127860752
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 11,
+      "user_id": "syn_282",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "7c84faf9e146ac91122885a669a1b47ecc019d35f6bb1f7206cfc503d4601e99",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.08463607758807011
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 11,
+      "user_id": "syn_283",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 1,
+        "noninteraction_streak": 0,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "7c84faf9e146ac91122885a669a1b47ecc019d35f6bb1f7206cfc503d4601e99",
+      "proposed_frequency": 2,
+      "scores": [
+        {
+          "frequency": 2,
+          "score": 0.5656420553719631
+        },
+        {
+          "frequency": 1,
+          "score": 0.5345328331811569
+        }
+      ],
+      "applied_frequency": 2,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0,
+        1
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 11,
+      "user_id": "syn_284",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.75,
+        "noninteraction_streak": 0,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "7c84faf9e146ac91122885a669a1b47ecc019d35f6bb1f7206cfc503d4601e99",
+      "proposed_frequency": 2,
+      "scores": [
+        {
+          "frequency": 2,
+          "score": 0.47116235640424803
+        },
+        {
+          "frequency": 1,
+          "score": 0.4341567554042945
+        }
+      ],
+      "applied_frequency": 2,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        1,
+        1
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 11,
+      "user_id": "syn_285",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.5,
+        "noninteraction_streak": 0,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "7c84faf9e146ac91122885a669a1b47ecc019d35f6bb1f7206cfc503d4601e99",
+      "proposed_frequency": 2,
+      "scores": [
+        {
+          "frequency": 2,
+          "score": 0.37243873415880696
+        },
+        {
+          "frequency": 1,
+          "score": 0.3705283175860358
+        }
+      ],
+      "applied_frequency": 2,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0,
+        1
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 11,
+      "user_id": "syn_286",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.5,
+        "noninteraction_streak": 2,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "7c84faf9e146ac91122885a669a1b47ecc019d35f6bb1f7206cfc503d4601e99",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.28430665310333664
+        },
+        {
+          "frequency": 2,
+          "score": 0.274806879456677
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 11,
+      "user_id": "syn_287",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "7c84faf9e146ac91122885a669a1b47ecc019d35f6bb1f7206cfc503d4601e99",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.09153383735544265
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 11,
+      "user_id": "syn_288",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "7c84faf9e146ac91122885a669a1b47ecc019d35f6bb1f7206cfc503d4601e99",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.0938445349080884
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 11,
+      "user_id": "syn_289",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "7c84faf9e146ac91122885a669a1b47ecc019d35f6bb1f7206cfc503d4601e99",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.10691860616186889
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 11,
+      "user_id": "syn_290",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "7c84faf9e146ac91122885a669a1b47ecc019d35f6bb1f7206cfc503d4601e99",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.08477100199790027
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        1
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 11,
+      "user_id": "syn_291",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.25,
+        "noninteraction_streak": 0,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "7c84faf9e146ac91122885a669a1b47ecc019d35f6bb1f7206cfc503d4601e99",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.3460457099323329
+        },
+        {
+          "frequency": 2,
+          "score": 0.30464329458917017
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 11,
+      "user_id": "syn_292",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "7c84faf9e146ac91122885a669a1b47ecc019d35f6bb1f7206cfc503d4601e99",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.10206683671735337
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 11,
+      "user_id": "syn_293",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "7c84faf9e146ac91122885a669a1b47ecc019d35f6bb1f7206cfc503d4601e99",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.08981563379290554
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 11,
+      "user_id": "syn_294",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "7c84faf9e146ac91122885a669a1b47ecc019d35f6bb1f7206cfc503d4601e99",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.09520931079414012
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 11,
+      "user_id": "syn_295",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.25,
+        "noninteraction_streak": 3,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "7c84faf9e146ac91122885a669a1b47ecc019d35f6bb1f7206cfc503d4601e99",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.19624460420783948
+        },
+        {
+          "frequency": 2,
+          "score": 0.16646702733446356
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 11,
+      "user_id": "syn_296",
+      "context": {
+        "current_frequency": 3,
+        "recent_interaction_rate": 0.25,
+        "noninteraction_streak": 1,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        2,
+        3
+      ],
+      "cells_sha256": "7c84faf9e146ac91122885a669a1b47ecc019d35f6bb1f7206cfc503d4601e99",
+      "proposed_frequency": 2,
+      "scores": [
+        {
+          "frequency": 2,
+          "score": 0.26039407870280573
+        },
+        {
+          "frequency": 3,
+          "score": 0.21987642230153664
+        }
+      ],
+      "applied_frequency": 2,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        1,
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 11,
+      "user_id": "syn_297",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "7c84faf9e146ac91122885a669a1b47ecc019d35f6bb1f7206cfc503d4601e99",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.09260581007473735
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 11,
+      "user_id": "syn_298",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.5,
+        "noninteraction_streak": 0,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "7c84faf9e146ac91122885a669a1b47ecc019d35f6bb1f7206cfc503d4601e99",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.4296224106865219
+        },
+        {
+          "frequency": 2,
+          "score": 0.3820190587515913
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 11,
+      "user_id": "syn_299",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.25,
+        "noninteraction_streak": 3,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "7c84faf9e146ac91122885a669a1b47ecc019d35f6bb1f7206cfc503d4601e99",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.19932005254573607
+        },
+        {
+          "frequency": 2,
+          "score": 0.1780057512510308
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        1
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 11,
+      "user_id": "syn_300",
+      "context": {
+        "current_frequency": 3,
+        "recent_interaction_rate": 0.75,
+        "noninteraction_streak": 1,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        2,
+        3
+      ],
+      "cells_sha256": "7c84faf9e146ac91122885a669a1b47ecc019d35f6bb1f7206cfc503d4601e99",
+      "proposed_frequency": 3,
+      "scores": [
+        {
+          "frequency": 3,
+          "score": 0.4556059313577286
+        },
+        {
+          "frequency": 2,
+          "score": 0.4381230355750347
+        }
+      ],
+      "applied_frequency": 3,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 12,
+      "user_id": "syn_271",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "587374498be33f5f5d51d691de1e713b3b6c68ff200824e15198caebc7a7bf1e",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.1050782134891458
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 12,
+      "user_id": "syn_272",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.5,
+        "noninteraction_streak": 0,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "587374498be33f5f5d51d691de1e713b3b6c68ff200824e15198caebc7a7bf1e",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.42414956557395495
+        },
+        {
+          "frequency": 2,
+          "score": 0.4148520989386028
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 12,
+      "user_id": "syn_273",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 1,
+        "noninteraction_streak": 0,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "587374498be33f5f5d51d691de1e713b3b6c68ff200824e15198caebc7a7bf1e",
+      "proposed_frequency": 2,
+      "scores": [
+        {
+          "frequency": 2,
+          "score": 0.5856826883588043
+        },
+        {
+          "frequency": 1,
+          "score": 0.5602200489172364
+        }
+      ],
+      "applied_frequency": 2,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        1,
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 12,
+      "user_id": "syn_274",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "587374498be33f5f5d51d691de1e713b3b6c68ff200824e15198caebc7a7bf1e",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.07859810515097558
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 12,
+      "user_id": "syn_275",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "587374498be33f5f5d51d691de1e713b3b6c68ff200824e15198caebc7a7bf1e",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.07834978005632669
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 12,
+      "user_id": "syn_276",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "587374498be33f5f5d51d691de1e713b3b6c68ff200824e15198caebc7a7bf1e",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.09003816140970866
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 12,
+      "user_id": "syn_277",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.25,
+        "noninteraction_streak": 0,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "587374498be33f5f5d51d691de1e713b3b6c68ff200824e15198caebc7a7bf1e",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.3724295109031396
+        },
+        {
+          "frequency": 2,
+          "score": 0.31935595097674735
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 12,
+      "user_id": "syn_278",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "587374498be33f5f5d51d691de1e713b3b6c68ff200824e15198caebc7a7bf1e",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.10206291073629516
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 12,
+      "user_id": "syn_279",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "587374498be33f5f5d51d691de1e713b3b6c68ff200824e15198caebc7a7bf1e",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.0759707974158089
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 12,
+      "user_id": "syn_280",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "587374498be33f5f5d51d691de1e713b3b6c68ff200824e15198caebc7a7bf1e",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.07295829332897041
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 12,
+      "user_id": "syn_281",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "587374498be33f5f5d51d691de1e713b3b6c68ff200824e15198caebc7a7bf1e",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.09722724666310398
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        1
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 12,
+      "user_id": "syn_282",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "587374498be33f5f5d51d691de1e713b3b6c68ff200824e15198caebc7a7bf1e",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.09466038465637373
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 12,
+      "user_id": "syn_283",
+      "context": {
+        "current_frequency": 2,
+        "recent_interaction_rate": 0.75,
+        "noninteraction_streak": 0,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2,
+        3
+      ],
+      "cells_sha256": "587374498be33f5f5d51d691de1e713b3b6c68ff200824e15198caebc7a7bf1e",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.5690343631527542
+        },
+        {
+          "frequency": 2,
+          "score": 0.5424700396744379
+        },
+        {
+          "frequency": 3,
+          "score": 0.5156620018159663
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        1
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 12,
+      "user_id": "syn_284",
+      "context": {
+        "current_frequency": 2,
+        "recent_interaction_rate": 1,
+        "noninteraction_streak": 0,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2,
+        3
+      ],
+      "cells_sha256": "587374498be33f5f5d51d691de1e713b3b6c68ff200824e15198caebc7a7bf1e",
+      "proposed_frequency": 3,
+      "scores": [
+        {
+          "frequency": 3,
+          "score": 0.6541333526869268
+        },
+        {
+          "frequency": 2,
+          "score": 0.6356959447247228
+        },
+        {
+          "frequency": 1,
+          "score": 0.616851372581965
+        }
+      ],
+      "applied_frequency": 3,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 12,
+      "user_id": "syn_285",
+      "context": {
+        "current_frequency": 2,
+        "recent_interaction_rate": 0.5,
+        "noninteraction_streak": 0,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2,
+        3
+      ],
+      "cells_sha256": "587374498be33f5f5d51d691de1e713b3b6c68ff200824e15198caebc7a7bf1e",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.44658917641859575
+        },
+        {
+          "frequency": 2,
+          "score": 0.4186708690164457
+        },
+        {
+          "frequency": 3,
+          "score": 0.3912639265789023
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 12,
+      "user_id": "syn_286",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.25,
+        "noninteraction_streak": 3,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "587374498be33f5f5d51d691de1e713b3b6c68ff200824e15198caebc7a7bf1e",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.18656719644112588
+        },
+        {
+          "frequency": 2,
+          "score": 0.16358673021733838
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        1
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 12,
+      "user_id": "syn_287",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "587374498be33f5f5d51d691de1e713b3b6c68ff200824e15198caebc7a7bf1e",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.08531274184297272
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        1
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 12,
+      "user_id": "syn_288",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "587374498be33f5f5d51d691de1e713b3b6c68ff200824e15198caebc7a7bf1e",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.09864162362085682
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 12,
+      "user_id": "syn_289",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "587374498be33f5f5d51d691de1e713b3b6c68ff200824e15198caebc7a7bf1e",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.0980856621601306
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        1
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 12,
+      "user_id": "syn_290",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.25,
+        "noninteraction_streak": 0,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "587374498be33f5f5d51d691de1e713b3b6c68ff200824e15198caebc7a7bf1e",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.32291811746069493
+        },
+        {
+          "frequency": 2,
+          "score": 0.2957794208825701
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 12,
+      "user_id": "syn_291",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.25,
+        "noninteraction_streak": 1,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "587374498be33f5f5d51d691de1e713b3b6c68ff200824e15198caebc7a7bf1e",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.25879161383360433
+        },
+        {
+          "frequency": 2,
+          "score": 0.22305882315552233
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 12,
+      "user_id": "syn_292",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "587374498be33f5f5d51d691de1e713b3b6c68ff200824e15198caebc7a7bf1e",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.09743328623036016
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 12,
+      "user_id": "syn_293",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "587374498be33f5f5d51d691de1e713b3b6c68ff200824e15198caebc7a7bf1e",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.1424148949269547
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 12,
+      "user_id": "syn_294",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "587374498be33f5f5d51d691de1e713b3b6c68ff200824e15198caebc7a7bf1e",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.09920154024733614
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        1
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 12,
+      "user_id": "syn_295",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "587374498be33f5f5d51d691de1e713b3b6c68ff200824e15198caebc7a7bf1e",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.09335287078600334
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 12,
+      "user_id": "syn_296",
+      "context": {
+        "current_frequency": 2,
+        "recent_interaction_rate": 0.5,
+        "noninteraction_streak": 1,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2,
+        3
+      ],
+      "cells_sha256": "587374498be33f5f5d51d691de1e713b3b6c68ff200824e15198caebc7a7bf1e",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.3672804943916401
+        },
+        {
+          "frequency": 2,
+          "score": 0.3620217892077016
+        },
+        {
+          "frequency": 3,
+          "score": 0.35679591905144153
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        1
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 12,
+      "user_id": "syn_297",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "587374498be33f5f5d51d691de1e713b3b6c68ff200824e15198caebc7a7bf1e",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.09818489327893434
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 12,
+      "user_id": "syn_298",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.5,
+        "noninteraction_streak": 1,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "587374498be33f5f5d51d691de1e713b3b6c68ff200824e15198caebc7a7bf1e",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.3662403127717473
+        },
+        {
+          "frequency": 2,
+          "score": 0.3422900306921864
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        1
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 12,
+      "user_id": "syn_299",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.25,
+        "noninteraction_streak": 0,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "587374498be33f5f5d51d691de1e713b3b6c68ff200824e15198caebc7a7bf1e",
+      "proposed_frequency": 1,
+      "scores": [
+        {
+          "frequency": 1,
+          "score": 0.37536377603090804
+        },
+        {
+          "frequency": 2,
+          "score": 0.33581519793886005
+        }
+      ],
+      "applied_frequency": 1,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        0
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "week": 12,
+      "user_id": "syn_300",
+      "context": {
+        "current_frequency": 3,
+        "recent_interaction_rate": 0.5,
+        "noninteraction_streak": 1,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        2,
+        3
+      ],
+      "cells_sha256": "587374498be33f5f5d51d691de1e713b3b6c68ff200824e15198caebc7a7bf1e",
+      "proposed_frequency": 3,
+      "scores": [
+        {
+          "frequency": 3,
+          "score": 0.38498629933842726
+        },
+        {
+          "frequency": 2,
+          "score": 0.37987181378044405
+        }
+      ],
+      "applied_frequency": 3,
+      "safety_rejected": false,
+      "observed_outcomes": [
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "weeks": [
+    {
+      "week": 9,
+      "delivered_messages": 42,
+      "ordinary_interactions": 9,
+      "interactions_per_message": 0.21428571428571427,
+      "frequency_changes": 19,
+      "direction_reversals": 0
+    },
+    {
+      "week": 10,
+      "delivered_messages": 34,
+      "ordinary_interactions": 9,
+      "interactions_per_message": 0.2647058823529412,
+      "frequency_changes": 8,
+      "direction_reversals": 0
+    },
+    {
+      "week": 11,
+      "delivered_messages": 36,
+      "ordinary_interactions": 12,
+      "interactions_per_message": 0.3333333333333333,
+      "frequency_changes": 4,
+      "direction_reversals": 2
+    },
+    {
+      "week": 12,
+      "delivered_messages": 35,
+      "ordinary_interactions": 15,
+      "interactions_per_message": 0.42857142857142855,
+      "frequency_changes": 5,
+      "direction_reversals": 2
+    }
+  ],
+  "model_fits": [
+    {
+      "week": 9,
+      "beta": [
+        -1.741482750533929,
+        -0.2511711314898179,
+        0.04741389405580115,
+        0.1474973818072221,
+        -0.5013922176393611,
+        0.13172432051118058,
+        0.3405524112211227,
+        0.011830898214338057
+      ],
+      "scaling": {
+        "mean": [
+          2.3629363449691994,
+          2.035677618069815,
+          0.18251625598904864,
+          2.3480492813141685,
+          0.36832648870636553,
+          0.42982118412046544,
+          5.6352669404517455
+        ],
+        "scale": [
+          0.7423131074832625,
+          0.7636574446599012,
+          0.286555842410296,
+          1.6821356614757763,
+          0.4823505845581644,
+          0.7150404160374386,
+          4.548413828786967
+        ]
+      },
+      "precision_cholesky": [
+        [
+          22.405564012175024,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          -2.747908220547578,
+          23.22244880770501,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          -0.7584108452349865,
+          1.0673006514914887,
+          22.114911840571025,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          10.475511198186037,
+          1.8642264388340424,
+          -1.2604428159160908,
+          25.63075940197614,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          -11.278670514606345,
+          0.248208812436359,
+          2.137656255809,
+          -12.872262291031495,
+          16.635077833680747,
+          0,
+          0,
+          0
+        ],
+        [
+          10.697745675681988,
+          2.369784008386684,
+          -0.8774535222908391,
+          17.7834870680379,
+          -3.32195739036942,
+          13.592497275950453,
+          0,
+          0
+        ],
+        [
+          9.637332349742163,
+          8.927729991289173,
+          -0.9621868874626873,
+          23.29387040986176,
+          -0.4019465843615954,
+          -0.5032666787083406,
+          7.814049143177563,
+          0
+        ],
+        [
+          -10.887285510729566,
+          5.895985311215401,
+          1.6609791129282014,
+          -11.032396062820704,
+          13.512524363269568,
+          -0.16537398083705646,
+          -3.5105575516324694,
+          4.927142383151082
+        ]
+      ],
+      "iterations": 6,
+      "converged": true,
+      "cells_sha256": "5b3ebf71691ea190b84c09e66fa0961a57704a7112e0788a9351e96f5561f999"
+    },
+    {
+      "week": 10,
+      "beta": [
+        -1.7435236129136193,
+        -0.24723584442316926,
+        0.0526534657142571,
+        0.14202585326194395,
+        -0.5202418816725318,
+        0.1218091971378715,
+        0.35462582258629205,
+        0.02925353696553789
+      ],
+      "scaling": {
+        "mean": [
+          2.3629363449691994,
+          2.035677618069815,
+          0.18251625598904864,
+          2.3480492813141685,
+          0.36832648870636553,
+          0.42982118412046544,
+          5.6352669404517455
+        ],
+        "scale": [
+          0.7423131074832625,
+          0.7636574446599012,
+          0.286555842410296,
+          1.6821356614757763,
+          0.4823505845581644,
+          0.7150404160374386,
+          4.548413828786967
+        ]
+      },
+      "precision_cholesky": [
+        [
+          22.53156366910255,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          -2.8517613670919704,
+          23.395494728241413,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          -0.620887842331425,
+          1.1984215527679174,
+          22.245181476173606,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          10.574676610684593,
+          1.8696047969035774,
+          -1.228432496130854,
+          25.701038106066772,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          -11.394234985334677,
+          0.2854283732827293,
+          2.1065328866214985,
+          -12.960666169557243,
+          16.709128529155638,
+          0,
+          0,
+          0
+        ],
+        [
+          10.873804153737408,
+          2.252371899808283,
+          -0.8342294100176569,
+          17.865496728688733,
+          -3.387703521415665,
+          13.666523711891104,
+          0,
+          0
+        ],
+        [
+          9.698562015845427,
+          9.00914001829733,
+          -0.9351825149253171,
+          23.36765805801979,
+          -0.39357095221867133,
+          -0.5006051030913593,
+          7.840462534170065,
+          0
+        ],
+        [
+          -11.00358072305991,
+          5.947857364627576,
+          1.6477284492535802,
+          -11.106090765614155,
+          13.555765144389257,
+          -0.1455123577914485,
+          -3.541074160167047,
+          4.9524257403166
+        ]
+      ],
+      "iterations": 6,
+      "converged": true,
+      "cells_sha256": "615bf2a45c479d09ed4e1879ac8d9b685b7e3d5ef107378cc9b47c54f569d2b7"
+    },
+    {
+      "week": 11,
+      "beta": [
+        -1.7432396082229409,
+        -0.25265968798257243,
+        0.05273998743728638,
+        0.1526448458289141,
+        -0.5469701096109306,
+        0.12039300008550974,
+        0.34628036801664475,
+        0.057495407376297054
+      ],
+      "scaling": {
+        "mean": [
+          2.3629363449691994,
+          2.035677618069815,
+          0.18251625598904864,
+          2.3480492813141685,
+          0.36832648870636553,
+          0.42982118412046544,
+          5.6352669404517455
+        ],
+        "scale": [
+          0.7423131074832625,
+          0.7636574446599012,
+          0.286555842410296,
+          1.6821356614757763,
+          0.4823505845581644,
+          0.7150404160374386,
+          4.548413828786967
+        ]
+      },
+      "precision_cholesky": [
+        [
+          22.641456159255657,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          -3.0498661334450516,
+          23.648068646529897,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          -0.7059230756812043,
+          1.5332626771372624,
+          22.36868704532979,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          10.683069659465893,
+          1.9221730372313774,
+          -1.1046761633519797,
+          25.791253887030646,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          -11.469055240457024,
+          0.260129707910461,
+          1.9658597148510877,
+          -13.05206838299933,
+          16.765780383070823,
+          0,
+          0,
+          0
+        ],
+        [
+          11.026054849960566,
+          2.160730818040726,
+          -0.8104804791001907,
+          17.9310234808834,
+          -3.391480391188391,
+          13.748107815423106,
+          0,
+          0
+        ],
+        [
+          9.753691757376458,
+          9.155202963361475,
+          -0.8148598882918151,
+          23.449938143458283,
+          -0.3759773324644854,
+          -0.5162109271111018,
+          7.887982187092876,
+          0
+        ],
+        [
+          -11.125541940903341,
+          5.995892500116936,
+          1.5561881882819462,
+          -11.171616275565258,
+          13.561317807460787,
+          -0.13709914548748597,
+          -3.59386839508937,
+          4.983894854270643
+        ]
+      ],
+      "iterations": 6,
+      "converged": true,
+      "cells_sha256": "7c84faf9e146ac91122885a669a1b47ecc019d35f6bb1f7206cfc503d4601e99"
+    },
+    {
+      "week": 12,
+      "beta": [
+        -1.739814131413923,
+        -0.25351343106718904,
+        0.04924065553780888,
+        0.15382411106631902,
+        -0.5363228571460077,
+        0.131315794759319,
+        0.3429747739461079,
+        0.05199546378481787
+      ],
+      "scaling": {
+        "mean": [
+          2.3629363449691994,
+          2.035677618069815,
+          0.18251625598904864,
+          2.3480492813141685,
+          0.36832648870636553,
+          0.42982118412046544,
+          5.6352669404517455
+        ],
+        "scale": [
+          0.7423131074832625,
+          0.7636574446599012,
+          0.286555842410296,
+          1.6821356614757763,
+          0.4823505845581644,
+          0.7150404160374386,
+          4.548413828786967
+        ]
+      },
+      "precision_cholesky": [
+        [
+          22.789246195309815,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          -3.328327048969813,
+          23.88717128763614,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          -0.9429304642940498,
+          1.8738085131901212,
+          22.59831144305277,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          10.857023975843438,
+          2.0194467679207766,
+          -1.0973368959180834,
+          25.923089033338442,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          -11.51004311993245,
+          0.08500819696192194,
+          1.834781366325948,
+          -13.195241294531957,
+          16.852093904850726,
+          0,
+          0,
+          0
+        ],
+        [
+          11.244006434868911,
+          2.1708192582104715,
+          -0.8390284753402925,
+          17.998677432134873,
+          -3.4080751957730575,
+          13.85055693271331,
+          0,
+          0
+        ],
+        [
+          9.854801206721186,
+          9.312165300875145,
+          -0.7952725809886892,
+          23.522603952938614,
+          -0.3259915177528333,
+          -0.5273676113455171,
+          7.93696100759989,
+          0
+        ],
+        [
+          -11.283656448880674,
+          5.977365346693053,
+          1.4807140793565907,
+          -11.240570339585123,
+          13.541428436824686,
+          -0.13750559193563172,
+          -3.6672655749906355,
+          5.024568185055672
+        ]
+      ],
+      "iterations": 6,
+      "converged": true,
+      "cells_sha256": "587374498be33f5f5d51d691de1e713b3b6c68ff200824e15198caebc7a7bf1e"
+    }
+  ]
+}

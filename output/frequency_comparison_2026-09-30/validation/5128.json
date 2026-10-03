@@ -1,0 +1,13 @@
+{
+  "seed": 5128,
+  "dataset_sha256": "b332923d43e528836c39259fbc35f99485601c60d5db33eddb0d9b3348f3a523",
+  "training_rows": 3818,
+  "metrics": {
+    "rows": 118,
+    "positives": 19,
+    "constant_brier": 0.13638252067103465,
+    "lr_brier": 0.11276248439730867,
+    "bandit_posterior_mean_brier": 0.1127327005705448,
+    "note": "validation only, no hyperparameter tuning; Gemini evaluated as a policy, not a probability estimator"
+  }
+}

@@ -1,0 +1,54 @@
+Extended frequency-policy baselines and multi-seed stability check
+Generated 2026-09-20T11:19:06Z | Node v24.13.1
+Command: node scripts/policy-baselines.js --seeds 10
+Frozen artifact sha256: 971e347d95f2d2eaf207db7d0d9978defe97df871eeb94068903eb989321aaa2
+Artifact not modified by this run.
+
+Reproduction of frozen policy_comparison on seed 5128: MATCHED
+
+Published seed 5128
+policy                     msgs   inter  int/msg  chg   rev   viol  share f=1/2/3
+fixed_1                    3600   931    0.25861  300   0     0     100.0% 0.0% 0.0%
+fixed_2                    7200   1707   0.23708  0     0     0     0.0% 100.0% 0.0%
+fixed_3                    10800  1790   0.16574  300   0     300   0.0% 0.0% 100.0%
+deterministic              5233   1361   0.26008  557   35    0     64.4% 25.9% 9.8%
+model_plus_safety          3800   1020   0.26842  523   157   0     94.4% 5.6% 0.0%
+oracle_preferred           6972   2778   0.39845  195   0     88    35.7% 35.0% 29.3%
+
+Mean +/- sd over 10 cohort seeds
+policy                               int/msg            interactions     messages        reversals     share f=1
+fixed_1                              0.2358+/-0.0129    849+/-46         3600+/-0        0+/-0         100.0%
+fixed_2                              0.2391+/-0.0080    1721+/-57        7200+/-0        0+/-0         0.0%
+fixed_3                              0.1799+/-0.0176    1943+/-190       10800+/-0       0+/-0         0.0%
+deterministic                        0.2547+/-0.0109    1347+/-72        5285+/-74       41+/-6        63.4%
+model_plus_safety                    0.2400+/-0.0135    903+/-56         3762+/-28       139+/-12      95.5%
+oracle_preferred                     0.3985+/-0.0149    2879+/-170       7224+/-275      0+/-0         32.8%
+model_plus_safety_retrained          0.2410+/-0.0158    925+/-62         3840+/-187      159+/-96      93.8%
+
+Selector sensitivity, seed 5128, frozen model
+selector               tolerance   msgs   inter  int/msg   rev   share f=1
+lowest_near_best       0.05        3800   1020   0.26842   157   94.4%
+lowest_near_best       0.01        4031   1048   0.25999   278   90.0%
+lowest_near_best       0.001       4104   1033   0.25171   290   89.2%
+argmax                 n/a         4104   1033   0.25171   290   89.2%
+
+Paired per-seed contrasts, interactions per message
+model_minus_fixed_1                  +0.0042 +/- 0.0039   higher in 9/10 seeds
+model_minus_fixed_2                  +0.0009 +/- 0.0142   higher in 4/10 seeds
+model_minus_deterministic            -0.0147 +/- 0.0125   higher in 1/10 seeds
+retrained_minus_deterministic        -0.0137 +/- 0.0132   higher in 1/10 seeds
+
+Wrote /Users/stevenleehans/Documents/Documents - Hans’s MacBook Pro/Uni - Masters - Monash University/Research/Whatsapp Nudging System - System POV/output/thesis/evidence_2026-09-20/policy_baselines.json
+
+Per-seed frozen test Brier skill score (1 - model/constant):
+  seed 5128  test rows  109  prevalence 0.220  brier 0.1372  constant 0.1722  skill 0.204
+  seed    1  test rows  124  prevalence 0.194  brier 0.1355  constant 0.1561  skill 0.132
+  seed    2  test rows  113  prevalence 0.168  brier 0.1300  constant 0.1404  skill 0.074
+  seed    3  test rows  113  prevalence 0.230  brier 0.1563  constant 0.1776  skill 0.120
+  seed    4  test rows  128  prevalence 0.141  brier 0.1172  constant 0.1262  skill 0.072
+  seed    5  test rows  128  prevalence 0.117  brier 0.1049  constant 0.1074  skill 0.024
+  seed    6  test rows  129  prevalence 0.209  brier 0.1484  constant 0.1655  skill 0.104
+  seed    7  test rows  111  prevalence 0.081  brier 0.0793  constant 0.0882  skill 0.102
+  seed    8  test rows  122  prevalence 0.066  brier 0.0667  constant 0.0888  skill 0.249
+  seed    9  test rows  118  prevalence 0.144  brier 0.1022  constant 0.1260  skill 0.189
+  mean skill 0.127, positive in 10/10 seeds

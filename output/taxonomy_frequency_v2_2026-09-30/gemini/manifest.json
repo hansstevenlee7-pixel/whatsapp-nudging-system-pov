@@ -1,0 +1,28 @@
+{
+  "version": "taxonomy-frequency-synthetic-v2",
+  "model": "gemini-2.5-flash",
+  "source_sha256": {
+    "scripts/taxonomy-frequency/generate.js": "41a768ef1c7a700354cf27517e01e52d8f15d73dca2cc1eafee9a2b253c50609",
+    "scripts/taxonomy-frequency/model.js": "1db0044aa394ee8b00fc2d56d0c1577fca15c992f38ebbaa611456c75b843f81",
+    "scripts/taxonomy-frequency/local-run.js": "ef4ad2b2fe9d1aea868c42e685a78fa76c2de193c91c0dbff8258a65ee1b2caa",
+    "scripts/taxonomy-frequency/gemini-run.js": "a7743f9b886c1bb4cc0c4d153de426f8ef5a1a57445ca810150fdce7ac537b38",
+    "lifestyle_nudging_schema.json": "81465c1f4783f79ed657be2d7500f1e3d49aa0dc2d2ba349b73a0eeb4a6bebde"
+  },
+  "prompt_sha256": "7334be338f7c04b03aaba6aead8533c063e19b1fc9b0b0d89ecce7567c46bbce",
+  "requested_seeds": [
+    5128,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "known_limitations": [
+    "training contingency summary, not all original rows",
+    "fixed temperature does not guarantee stable outputs across model updates"
+  ]
+}

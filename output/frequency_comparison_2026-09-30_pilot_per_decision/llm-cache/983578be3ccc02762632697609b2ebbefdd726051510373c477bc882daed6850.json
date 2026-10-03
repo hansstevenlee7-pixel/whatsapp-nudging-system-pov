@@ -1,0 +1,108 @@
+{
+  "cache_key": "983578be3ccc02762632697609b2ebbefdd726051510373c477bc882daed6850",
+  "model": "gemini-2.5-flash",
+  "request": {
+    "systemInstruction": {
+      "parts": [
+        {
+          "text": "You are a bounded weekly communication-frequency policy in a synthetic research experiment.\nSelect an eligible frequency of 1, 2, or 3 messages per week to maximise ordinary interactions per delivered message.\nOrdinary interaction means a tracked-link visit or ordinary reply within 24 hours, NOT adherence or health benefit.\nYou receive only observed data. Do not invent user preferences or assume that silence implies a preference.\nUse current context and historical evidence; lower frequency breaks a true tie. Never choose outside eligible_frequencies.\nThe training_cells table contains exact counts, not recommendations. Columns are:\n[current_frequency, recent_interaction_rate, noninteraction_streak, has_previous_interaction, candidate_frequency, delivered_count, interaction_count].\nHistory features use the last four observed message outcomes. current_frequency is the preceding week's assigned frequency;\ncandidate_frequency is the frequency assigned for the row's week. History can change between messages within a week.\nThe candidate-times-rate and candidate-times-streak interactions can be derived from these columns.\nRows with the same feature values are combined without loss of counts. Absence of a cell is not a zero response probability.\nAll training cells precede the current decision week. No hidden user characteristics or future responses are available.\nReturn only JSON with integer frequency and a brief evidence-based reason (at most 30 words)."
+        }
+      ]
+    },
+    "contents": [
+      {
+        "role": "user",
+        "parts": [
+          {
+            "text": "{\"context\":{\"current_frequency\":2,\"recent_interaction_rate\":0.25,\"noninteraction_streak\":2,\"has_previous_interaction\":1},\"eligible_frequencies\":[1,2,3],\"training_cells\":[[1,0,1,0,1,17,5],[1,0,1,0,2,19,4],[1,0,1,0,3,23,5],[1,0,2,0,1,6,1],[1,0,2,0,2,17,2],[1,0,2,0,3,22,2],[1,0,3,0,1,9,1],[1,0,3,0,2,10,2],[1,0,3,0,3,24,2],[1,0,4,0,1,66,8],[1,0,4,0,2,149,17],[1,0,4,0,3,228,22],[1,0.25,0,1,1,16,4],[1,0.25,0,1,2,27,7],[1,0.25,0,1,3,29,6],[1,0.25,1,1,1,12,2],[1,0.25,1,1,2,25,8],[1,0.25,1,1,3,25,6],[1,0.25,2,1,1,9,3],[1,0.25,2,1,2,23,4],[1,0.25,2,1,3,29,3],[1,0.25,3,1,1,5,1],[1,0.25,3,1,2,16,3],[1,0.25,3,1,3,34,5],[1,0.3333333333333333,0,1,1,4,1],[1,0.3333333333333333,0,1,2,1,0],[1,0.3333333333333333,0,1,3,2,2],[1,0.3333333333333333,1,1,1,3,1],[1,0.3333333333333333,1,1,2,2,0],[1,0.3333333333333333,1,1,3,3,0],[1,0.3333333333333333,2,1,1,2,1],[1,0.3333333333333333,2,1,2,3,0],[1,0.3333333333333333,2,1,3,6,0],[1,0.5,0,1,1,14,6],[1,0.5,0,1,2,25,8],[1,0.5,0,1,3,29,12],[1,0.5,1,1,1,4,2],[1,0.5,1,1,2,13,7],[1,0.5,1,1,3,26,4],[1,0.5,2,1,1,1,0],[1,0.5,2,1,2,8,3],[1,0.5,2,1,3,24,6],[1,0.6666666666666666,0,1,1,1,1],[1,0.6666666666666666,0,1,2,2,1],[1,0.6666666666666666,0,1,3,5,3],[1,0.6666666666666666,1,1,1,1,0],[1,0.6666666666666666,1,1,2,1,0],[1,0.6666666666666666,1,1,3,3,1],[1,0.75,0,1,1,4,1],[1,0.75,0,1,2,13,6],[1,0.75,0,1,3,17,9],[1,0.75,1,1,1,5,3],[1,0.75,1,1,2,5,2],[1,0.75,1,1,3,14,4],[1,1,0,1,1,24,16],[1,1,0,1,2,15,12],[1,1,0,1,3,21,6],[2,0,0,0,1,83,24],[2,0,0,0,2,86,17],[2,0,0,0,3,71,9],[2,0,1,0,2,69,12],[2,0,1,0,3,62,5],[2,0,2,0,1,20,4],[2,0,2,0,2,17,4],[2,0,2,0,3,77,8],[2,0,3,0,1,3,0],[2,0,3,0,2,20,3],[2,0,3,0,3,19,2],[2,0,4,0,1,76,8],[2,0,4,0,2,169,16],[2,0,4,0,3,211,14],[2,0.25,0,1,1,11,2],[2,0.25,0,1,2,21,12],[2,0.25,0,1,3,19,3],[2,0.25,1,1,1,13,3],[2,0.25,1,1,2,16,1],[2,0.25,1,1,3,27,4],[2,0.25,2,1,1,5,1],[2,0.25,2,1,2,22,6],[2,0.25,2,1,3,34,4],[2,0.25,3,1,1,11,1],[2,0.25,3,1,2,18,4],[2,0.25,3,1,3,38,4],[2,0.3333333333333333,0,1,1,1,0],[2,0.3333333333333333,0,1,2,5,1],[2,0.3333333333333333,0,1,3,4,2],[2,0.3333333333333333,1,1,1,1,1],[2,0.3333333333333333,1,1,2,5,0],[2,0.3333333333333333,1,1,3,3,0],[2,0.3333333333333333,2,1,2,1,0],[2,0.3333333333333333,2,1,3,1,0],[2,0.5,0,1,1,20,4],[2,0.5,0,1,2,23,8],[2,0.5,0,1,3,32,12],[2,0.5,1,1,1,4,1],[2,0.5,1,1,2,16,3],[2,0.5,1,1,3,29,10],[2,0.5,2,1,1,4,1],[2,0.5,2,1,2,7,5],[2,0.5,2,1,3,16,5],[2,0.6666666666666666,0,1,2,1,0],[2,0.6666666666666666,0,1,3,2,1],[2,0.6666666666666666,1,1,1,2,0],[2,0.6666666666666666,1,1,2,4,2],[2,0.6666666666666666,1,1,3,3,2],[2,0.75,0,1,1,4,1],[2,0.75,0,1,2,11,4],[2,0.75,0,1,3,29,14],[2,0.75,1,1,1,3,0],[2,0.75,1,1,2,3,1],[2,0.75,1,1,3,11,4],[2,1,0,1,1,7,5],[2,1,0,1,2,34,21],[2,1,0,1,3,35,23],[3,0,3,0,1,19,2],[3,0,3,0,2,16,2],[3,0,3,0,3,18,1],[3,0,4,0,1,94,14],[3,0,4,0,2,180,23],[3,0,4,0,3,370,22],[3,0.25,0,1,1,13,3],[3,0.25,0,1,2,17,3],[3,0.25,0,1,3,23,7],[3,0.25,1,1,1,7,0],[3,0.25,1,1,2,12,3],[3,0.25,1,1,3,21,6],[3,0.25,2,1,1,8,1],[3,0.25,2,1,2,13,1],[3,0.25,2,1,3,20,3],[3,0.25,3,1,1,18,4],[3,0.25,3,1,2,17,3],[3,0.25,3,1,3,39,4],[3,0.3333333333333333,0,1,1,1,1],[3,0.3333333333333333,0,1,2,2,1],[3,0.3333333333333333,0,1,3,1,1],[3,0.3333333333333333,1,1,3,1,0],[3,0.3333333333333333,2,1,3,2,0],[3,0.5,0,1,1,5,2],[3,0.5,0,1,2,18,9],[3,0.5,0,1,3,24,11],[3,0.5,1,1,1,4,1],[3,0.5,1,1,2,15,7],[3,0.5,1,1,3,18,3],[3,0.5,2,1,1,2,1],[3,0.5,2,1,2,8,1],[3,0.5,2,1,3,17,5],[3,0.6666666666666666,0,1,1,1,0],[3,0.6666666666666666,0,1,2,2,1],[3,0.6666666666666666,0,1,3,2,1],[3,0.75,0,1,1,5,2],[3,0.75,0,1,2,19,12],[3,0.75,0,1,3,28,15],[3,0.75,1,1,1,3,1],[3,0.75,1,1,2,6,3],[3,0.75,1,1,3,10,5],[3,1,0,1,1,6,2],[3,1,0,1,2,9,5],[3,1,0,1,3,24,17]]}"
+          }
+        ]
+      }
+    ],
+    "generationConfig": {
+      "temperature": 0,
+      "maxOutputTokens": 256,
+      "thinkingConfig": {
+        "thinkingBudget": 0
+      },
+      "responseMimeType": "application/json",
+      "responseJsonSchema": {
+        "type": "object",
+        "properties": {
+          "frequency": {
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              3
+            ]
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "frequency",
+          "reason"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "response": {
+    "candidates": [
+      {
+        "content": {
+          "parts": [
+            {
+              "text": "{\"frequency\": 1, \"reason\": \"Frequency 1 has the highest interaction rate (0.20) for the given context, maximizing ordinary interactions per delivered message.\"}"
+            }
+          ],
+          "role": "model"
+        },
+        "finishReason": "STOP",
+        "index": 0
+      }
+    ],
+    "usageMetadata": {
+      "promptTokenCount": 3506,
+      "candidatesTokenCount": 37,
+      "totalTokenCount": 3543,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 3506
+        }
+      ],
+      "serviceTier": "standard"
+    },
+    "modelVersion": "gemini-2.5-flash",
+    "responseId": "AMq7arjvKI3O1e8P-vH2sA0"
+  },
+  "decision": {
+    "proposed_frequency": 1,
+    "reason": "Frequency 1 has the highest interaction rate (0.20) for the given context, maximizing ordinary interactions per delivered message.",
+    "source": "gemini",
+    "fallback": false,
+    "attempts": [
+      {
+        "status": 200,
+        "latency_ms": 1671,
+        "usage": {
+          "promptTokenCount": 3506,
+          "candidatesTokenCount": 37,
+          "totalTokenCount": 3543,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 3506
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "model_version": "gemini-2.5-flash"
+      }
+    ],
+    "model_version": "gemini-2.5-flash"
+  }
+}

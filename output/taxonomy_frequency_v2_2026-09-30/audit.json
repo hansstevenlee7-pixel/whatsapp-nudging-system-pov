@@ -1,0 +1,224 @@
+{
+  "audited_at": "2026-10-03T07:26:12.291Z",
+  "passed": true,
+  "trajectories": [
+    {
+      "policy": "greedy_logistic",
+      "seed": 5128,
+      "messages": 148,
+      "interactions": 35,
+      "passed": true
+    },
+    {
+      "policy": "greedy_logistic",
+      "seed": 1,
+      "messages": 155,
+      "interactions": 38,
+      "passed": true
+    },
+    {
+      "policy": "greedy_logistic",
+      "seed": 2,
+      "messages": 163,
+      "interactions": 33,
+      "passed": true
+    },
+    {
+      "policy": "greedy_logistic",
+      "seed": 3,
+      "messages": 196,
+      "interactions": 51,
+      "passed": true
+    },
+    {
+      "policy": "greedy_logistic",
+      "seed": 4,
+      "messages": 176,
+      "interactions": 42,
+      "passed": true
+    },
+    {
+      "policy": "greedy_logistic",
+      "seed": 5,
+      "messages": 156,
+      "interactions": 31,
+      "passed": true
+    },
+    {
+      "policy": "greedy_logistic",
+      "seed": 6,
+      "messages": 137,
+      "interactions": 19,
+      "passed": true
+    },
+    {
+      "policy": "greedy_logistic",
+      "seed": 7,
+      "messages": 136,
+      "interactions": 24,
+      "passed": true
+    },
+    {
+      "policy": "greedy_logistic",
+      "seed": 8,
+      "messages": 150,
+      "interactions": 23,
+      "passed": true
+    },
+    {
+      "policy": "greedy_logistic",
+      "seed": 9,
+      "messages": 168,
+      "interactions": 34,
+      "passed": true
+    },
+    {
+      "policy": "contextual_thompson",
+      "seed": 5128,
+      "messages": 153,
+      "interactions": 37,
+      "passed": true
+    },
+    {
+      "policy": "contextual_thompson",
+      "seed": 1,
+      "messages": 159,
+      "interactions": 38,
+      "passed": true
+    },
+    {
+      "policy": "contextual_thompson",
+      "seed": 2,
+      "messages": 161,
+      "interactions": 34,
+      "passed": true
+    },
+    {
+      "policy": "contextual_thompson",
+      "seed": 3,
+      "messages": 202,
+      "interactions": 56,
+      "passed": true
+    },
+    {
+      "policy": "contextual_thompson",
+      "seed": 4,
+      "messages": 197,
+      "interactions": 47,
+      "passed": true
+    },
+    {
+      "policy": "contextual_thompson",
+      "seed": 5,
+      "messages": 163,
+      "interactions": 35,
+      "passed": true
+    },
+    {
+      "policy": "contextual_thompson",
+      "seed": 6,
+      "messages": 141,
+      "interactions": 19,
+      "passed": true
+    },
+    {
+      "policy": "contextual_thompson",
+      "seed": 7,
+      "messages": 143,
+      "interactions": 25,
+      "passed": true
+    },
+    {
+      "policy": "contextual_thompson",
+      "seed": 8,
+      "messages": 149,
+      "interactions": 23,
+      "passed": true
+    },
+    {
+      "policy": "contextual_thompson",
+      "seed": 9,
+      "messages": 181,
+      "interactions": 41,
+      "passed": true
+    },
+    {
+      "policy": "eligible_random",
+      "seed": 5128,
+      "messages": 214,
+      "interactions": 41,
+      "passed": true
+    },
+    {
+      "policy": "eligible_random",
+      "seed": 1,
+      "messages": 195,
+      "interactions": 41,
+      "passed": true
+    },
+    {
+      "policy": "eligible_random",
+      "seed": 2,
+      "messages": 213,
+      "interactions": 31,
+      "passed": true
+    },
+    {
+      "policy": "eligible_random",
+      "seed": 3,
+      "messages": 203,
+      "interactions": 53,
+      "passed": true
+    },
+    {
+      "policy": "eligible_random",
+      "seed": 4,
+      "messages": 210,
+      "interactions": 56,
+      "passed": true
+    },
+    {
+      "policy": "eligible_random",
+      "seed": 5,
+      "messages": 177,
+      "interactions": 26,
+      "passed": true
+    },
+    {
+      "policy": "eligible_random",
+      "seed": 6,
+      "messages": 196,
+      "interactions": 21,
+      "passed": true
+    },
+    {
+      "policy": "eligible_random",
+      "seed": 7,
+      "messages": 179,
+      "interactions": 25,
+      "passed": true
+    },
+    {
+      "policy": "eligible_random",
+      "seed": 8,
+      "messages": 192,
+      "interactions": 36,
+      "passed": true
+    },
+    {
+      "policy": "eligible_random",
+      "seed": 9,
+      "messages": 213,
+      "interactions": 42,
+      "passed": true
+    }
+  ],
+  "checks": [
+    "source and dataset hashes",
+    "approved slots unchanged",
+    "valid frequency decisions",
+    "chronological same-taxonomy history",
+    "matched seeded outcomes",
+    "recorded interactions and messages"
+  ]
+}

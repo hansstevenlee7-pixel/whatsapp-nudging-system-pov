@@ -1,0 +1,4 @@
+Access check against the local synthetic preview, 2026-10-03T15:00:55Z
+GET /api/patients without a session -> HTTP 401
+GET /api/patients with an invalid token -> HTTP 401
+GET /api/patients with the synthetic session -> HTTP 200

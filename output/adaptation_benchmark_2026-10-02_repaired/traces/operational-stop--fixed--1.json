@@ -1,0 +1,1605 @@
+{
+  "case_id": "operational-stop",
+  "category": "operational",
+  "arm": "fixed",
+  "initial": {
+    "sheets": {
+      "user": {
+        "headers": [
+          "user_id",
+          "name",
+          "phone",
+          "email",
+          "user_status",
+          "doctor_id"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "user_id": "synthetic-1",
+            "name": "Synthetic Benchmark",
+            "phone": "+61400000000",
+            "user_status": "active",
+            "doctor_id": "doc-test"
+          }
+        ]
+      },
+      "questionnaire": {
+        "headers": [
+          "questionnaire_id",
+          "user_id",
+          "preferred_nudge_time",
+          "opt_in_whatsapp"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "questionnaire_id": "q1",
+            "user_id": "synthetic-1",
+            "opt_in_whatsapp": true
+          }
+        ]
+      },
+      "prescriptions": {
+        "headers": [
+          "prescription_id",
+          "user_id",
+          "doctor_id",
+          "issued_date",
+          "pillar",
+          "category",
+          "target_behavior",
+          "frequency_per_week",
+          "duration_weeks",
+          "prescription_raw_text",
+          "status"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "prescription_id": "rx-1",
+            "user_id": "synthetic-1",
+            "doctor_id": "doc-test",
+            "action_text": "Be in bed by 10pm",
+            "pillar": "sleep",
+            "category": "establish",
+            "frequency_per_week": 2,
+            "status": "active"
+          }
+        ]
+      },
+      "nudges": {
+        "headers": [
+          "nudge_id",
+          "prescription_id",
+          "user_id",
+          "nudge_type",
+          "pillar",
+          "action_text",
+          "scheduled_date",
+          "scheduled_time",
+          "message_body",
+          "message_body_alt",
+          "tone_variant",
+          "template_name",
+          "status",
+          "sent_at",
+          "reviewed_at",
+          "week_number",
+          "schedule_slot_id",
+          "category",
+          "media_selection_mode",
+          "media_override_asset_id",
+          "media_asset_id",
+          "adaptation_decision_id"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "action_text": "Be in bed by 10pm",
+            "pillar": "sleep",
+            "category": "establish",
+            "user_id": "synthetic-1",
+            "prescription_id": "rx-1",
+            "nudge_type": "reminder",
+            "message_body": "Prepare for sleep.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "scheduled_time": "09:00",
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "nudge_id": "history",
+            "scheduled_date": "2026-09-28",
+            "status": "sent",
+            "sent_at": "2026-09-28T00:00:00.000Z",
+            "media_asset_id": "asset-paper"
+          },
+          {
+            "row_number": 3,
+            "action_text": "Be in bed by 10pm",
+            "pillar": "sleep",
+            "category": "establish",
+            "user_id": "synthetic-1",
+            "prescription_id": "rx-1",
+            "nudge_type": "reminder",
+            "message_body": "Prepare for sleep.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "scheduled_time": "09:00",
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "schedule_slot_id": "slot-0",
+            "source_nudge_id": "history",
+            "day": "monday",
+            "status": "approved",
+            "start_date": "2026-10-05",
+            "end_date": "2026-10-18",
+            "nudge_id": "schd_slot-0_20261005",
+            "scheduled_date": "2026-10-05",
+            "sent_at": ""
+          },
+          {
+            "row_number": 4,
+            "action_text": "Be in bed by 10pm",
+            "pillar": "sleep",
+            "category": "establish",
+            "user_id": "synthetic-1",
+            "prescription_id": "rx-1",
+            "nudge_type": "reminder",
+            "message_body": "Prepare for sleep.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "scheduled_time": "09:00",
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "schedule_slot_id": "slot-1",
+            "source_nudge_id": "history",
+            "day": "thursday",
+            "status": "approved",
+            "start_date": "2026-10-05",
+            "end_date": "2026-10-18",
+            "nudge_id": "schd_slot-1_20261008",
+            "scheduled_date": "2026-10-08",
+            "sent_at": ""
+          }
+        ]
+      },
+      "weekly_schedule": {
+        "headers": [
+          "schedule_slot_id",
+          "user_id",
+          "source_nudge_id",
+          "prescription_id",
+          "day",
+          "scheduled_time",
+          "nudge_type",
+          "pillar",
+          "action_text",
+          "tone_variant",
+          "message_body",
+          "message_body_alt",
+          "template_name",
+          "status",
+          "start_date",
+          "end_date",
+          "created_at",
+          "updated_at",
+          "category",
+          "media_selection_mode",
+          "media_override_asset_id",
+          "media_asset_id",
+          "adaptation_decision_id"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "action_text": "Be in bed by 10pm",
+            "pillar": "sleep",
+            "category": "establish",
+            "user_id": "synthetic-1",
+            "prescription_id": "rx-1",
+            "nudge_type": "reminder",
+            "message_body": "Prepare for sleep.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "scheduled_time": "09:00",
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "schedule_slot_id": "slot-0",
+            "source_nudge_id": "history",
+            "day": "monday",
+            "status": "active",
+            "start_date": "2026-10-05",
+            "end_date": "2026-10-18"
+          },
+          {
+            "row_number": 3,
+            "action_text": "Be in bed by 10pm",
+            "pillar": "sleep",
+            "category": "establish",
+            "user_id": "synthetic-1",
+            "prescription_id": "rx-1",
+            "nudge_type": "reminder",
+            "message_body": "Prepare for sleep.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "scheduled_time": "09:00",
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "schedule_slot_id": "slot-1",
+            "source_nudge_id": "history",
+            "day": "thursday",
+            "status": "active",
+            "start_date": "2026-10-05",
+            "end_date": "2026-10-18"
+          }
+        ]
+      },
+      "schedule_state": {
+        "headers": [
+          "schedule_id",
+          "nudge_id",
+          "user_id",
+          "parent_nudge_id",
+          "status",
+          "sent_at",
+          "delivered_at",
+          "wa_message_id",
+          "tone_sent",
+          "last_updated",
+          "read_at",
+          "interacted_at",
+          "last_inbound_message_sid",
+          "delivery_attempt_id",
+          "submission_started_at"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "schedule_id": "state-history",
+            "nudge_id": "history",
+            "user_id": "synthetic-1",
+            "status": "delivered",
+            "sent_at": "2026-09-28T00:00:00.000Z",
+            "delivered_at": "2026-09-28T00:01:00.000Z",
+            "read_at": "",
+            "wa_message_id": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "row_number": 3,
+            "schedule_id": "state-schd_slot-0_20261005",
+            "nudge_id": "schd_slot-0_20261005",
+            "user_id": "synthetic-1",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "read_at": "",
+            "wa_message_id": ""
+          },
+          {
+            "row_number": 4,
+            "schedule_id": "state-schd_slot-1_20261008",
+            "nudge_id": "schd_slot-1_20261008",
+            "user_id": "synthetic-1",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "read_at": "",
+            "wa_message_id": ""
+          }
+        ]
+      },
+      "delivery_events": {
+        "headers": [
+          "event_id",
+          "event_at",
+          "wa_message_id",
+          "nudge_id",
+          "user_id",
+          "status",
+          "error_code",
+          "error_message",
+          "channel_to",
+          "raw_payload"
+        ],
+        "rows": []
+      },
+      "media_assignments": {
+        "headers": [
+          "assignment_id",
+          "assigned_at",
+          "user_id",
+          "nudge_id",
+          "behaviour_key",
+          "media_asset_id",
+          "adaptation_decision_id",
+          "media_kind",
+          "selection_mode",
+          "source_url",
+          "tracked_url",
+          "planned_frequency",
+          "scheduled_at",
+          "sent_at",
+          "delivered_at",
+          "read_at",
+          "visited_at",
+          "replied_at",
+          "send_to_read_hours",
+          "send_to_visit_hours",
+          "send_to_reply_hours"
+        ],
+        "rows": []
+      },
+      "interaction_events": {
+        "headers": [
+          "interaction_id",
+          "event_at",
+          "inbound_message_sid",
+          "user_id",
+          "from_phone",
+          "reply_to_wa_message_id",
+          "nudge_id",
+          "body",
+          "media_count",
+          "correlation_method",
+          "ack_status"
+        ],
+        "rows": []
+      },
+      "adaptation_decisions": {
+        "headers": [
+          "decision_id",
+          "decided_at",
+          "user_id",
+          "behaviour_key",
+          "interaction_id",
+          "signal_type",
+          "rule_applied",
+          "outcome",
+          "reason",
+          "selected_asset_id",
+          "interpretation",
+          "previous_state",
+          "next_state",
+          "scope",
+          "decision_source",
+          "effective_at",
+          "state_version",
+          "changed_fields",
+          "frequency_before",
+          "frequency_after",
+          "media_mode_before",
+          "media_mode_after",
+          "media_kind_before",
+          "media_kind_after",
+          "nudge_id"
+        ],
+        "rows": []
+      },
+      "patient_adaptation_state": {
+        "headers": [
+          "user_id",
+          "scope",
+          "behaviour_key",
+          "state_version",
+          "preferred_format",
+          "preferred_frequency",
+          "planned_frequency",
+          "delivered_frequency",
+          "observed_frequency",
+          "last_change_at",
+          "updated_at"
+        ],
+        "rows": []
+      },
+      "patient_adaptation_timeline": {
+        "headers": [
+          "user_id",
+          "event_id",
+          "event_at",
+          "event_type",
+          "source",
+          "scope",
+          "behaviour_key",
+          "signal",
+          "rule_applied",
+          "outcome",
+          "reason",
+          "previous_state",
+          "new_state",
+          "changed_fields",
+          "selected_asset_id",
+          "selected_media_kind",
+          "nudge_id",
+          "interaction_id"
+        ],
+        "rows": []
+      }
+    },
+    "database": {
+      "adaptation_envelopes": [
+        {
+          "action_text": "Be in bed by 10pm",
+          "pillar": "sleep",
+          "category": "establish",
+          "user_id": "synthetic-1",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "status": "approved",
+          "automatic_schedule_apply": true,
+          "formats": [
+            "paper",
+            "video"
+          ],
+          "summary_lengths": [
+            "short",
+            "detailed"
+          ],
+          "tones": [
+            "encouraging",
+            "neutral_informational"
+          ],
+          "earliest_time": "08:00",
+          "latest_time": "20:00",
+          "frequency_min": 1,
+          "frequency_max": 3,
+          "action_alternatives": [
+            "Be in bed by 10pm"
+          ],
+          "approved_asset_ids": [
+            "asset-paper",
+            "asset-video"
+          ]
+        }
+      ],
+      "media_assets": [
+        {
+          "asset_id": "asset-paper",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "media_kind": "paper",
+          "status": "approved",
+          "source_url": "https://example.test/paper",
+          "title": "Synthetic paper resource",
+          "source_name": "Synthetic approved pool",
+          "short_summary": "SHORT synthetic explanation.",
+          "detailed_summary": "DETAILED synthetic explanation with additional context for this controlled software evaluation."
+        },
+        {
+          "asset_id": "asset-video",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "media_kind": "video",
+          "status": "approved",
+          "source_url": "https://example.test/video",
+          "title": "Synthetic video resource",
+          "source_name": "Synthetic approved pool",
+          "short_summary": "SHORT synthetic explanation.",
+          "detailed_summary": "DETAILED synthetic explanation with additional context for this controlled software evaluation."
+        }
+      ],
+      "media_candidates": [],
+      "media_search_jobs": [],
+      "tracked_links": [],
+      "patient_adaptation_state": [],
+      "user_adaptation_state": [
+        {
+          "user_id": "synthetic-1",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "preferred_time": "09:00",
+          "preferred_frequency": 2,
+          "preferred_format": "paper",
+          "preferred_summary_length": "detailed",
+          "format_scores": {},
+          "asset_history": []
+        }
+      ],
+      "adaptation_decisions": [],
+      "interaction_events": [
+        {
+          "interaction_id": "old-positive",
+          "user_id": "synthetic-1",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "nudge_id": "history",
+          "event_type": "inbound_reply",
+          "body": "Thanks",
+          "event_at": "2026-09-28T00:05:00.000Z",
+          "processed_at": "2026-09-28T00:06:00.000Z"
+        }
+      ]
+    }
+  },
+  "steps": [
+    {
+      "input": {
+        "body": "STOP",
+        "expected": {
+          "time": "09:00",
+          "frequency": 2,
+          "format": "paper",
+          "summary": "detailed",
+          "blocked": true
+        },
+        "interpretation": {
+          "explicit": false,
+          "format": null,
+          "summary_length": null,
+          "tone": null,
+          "time": null,
+          "frequency_delta": 0,
+          "action": null
+        }
+      },
+      "checks": {
+        "inbound_accepted": true,
+        "stop_blocks": true,
+        "sent_nudge_unchanged": true,
+        "sent_delivery_fields_unchanged": true
+      },
+      "before_state": {
+        "user_id": "synthetic-1",
+        "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+        "preferred_time": "09:00",
+        "preferred_frequency": 2,
+        "preferred_format": "paper",
+        "preferred_summary_length": "detailed",
+        "format_scores": {},
+        "asset_history": []
+      },
+      "inbound": {
+        "status": 200,
+        "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Response></Response>"
+      },
+      "prepared": {
+        "status": 409,
+        "body": {
+          "error": "nudge is not eligible for delivery"
+        }
+      },
+      "observed": {
+        "time": "09:00",
+        "frequency": 2,
+        "format": null,
+        "summary": null,
+        "blocked": true,
+        "user_status": "opted_out"
+      },
+      "after_state": {
+        "user_id": "synthetic-1",
+        "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+        "preferred_time": "09:00",
+        "preferred_frequency": 2,
+        "preferred_format": "paper",
+        "preferred_summary_length": "detailed",
+        "format_scores": {},
+        "asset_history": []
+      },
+      "persisted_after": {
+        "sheets": {
+          "user": {
+            "headers": [
+              "user_id",
+              "name",
+              "phone",
+              "email",
+              "user_status",
+              "doctor_id"
+            ],
+            "rows": [
+              {
+                "row_number": 2,
+                "user_id": "synthetic-1",
+                "name": "Synthetic Benchmark",
+                "phone": "+61400000000",
+                "user_status": "opted_out",
+                "doctor_id": "doc-test"
+              }
+            ]
+          },
+          "questionnaire": {
+            "headers": [
+              "questionnaire_id",
+              "user_id",
+              "preferred_nudge_time",
+              "opt_in_whatsapp"
+            ],
+            "rows": [
+              {
+                "row_number": 2,
+                "questionnaire_id": "q1",
+                "user_id": "synthetic-1",
+                "opt_in_whatsapp": true
+              }
+            ]
+          },
+          "prescriptions": {
+            "headers": [
+              "prescription_id",
+              "user_id",
+              "doctor_id",
+              "issued_date",
+              "pillar",
+              "category",
+              "target_behavior",
+              "frequency_per_week",
+              "duration_weeks",
+              "prescription_raw_text",
+              "status"
+            ],
+            "rows": [
+              {
+                "row_number": 2,
+                "prescription_id": "rx-1",
+                "user_id": "synthetic-1",
+                "doctor_id": "doc-test",
+                "action_text": "Be in bed by 10pm",
+                "pillar": "sleep",
+                "category": "establish",
+                "frequency_per_week": 2,
+                "status": "active"
+              }
+            ]
+          },
+          "nudges": {
+            "headers": [
+              "nudge_id",
+              "prescription_id",
+              "user_id",
+              "nudge_type",
+              "pillar",
+              "action_text",
+              "scheduled_date",
+              "scheduled_time",
+              "message_body",
+              "message_body_alt",
+              "tone_variant",
+              "template_name",
+              "status",
+              "sent_at",
+              "reviewed_at",
+              "week_number",
+              "schedule_slot_id",
+              "category",
+              "media_selection_mode",
+              "media_override_asset_id",
+              "media_asset_id",
+              "adaptation_decision_id"
+            ],
+            "rows": [
+              {
+                "row_number": 2,
+                "action_text": "Be in bed by 10pm",
+                "pillar": "sleep",
+                "category": "establish",
+                "user_id": "synthetic-1",
+                "prescription_id": "rx-1",
+                "nudge_type": "reminder",
+                "message_body": "Prepare for sleep.",
+                "tone_variant": "encouraging",
+                "template_name": "health_plan_reminder",
+                "scheduled_time": "09:00",
+                "media_selection_mode": "automatic",
+                "media_override_asset_id": "",
+                "nudge_id": "history",
+                "scheduled_date": "2026-09-28",
+                "status": "sent",
+                "sent_at": "2026-09-28T00:00:00.000Z",
+                "media_asset_id": "asset-paper"
+              },
+              {
+                "row_number": 3,
+                "action_text": "Be in bed by 10pm",
+                "pillar": "sleep",
+                "category": "establish",
+                "user_id": "synthetic-1",
+                "prescription_id": "rx-1",
+                "nudge_type": "reminder",
+                "message_body": "Prepare for sleep.",
+                "tone_variant": "encouraging",
+                "template_name": "health_plan_reminder",
+                "scheduled_time": "09:00",
+                "media_selection_mode": "automatic",
+                "media_override_asset_id": "",
+                "schedule_slot_id": "slot-0",
+                "source_nudge_id": "history",
+                "day": "monday",
+                "status": "canceled",
+                "start_date": "2026-10-05",
+                "end_date": "2026-10-18",
+                "nudge_id": "schd_slot-0_20261005",
+                "scheduled_date": "2026-10-05",
+                "sent_at": ""
+              },
+              {
+                "row_number": 4,
+                "action_text": "Be in bed by 10pm",
+                "pillar": "sleep",
+                "category": "establish",
+                "user_id": "synthetic-1",
+                "prescription_id": "rx-1",
+                "nudge_type": "reminder",
+                "message_body": "Prepare for sleep.",
+                "tone_variant": "encouraging",
+                "template_name": "health_plan_reminder",
+                "scheduled_time": "09:00",
+                "media_selection_mode": "automatic",
+                "media_override_asset_id": "",
+                "schedule_slot_id": "slot-1",
+                "source_nudge_id": "history",
+                "day": "thursday",
+                "status": "canceled",
+                "start_date": "2026-10-05",
+                "end_date": "2026-10-18",
+                "nudge_id": "schd_slot-1_20261008",
+                "scheduled_date": "2026-10-08",
+                "sent_at": ""
+              }
+            ]
+          },
+          "weekly_schedule": {
+            "headers": [
+              "schedule_slot_id",
+              "user_id",
+              "source_nudge_id",
+              "prescription_id",
+              "day",
+              "scheduled_time",
+              "nudge_type",
+              "pillar",
+              "action_text",
+              "tone_variant",
+              "message_body",
+              "message_body_alt",
+              "template_name",
+              "status",
+              "start_date",
+              "end_date",
+              "created_at",
+              "updated_at",
+              "category",
+              "media_selection_mode",
+              "media_override_asset_id",
+              "media_asset_id",
+              "adaptation_decision_id"
+            ],
+            "rows": [
+              {
+                "row_number": 2,
+                "action_text": "Be in bed by 10pm",
+                "pillar": "sleep",
+                "category": "establish",
+                "user_id": "synthetic-1",
+                "prescription_id": "rx-1",
+                "nudge_type": "reminder",
+                "message_body": "Prepare for sleep.",
+                "tone_variant": "encouraging",
+                "template_name": "health_plan_reminder",
+                "scheduled_time": "09:00",
+                "media_selection_mode": "automatic",
+                "media_override_asset_id": "",
+                "schedule_slot_id": "slot-0",
+                "source_nudge_id": "history",
+                "day": "monday",
+                "status": "active",
+                "start_date": "2026-10-05",
+                "end_date": "2026-10-18"
+              },
+              {
+                "row_number": 3,
+                "action_text": "Be in bed by 10pm",
+                "pillar": "sleep",
+                "category": "establish",
+                "user_id": "synthetic-1",
+                "prescription_id": "rx-1",
+                "nudge_type": "reminder",
+                "message_body": "Prepare for sleep.",
+                "tone_variant": "encouraging",
+                "template_name": "health_plan_reminder",
+                "scheduled_time": "09:00",
+                "media_selection_mode": "automatic",
+                "media_override_asset_id": "",
+                "schedule_slot_id": "slot-1",
+                "source_nudge_id": "history",
+                "day": "thursday",
+                "status": "active",
+                "start_date": "2026-10-05",
+                "end_date": "2026-10-18"
+              }
+            ]
+          },
+          "schedule_state": {
+            "headers": [
+              "schedule_id",
+              "nudge_id",
+              "user_id",
+              "parent_nudge_id",
+              "status",
+              "sent_at",
+              "delivered_at",
+              "wa_message_id",
+              "tone_sent",
+              "last_updated",
+              "read_at",
+              "interacted_at",
+              "last_inbound_message_sid",
+              "delivery_attempt_id",
+              "submission_started_at"
+            ],
+            "rows": [
+              {
+                "row_number": 2,
+                "schedule_id": "state-history",
+                "nudge_id": "history",
+                "user_id": "synthetic-1",
+                "status": "delivered",
+                "sent_at": "2026-09-28T00:00:00.000Z",
+                "delivered_at": "2026-09-28T00:01:00.000Z",
+                "read_at": "",
+                "wa_message_id": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              },
+              {
+                "row_number": 3,
+                "schedule_id": "state-schd_slot-0_20261005",
+                "nudge_id": "schd_slot-0_20261005",
+                "user_id": "synthetic-1",
+                "status": "canceled",
+                "sent_at": "",
+                "delivered_at": "",
+                "read_at": "",
+                "wa_message_id": "",
+                "last_updated": "2026-10-02T00:00:00.000Z"
+              },
+              {
+                "row_number": 4,
+                "schedule_id": "state-schd_slot-1_20261008",
+                "nudge_id": "schd_slot-1_20261008",
+                "user_id": "synthetic-1",
+                "status": "canceled",
+                "sent_at": "",
+                "delivered_at": "",
+                "read_at": "",
+                "wa_message_id": "",
+                "last_updated": "2026-10-02T00:00:00.000Z"
+              }
+            ]
+          },
+          "delivery_events": {
+            "headers": [
+              "event_id",
+              "event_at",
+              "wa_message_id",
+              "nudge_id",
+              "user_id",
+              "status",
+              "error_code",
+              "error_message",
+              "channel_to",
+              "raw_payload"
+            ],
+            "rows": []
+          },
+          "media_assignments": {
+            "headers": [
+              "assignment_id",
+              "assigned_at",
+              "user_id",
+              "nudge_id",
+              "behaviour_key",
+              "media_asset_id",
+              "adaptation_decision_id",
+              "media_kind",
+              "selection_mode",
+              "source_url",
+              "tracked_url",
+              "planned_frequency",
+              "scheduled_at",
+              "sent_at",
+              "delivered_at",
+              "read_at",
+              "visited_at",
+              "replied_at",
+              "send_to_read_hours",
+              "send_to_visit_hours",
+              "send_to_reply_hours"
+            ],
+            "rows": []
+          },
+          "interaction_events": {
+            "headers": [
+              "interaction_id",
+              "event_at",
+              "inbound_message_sid",
+              "user_id",
+              "from_phone",
+              "reply_to_wa_message_id",
+              "nudge_id",
+              "body",
+              "media_count",
+              "correlation_method",
+              "ack_status"
+            ],
+            "rows": []
+          },
+          "adaptation_decisions": {
+            "headers": [
+              "decision_id",
+              "decided_at",
+              "user_id",
+              "behaviour_key",
+              "interaction_id",
+              "signal_type",
+              "rule_applied",
+              "outcome",
+              "reason",
+              "selected_asset_id",
+              "interpretation",
+              "previous_state",
+              "next_state",
+              "scope",
+              "decision_source",
+              "effective_at",
+              "state_version",
+              "changed_fields",
+              "frequency_before",
+              "frequency_after",
+              "media_mode_before",
+              "media_mode_after",
+              "media_kind_before",
+              "media_kind_after",
+              "nudge_id"
+            ],
+            "rows": []
+          },
+          "patient_adaptation_state": {
+            "headers": [
+              "user_id",
+              "scope",
+              "behaviour_key",
+              "state_version",
+              "preferred_format",
+              "preferred_frequency",
+              "planned_frequency",
+              "delivered_frequency",
+              "observed_frequency",
+              "last_change_at",
+              "updated_at"
+            ],
+            "rows": []
+          },
+          "patient_adaptation_timeline": {
+            "headers": [
+              "user_id",
+              "event_id",
+              "event_at",
+              "event_type",
+              "source",
+              "scope",
+              "behaviour_key",
+              "signal",
+              "rule_applied",
+              "outcome",
+              "reason",
+              "previous_state",
+              "new_state",
+              "changed_fields",
+              "selected_asset_id",
+              "selected_media_kind",
+              "nudge_id",
+              "interaction_id"
+            ],
+            "rows": []
+          }
+        },
+        "database": {
+          "adaptation_envelopes": [
+            {
+              "action_text": "Be in bed by 10pm",
+              "pillar": "sleep",
+              "category": "establish",
+              "user_id": "synthetic-1",
+              "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+              "status": "approved",
+              "automatic_schedule_apply": true,
+              "formats": [
+                "paper",
+                "video"
+              ],
+              "summary_lengths": [
+                "short",
+                "detailed"
+              ],
+              "tones": [
+                "encouraging",
+                "neutral_informational"
+              ],
+              "earliest_time": "08:00",
+              "latest_time": "20:00",
+              "frequency_min": 1,
+              "frequency_max": 3,
+              "action_alternatives": [
+                "Be in bed by 10pm"
+              ],
+              "approved_asset_ids": [
+                "asset-paper",
+                "asset-video"
+              ]
+            }
+          ],
+          "media_assets": [
+            {
+              "asset_id": "asset-paper",
+              "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+              "media_kind": "paper",
+              "status": "approved",
+              "source_url": "https://example.test/paper",
+              "title": "Synthetic paper resource",
+              "source_name": "Synthetic approved pool",
+              "short_summary": "SHORT synthetic explanation.",
+              "detailed_summary": "DETAILED synthetic explanation with additional context for this controlled software evaluation."
+            },
+            {
+              "asset_id": "asset-video",
+              "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+              "media_kind": "video",
+              "status": "approved",
+              "source_url": "https://example.test/video",
+              "title": "Synthetic video resource",
+              "source_name": "Synthetic approved pool",
+              "short_summary": "SHORT synthetic explanation.",
+              "detailed_summary": "DETAILED synthetic explanation with additional context for this controlled software evaluation."
+            }
+          ],
+          "media_candidates": [],
+          "media_search_jobs": [],
+          "tracked_links": [],
+          "patient_adaptation_state": [],
+          "user_adaptation_state": [
+            {
+              "user_id": "synthetic-1",
+              "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+              "preferred_time": "09:00",
+              "preferred_frequency": 2,
+              "preferred_format": "paper",
+              "preferred_summary_length": "detailed",
+              "format_scores": {},
+              "asset_history": []
+            }
+          ],
+          "adaptation_decisions": [],
+          "interaction_events": [
+            {
+              "interaction_id": "old-positive",
+              "user_id": "synthetic-1",
+              "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+              "nudge_id": "history",
+              "event_type": "inbound_reply",
+              "body": "Thanks",
+              "event_at": "2026-09-28T00:05:00.000Z",
+              "processed_at": "2026-09-28T00:06:00.000Z"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "final": {
+    "sheets": {
+      "user": {
+        "headers": [
+          "user_id",
+          "name",
+          "phone",
+          "email",
+          "user_status",
+          "doctor_id"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "user_id": "synthetic-1",
+            "name": "Synthetic Benchmark",
+            "phone": "+61400000000",
+            "user_status": "opted_out",
+            "doctor_id": "doc-test"
+          }
+        ]
+      },
+      "questionnaire": {
+        "headers": [
+          "questionnaire_id",
+          "user_id",
+          "preferred_nudge_time",
+          "opt_in_whatsapp"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "questionnaire_id": "q1",
+            "user_id": "synthetic-1",
+            "opt_in_whatsapp": true
+          }
+        ]
+      },
+      "prescriptions": {
+        "headers": [
+          "prescription_id",
+          "user_id",
+          "doctor_id",
+          "issued_date",
+          "pillar",
+          "category",
+          "target_behavior",
+          "frequency_per_week",
+          "duration_weeks",
+          "prescription_raw_text",
+          "status"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "prescription_id": "rx-1",
+            "user_id": "synthetic-1",
+            "doctor_id": "doc-test",
+            "action_text": "Be in bed by 10pm",
+            "pillar": "sleep",
+            "category": "establish",
+            "frequency_per_week": 2,
+            "status": "active"
+          }
+        ]
+      },
+      "nudges": {
+        "headers": [
+          "nudge_id",
+          "prescription_id",
+          "user_id",
+          "nudge_type",
+          "pillar",
+          "action_text",
+          "scheduled_date",
+          "scheduled_time",
+          "message_body",
+          "message_body_alt",
+          "tone_variant",
+          "template_name",
+          "status",
+          "sent_at",
+          "reviewed_at",
+          "week_number",
+          "schedule_slot_id",
+          "category",
+          "media_selection_mode",
+          "media_override_asset_id",
+          "media_asset_id",
+          "adaptation_decision_id"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "action_text": "Be in bed by 10pm",
+            "pillar": "sleep",
+            "category": "establish",
+            "user_id": "synthetic-1",
+            "prescription_id": "rx-1",
+            "nudge_type": "reminder",
+            "message_body": "Prepare for sleep.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "scheduled_time": "09:00",
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "nudge_id": "history",
+            "scheduled_date": "2026-09-28",
+            "status": "sent",
+            "sent_at": "2026-09-28T00:00:00.000Z",
+            "media_asset_id": "asset-paper"
+          },
+          {
+            "row_number": 3,
+            "action_text": "Be in bed by 10pm",
+            "pillar": "sleep",
+            "category": "establish",
+            "user_id": "synthetic-1",
+            "prescription_id": "rx-1",
+            "nudge_type": "reminder",
+            "message_body": "Prepare for sleep.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "scheduled_time": "09:00",
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "schedule_slot_id": "slot-0",
+            "source_nudge_id": "history",
+            "day": "monday",
+            "status": "canceled",
+            "start_date": "2026-10-05",
+            "end_date": "2026-10-18",
+            "nudge_id": "schd_slot-0_20261005",
+            "scheduled_date": "2026-10-05",
+            "sent_at": ""
+          },
+          {
+            "row_number": 4,
+            "action_text": "Be in bed by 10pm",
+            "pillar": "sleep",
+            "category": "establish",
+            "user_id": "synthetic-1",
+            "prescription_id": "rx-1",
+            "nudge_type": "reminder",
+            "message_body": "Prepare for sleep.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "scheduled_time": "09:00",
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "schedule_slot_id": "slot-1",
+            "source_nudge_id": "history",
+            "day": "thursday",
+            "status": "canceled",
+            "start_date": "2026-10-05",
+            "end_date": "2026-10-18",
+            "nudge_id": "schd_slot-1_20261008",
+            "scheduled_date": "2026-10-08",
+            "sent_at": ""
+          }
+        ]
+      },
+      "weekly_schedule": {
+        "headers": [
+          "schedule_slot_id",
+          "user_id",
+          "source_nudge_id",
+          "prescription_id",
+          "day",
+          "scheduled_time",
+          "nudge_type",
+          "pillar",
+          "action_text",
+          "tone_variant",
+          "message_body",
+          "message_body_alt",
+          "template_name",
+          "status",
+          "start_date",
+          "end_date",
+          "created_at",
+          "updated_at",
+          "category",
+          "media_selection_mode",
+          "media_override_asset_id",
+          "media_asset_id",
+          "adaptation_decision_id"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "action_text": "Be in bed by 10pm",
+            "pillar": "sleep",
+            "category": "establish",
+            "user_id": "synthetic-1",
+            "prescription_id": "rx-1",
+            "nudge_type": "reminder",
+            "message_body": "Prepare for sleep.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "scheduled_time": "09:00",
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "schedule_slot_id": "slot-0",
+            "source_nudge_id": "history",
+            "day": "monday",
+            "status": "active",
+            "start_date": "2026-10-05",
+            "end_date": "2026-10-18"
+          },
+          {
+            "row_number": 3,
+            "action_text": "Be in bed by 10pm",
+            "pillar": "sleep",
+            "category": "establish",
+            "user_id": "synthetic-1",
+            "prescription_id": "rx-1",
+            "nudge_type": "reminder",
+            "message_body": "Prepare for sleep.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "scheduled_time": "09:00",
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "schedule_slot_id": "slot-1",
+            "source_nudge_id": "history",
+            "day": "thursday",
+            "status": "active",
+            "start_date": "2026-10-05",
+            "end_date": "2026-10-18"
+          }
+        ]
+      },
+      "schedule_state": {
+        "headers": [
+          "schedule_id",
+          "nudge_id",
+          "user_id",
+          "parent_nudge_id",
+          "status",
+          "sent_at",
+          "delivered_at",
+          "wa_message_id",
+          "tone_sent",
+          "last_updated",
+          "read_at",
+          "interacted_at",
+          "last_inbound_message_sid",
+          "delivery_attempt_id",
+          "submission_started_at"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "schedule_id": "state-history",
+            "nudge_id": "history",
+            "user_id": "synthetic-1",
+            "status": "delivered",
+            "sent_at": "2026-09-28T00:00:00.000Z",
+            "delivered_at": "2026-09-28T00:01:00.000Z",
+            "read_at": "",
+            "wa_message_id": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "row_number": 3,
+            "schedule_id": "state-schd_slot-0_20261005",
+            "nudge_id": "schd_slot-0_20261005",
+            "user_id": "synthetic-1",
+            "status": "canceled",
+            "sent_at": "",
+            "delivered_at": "",
+            "read_at": "",
+            "wa_message_id": "",
+            "last_updated": "2026-10-02T00:00:00.000Z"
+          },
+          {
+            "row_number": 4,
+            "schedule_id": "state-schd_slot-1_20261008",
+            "nudge_id": "schd_slot-1_20261008",
+            "user_id": "synthetic-1",
+            "status": "canceled",
+            "sent_at": "",
+            "delivered_at": "",
+            "read_at": "",
+            "wa_message_id": "",
+            "last_updated": "2026-10-02T00:00:00.000Z"
+          }
+        ]
+      },
+      "delivery_events": {
+        "headers": [
+          "event_id",
+          "event_at",
+          "wa_message_id",
+          "nudge_id",
+          "user_id",
+          "status",
+          "error_code",
+          "error_message",
+          "channel_to",
+          "raw_payload"
+        ],
+        "rows": []
+      },
+      "media_assignments": {
+        "headers": [
+          "assignment_id",
+          "assigned_at",
+          "user_id",
+          "nudge_id",
+          "behaviour_key",
+          "media_asset_id",
+          "adaptation_decision_id",
+          "media_kind",
+          "selection_mode",
+          "source_url",
+          "tracked_url",
+          "planned_frequency",
+          "scheduled_at",
+          "sent_at",
+          "delivered_at",
+          "read_at",
+          "visited_at",
+          "replied_at",
+          "send_to_read_hours",
+          "send_to_visit_hours",
+          "send_to_reply_hours"
+        ],
+        "rows": []
+      },
+      "interaction_events": {
+        "headers": [
+          "interaction_id",
+          "event_at",
+          "inbound_message_sid",
+          "user_id",
+          "from_phone",
+          "reply_to_wa_message_id",
+          "nudge_id",
+          "body",
+          "media_count",
+          "correlation_method",
+          "ack_status"
+        ],
+        "rows": []
+      },
+      "adaptation_decisions": {
+        "headers": [
+          "decision_id",
+          "decided_at",
+          "user_id",
+          "behaviour_key",
+          "interaction_id",
+          "signal_type",
+          "rule_applied",
+          "outcome",
+          "reason",
+          "selected_asset_id",
+          "interpretation",
+          "previous_state",
+          "next_state",
+          "scope",
+          "decision_source",
+          "effective_at",
+          "state_version",
+          "changed_fields",
+          "frequency_before",
+          "frequency_after",
+          "media_mode_before",
+          "media_mode_after",
+          "media_kind_before",
+          "media_kind_after",
+          "nudge_id"
+        ],
+        "rows": []
+      },
+      "patient_adaptation_state": {
+        "headers": [
+          "user_id",
+          "scope",
+          "behaviour_key",
+          "state_version",
+          "preferred_format",
+          "preferred_frequency",
+          "planned_frequency",
+          "delivered_frequency",
+          "observed_frequency",
+          "last_change_at",
+          "updated_at"
+        ],
+        "rows": []
+      },
+      "patient_adaptation_timeline": {
+        "headers": [
+          "user_id",
+          "event_id",
+          "event_at",
+          "event_type",
+          "source",
+          "scope",
+          "behaviour_key",
+          "signal",
+          "rule_applied",
+          "outcome",
+          "reason",
+          "previous_state",
+          "new_state",
+          "changed_fields",
+          "selected_asset_id",
+          "selected_media_kind",
+          "nudge_id",
+          "interaction_id"
+        ],
+        "rows": []
+      }
+    },
+    "database": {
+      "adaptation_envelopes": [
+        {
+          "action_text": "Be in bed by 10pm",
+          "pillar": "sleep",
+          "category": "establish",
+          "user_id": "synthetic-1",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "status": "approved",
+          "automatic_schedule_apply": true,
+          "formats": [
+            "paper",
+            "video"
+          ],
+          "summary_lengths": [
+            "short",
+            "detailed"
+          ],
+          "tones": [
+            "encouraging",
+            "neutral_informational"
+          ],
+          "earliest_time": "08:00",
+          "latest_time": "20:00",
+          "frequency_min": 1,
+          "frequency_max": 3,
+          "action_alternatives": [
+            "Be in bed by 10pm"
+          ],
+          "approved_asset_ids": [
+            "asset-paper",
+            "asset-video"
+          ]
+        }
+      ],
+      "media_assets": [
+        {
+          "asset_id": "asset-paper",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "media_kind": "paper",
+          "status": "approved",
+          "source_url": "https://example.test/paper",
+          "title": "Synthetic paper resource",
+          "source_name": "Synthetic approved pool",
+          "short_summary": "SHORT synthetic explanation.",
+          "detailed_summary": "DETAILED synthetic explanation with additional context for this controlled software evaluation."
+        },
+        {
+          "asset_id": "asset-video",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "media_kind": "video",
+          "status": "approved",
+          "source_url": "https://example.test/video",
+          "title": "Synthetic video resource",
+          "source_name": "Synthetic approved pool",
+          "short_summary": "SHORT synthetic explanation.",
+          "detailed_summary": "DETAILED synthetic explanation with additional context for this controlled software evaluation."
+        }
+      ],
+      "media_candidates": [],
+      "media_search_jobs": [],
+      "tracked_links": [],
+      "patient_adaptation_state": [],
+      "user_adaptation_state": [
+        {
+          "user_id": "synthetic-1",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "preferred_time": "09:00",
+          "preferred_frequency": 2,
+          "preferred_format": "paper",
+          "preferred_summary_length": "detailed",
+          "format_scores": {},
+          "asset_history": []
+        }
+      ],
+      "adaptation_decisions": [],
+      "interaction_events": [
+        {
+          "interaction_id": "old-positive",
+          "user_id": "synthetic-1",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "nudge_id": "history",
+          "event_type": "inbound_reply",
+          "body": "Thanks",
+          "event_at": "2026-09-28T00:05:00.000Z",
+          "processed_at": "2026-09-28T00:06:00.000Z"
+        }
+      ]
+    }
+  },
+  "database_requests": [
+    {
+      "table": "interaction_events",
+      "method": "GET",
+      "query": "?processed_at=is.null&event_type=in.(inbound_reply,link_visit)&select=*&order=event_at.asc&limit=1",
+      "payload": null
+    }
+  ],
+  "elapsed_ms": 0.6734579999999823,
+  "api_ms": 0,
+  "local_ms": 0.6734579999999823,
+  "api_calls": 0,
+  "failed_checks": [],
+  "success": true,
+  "constraint_violations": [],
+  "repeat": 1
+}

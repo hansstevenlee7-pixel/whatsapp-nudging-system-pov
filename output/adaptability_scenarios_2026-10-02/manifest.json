@@ -1,0 +1,51 @@
+{
+  "created_at": "2026-10-02T01:03:01.017Z",
+  "configuration_sha256": "1c4dc5d95466757c09b1964433c14237f3c32ff5039310c9706d5fd0e667de5b",
+  "configuration": {
+    "protocol_version": "adaptability-scenarios-v1",
+    "seeds": [
+      5128,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "weeks": 12,
+    "shift_week": 7,
+    "part_a_arms": [
+      "fixed_2",
+      "deterministic",
+      "model_selector",
+      "model_operative",
+      "oracle"
+    ],
+    "part_b_arms": [
+      "fixed_2",
+      "deterministic",
+      "model_selector",
+      "model_operative"
+    ],
+    "source_hashes": {
+      "scripts/adaptability-scenarios/PROTOCOL.md": "4463e61b07a76af4956cdcacaccddd4d759ef50cb1ad2cdb0f27e32565b8c47c",
+      "scripts/adaptability-scenarios/core.js": "2c0fd42b814d9cc5bddfcfd536ebabf3c8225090bafb450c957302d8b58a241e",
+      "scripts/adaptability-scenarios/run.js": "1cc89b11bc1879ac2f3f21238762899feb716934e9060909da707f0f86f9a033",
+      "scripts/policy-baselines.js": "957966d80190c9a4a92c4aa53286db1f5efe471b238079fd6f2d920f5987a628",
+      "scripts/generate-frequency-dataset.js": "56322a7cf8dab59b18d463095fd7f2cbc3dc47ddee1cc47f5b1047c6dae2de8b",
+      "landing/api/_lib/frequency-model.js": "888c25e75b8806e73323eb6b74a8949e1e7059791d6446494d58ebe9f601cc94",
+      "landing/api/_lib/frequency-shadow.js": "fc6e5cf1b7e8bf05134305d03f1d496a382cc32426197451c1f17b29fcfb11ef",
+      "landing/api/_lib/behaviour-policy.js": "b3305e8063ccd99c9e90e202c99da7c9a3739d95352f0bd327696fff5e6656fd",
+      "landing/api/_lib/adaptive-core.js": "91720c0fe0e6b84f0a9a0644a1435069d2468e5f1bee7b14bd13e5e18353d811",
+      "landing/api/_models/frequency-logistic-v1.json": "971e347d95f2d2eaf207db7d0d9978defe97df871eeb94068903eb989321aaa2"
+    }
+  },
+  "node": "v24.13.1",
+  "git_commit": "869cbe4efbbdeb4ad2eaa08ee180ddcd53801adf",
+  "working_tree": "dirty; source-snapshot/ and source_hashes are authoritative",
+  "network": "none",
+  "model_retraining": "none"
+}

@@ -1,0 +1,8 @@
+{
+  "seed": 5128,
+  "users": 300,
+  "weeks": 12,
+  "rows": 7208,
+  "positive_rows": 1380,
+  "dataset_sha256": "b332923d43e528836c39259fbc35f99485601c60d5db33eddb0d9b3348f3a523"
+}

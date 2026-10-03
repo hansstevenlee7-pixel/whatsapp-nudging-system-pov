@@ -1,0 +1,300 @@
+{
+  "cache_key": "24c74f6e82fca49242f4b48d69ec61db6df798e63b169a23f5a28203f28a2a60",
+  "model": "gemini-2.5-flash",
+  "request": {
+    "systemInstruction": {
+      "parts": [
+        {
+          "text": "You are a bounded weekly communication-frequency policy in a synthetic research experiment.\nFor EACH listed context, select an eligible frequency of 1, 2, or 3 messages per week to maximise ordinary interactions per delivered message.\nOrdinary interaction means a tracked-link visit or ordinary reply within 24 hours, NOT adherence or health benefit.\nThe contexts enumerate ALL possible four-message history states, not an actual user population or its distribution.\nEvaluate every context independently. You receive only observed data. Do not invent user preferences or assume that silence implies a preference.\nUse current context and historical evidence; lower frequency breaks a true tie. Never choose outside eligible_frequencies.\nThe training_cells table contains exact counts, not recommendations. Columns are:\n[current_frequency, recent_interaction_rate, noninteraction_streak, has_previous_interaction, candidate_frequency, delivered_count, interaction_count].\nHistory features use the last four observed message outcomes. current_frequency is the preceding week's assigned frequency;\ncandidate_frequency is the frequency assigned for the row's week. History can change between messages within a week.\nThe candidate-times-rate and candidate-times-streak interactions can be derived from these columns.\nRows with the same feature values are combined without loss of counts. Absence of a cell is not a zero response probability.\nAll training cells precede the current decision week. No hidden user characteristics or future responses are available.\nReturn only JSON with a decisions array containing each context_index exactly once, its integer frequency, and a brief evidence-based reason (at most 20 words)."
+        }
+      ]
+    },
+    "contents": [
+      {
+        "role": "user",
+        "parts": [
+          {
+            "text": "{\"contexts\":[{\"context_index\":0,\"current_frequency\":1,\"recent_interaction_rate\":0.25,\"noninteraction_streak\":3,\"has_previous_interaction\":1,\"eligible_frequencies\":[1,2]},{\"context_index\":1,\"current_frequency\":1,\"recent_interaction_rate\":0.25,\"noninteraction_streak\":2,\"has_previous_interaction\":1,\"eligible_frequencies\":[1,2]},{\"context_index\":2,\"current_frequency\":1,\"recent_interaction_rate\":0.5,\"noninteraction_streak\":2,\"has_previous_interaction\":1,\"eligible_frequencies\":[1,2]},{\"context_index\":3,\"current_frequency\":1,\"recent_interaction_rate\":0.25,\"noninteraction_streak\":1,\"has_previous_interaction\":1,\"eligible_frequencies\":[1,2]},{\"context_index\":4,\"current_frequency\":1,\"recent_interaction_rate\":0.5,\"noninteraction_streak\":1,\"has_previous_interaction\":1,\"eligible_frequencies\":[1,2]},{\"context_index\":5,\"current_frequency\":1,\"recent_interaction_rate\":0.75,\"noninteraction_streak\":1,\"has_previous_interaction\":1,\"eligible_frequencies\":[1,2]},{\"context_index\":6,\"current_frequency\":1,\"recent_interaction_rate\":0.25,\"noninteraction_streak\":0,\"has_previous_interaction\":1,\"eligible_frequencies\":[1,2]},{\"context_index\":7,\"current_frequency\":1,\"recent_interaction_rate\":0.5,\"noninteraction_streak\":0,\"has_previous_interaction\":1,\"eligible_frequencies\":[1,2]},{\"context_index\":8,\"current_frequency\":1,\"recent_interaction_rate\":0.75,\"noninteraction_streak\":0,\"has_previous_interaction\":1,\"eligible_frequencies\":[1,2]},{\"context_index\":9,\"current_frequency\":1,\"recent_interaction_rate\":1,\"noninteraction_streak\":0,\"has_previous_interaction\":1,\"eligible_frequencies\":[1,2]},{\"context_index\":10,\"current_frequency\":2,\"recent_interaction_rate\":0,\"noninteraction_streak\":4,\"has_previous_interaction\":0,\"eligible_frequencies\":[1,2]},{\"context_index\":11,\"current_frequency\":2,\"recent_interaction_rate\":0.25,\"noninteraction_streak\":3,\"has_previous_interaction\":1,\"eligible_frequencies\":[1,2,3]},{\"context_index\":12,\"current_frequency\":2,\"recent_interaction_rate\":0.25,\"noninteraction_streak\":2,\"has_previous_interaction\":1,\"eligible_frequencies\":[1,2,3]},{\"context_index\":13,\"current_frequency\":2,\"recent_interaction_rate\":0.5,\"noninteraction_streak\":2,\"has_previous_interaction\":1,\"eligible_frequencies\":[1,2,3]},{\"context_index\":14,\"current_frequency\":2,\"recent_interaction_rate\":0.25,\"noninteraction_streak\":1,\"has_previous_interaction\":1,\"eligible_frequencies\":[1,2,3]},{\"context_index\":15,\"current_frequency\":2,\"recent_interaction_rate\":0.5,\"noninteraction_streak\":1,\"has_previous_interaction\":1,\"eligible_frequencies\":[1,2,3]},{\"context_index\":16,\"current_frequency\":2,\"recent_interaction_rate\":0.75,\"noninteraction_streak\":1,\"has_previous_interaction\":1,\"eligible_frequencies\":[1,2,3]},{\"context_index\":17,\"current_frequency\":2,\"recent_interaction_rate\":0.25,\"noninteraction_streak\":0,\"has_previous_interaction\":1,\"eligible_frequencies\":[1,2,3]},{\"context_index\":18,\"current_frequency\":2,\"recent_interaction_rate\":0.5,\"noninteraction_streak\":0,\"has_previous_interaction\":1,\"eligible_frequencies\":[1,2,3]},{\"context_index\":19,\"current_frequency\":2,\"recent_interaction_rate\":0.75,\"noninteraction_streak\":0,\"has_previous_interaction\":1,\"eligible_frequencies\":[1,2,3]},{\"context_index\":20,\"current_frequency\":2,\"recent_interaction_rate\":1,\"noninteraction_streak\":0,\"has_previous_interaction\":1,\"eligible_frequencies\":[1,2,3]},{\"context_index\":21,\"current_frequency\":3,\"recent_interaction_rate\":0,\"noninteraction_streak\":4,\"has_previous_interaction\":0,\"eligible_frequencies\":[2,3]},{\"context_index\":22,\"current_frequency\":3,\"recent_interaction_rate\":0.25,\"noninteraction_streak\":3,\"has_previous_interaction\":1,\"eligible_frequencies\":[2,3]},{\"context_index\":23,\"current_frequency\":3,\"recent_interaction_rate\":0.25,\"noninteraction_streak\":2,\"has_previous_interaction\":1,\"eligible_frequencies\":[2,3]},{\"context_index\":24,\"current_frequency\":3,\"recent_interaction_rate\":0.5,\"noninteraction_streak\":2,\"has_previous_interaction\":1,\"eligible_frequencies\":[2,3]},{\"context_index\":25,\"current_frequency\":3,\"recent_interaction_rate\":0.25,\"noninteraction_streak\":1,\"has_previous_interaction\":1,\"eligible_frequencies\":[2,3]},{\"context_index\":26,\"current_frequency\":3,\"recent_interaction_rate\":0.5,\"noninteraction_streak\":1,\"has_previous_interaction\":1,\"eligible_frequencies\":[2,3]},{\"context_index\":27,\"current_frequency\":3,\"recent_interaction_rate\":0.75,\"noninteraction_streak\":1,\"has_previous_interaction\":1,\"eligible_frequencies\":[2,3]},{\"context_index\":28,\"current_frequency\":3,\"recent_interaction_rate\":0.25,\"noninteraction_streak\":0,\"has_previous_interaction\":1,\"eligible_frequencies\":[2,3]},{\"context_index\":29,\"current_frequency\":3,\"recent_interaction_rate\":0.5,\"noninteraction_streak\":0,\"has_previous_interaction\":1,\"eligible_frequencies\":[2,3]},{\"context_index\":30,\"current_frequency\":3,\"recent_interaction_rate\":0.75,\"noninteraction_streak\":0,\"has_previous_interaction\":1,\"eligible_frequencies\":[2,3]},{\"context_index\":31,\"current_frequency\":3,\"recent_interaction_rate\":1,\"noninteraction_streak\":0,\"has_previous_interaction\":1,\"eligible_frequencies\":[2,3]}],\"training_cells\":[[1,0,1,0,1,20,3],[1,0,1,0,2,21,4],[1,0,1,0,3,19,1],[1,0,2,0,1,6,1],[1,0,2,0,2,21,5],[1,0,2,0,3,25,0],[1,0,3,0,1,5,0],[1,0,3,0,2,6,0],[1,0,3,0,3,34,2],[1,0,4,0,1,100,4],[1,0,4,0,2,204,16],[1,0,4,0,3,250,17],[1,0.25,0,1,1,4,1],[1,0.25,0,1,2,24,11],[1,0.25,0,1,3,24,8],[1,0.25,1,1,1,4,1],[1,0.25,1,1,2,12,0],[1,0.25,1,1,3,26,5],[1,0.25,2,1,1,7,1],[1,0.25,2,1,2,14,3],[1,0.25,2,1,3,25,9],[1,0.25,3,1,1,9,0],[1,0.25,3,1,2,17,3],[1,0.25,3,1,3,18,5],[1,0.3333333333333333,0,1,1,1,0],[1,0.3333333333333333,0,1,2,1,1],[1,0.3333333333333333,0,1,3,2,0],[1,0.3333333333333333,1,1,2,2,0],[1,0.3333333333333333,1,1,3,1,0],[1,0.3333333333333333,2,1,3,4,1],[1,0.5,0,1,1,5,0],[1,0.5,0,1,2,23,6],[1,0.5,0,1,3,27,9],[1,0.5,1,1,1,5,1],[1,0.5,1,1,2,23,12],[1,0.5,1,1,3,19,6],[1,0.5,2,1,1,7,1],[1,0.5,2,1,2,3,0],[1,0.5,2,1,3,11,2],[1,0.6666666666666666,0,1,2,1,1],[1,0.6666666666666666,0,1,3,5,1],[1,0.6666666666666666,1,1,1,4,1],[1,0.6666666666666666,1,1,2,1,1],[1,0.6666666666666666,1,1,3,2,1],[1,0.75,0,1,1,5,2],[1,0.75,0,1,2,18,13],[1,0.75,0,1,3,16,7],[1,0.75,1,1,1,4,2],[1,0.75,1,1,2,7,6],[1,0.75,1,1,3,11,5],[1,1,0,1,1,5,2],[1,1,0,1,2,28,13],[1,1,0,1,3,21,14],[2,0,0,0,1,82,22],[2,0,0,0,2,90,30],[2,0,0,0,3,68,8],[2,0,1,0,2,60,10],[2,0,1,0,3,60,5],[2,0,2,0,1,14,2],[2,0,2,0,2,22,5],[2,0,2,0,3,69,3],[2,0,3,0,1,4,2],[2,0,3,0,2,21,4],[2,0,3,0,3,19,2],[2,0,4,0,1,93,8],[2,0,4,0,2,237,22],[2,0,4,0,3,270,13],[2,0.25,0,1,1,8,3],[2,0.25,0,1,2,29,13],[2,0.25,0,1,3,22,8],[2,0.25,1,1,1,12,2],[2,0.25,1,1,2,17,5],[2,0.25,1,1,3,23,3],[2,0.25,2,1,1,6,1],[2,0.25,2,1,2,15,3],[2,0.25,2,1,3,32,4],[2,0.25,3,1,1,15,4],[2,0.25,3,1,2,18,6],[2,0.25,3,1,3,32,5],[2,0.3333333333333333,0,1,1,1,0],[2,0.3333333333333333,0,1,2,6,2],[2,0.3333333333333333,0,1,3,2,0],[2,0.3333333333333333,1,1,1,2,0],[2,0.3333333333333333,1,1,2,1,0],[2,0.3333333333333333,1,1,3,5,3],[2,0.3333333333333333,2,1,1,2,1],[2,0.3333333333333333,2,1,2,7,3],[2,0.3333333333333333,2,1,3,8,0],[2,0.5,0,1,1,14,7],[2,0.5,0,1,2,19,8],[2,0.5,0,1,3,36,10],[2,0.5,1,1,1,6,1],[2,0.5,1,1,2,17,5],[2,0.5,1,1,3,34,7],[2,0.5,2,1,1,1,0],[2,0.5,2,1,2,9,1],[2,0.5,2,1,3,20,6],[2,0.6666666666666666,0,1,2,7,5],[2,0.6666666666666666,0,1,3,1,0],[2,0.6666666666666666,1,1,2,1,0],[2,0.6666666666666666,1,1,3,6,0],[2,0.75,0,1,1,11,6],[2,0.75,0,1,2,20,16],[2,0.75,0,1,3,19,7],[2,0.75,1,1,2,5,3],[2,0.75,1,1,3,12,4],[2,1,0,1,1,16,7],[2,1,0,1,2,53,34],[2,1,0,1,3,33,18],[3,0,3,0,1,12,0],[3,0,3,0,2,19,3],[3,0,3,0,3,21,1],[3,0,4,0,1,101,11],[3,0,4,0,2,218,17],[3,0,4,0,3,329,9],[3,0.25,0,1,1,4,0],[3,0.25,0,1,2,21,9],[3,0.25,0,1,3,16,4],[3,0.25,1,1,1,6,0],[3,0.25,1,1,2,7,2],[3,0.25,1,1,3,15,4],[3,0.25,2,1,1,7,0],[3,0.25,2,1,2,9,1],[3,0.25,2,1,3,17,2],[3,0.25,3,1,1,8,1],[3,0.25,3,1,2,20,3],[3,0.25,3,1,3,32,7],[3,0.3333333333333333,0,1,2,3,1],[3,0.3333333333333333,1,1,1,2,1],[3,0.3333333333333333,1,1,2,1,1],[3,0.3333333333333333,2,1,1,1,0],[3,0.3333333333333333,2,1,2,1,1],[3,0.3333333333333333,2,1,3,1,0],[3,0.5,0,1,1,8,1],[3,0.5,0,1,2,18,8],[3,0.5,0,1,3,18,6],[3,0.5,1,1,1,8,3],[3,0.5,1,1,2,10,0],[3,0.5,1,1,3,12,7],[3,0.5,2,1,1,5,1],[3,0.5,2,1,2,4,1],[3,0.5,2,1,3,9,2],[3,0.6666666666666666,0,1,1,1,1],[3,0.6666666666666666,0,1,3,1,1],[3,0.6666666666666666,1,1,3,1,1],[3,0.75,0,1,1,9,2],[3,0.75,0,1,2,8,5],[3,0.75,0,1,3,18,11],[3,0.75,1,1,2,5,2],[3,0.75,1,1,3,7,4],[3,1,0,1,1,5,2],[3,1,0,1,2,8,4],[3,1,0,1,3,19,13]]}"
+          }
+        ]
+      }
+    ],
+    "generationConfig": {
+      "temperature": 0,
+      "maxOutputTokens": 4096,
+      "thinkingConfig": {
+        "thinkingBudget": 0
+      },
+      "responseMimeType": "application/json",
+      "responseJsonSchema": {
+        "type": "object",
+        "properties": {
+          "decisions": {
+            "type": "array",
+            "minItems": 32,
+            "maxItems": 32,
+            "items": {
+              "type": "object",
+              "properties": {
+                "context_index": {
+                  "type": "integer"
+                },
+                "frequency": {
+                  "type": "integer",
+                  "enum": [
+                    1,
+                    2,
+                    3
+                  ]
+                },
+                "reason": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "context_index",
+                "frequency",
+                "reason"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "decisions"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "response": {
+    "candidates": [
+      {
+        "content": {
+          "parts": [
+            {
+              "text": "{\"decisions\":[{\"context_index\":0,\"frequency\":2,\"reason\":\"Frequency 2 has a higher interaction rate (3/17 = 0.176) than frequency 1 (0/9 = 0).\"},{\"context_index\":1,\"frequency\":2,\"reason\":\"Frequency 2 has a higher interaction rate (3/14 = 0.214) than frequency 1 (1/7 = 0.143).\"},{\"context_index\":2,\"frequency\":1,\"reason\":\"Frequency 1 has a higher interaction rate (1/7 = 0.143) than frequency 2 (0/3 = 0).\"},{\"context_index\":3,\"frequency\":1,\"reason\":\"Frequency 1 has a higher interaction rate (1/4 = 0.25) than frequency 2 (0/12 = 0).\"},{\"context_index\":4,\"frequency\":2,\"reason\":\"Frequency 2 has a higher interaction rate (12/23 = 0.522) than frequency 1 (1/5 = 0.2).\"},{\"context_index\":5,\"frequency\":2,\"reason\":\"Frequency 2 has a higher interaction rate (6/7 = 0.857) than frequency 1 (2/4 = 0.5).\"},{\"context_index\":6,\"frequency\":2,\"reason\":\"Frequency 2 has a higher interaction rate (11/24 = 0.458) than frequency 1 (1/4 = 0.25).\"},{\"context_index\":7,\"frequency\":2,\"reason\":\"Frequency 2 has a higher interaction rate (6/23 = 0.261) than frequency 1 (0/5 = 0).\"},{\"context_index\":8,\"frequency\":2,\"reason\":\"Frequency 2 has a higher interaction rate (13/18 = 0.722) than frequency 1 (2/5 = 0.4).\"},{\"context_index\":9,\"frequency\":2,\"reason\":\"Frequency 2 has a higher interaction rate (13/28 = 0.464) than frequency 1 (2/5 = 0.4).\"},{\"context_index\":10,\"frequency\":2,\"reason\":\"Frequency 2 has a higher interaction rate (22/237 = 0.093) than frequency 1 (8/93 = 0.086).\"},{\"context_index\":11,\"frequency\":2,\"reason\":\"Frequency 2 has a higher interaction rate (6/18 = 0.333) than frequency 1 (4/15 = 0.267) and frequency 3 (5/32 = 0.156).\"},{\"context_index\":12,\"frequency\":2,\"reason\":\"Frequency 2 has a higher interaction rate (3/15 = 0.2) than frequency 1 (1/6 = 0.167) and frequency 3 (4/32 = 0.125).\"},{\"context_index\":13,\"frequency\":3,\"reason\":\"Frequency 3 has a higher interaction rate (6/20 = 0.3) than frequency 1 (0/1 = 0) and frequency 2 (1/9 = 0.111).\"},{\"context_index\":14,\"frequency\":2,\"reason\":\"Frequency 2 has a higher interaction rate (5/17 = 0.294) than frequency 1 (2/12 = 0.167) and frequency 3 (3/23 = 0.13).\"},{\"context_index\":15,\"frequency\":3,\"reason\":\"Frequency 3 has a higher interaction rate (7/34 = 0.206) than frequency 1 (1/6 = 0.167) and frequency 2 (5/17 = 0.294).\"},{\"context_index\":16,\"frequency\":2,\"reason\":\"Frequency 2 has a higher interaction rate (3/5 = 0.6) than frequency 3 (4/12 = 0.333).\"},{\"context_index\":17,\"frequency\":2,\"reason\":\"Frequency 2 has a higher interaction rate (13/29 = 0.448) than frequency 1 (3/8 = 0.375) and frequency 3 (8/22 = 0.364).\"},{\"context_index\":18,\"frequency\":2,\"reason\":\"Frequency 2 has a higher interaction rate (8/19 = 0.421) than frequency 1 (7/14 = 0.5) and frequency 3 (10/36 = 0.278).\"},{\"context_index\":19,\"frequency\":2,\"reason\":\"Frequency 2 has a higher interaction rate (16/20 = 0.8) than frequency 1 (6/11 = 0.545) and frequency 3 (7/19 = 0.368).\"},{\"context_index\":20,\"frequency\":2,\"reason\":\"Frequency 2 has a higher interaction rate (34/53 = 0.642) than frequency 1 (7/16 = 0.438) and frequency 3 (18/33 = 0.545).\"},{\"context_index\":21,\"frequency\":2,\"reason\":\"Frequency 2 has a higher interaction rate (17/218 = 0.078) than frequency 3 (9/329 = 0.027).\"},{\"context_index\":22,\"frequency\":3,\"reason\":\"Frequency 3 has a higher interaction rate (7/32 = 0.219) than frequency 2 (3/20 = 0.15).\"},{\"context_index\":23,\"frequency\":3,\"reason\":\"Frequency 3 has a higher interaction rate (2/17 = 0.118) than frequency 2 (1/9 = 0.111).\"},{\"context_index\":24,\"frequency\":3,\"reason\":\"Frequency 3 has a higher interaction rate (2/9 = 0.222) than frequency 2 (1/4 = 0.25).\"},{\"context_index\":25,\"frequency\":3,\"reason\":\"Frequency 3 has a higher interaction rate (4/15 = 0.267) than frequency 2 (2/7 = 0.286).\"},{\"context_index\":26,\"frequency\":3,\"reason\":\"Frequency 3 has a higher interaction rate (7/12 = 0.583) than frequency 2 (0/10 = 0).\"},{\"context_index\":27,\"frequency\":3,\"reason\":\"Frequency 3 has a higher interaction rate (4/7 = 0.571) than frequency 2 (2/5 = 0.4).\"},{\"context_index\":28,\"frequency\":2,\"reason\":\"Frequency 2 has a higher interaction rate (9/21 = 0.429) than frequency 3 (4/16 = 0.25).\"},{\"context_index\":29,\"frequency\":2,\"reason\":\"Frequency 2 has a higher interaction rate (8/18 = 0.444) than frequency 3 (6/18 = 0.333).\"},{\"context_index\":30,\"frequency\":3,\"reason\":\"Frequency 3 has a higher interaction rate (11/18 = 0.611) than frequency 2 (5/8 = 0.625).\"},{\"context_index\":31,\"frequency\":3,\"reason\":\"Frequency 3 has a higher interaction rate (13/19 = 0.684) than frequency 2 (4/8 = 0.5).\"}]}"
+            }
+          ],
+          "role": "model"
+        },
+        "finishReason": "STOP",
+        "index": 0
+      }
+    ],
+    "usageMetadata": {
+      "promptTokenCount": 4892,
+      "candidatesTokenCount": 1749,
+      "totalTokenCount": 6641,
+      "cachedContentTokenCount": 1867,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 4892
+        }
+      ],
+      "cacheTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 1867
+        }
+      ],
+      "serviceTier": "standard"
+    },
+    "modelVersion": "gemini-2.5-flash",
+    "responseId": "ire8ar61N5f71e8P-MmSwA8"
+  },
+  "table": [
+    {
+      "context_index": 0,
+      "frequency": 2,
+      "reason": "Frequency 2 has a higher interaction rate (3/17 = 0.176) than frequency 1 (0/9 = 0)."
+    },
+    {
+      "context_index": 1,
+      "frequency": 2,
+      "reason": "Frequency 2 has a higher interaction rate (3/14 = 0.214) than frequency 1 (1/7 = 0.143)."
+    },
+    {
+      "context_index": 2,
+      "frequency": 1,
+      "reason": "Frequency 1 has a higher interaction rate (1/7 = 0.143) than frequency 2 (0/3 = 0)."
+    },
+    {
+      "context_index": 3,
+      "frequency": 1,
+      "reason": "Frequency 1 has a higher interaction rate (1/4 = 0.25) than frequency 2 (0/12 = 0)."
+    },
+    {
+      "context_index": 4,
+      "frequency": 2,
+      "reason": "Frequency 2 has a higher interaction rate (12/23 = 0.522) than frequency 1 (1/5 = 0.2)."
+    },
+    {
+      "context_index": 5,
+      "frequency": 2,
+      "reason": "Frequency 2 has a higher interaction rate (6/7 = 0.857) than frequency 1 (2/4 = 0.5)."
+    },
+    {
+      "context_index": 6,
+      "frequency": 2,
+      "reason": "Frequency 2 has a higher interaction rate (11/24 = 0.458) than frequency 1 (1/4 = 0.25)."
+    },
+    {
+      "context_index": 7,
+      "frequency": 2,
+      "reason": "Frequency 2 has a higher interaction rate (6/23 = 0.261) than frequency 1 (0/5 = 0)."
+    },
+    {
+      "context_index": 8,
+      "frequency": 2,
+      "reason": "Frequency 2 has a higher interaction rate (13/18 = 0.722) than frequency 1 (2/5 = 0.4)."
+    },
+    {
+      "context_index": 9,
+      "frequency": 2,
+      "reason": "Frequency 2 has a higher interaction rate (13/28 = 0.464) than frequency 1 (2/5 = 0.4)."
+    },
+    {
+      "context_index": 10,
+      "frequency": 2,
+      "reason": "Frequency 2 has a higher interaction rate (22/237 = 0.093) than frequency 1 (8/93 = 0.086)."
+    },
+    {
+      "context_index": 11,
+      "frequency": 2,
+      "reason": "Frequency 2 has a higher interaction rate (6/18 = 0.333) than frequency 1 (4/15 = 0.267) and frequency 3 (5/32 = 0.156)."
+    },
+    {
+      "context_index": 12,
+      "frequency": 2,
+      "reason": "Frequency 2 has a higher interaction rate (3/15 = 0.2) than frequency 1 (1/6 = 0.167) and frequency 3 (4/32 = 0.125)."
+    },
+    {
+      "context_index": 13,
+      "frequency": 3,
+      "reason": "Frequency 3 has a higher interaction rate (6/20 = 0.3) than frequency 1 (0/1 = 0) and frequency 2 (1/9 = 0.111)."
+    },
+    {
+      "context_index": 14,
+      "frequency": 2,
+      "reason": "Frequency 2 has a higher interaction rate (5/17 = 0.294) than frequency 1 (2/12 = 0.167) and frequency 3 (3/23 = 0.13)."
+    },
+    {
+      "context_index": 15,
+      "frequency": 3,
+      "reason": "Frequency 3 has a higher interaction rate (7/34 = 0.206) than frequency 1 (1/6 = 0.167) and frequency 2 (5/17 = 0.294)."
+    },
+    {
+      "context_index": 16,
+      "frequency": 2,
+      "reason": "Frequency 2 has a higher interaction rate (3/5 = 0.6) than frequency 3 (4/12 = 0.333)."
+    },
+    {
+      "context_index": 17,
+      "frequency": 2,
+      "reason": "Frequency 2 has a higher interaction rate (13/29 = 0.448) than frequency 1 (3/8 = 0.375) and frequency 3 (8/22 = 0.364)."
+    },
+    {
+      "context_index": 18,
+      "frequency": 2,
+      "reason": "Frequency 2 has a higher interaction rate (8/19 = 0.421) than frequency 1 (7/14 = 0.5) and frequency 3 (10/36 = 0.278)."
+    },
+    {
+      "context_index": 19,
+      "frequency": 2,
+      "reason": "Frequency 2 has a higher interaction rate (16/20 = 0.8) than frequency 1 (6/11 = 0.545) and frequency 3 (7/19 = 0.368)."
+    },
+    {
+      "context_index": 20,
+      "frequency": 2,
+      "reason": "Frequency 2 has a higher interaction rate (34/53 = 0.642) than frequency 1 (7/16 = 0.438) and frequency 3 (18/33 = 0.545)."
+    },
+    {
+      "context_index": 21,
+      "frequency": 2,
+      "reason": "Frequency 2 has a higher interaction rate (17/218 = 0.078) than frequency 3 (9/329 = 0.027)."
+    },
+    {
+      "context_index": 22,
+      "frequency": 3,
+      "reason": "Frequency 3 has a higher interaction rate (7/32 = 0.219) than frequency 2 (3/20 = 0.15)."
+    },
+    {
+      "context_index": 23,
+      "frequency": 3,
+      "reason": "Frequency 3 has a higher interaction rate (2/17 = 0.118) than frequency 2 (1/9 = 0.111)."
+    },
+    {
+      "context_index": 24,
+      "frequency": 3,
+      "reason": "Frequency 3 has a higher interaction rate (2/9 = 0.222) than frequency 2 (1/4 = 0.25)."
+    },
+    {
+      "context_index": 25,
+      "frequency": 3,
+      "reason": "Frequency 3 has a higher interaction rate (4/15 = 0.267) than frequency 2 (2/7 = 0.286)."
+    },
+    {
+      "context_index": 26,
+      "frequency": 3,
+      "reason": "Frequency 3 has a higher interaction rate (7/12 = 0.583) than frequency 2 (0/10 = 0)."
+    },
+    {
+      "context_index": 27,
+      "frequency": 3,
+      "reason": "Frequency 3 has a higher interaction rate (4/7 = 0.571) than frequency 2 (2/5 = 0.4)."
+    },
+    {
+      "context_index": 28,
+      "frequency": 2,
+      "reason": "Frequency 2 has a higher interaction rate (9/21 = 0.429) than frequency 3 (4/16 = 0.25)."
+    },
+    {
+      "context_index": 29,
+      "frequency": 2,
+      "reason": "Frequency 2 has a higher interaction rate (8/18 = 0.444) than frequency 3 (6/18 = 0.333)."
+    },
+    {
+      "context_index": 30,
+      "frequency": 3,
+      "reason": "Frequency 3 has a higher interaction rate (11/18 = 0.611) than frequency 2 (5/8 = 0.625)."
+    },
+    {
+      "context_index": 31,
+      "frequency": 3,
+      "reason": "Frequency 3 has a higher interaction rate (13/19 = 0.684) than frequency 2 (4/8 = 0.5)."
+    }
+  ],
+  "metadata": {
+    "source": "gemini",
+    "fallback": false,
+    "attempts": [
+      {
+        "status": 200,
+        "latency_ms": 7881,
+        "usage": {
+          "promptTokenCount": 4892,
+          "candidatesTokenCount": 1749,
+          "totalTokenCount": 6641,
+          "cachedContentTokenCount": 1867,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 4892
+            }
+          ],
+          "cacheTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 1867
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "model_version": "gemini-2.5-flash"
+      }
+    ],
+    "model_version": "gemini-2.5-flash"
+  }
+}

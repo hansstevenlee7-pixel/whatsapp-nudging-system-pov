@@ -1,0 +1,258 @@
+{
+  "audited_at": "2026-10-01T07:15:01.453Z",
+  "passed": true,
+  "checks": [
+    {
+      "seed": 1,
+      "policy": "contextual_thompson",
+      "completed_weeks": 4,
+      "complete": true,
+      "reconstructed_messages": 177,
+      "passed": true
+    },
+    {
+      "seed": 1,
+      "policy": "gemini",
+      "completed_weeks": 4,
+      "complete": true,
+      "reconstructed_messages": 194,
+      "passed": true
+    },
+    {
+      "seed": 1,
+      "policy": "logistic_regression",
+      "completed_weeks": 4,
+      "complete": true,
+      "reconstructed_messages": 182,
+      "passed": true
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "completed_weeks": 4,
+      "complete": true,
+      "reconstructed_messages": 147,
+      "passed": true
+    },
+    {
+      "seed": 2,
+      "policy": "gemini",
+      "completed_weeks": 4,
+      "complete": true,
+      "reconstructed_messages": 259,
+      "passed": true
+    },
+    {
+      "seed": 2,
+      "policy": "logistic_regression",
+      "completed_weeks": 4,
+      "complete": true,
+      "reconstructed_messages": 138,
+      "passed": true
+    },
+    {
+      "seed": 3,
+      "policy": "contextual_thompson",
+      "completed_weeks": 4,
+      "complete": true,
+      "reconstructed_messages": 153,
+      "passed": true
+    },
+    {
+      "seed": 3,
+      "policy": "gemini",
+      "completed_weeks": 4,
+      "complete": true,
+      "reconstructed_messages": 243,
+      "passed": true
+    },
+    {
+      "seed": 3,
+      "policy": "logistic_regression",
+      "completed_weeks": 4,
+      "complete": true,
+      "reconstructed_messages": 153,
+      "passed": true
+    },
+    {
+      "seed": 4,
+      "policy": "contextual_thompson",
+      "completed_weeks": 4,
+      "complete": true,
+      "reconstructed_messages": 183,
+      "passed": true
+    },
+    {
+      "seed": 4,
+      "policy": "gemini",
+      "completed_weeks": 4,
+      "complete": true,
+      "reconstructed_messages": 198,
+      "passed": true
+    },
+    {
+      "seed": 4,
+      "policy": "logistic_regression",
+      "completed_weeks": 4,
+      "complete": true,
+      "reconstructed_messages": 182,
+      "passed": true
+    },
+    {
+      "seed": 5,
+      "policy": "contextual_thompson",
+      "completed_weeks": 4,
+      "complete": true,
+      "reconstructed_messages": 138,
+      "passed": true
+    },
+    {
+      "seed": 5,
+      "policy": "gemini",
+      "completed_weeks": 4,
+      "complete": true,
+      "reconstructed_messages": 219,
+      "passed": true
+    },
+    {
+      "seed": 5,
+      "policy": "logistic_regression",
+      "completed_weeks": 4,
+      "complete": true,
+      "reconstructed_messages": 129,
+      "passed": true
+    },
+    {
+      "seed": 5128,
+      "policy": "contextual_thompson",
+      "completed_weeks": 4,
+      "complete": true,
+      "reconstructed_messages": 165,
+      "passed": true
+    },
+    {
+      "seed": 5128,
+      "policy": "gemini",
+      "completed_weeks": 4,
+      "complete": true,
+      "reconstructed_messages": 221,
+      "passed": true
+    },
+    {
+      "seed": 5128,
+      "policy": "logistic_regression",
+      "completed_weeks": 4,
+      "complete": true,
+      "reconstructed_messages": 154,
+      "passed": true
+    },
+    {
+      "seed": 6,
+      "policy": "contextual_thompson",
+      "completed_weeks": 4,
+      "complete": true,
+      "reconstructed_messages": 161,
+      "passed": true
+    },
+    {
+      "seed": 6,
+      "policy": "gemini",
+      "completed_weeks": 4,
+      "complete": true,
+      "reconstructed_messages": 185,
+      "passed": true
+    },
+    {
+      "seed": 6,
+      "policy": "logistic_regression",
+      "completed_weeks": 4,
+      "complete": true,
+      "reconstructed_messages": 156,
+      "passed": true
+    },
+    {
+      "seed": 7,
+      "policy": "contextual_thompson",
+      "completed_weeks": 4,
+      "complete": true,
+      "reconstructed_messages": 169,
+      "passed": true
+    },
+    {
+      "seed": 7,
+      "policy": "gemini",
+      "completed_weeks": 4,
+      "complete": true,
+      "reconstructed_messages": 186,
+      "passed": true
+    },
+    {
+      "seed": 7,
+      "policy": "logistic_regression",
+      "completed_weeks": 4,
+      "complete": true,
+      "reconstructed_messages": 164,
+      "passed": true
+    },
+    {
+      "seed": 8,
+      "policy": "contextual_thompson",
+      "completed_weeks": 4,
+      "complete": true,
+      "reconstructed_messages": 160,
+      "passed": true
+    },
+    {
+      "seed": 8,
+      "policy": "gemini",
+      "completed_weeks": 4,
+      "complete": true,
+      "reconstructed_messages": 184,
+      "passed": true
+    },
+    {
+      "seed": 8,
+      "policy": "logistic_regression",
+      "completed_weeks": 4,
+      "complete": true,
+      "reconstructed_messages": 158,
+      "passed": true
+    },
+    {
+      "seed": 9,
+      "policy": "contextual_thompson",
+      "completed_weeks": 4,
+      "complete": true,
+      "reconstructed_messages": 169,
+      "passed": true
+    },
+    {
+      "seed": 9,
+      "policy": "gemini",
+      "completed_weeks": 4,
+      "complete": true,
+      "reconstructed_messages": 201,
+      "passed": true
+    },
+    {
+      "seed": 9,
+      "policy": "logistic_regression",
+      "completed_weeks": 4,
+      "complete": true,
+      "reconstructed_messages": 163,
+      "passed": true
+    }
+  ],
+  "checks_performed": [
+    "current and snapshot source hashes",
+    "disjoint initial training and evaluation users",
+    "prior-week-only feedback",
+    "exact public contexts",
+    "Gemini input cells and complete context enumeration",
+    "Gemini cached table validation and selected entry",
+    "frequency eligibility",
+    "matched seeded outcome reconstruction",
+    "message and interaction counters",
+    "checkpoint histories"
+  ]
+}

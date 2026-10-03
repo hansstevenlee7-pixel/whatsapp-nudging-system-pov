@@ -1,0 +1,1265 @@
+{
+  "config_sha256": "2e2154e17ed33e9c392bf6890d76d678f5dce1aa7c8d3e454ee7192cd7a8fabb",
+  "seed": 5128,
+  "policy": "gemini",
+  "next_week": 9,
+  "completed": false,
+  "users": [
+    {
+      "id": "syn_271",
+      "outcomes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "current": 3,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_272",
+      "outcomes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1
+      ],
+      "current": 3,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_273",
+      "outcomes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "current": 3,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_274",
+      "outcomes": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "current": 3,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_275",
+      "outcomes": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1
+      ],
+      "current": 1,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_276",
+      "outcomes": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        1,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "current": 1,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_277",
+      "outcomes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "current": 3,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_278",
+      "outcomes": [
+        1,
+        0,
+        0,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "current": 2,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_279",
+      "outcomes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1
+      ],
+      "current": 2,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_280",
+      "outcomes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "current": 1,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_281",
+      "outcomes": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      "current": 3,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_282",
+      "outcomes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "current": 2,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_283",
+      "outcomes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "current": 2,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_284",
+      "outcomes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0,
+        1,
+        1
+      ],
+      "current": 2,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_285",
+      "outcomes": [
+        1,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "current": 1,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_286",
+      "outcomes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1
+      ],
+      "current": 2,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_287",
+      "outcomes": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        1
+      ],
+      "current": 1,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_288",
+      "outcomes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "current": 3,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_289",
+      "outcomes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1
+      ],
+      "current": 2,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_290",
+      "outcomes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "current": 3,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_291",
+      "outcomes": [
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "current": 3,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_292",
+      "outcomes": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "current": 3,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_293",
+      "outcomes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "current": 1,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_294",
+      "outcomes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "current": 2,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_295",
+      "outcomes": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "current": 2,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_296",
+      "outcomes": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "current": 2,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_297",
+      "outcomes": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "current": 1,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_298",
+      "outcomes": [
+        0,
+        1,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "current": 2,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_299",
+      "outcomes": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      "current": 3,
+      "previous_direction": "hold"
+    },
+    {
+      "id": "syn_300",
+      "outcomes": [
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "current": 2,
+      "previous_direction": "hold"
+    }
+  ],
+  "online_rows": [],
+  "decisions": [
+    {
+      "seed": 5128,
+      "policy": "gemini",
+      "week": 9,
+      "user_id": "syn_271",
+      "context": {
+        "current_frequency": 3,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        2,
+        3
+      ],
+      "cells_sha256": "1cfad43e0f6b139ef947b8324eb1a7a52ed28384c40234a3ba4d374e465ecb05",
+      "proposed_frequency": 2,
+      "reason": "Frequency 2 has a higher interaction rate (23/180 = 0.128) than frequency 3 (22/370 = 0.059) for the current context.",
+      "source": "gemini",
+      "fallback": false,
+      "attempts": [
+        {
+          "status": 200,
+          "latency_ms": 1847,
+          "usage": {
+            "promptTokenCount": 3501,
+            "candidatesTokenCount": 55,
+            "totalTokenCount": 3556,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 3501
+              }
+            ],
+            "serviceTier": "standard"
+          },
+          "model_version": "gemini-2.5-flash"
+        }
+      ],
+      "model_version": "gemini-2.5-flash",
+      "cache_key": "43f6a161846dd035e80d16ea0313015afaa7b9386b0c81a1b350fae6aa3ad8f0",
+      "cache_hit": false,
+      "applied_frequency": 2,
+      "safety_rejected": false
+    },
+    {
+      "seed": 5128,
+      "policy": "gemini",
+      "week": 9,
+      "user_id": "syn_272",
+      "context": {
+        "current_frequency": 3,
+        "recent_interaction_rate": 0.5,
+        "noninteraction_streak": 0,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        2,
+        3
+      ],
+      "cells_sha256": "1cfad43e0f6b139ef947b8324eb1a7a52ed28384c40234a3ba4d374e465ecb05",
+      "proposed_frequency": 2,
+      "reason": "Frequency 2 has a higher interaction rate (9/18 = 0.5) than frequency 3 (11/24 = 0.458) for the given context.",
+      "source": "gemini",
+      "fallback": false,
+      "attempts": [
+        {
+          "status": 200,
+          "latency_ms": 1627,
+          "usage": {
+            "promptTokenCount": 3503,
+            "candidatesTokenCount": 50,
+            "totalTokenCount": 3553,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 3503
+              }
+            ],
+            "serviceTier": "standard"
+          },
+          "model_version": "gemini-2.5-flash"
+        }
+      ],
+      "model_version": "gemini-2.5-flash",
+      "cache_key": "cbd609f42c850ce95ae522a731052907e426a517ff541869f1e0fcfa17e78a33",
+      "cache_hit": false,
+      "applied_frequency": 2,
+      "safety_rejected": false
+    },
+    {
+      "seed": 5128,
+      "policy": "gemini",
+      "week": 9,
+      "user_id": "syn_273",
+      "context": {
+        "current_frequency": 3,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        2,
+        3
+      ],
+      "cells_sha256": "1cfad43e0f6b139ef947b8324eb1a7a52ed28384c40234a3ba4d374e465ecb05",
+      "proposed_frequency": 2,
+      "reason": "Frequency 2 has a higher interaction rate (23/180 = 0.128) than frequency 3 (22/370 = 0.059) for the current context.",
+      "source": "gemini",
+      "fallback": false,
+      "attempts": [
+        {
+          "status": 200,
+          "latency_ms": 1847,
+          "usage": {
+            "promptTokenCount": 3501,
+            "candidatesTokenCount": 55,
+            "totalTokenCount": 3556,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 3501
+              }
+            ],
+            "serviceTier": "standard"
+          },
+          "model_version": "gemini-2.5-flash"
+        }
+      ],
+      "model_version": "gemini-2.5-flash",
+      "cache_key": "43f6a161846dd035e80d16ea0313015afaa7b9386b0c81a1b350fae6aa3ad8f0",
+      "cache_hit": true,
+      "applied_frequency": 2,
+      "safety_rejected": false
+    },
+    {
+      "seed": 5128,
+      "policy": "gemini",
+      "week": 9,
+      "user_id": "syn_274",
+      "context": {
+        "current_frequency": 3,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        2,
+        3
+      ],
+      "cells_sha256": "1cfad43e0f6b139ef947b8324eb1a7a52ed28384c40234a3ba4d374e465ecb05",
+      "proposed_frequency": 2,
+      "reason": "Frequency 2 has a higher interaction rate (23/180 = 0.128) than frequency 3 (22/370 = 0.059) for the current context.",
+      "source": "gemini",
+      "fallback": false,
+      "attempts": [
+        {
+          "status": 200,
+          "latency_ms": 1847,
+          "usage": {
+            "promptTokenCount": 3501,
+            "candidatesTokenCount": 55,
+            "totalTokenCount": 3556,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 3501
+              }
+            ],
+            "serviceTier": "standard"
+          },
+          "model_version": "gemini-2.5-flash"
+        }
+      ],
+      "model_version": "gemini-2.5-flash",
+      "cache_key": "43f6a161846dd035e80d16ea0313015afaa7b9386b0c81a1b350fae6aa3ad8f0",
+      "cache_hit": true,
+      "applied_frequency": 2,
+      "safety_rejected": false
+    },
+    {
+      "seed": 5128,
+      "policy": "gemini",
+      "week": 9,
+      "user_id": "syn_275",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.75,
+        "noninteraction_streak": 0,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "1cfad43e0f6b139ef947b8324eb1a7a52ed28384c40234a3ba4d374e465ecb05",
+      "proposed_frequency": 2,
+      "reason": "Frequency 2 has the highest interaction rate (6/13 = 0.46) for the current context, maximizing ordinary interactions per delivered message.",
+      "source": "gemini",
+      "fallback": false,
+      "attempts": [
+        {
+          "status": 200,
+          "latency_ms": 2099,
+          "usage": {
+            "promptTokenCount": 3504,
+            "candidatesTokenCount": 40,
+            "totalTokenCount": 3544,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 3504
+              }
+            ],
+            "serviceTier": "standard"
+          },
+          "model_version": "gemini-2.5-flash"
+        }
+      ],
+      "model_version": "gemini-2.5-flash",
+      "cache_key": "d9b0c32d754506502312908e547c2e5a72808db8a020380c84147b7f8d4bc87a",
+      "cache_hit": false,
+      "applied_frequency": 2,
+      "safety_rejected": false
+    },
+    {
+      "seed": 5128,
+      "policy": "gemini",
+      "week": 9,
+      "user_id": "syn_276",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0.5,
+        "noninteraction_streak": 2,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "1cfad43e0f6b139ef947b8324eb1a7a52ed28384c40234a3ba4d374e465ecb05",
+      "proposed_frequency": 2,
+      "reason": "Frequency 2 has a higher interaction rate (0.375) than frequency 1 (0.0) for the given context.",
+      "source": "gemini",
+      "fallback": false,
+      "attempts": [
+        {
+          "status": 200,
+          "latency_ms": 1570,
+          "usage": {
+            "promptTokenCount": 3503,
+            "candidatesTokenCount": 40,
+            "totalTokenCount": 3543,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 3503
+              }
+            ],
+            "serviceTier": "standard"
+          },
+          "model_version": "gemini-2.5-flash"
+        }
+      ],
+      "model_version": "gemini-2.5-flash",
+      "cache_key": "6ed73cf490ebc813848bb52a849d2313f8a324888b9d30ede8d2866e336b687c",
+      "cache_hit": false,
+      "applied_frequency": 2,
+      "safety_rejected": false
+    },
+    {
+      "seed": 5128,
+      "policy": "gemini",
+      "week": 9,
+      "user_id": "syn_277",
+      "context": {
+        "current_frequency": 3,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        2,
+        3
+      ],
+      "cells_sha256": "1cfad43e0f6b139ef947b8324eb1a7a52ed28384c40234a3ba4d374e465ecb05",
+      "proposed_frequency": 2,
+      "reason": "Frequency 2 has a higher interaction rate (23/180 = 0.128) than frequency 3 (22/370 = 0.059) for the current context.",
+      "source": "gemini",
+      "fallback": false,
+      "attempts": [
+        {
+          "status": 200,
+          "latency_ms": 1847,
+          "usage": {
+            "promptTokenCount": 3501,
+            "candidatesTokenCount": 55,
+            "totalTokenCount": 3556,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 3501
+              }
+            ],
+            "serviceTier": "standard"
+          },
+          "model_version": "gemini-2.5-flash"
+        }
+      ],
+      "model_version": "gemini-2.5-flash",
+      "cache_key": "43f6a161846dd035e80d16ea0313015afaa7b9386b0c81a1b350fae6aa3ad8f0",
+      "cache_hit": true,
+      "applied_frequency": 2,
+      "safety_rejected": false
+    },
+    {
+      "seed": 5128,
+      "policy": "gemini",
+      "week": 9,
+      "user_id": "syn_278",
+      "context": {
+        "current_frequency": 2,
+        "recent_interaction_rate": 0.25,
+        "noninteraction_streak": 2,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2,
+        3
+      ],
+      "cells_sha256": "1cfad43e0f6b139ef947b8324eb1a7a52ed28384c40234a3ba4d374e465ecb05",
+      "proposed_frequency": 1,
+      "reason": "Frequency 1 has the highest interaction rate (0.20) for the given context, maximizing ordinary interactions per delivered message.",
+      "source": "gemini",
+      "fallback": false,
+      "attempts": [
+        {
+          "status": 200,
+          "latency_ms": 1671,
+          "usage": {
+            "promptTokenCount": 3506,
+            "candidatesTokenCount": 37,
+            "totalTokenCount": 3543,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 3506
+              }
+            ],
+            "serviceTier": "standard"
+          },
+          "model_version": "gemini-2.5-flash"
+        }
+      ],
+      "model_version": "gemini-2.5-flash",
+      "cache_key": "983578be3ccc02762632697609b2ebbefdd726051510373c477bc882daed6850",
+      "cache_hit": false,
+      "applied_frequency": 1,
+      "safety_rejected": false
+    },
+    {
+      "seed": 5128,
+      "policy": "gemini",
+      "week": 9,
+      "user_id": "syn_279",
+      "context": {
+        "current_frequency": 2,
+        "recent_interaction_rate": 0.5,
+        "noninteraction_streak": 0,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        1,
+        2,
+        3
+      ],
+      "cells_sha256": "1cfad43e0f6b139ef947b8324eb1a7a52ed28384c40234a3ba4d374e465ecb05",
+      "proposed_frequency": 3,
+      "reason": "Frequency 3 has the highest interaction rate (0.375) for the given context, maximizing ordinary interactions per delivered message.",
+      "source": "gemini",
+      "fallback": false,
+      "attempts": [
+        {
+          "status": 200,
+          "latency_ms": 1683,
+          "usage": {
+            "promptTokenCount": 3505,
+            "candidatesTokenCount": 38,
+            "totalTokenCount": 3543,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 3505
+              }
+            ],
+            "serviceTier": "standard"
+          },
+          "model_version": "gemini-2.5-flash"
+        }
+      ],
+      "model_version": "gemini-2.5-flash",
+      "cache_key": "a429844bb21b82d446163168f8ba13ad3dd20e18e01fae8bac603f06695a33da",
+      "cache_hit": false,
+      "applied_frequency": 3,
+      "safety_rejected": false
+    },
+    {
+      "seed": 5128,
+      "policy": "gemini",
+      "week": 9,
+      "user_id": "syn_280",
+      "context": {
+        "current_frequency": 1,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1
+      ],
+      "cells_sha256": "1cfad43e0f6b139ef947b8324eb1a7a52ed28384c40234a3ba4d374e465ecb05",
+      "proposed_frequency": 1,
+      "source": "forced_by_constraints",
+      "fallback": false,
+      "applied_frequency": 1,
+      "safety_rejected": false
+    },
+    {
+      "seed": 5128,
+      "policy": "gemini",
+      "week": 9,
+      "user_id": "syn_281",
+      "context": {
+        "current_frequency": 3,
+        "recent_interaction_rate": 0.75,
+        "noninteraction_streak": 1,
+        "has_previous_interaction": 1
+      },
+      "eligible_frequencies": [
+        2,
+        3
+      ],
+      "cells_sha256": "1cfad43e0f6b139ef947b8324eb1a7a52ed28384c40234a3ba4d374e465ecb05",
+      "proposed_frequency": 2,
+      "reason": "Frequency 2 has a higher interaction rate (0.15) compared to frequency 3 (0.14) for similar historical context.",
+      "source": "gemini",
+      "fallback": false,
+      "attempts": [
+        {
+          "status": 200,
+          "latency_ms": 2005,
+          "usage": {
+            "promptTokenCount": 3504,
+            "candidatesTokenCount": 38,
+            "totalTokenCount": 3542,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 3504
+              }
+            ],
+            "serviceTier": "standard"
+          },
+          "model_version": "gemini-2.5-flash"
+        }
+      ],
+      "model_version": "gemini-2.5-flash",
+      "cache_key": "6584b00520e778bb9348c3cf5593dbab1b447401d5573f8f38a3d02642139055",
+      "cache_hit": false,
+      "applied_frequency": 2,
+      "safety_rejected": false
+    },
+    {
+      "seed": 5128,
+      "policy": "gemini",
+      "week": 9,
+      "user_id": "syn_282",
+      "context": {
+        "current_frequency": 2,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "1cfad43e0f6b139ef947b8324eb1a7a52ed28384c40234a3ba4d374e465ecb05",
+      "proposed_frequency": 1,
+      "reason": "Frequency 1 has a higher interaction rate (8/76 = 0.105) than frequency 2 (16/169 = 0.095) for the given context.",
+      "source": "gemini",
+      "fallback": false,
+      "attempts": [
+        {
+          "status": 200,
+          "latency_ms": 1667,
+          "usage": {
+            "promptTokenCount": 3501,
+            "candidatesTokenCount": 53,
+            "totalTokenCount": 3554,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 3501
+              }
+            ],
+            "serviceTier": "standard"
+          },
+          "model_version": "gemini-2.5-flash"
+        }
+      ],
+      "model_version": "gemini-2.5-flash",
+      "cache_key": "5f6dc5ce4d4fc59a2a9fd8fc80daa72307fccf0ee91d15fbc12ff9db53748e9e",
+      "cache_hit": false,
+      "applied_frequency": 1,
+      "safety_rejected": false
+    },
+    {
+      "seed": 5128,
+      "policy": "gemini",
+      "week": 9,
+      "user_id": "syn_283",
+      "context": {
+        "current_frequency": 2,
+        "recent_interaction_rate": 0,
+        "noninteraction_streak": 4,
+        "has_previous_interaction": 0
+      },
+      "eligible_frequencies": [
+        1,
+        2
+      ],
+      "cells_sha256": "1cfad43e0f6b139ef947b8324eb1a7a52ed28384c40234a3ba4d374e465ecb05",
+      "proposed_frequency": 1,
+      "reason": "Frequency 1 has a higher interaction rate (8/76 = 0.105) than frequency 2 (16/169 = 0.095) for the given context.",
+      "source": "gemini",
+      "fallback": false,
+      "attempts": [
+        {
+          "status": 200,
+          "latency_ms": 1667,
+          "usage": {
+            "promptTokenCount": 3501,
+            "candidatesTokenCount": 53,
+            "totalTokenCount": 3554,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 3501
+              }
+            ],
+            "serviceTier": "standard"
+          },
+          "model_version": "gemini-2.5-flash"
+        }
+      ],
+      "model_version": "gemini-2.5-flash",
+      "cache_key": "5f6dc5ce4d4fc59a2a9fd8fc80daa72307fccf0ee91d15fbc12ff9db53748e9e",
+      "cache_hit": true,
+      "applied_frequency": 1,
+      "safety_rejected": false
+    }
+  ],
+  "weeks": [],
+  "model_fits": []
+}

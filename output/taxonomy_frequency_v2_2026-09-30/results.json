@@ -1,0 +1,502 @@
+{
+  "generated_at": "2026-09-30T00:43:10.882Z",
+  "version": "taxonomy-frequency-synthetic-v2",
+  "per_seed": [
+    {
+      "seed": 5128,
+      "policy": "greedy_logistic",
+      "delivered_messages": 148,
+      "ordinary_interactions": 35,
+      "interactions_per_message": 0.23648648648648649,
+      "constraint_violations": 0,
+      "frequency_changes": 53
+    },
+    {
+      "seed": 1,
+      "policy": "greedy_logistic",
+      "delivered_messages": 155,
+      "ordinary_interactions": 38,
+      "interactions_per_message": 0.24516129032258063,
+      "constraint_violations": 0,
+      "frequency_changes": 47
+    },
+    {
+      "seed": 2,
+      "policy": "greedy_logistic",
+      "delivered_messages": 163,
+      "ordinary_interactions": 33,
+      "interactions_per_message": 0.20245398773006135,
+      "constraint_violations": 0,
+      "frequency_changes": 55
+    },
+    {
+      "seed": 3,
+      "policy": "greedy_logistic",
+      "delivered_messages": 196,
+      "ordinary_interactions": 51,
+      "interactions_per_message": 0.2602040816326531,
+      "constraint_violations": 0,
+      "frequency_changes": 51
+    },
+    {
+      "seed": 4,
+      "policy": "greedy_logistic",
+      "delivered_messages": 176,
+      "ordinary_interactions": 42,
+      "interactions_per_message": 0.23863636363636365,
+      "constraint_violations": 0,
+      "frequency_changes": 60
+    },
+    {
+      "seed": 5,
+      "policy": "greedy_logistic",
+      "delivered_messages": 156,
+      "ordinary_interactions": 31,
+      "interactions_per_message": 0.1987179487179487,
+      "constraint_violations": 0,
+      "frequency_changes": 44
+    },
+    {
+      "seed": 6,
+      "policy": "greedy_logistic",
+      "delivered_messages": 137,
+      "ordinary_interactions": 19,
+      "interactions_per_message": 0.1386861313868613,
+      "constraint_violations": 0,
+      "frequency_changes": 38
+    },
+    {
+      "seed": 7,
+      "policy": "greedy_logistic",
+      "delivered_messages": 136,
+      "ordinary_interactions": 24,
+      "interactions_per_message": 0.17647058823529413,
+      "constraint_violations": 0,
+      "frequency_changes": 38
+    },
+    {
+      "seed": 8,
+      "policy": "greedy_logistic",
+      "delivered_messages": 150,
+      "ordinary_interactions": 23,
+      "interactions_per_message": 0.15333333333333332,
+      "constraint_violations": 0,
+      "frequency_changes": 50
+    },
+    {
+      "seed": 9,
+      "policy": "greedy_logistic",
+      "delivered_messages": 168,
+      "ordinary_interactions": 34,
+      "interactions_per_message": 0.20238095238095238,
+      "constraint_violations": 0,
+      "frequency_changes": 49
+    },
+    {
+      "seed": 5128,
+      "policy": "contextual_thompson",
+      "delivered_messages": 153,
+      "ordinary_interactions": 37,
+      "interactions_per_message": 0.24183006535947713,
+      "constraint_violations": 0,
+      "frequency_changes": 58
+    },
+    {
+      "seed": 1,
+      "policy": "contextual_thompson",
+      "delivered_messages": 159,
+      "ordinary_interactions": 38,
+      "interactions_per_message": 0.2389937106918239,
+      "constraint_violations": 0,
+      "frequency_changes": 39
+    },
+    {
+      "seed": 2,
+      "policy": "contextual_thompson",
+      "delivered_messages": 161,
+      "ordinary_interactions": 34,
+      "interactions_per_message": 0.2111801242236025,
+      "constraint_violations": 0,
+      "frequency_changes": 57
+    },
+    {
+      "seed": 3,
+      "policy": "contextual_thompson",
+      "delivered_messages": 202,
+      "ordinary_interactions": 56,
+      "interactions_per_message": 0.27722772277227725,
+      "constraint_violations": 0,
+      "frequency_changes": 47
+    },
+    {
+      "seed": 4,
+      "policy": "contextual_thompson",
+      "delivered_messages": 197,
+      "ordinary_interactions": 47,
+      "interactions_per_message": 0.23857868020304568,
+      "constraint_violations": 0,
+      "frequency_changes": 63
+    },
+    {
+      "seed": 5,
+      "policy": "contextual_thompson",
+      "delivered_messages": 163,
+      "ordinary_interactions": 35,
+      "interactions_per_message": 0.2147239263803681,
+      "constraint_violations": 0,
+      "frequency_changes": 43
+    },
+    {
+      "seed": 6,
+      "policy": "contextual_thompson",
+      "delivered_messages": 141,
+      "ordinary_interactions": 19,
+      "interactions_per_message": 0.1347517730496454,
+      "constraint_violations": 0,
+      "frequency_changes": 41
+    },
+    {
+      "seed": 7,
+      "policy": "contextual_thompson",
+      "delivered_messages": 143,
+      "ordinary_interactions": 25,
+      "interactions_per_message": 0.17482517482517482,
+      "constraint_violations": 0,
+      "frequency_changes": 43
+    },
+    {
+      "seed": 8,
+      "policy": "contextual_thompson",
+      "delivered_messages": 149,
+      "ordinary_interactions": 23,
+      "interactions_per_message": 0.15436241610738255,
+      "constraint_violations": 0,
+      "frequency_changes": 50
+    },
+    {
+      "seed": 9,
+      "policy": "contextual_thompson",
+      "delivered_messages": 181,
+      "ordinary_interactions": 41,
+      "interactions_per_message": 0.2265193370165746,
+      "constraint_violations": 0,
+      "frequency_changes": 58
+    },
+    {
+      "seed": 5128,
+      "policy": "eligible_random",
+      "delivered_messages": 214,
+      "ordinary_interactions": 41,
+      "interactions_per_message": 0.19158878504672897,
+      "constraint_violations": 0,
+      "frequency_changes": 55
+    },
+    {
+      "seed": 1,
+      "policy": "eligible_random",
+      "delivered_messages": 195,
+      "ordinary_interactions": 41,
+      "interactions_per_message": 0.21025641025641026,
+      "constraint_violations": 0,
+      "frequency_changes": 50
+    },
+    {
+      "seed": 2,
+      "policy": "eligible_random",
+      "delivered_messages": 213,
+      "ordinary_interactions": 31,
+      "interactions_per_message": 0.14553990610328638,
+      "constraint_violations": 0,
+      "frequency_changes": 51
+    },
+    {
+      "seed": 3,
+      "policy": "eligible_random",
+      "delivered_messages": 203,
+      "ordinary_interactions": 53,
+      "interactions_per_message": 0.26108374384236455,
+      "constraint_violations": 0,
+      "frequency_changes": 43
+    },
+    {
+      "seed": 4,
+      "policy": "eligible_random",
+      "delivered_messages": 210,
+      "ordinary_interactions": 56,
+      "interactions_per_message": 0.26666666666666666,
+      "constraint_violations": 0,
+      "frequency_changes": 67
+    },
+    {
+      "seed": 5,
+      "policy": "eligible_random",
+      "delivered_messages": 177,
+      "ordinary_interactions": 26,
+      "interactions_per_message": 0.14689265536723164,
+      "constraint_violations": 0,
+      "frequency_changes": 37
+    },
+    {
+      "seed": 6,
+      "policy": "eligible_random",
+      "delivered_messages": 196,
+      "ordinary_interactions": 21,
+      "interactions_per_message": 0.10714285714285714,
+      "constraint_violations": 0,
+      "frequency_changes": 43
+    },
+    {
+      "seed": 7,
+      "policy": "eligible_random",
+      "delivered_messages": 179,
+      "ordinary_interactions": 25,
+      "interactions_per_message": 0.13966480446927373,
+      "constraint_violations": 0,
+      "frequency_changes": 42
+    },
+    {
+      "seed": 8,
+      "policy": "eligible_random",
+      "delivered_messages": 192,
+      "ordinary_interactions": 36,
+      "interactions_per_message": 0.1875,
+      "constraint_violations": 0,
+      "frequency_changes": 54
+    },
+    {
+      "seed": 9,
+      "policy": "eligible_random",
+      "delivered_messages": 213,
+      "ordinary_interactions": 42,
+      "interactions_per_message": 0.19718309859154928,
+      "constraint_violations": 0,
+      "frequency_changes": 44
+    }
+  ],
+  "across_seeds": {
+    "greedy_logistic": {
+      "seeds": 10,
+      "mean_interactions_per_message": 0.20525311638625351,
+      "mean_delivered_messages": 158.5,
+      "mean_ordinary_interactions": 33,
+      "total_constraint_violations": 0
+    },
+    "contextual_thompson": {
+      "seeds": 10,
+      "mean_interactions_per_message": 0.2112992930629372,
+      "mean_delivered_messages": 164.9,
+      "mean_ordinary_interactions": 35.5,
+      "total_constraint_violations": 0
+    },
+    "eligible_random": {
+      "seeds": 10,
+      "mean_interactions_per_message": 0.18535189274863687,
+      "mean_delivered_messages": 199.2,
+      "mean_ordinary_interactions": 37.2,
+      "total_constraint_violations": 0
+    }
+  },
+  "paired_contrasts": {
+    "contextual_thompson_minus_logistic": {
+      "mean": 0.006046176676683687,
+      "ci95": [
+        0.00025809829009731944,
+        0.012201536150490844
+      ],
+      "higher_seeds": 6,
+      "paired_seeds": 10
+    },
+    "eligible_random_minus_logistic": {
+      "mean": -0.019901223637616643,
+      "ci95": [
+        -0.03817624630174235,
+        0.000011158481549730647
+      ],
+      "higher_seeds": 3,
+      "paired_seeds": 10
+    }
+  },
+  "predictive_diagnostics": {
+    "1": {
+      "train_rows": 3858,
+      "validation": {
+        "rows": 126,
+        "positives": 25,
+        "brier": 0.13688661168833974,
+        "constant_baseline_brier": 0.15927483797704803,
+        "pr_auc": 0.42259821677382675
+      },
+      "test": {
+        "rows": 233,
+        "positives": 43,
+        "brier": 0.1428985853024951,
+        "constant_baseline_brier": 0.15049256521624166,
+        "pr_auc": 0.3566275106639586
+      },
+      "source": "random-assignment generator rows; independent of policy replay responses"
+    },
+    "2": {
+      "train_rows": 3844,
+      "validation": {
+        "rows": 132,
+        "positives": 31,
+        "brier": 0.15452022092524742,
+        "constant_baseline_brier": 0.18320525426190895,
+        "pr_auc": 0.48957446176677094
+      },
+      "test": {
+        "rows": 237,
+        "positives": 31,
+        "brier": 0.11181291485352297,
+        "constant_baseline_brier": 0.11569934585155016,
+        "pr_auc": 0.2297868852593359
+      },
+      "source": "random-assignment generator rows; independent of policy replay responses"
+    },
+    "3": {
+      "train_rows": 3848,
+      "validation": {
+        "rows": 107,
+        "positives": 12,
+        "brier": 0.09346228615833352,
+        "constant_baseline_brier": 0.10469603726356849,
+        "pr_auc": 0.34700091633859315
+      },
+      "test": {
+        "rows": 248,
+        "positives": 44,
+        "brier": 0.12320231071809994,
+        "constant_baseline_brier": 0.14598157444147808,
+        "pr_auc": 0.45616570827569763
+      },
+      "source": "random-assignment generator rows; independent of policy replay responses"
+    },
+    "4": {
+      "train_rows": 3857,
+      "validation": {
+        "rows": 108,
+        "positives": 22,
+        "brier": 0.14807862624981263,
+        "constant_baseline_brier": 0.1622847791660995,
+        "pr_auc": 0.39200999491636673
+      },
+      "test": {
+        "rows": 226,
+        "positives": 49,
+        "brier": 0.16387107608810342,
+        "constant_baseline_brier": 0.1702829388755488,
+        "pr_auc": 0.30570446735701323
+      },
+      "source": "random-assignment generator rows; independent of policy replay responses"
+    },
+    "5": {
+      "train_rows": 3804,
+      "validation": {
+        "rows": 109,
+        "positives": 18,
+        "brier": 0.11550757350847901,
+        "constant_baseline_brier": 0.13884278470024727,
+        "pr_auc": 0.39421963977247804
+      },
+      "test": {
+        "rows": 231,
+        "positives": 31,
+        "brier": 0.1149867792427538,
+        "constant_baseline_brier": 0.12005522163288163,
+        "pr_auc": 0.2175469974391249
+      },
+      "source": "random-assignment generator rows; independent of policy replay responses"
+    },
+    "6": {
+      "train_rows": 3903,
+      "validation": {
+        "rows": 123,
+        "positives": 22,
+        "brier": 0.13641360762911556,
+        "constant_baseline_brier": 0.14687694242210433,
+        "pr_auc": 0.360550449183572
+      },
+      "test": {
+        "rows": 249,
+        "positives": 45,
+        "brier": 0.1324594588552193,
+        "constant_baseline_brier": 0.14808191478965577,
+        "pr_auc": 0.4048386968041337
+      },
+      "source": "random-assignment generator rows; independent of policy replay responses"
+    },
+    "7": {
+      "train_rows": 3842,
+      "validation": {
+        "rows": 124,
+        "positives": 26,
+        "brier": 0.14879194068006374,
+        "constant_baseline_brier": 0.16679827432548763,
+        "pr_auc": 0.4244602524720028
+      },
+      "test": {
+        "rows": 226,
+        "positives": 38,
+        "brier": 0.1371847844617796,
+        "constant_baseline_brier": 0.1399437733199542,
+        "pr_auc": 0.2575404509446211
+      },
+      "source": "random-assignment generator rows; independent of policy replay responses"
+    },
+    "8": {
+      "train_rows": 3835,
+      "validation": {
+        "rows": 118,
+        "positives": 25,
+        "brier": 0.1459156323311653,
+        "constant_baseline_brier": 0.1672350494399859,
+        "pr_auc": 0.44554912921572004
+      },
+      "test": {
+        "rows": 241,
+        "positives": 44,
+        "brier": 0.13189842911357394,
+        "constant_baseline_brier": 0.1494155573139737,
+        "pr_auc": 0.417653927500717
+      },
+      "source": "random-assignment generator rows; independent of policy replay responses"
+    },
+    "9": {
+      "train_rows": 3815,
+      "validation": {
+        "rows": 121,
+        "positives": 12,
+        "brier": 0.08434765350254453,
+        "constant_baseline_brier": 0.0941505875242923,
+        "pr_auc": 0.2966429184454973
+      },
+      "test": {
+        "rows": 241,
+        "positives": 44,
+        "brier": 0.1369974140791131,
+        "constant_baseline_brier": 0.14943662257631501,
+        "pr_auc": 0.36514514689367106
+      },
+      "source": "random-assignment generator rows; independent of policy replay responses"
+    },
+    "5128": {
+      "train_rows": 3803,
+      "validation": {
+        "rows": 119,
+        "positives": 22,
+        "brier": 0.1325843949674181,
+        "constant_baseline_brier": 0.15069888753220476,
+        "pr_auc": 0.46895256742362235
+      },
+      "test": {
+        "rows": 230,
+        "positives": 39,
+        "brier": 0.11851782267726309,
+        "constant_baseline_brier": 0.1411062741203562,
+        "pr_auc": 0.43815646334255487
+      },
+      "source": "random-assignment generator rows; independent of policy replay responses"
+    }
+  },
+  "note": "Synthetic taxonomy-aware frequency study. Logistic and Thompson share the same posterior mean; Thompson also samples uncertainty. The LLM arm is pending free-tier capacity."
+}

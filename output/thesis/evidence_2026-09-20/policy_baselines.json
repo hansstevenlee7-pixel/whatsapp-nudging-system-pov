@@ -1,0 +1,7104 @@
+{
+  "generated_at": "2026-09-20T11:20:08.160Z",
+  "node_version": "v24.13.1",
+  "frozen_artifact": {
+    "path": "landing/api/_models/frequency-logistic-v1.json",
+    "model_id": "frequency-logistic-v1"
+  },
+  "design": {
+    "cohort": 300,
+    "weeks": 12,
+    "frequency_range": [
+      1,
+      3
+    ],
+    "initial_frequency": 2,
+    "seeds": [
+      5128,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "note": "Every policy starts each profile at 2 per week, so fixed_1 and fixed_3 record one initial change per profile. oracle_preferred reads a hidden simulation property and is an interpretation bound, not an implementable policy."
+  },
+  "reproduction_check": {
+    "matched": true,
+    "checks": [
+      {
+        "policy": "fixed_2",
+        "frozen_policy": "fixed",
+        "matched": true,
+        "mismatched_fields": []
+      },
+      {
+        "policy": "deterministic",
+        "frozen_policy": "deterministic",
+        "matched": true,
+        "mismatched_fields": []
+      },
+      {
+        "policy": "model_plus_safety",
+        "frozen_policy": "model",
+        "matched": true,
+        "mismatched_fields": []
+      }
+    ]
+  },
+  "selector_sensitivity_published_seed": [
+    {
+      "selector": "lowest_near_best",
+      "near_best_tolerance": 0.05,
+      "note": "shipped configuration",
+      "delivered_messages": 3800,
+      "ordinary_interactions": 1020,
+      "interactions_per_message": 0.26842105263157895,
+      "direction_reversals": 157,
+      "share_at_minimum": 0.9444444444444444,
+      "selected_frequency_share": {
+        "1": 0.9444444444444444,
+        "2": 0.05555555555555555,
+        "3": 0
+      }
+    },
+    {
+      "selector": "lowest_near_best",
+      "near_best_tolerance": 0.01,
+      "delivered_messages": 4031,
+      "ordinary_interactions": 1048,
+      "interactions_per_message": 0.25998511535599106,
+      "direction_reversals": 278,
+      "share_at_minimum": 0.8997222222222222,
+      "selected_frequency_share": {
+        "1": 0.8997222222222222,
+        "2": 0.08083333333333333,
+        "3": 0.019444444444444445
+      }
+    },
+    {
+      "selector": "lowest_near_best",
+      "near_best_tolerance": 0.001,
+      "delivered_messages": 4104,
+      "ordinary_interactions": 1033,
+      "interactions_per_message": 0.2517056530214425,
+      "direction_reversals": 290,
+      "share_at_minimum": 0.8922222222222222,
+      "selected_frequency_share": {
+        "1": 0.8922222222222222,
+        "2": 0.07555555555555556,
+        "3": 0.03222222222222222
+      }
+    },
+    {
+      "selector": "argmax",
+      "note": "highest-probability candidate, safety bounds retained",
+      "delivered_messages": 4104,
+      "ordinary_interactions": 1033,
+      "interactions_per_message": 0.2517056530214425,
+      "direction_reversals": 290,
+      "share_at_minimum": 0.8922222222222222,
+      "selected_frequency_share": {
+        "1": 0.8922222222222222,
+        "2": 0.07555555555555556,
+        "3": 0.03222222222222222
+      }
+    }
+  ],
+  "published_seed": {
+    "seed": 5128,
+    "policies": [
+      {
+        "policy": "fixed_1",
+        "delivered_messages": 3600,
+        "ordinary_interactions": 931,
+        "interactions_per_message": 0.2586111111111111,
+        "messages_per_interaction": 3.866809881847476,
+        "frequency_changes": 300,
+        "direction_reversals": 0,
+        "constraint_violations": 0,
+        "selected_frequency_counts": {
+          "1": 3600,
+          "2": 0,
+          "3": 0
+        },
+        "selected_frequency_share": {
+          "1": 1,
+          "2": 0,
+          "3": 0
+        },
+        "weekly_selected_frequency_counts": [
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          }
+        ]
+      },
+      {
+        "policy": "fixed_2",
+        "delivered_messages": 7200,
+        "ordinary_interactions": 1707,
+        "interactions_per_message": 0.23708333333333334,
+        "messages_per_interaction": 4.21792618629174,
+        "frequency_changes": 0,
+        "direction_reversals": 0,
+        "constraint_violations": 0,
+        "selected_frequency_counts": {
+          "1": 0,
+          "2": 3600,
+          "3": 0
+        },
+        "selected_frequency_share": {
+          "1": 0,
+          "2": 1,
+          "3": 0
+        },
+        "weekly_selected_frequency_counts": [
+          {
+            "1": 0,
+            "2": 300,
+            "3": 0
+          },
+          {
+            "1": 0,
+            "2": 300,
+            "3": 0
+          },
+          {
+            "1": 0,
+            "2": 300,
+            "3": 0
+          },
+          {
+            "1": 0,
+            "2": 300,
+            "3": 0
+          },
+          {
+            "1": 0,
+            "2": 300,
+            "3": 0
+          },
+          {
+            "1": 0,
+            "2": 300,
+            "3": 0
+          },
+          {
+            "1": 0,
+            "2": 300,
+            "3": 0
+          },
+          {
+            "1": 0,
+            "2": 300,
+            "3": 0
+          },
+          {
+            "1": 0,
+            "2": 300,
+            "3": 0
+          },
+          {
+            "1": 0,
+            "2": 300,
+            "3": 0
+          },
+          {
+            "1": 0,
+            "2": 300,
+            "3": 0
+          },
+          {
+            "1": 0,
+            "2": 300,
+            "3": 0
+          }
+        ]
+      },
+      {
+        "policy": "fixed_3",
+        "delivered_messages": 10800,
+        "ordinary_interactions": 1790,
+        "interactions_per_message": 0.16574074074074074,
+        "messages_per_interaction": 6.033519553072626,
+        "frequency_changes": 300,
+        "direction_reversals": 0,
+        "constraint_violations": 300,
+        "selected_frequency_counts": {
+          "1": 0,
+          "2": 0,
+          "3": 3600
+        },
+        "selected_frequency_share": {
+          "1": 0,
+          "2": 0,
+          "3": 1
+        },
+        "weekly_selected_frequency_counts": [
+          {
+            "1": 0,
+            "2": 0,
+            "3": 300
+          },
+          {
+            "1": 0,
+            "2": 0,
+            "3": 300
+          },
+          {
+            "1": 0,
+            "2": 0,
+            "3": 300
+          },
+          {
+            "1": 0,
+            "2": 0,
+            "3": 300
+          },
+          {
+            "1": 0,
+            "2": 0,
+            "3": 300
+          },
+          {
+            "1": 0,
+            "2": 0,
+            "3": 300
+          },
+          {
+            "1": 0,
+            "2": 0,
+            "3": 300
+          },
+          {
+            "1": 0,
+            "2": 0,
+            "3": 300
+          },
+          {
+            "1": 0,
+            "2": 0,
+            "3": 300
+          },
+          {
+            "1": 0,
+            "2": 0,
+            "3": 300
+          },
+          {
+            "1": 0,
+            "2": 0,
+            "3": 300
+          },
+          {
+            "1": 0,
+            "2": 0,
+            "3": 300
+          }
+        ]
+      },
+      {
+        "policy": "deterministic",
+        "delivered_messages": 5233,
+        "ordinary_interactions": 1361,
+        "interactions_per_message": 0.2600802598891649,
+        "messages_per_interaction": 3.8449669360764145,
+        "frequency_changes": 557,
+        "direction_reversals": 35,
+        "constraint_violations": 0,
+        "selected_frequency_counts": {
+          "1": 2318,
+          "2": 931,
+          "3": 351
+        },
+        "selected_frequency_share": {
+          "1": 0.6438888888888888,
+          "2": 0.2586111111111111,
+          "3": 0.0975
+        },
+        "weekly_selected_frequency_counts": [
+          {
+            "1": 0,
+            "2": 300,
+            "3": 0
+          },
+          {
+            "1": 0,
+            "2": 255,
+            "3": 45
+          },
+          {
+            "1": 163,
+            "2": 100,
+            "3": 37
+          },
+          {
+            "1": 204,
+            "2": 54,
+            "3": 42
+          },
+          {
+            "1": 235,
+            "2": 35,
+            "3": 30
+          },
+          {
+            "1": 243,
+            "2": 28,
+            "3": 29
+          },
+          {
+            "1": 240,
+            "2": 28,
+            "3": 32
+          },
+          {
+            "1": 240,
+            "2": 29,
+            "3": 31
+          },
+          {
+            "1": 241,
+            "2": 30,
+            "3": 29
+          },
+          {
+            "1": 246,
+            "2": 30,
+            "3": 24
+          },
+          {
+            "1": 253,
+            "2": 21,
+            "3": 26
+          },
+          {
+            "1": 253,
+            "2": 21,
+            "3": 26
+          }
+        ]
+      },
+      {
+        "policy": "model_plus_safety",
+        "delivered_messages": 3800,
+        "ordinary_interactions": 1020,
+        "interactions_per_message": 0.26842105263157895,
+        "messages_per_interaction": 3.7254901960784315,
+        "frequency_changes": 523,
+        "direction_reversals": 157,
+        "constraint_violations": 0,
+        "selected_frequency_counts": {
+          "1": 3400,
+          "2": 200,
+          "3": 0
+        },
+        "selected_frequency_share": {
+          "1": 0.9444444444444444,
+          "2": 0.05555555555555555,
+          "3": 0
+        },
+        "weekly_selected_frequency_counts": [
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 218,
+            "2": 82,
+            "3": 0
+          },
+          {
+            "1": 277,
+            "2": 23,
+            "3": 0
+          },
+          {
+            "1": 287,
+            "2": 13,
+            "3": 0
+          },
+          {
+            "1": 292,
+            "2": 8,
+            "3": 0
+          },
+          {
+            "1": 287,
+            "2": 13,
+            "3": 0
+          },
+          {
+            "1": 287,
+            "2": 13,
+            "3": 0
+          },
+          {
+            "1": 289,
+            "2": 11,
+            "3": 0
+          },
+          {
+            "1": 288,
+            "2": 12,
+            "3": 0
+          },
+          {
+            "1": 292,
+            "2": 8,
+            "3": 0
+          },
+          {
+            "1": 294,
+            "2": 6,
+            "3": 0
+          },
+          {
+            "1": 289,
+            "2": 11,
+            "3": 0
+          }
+        ]
+      },
+      {
+        "policy": "oracle_preferred",
+        "delivered_messages": 6972,
+        "ordinary_interactions": 2778,
+        "interactions_per_message": 0.3984509466437177,
+        "messages_per_interaction": 2.509719222462203,
+        "frequency_changes": 195,
+        "direction_reversals": 0,
+        "constraint_violations": 88,
+        "selected_frequency_counts": {
+          "1": 1284,
+          "2": 1260,
+          "3": 1056
+        },
+        "selected_frequency_share": {
+          "1": 0.3566666666666667,
+          "2": 0.35,
+          "3": 0.29333333333333333
+        },
+        "weekly_selected_frequency_counts": [
+          {
+            "1": 107,
+            "2": 105,
+            "3": 88
+          },
+          {
+            "1": 107,
+            "2": 105,
+            "3": 88
+          },
+          {
+            "1": 107,
+            "2": 105,
+            "3": 88
+          },
+          {
+            "1": 107,
+            "2": 105,
+            "3": 88
+          },
+          {
+            "1": 107,
+            "2": 105,
+            "3": 88
+          },
+          {
+            "1": 107,
+            "2": 105,
+            "3": 88
+          },
+          {
+            "1": 107,
+            "2": 105,
+            "3": 88
+          },
+          {
+            "1": 107,
+            "2": 105,
+            "3": 88
+          },
+          {
+            "1": 107,
+            "2": 105,
+            "3": 88
+          },
+          {
+            "1": 107,
+            "2": 105,
+            "3": 88
+          },
+          {
+            "1": 107,
+            "2": 105,
+            "3": 88
+          },
+          {
+            "1": 107,
+            "2": 105,
+            "3": 88
+          }
+        ]
+      }
+    ],
+    "model_plus_safety_retrained": {
+      "policy": "model_plus_safety",
+      "delivered_messages": 3800,
+      "ordinary_interactions": 1020,
+      "interactions_per_message": 0.26842105263157895,
+      "messages_per_interaction": 3.7254901960784315,
+      "frequency_changes": 523,
+      "direction_reversals": 157,
+      "constraint_violations": 0,
+      "selected_frequency_counts": {
+        "1": 3400,
+        "2": 200,
+        "3": 0
+      },
+      "selected_frequency_share": {
+        "1": 0.9444444444444444,
+        "2": 0.05555555555555555,
+        "3": 0
+      },
+      "weekly_selected_frequency_counts": [
+        {
+          "1": 300,
+          "2": 0,
+          "3": 0
+        },
+        {
+          "1": 218,
+          "2": 82,
+          "3": 0
+        },
+        {
+          "1": 277,
+          "2": 23,
+          "3": 0
+        },
+        {
+          "1": 287,
+          "2": 13,
+          "3": 0
+        },
+        {
+          "1": 292,
+          "2": 8,
+          "3": 0
+        },
+        {
+          "1": 287,
+          "2": 13,
+          "3": 0
+        },
+        {
+          "1": 287,
+          "2": 13,
+          "3": 0
+        },
+        {
+          "1": 289,
+          "2": 11,
+          "3": 0
+        },
+        {
+          "1": 288,
+          "2": 12,
+          "3": 0
+        },
+        {
+          "1": 292,
+          "2": 8,
+          "3": 0
+        },
+        {
+          "1": 294,
+          "2": 6,
+          "3": 0
+        },
+        {
+          "1": 289,
+          "2": 11,
+          "3": 0
+        }
+      ]
+    }
+  },
+  "across_seeds": {
+    "fixed_1": {
+      "label": "Fixed at minimum (1/week)",
+      "oracle": false,
+      "delivered_messages": {
+        "mean": 3600,
+        "sd": 0,
+        "min": 3600,
+        "max": 3600,
+        "n": 10
+      },
+      "ordinary_interactions": {
+        "mean": 848.8,
+        "sd": 46.319662251695135,
+        "min": 784,
+        "max": 931,
+        "n": 10
+      },
+      "interactions_per_message": {
+        "mean": 0.23577777777777778,
+        "sd": 0.012866572847693096,
+        "min": 0.21777777777777776,
+        "max": 0.2586111111111111,
+        "n": 10
+      },
+      "frequency_changes": {
+        "mean": 300,
+        "sd": 0,
+        "min": 300,
+        "max": 300,
+        "n": 10
+      },
+      "direction_reversals": {
+        "mean": 0,
+        "sd": 0,
+        "min": 0,
+        "max": 0,
+        "n": 10
+      },
+      "constraint_violations": {
+        "mean": 0,
+        "sd": 0,
+        "min": 0,
+        "max": 0,
+        "n": 10
+      },
+      "share_at_minimum": {
+        "mean": 1,
+        "sd": 0,
+        "min": 1,
+        "max": 1,
+        "n": 10
+      }
+    },
+    "fixed_2": {
+      "label": "Fixed at 2/week (published comparator)",
+      "oracle": false,
+      "delivered_messages": {
+        "mean": 7200,
+        "sd": 0,
+        "min": 7200,
+        "max": 7200,
+        "n": 10
+      },
+      "ordinary_interactions": {
+        "mean": 1721.2,
+        "sd": 57.24955118698409,
+        "min": 1648,
+        "max": 1818,
+        "n": 10
+      },
+      "interactions_per_message": {
+        "mean": 0.23905555555555558,
+        "sd": 0.007951326553747787,
+        "min": 0.2288888888888889,
+        "max": 0.2525,
+        "n": 10
+      },
+      "frequency_changes": {
+        "mean": 0,
+        "sd": 0,
+        "min": 0,
+        "max": 0,
+        "n": 10
+      },
+      "direction_reversals": {
+        "mean": 0,
+        "sd": 0,
+        "min": 0,
+        "max": 0,
+        "n": 10
+      },
+      "constraint_violations": {
+        "mean": 0,
+        "sd": 0,
+        "min": 0,
+        "max": 0,
+        "n": 10
+      },
+      "share_at_minimum": {
+        "mean": 0,
+        "sd": 0,
+        "min": 0,
+        "max": 0,
+        "n": 10
+      }
+    },
+    "fixed_3": {
+      "label": "Fixed at maximum (3/week)",
+      "oracle": false,
+      "delivered_messages": {
+        "mean": 10800,
+        "sd": 0,
+        "min": 10800,
+        "max": 10800,
+        "n": 10
+      },
+      "ordinary_interactions": {
+        "mean": 1942.5,
+        "sd": 190.3477811212355,
+        "min": 1699,
+        "max": 2265,
+        "n": 10
+      },
+      "interactions_per_message": {
+        "mean": 0.1798611111111111,
+        "sd": 0.017624794548262546,
+        "min": 0.15731481481481482,
+        "max": 0.20972222222222223,
+        "n": 10
+      },
+      "frequency_changes": {
+        "mean": 300,
+        "sd": 0,
+        "min": 300,
+        "max": 300,
+        "n": 10
+      },
+      "direction_reversals": {
+        "mean": 0,
+        "sd": 0,
+        "min": 0,
+        "max": 0,
+        "n": 10
+      },
+      "constraint_violations": {
+        "mean": 300,
+        "sd": 0,
+        "min": 300,
+        "max": 300,
+        "n": 10
+      },
+      "share_at_minimum": {
+        "mean": 0,
+        "sd": 0,
+        "min": 0,
+        "max": 0,
+        "n": 10
+      }
+    },
+    "deterministic": {
+      "label": "Deterministic history rules",
+      "oracle": false,
+      "delivered_messages": {
+        "mean": 5285,
+        "sd": 74.41773982055622,
+        "min": 5143,
+        "max": 5370,
+        "n": 10
+      },
+      "ordinary_interactions": {
+        "mean": 1346.5,
+        "sd": 72.27609102139748,
+        "min": 1197,
+        "max": 1443,
+        "n": 10
+      },
+      "interactions_per_message": {
+        "mean": 0.25467391750266843,
+        "sd": 0.01085455500601629,
+        "min": 0.2327435349018083,
+        "max": 0.26931690929451285,
+        "n": 10
+      },
+      "frequency_changes": {
+        "mean": 564.8,
+        "sd": 18.784154078489784,
+        "min": 522,
+        "max": 589,
+        "n": 10
+      },
+      "direction_reversals": {
+        "mean": 41.2,
+        "sd": 5.921711464320654,
+        "min": 32,
+        "max": 52,
+        "n": 10
+      },
+      "constraint_violations": {
+        "mean": 0,
+        "sd": 0,
+        "min": 0,
+        "max": 0,
+        "n": 10
+      },
+      "share_at_minimum": {
+        "mean": 0.6339444444444445,
+        "sd": 0.011431942110224413,
+        "min": 0.6161111111111112,
+        "max": 0.6538888888888889,
+        "n": 10
+      }
+    },
+    "model_plus_safety": {
+      "label": "Model recommendation plus safety selector",
+      "oracle": false,
+      "delivered_messages": {
+        "mean": 3761.6,
+        "sd": 27.74567033290459,
+        "min": 3721,
+        "max": 3802,
+        "n": 10
+      },
+      "ordinary_interactions": {
+        "mean": 903,
+        "sd": 56.3382640840131,
+        "min": 819,
+        "max": 1020,
+        "n": 10
+      },
+      "interactions_per_message": {
+        "mean": 0.2399873777658233,
+        "sd": 0.013522979991260621,
+        "min": 0.21939458880257165,
+        "max": 0.26842105263157895,
+        "n": 10
+      },
+      "frequency_changes": {
+        "mean": 500.7,
+        "sd": 22.56866067015153,
+        "min": 472,
+        "max": 533,
+        "n": 10
+      },
+      "direction_reversals": {
+        "mean": 138.8,
+        "sd": 12.452576707921406,
+        "min": 122,
+        "max": 157,
+        "n": 10
+      },
+      "constraint_violations": {
+        "mean": 0,
+        "sd": 0,
+        "min": 0,
+        "max": 0,
+        "n": 10
+      },
+      "share_at_minimum": {
+        "mean": 0.9551111111111112,
+        "sd": 0.007707130648029053,
+        "min": 0.9438888888888889,
+        "max": 0.9663888888888889,
+        "n": 10
+      }
+    },
+    "oracle_preferred": {
+      "label": "Oracle: hidden preferred frequency",
+      "oracle": true,
+      "delivered_messages": {
+        "mean": 7224,
+        "sd": 275.2162785883132,
+        "min": 6900,
+        "max": 7644,
+        "n": 10
+      },
+      "ordinary_interactions": {
+        "mean": 2879.4,
+        "sd": 169.88636725110635,
+        "min": 2652,
+        "max": 3185,
+        "n": 10
+      },
+      "interactions_per_message": {
+        "mean": 0.3984780476050738,
+        "sd": 0.014933841034906878,
+        "min": 0.37649063032367974,
+        "max": 0.4274020397208803,
+        "n": 10
+      },
+      "frequency_changes": {
+        "mean": 198.8,
+        "sd": 6.1064628786957265,
+        "min": 191,
+        "max": 207,
+        "n": 10
+      },
+      "direction_reversals": {
+        "mean": 0,
+        "sd": 0,
+        "min": 0,
+        "max": 0,
+        "n": 10
+      },
+      "constraint_violations": {
+        "mean": 100.4,
+        "sd": 12.71219886565656,
+        "min": 88,
+        "max": 122,
+        "n": 10
+      },
+      "share_at_minimum": {
+        "mean": 0.328,
+        "sd": 0.036521598547898035,
+        "min": 0.26666666666666666,
+        "max": 0.38333333333333336,
+        "n": 10
+      }
+    },
+    "model_plus_safety_retrained": {
+      "label": "Model plus safety, retrained on each seed",
+      "oracle": false,
+      "delivered_messages": {
+        "mean": 3840.3,
+        "sd": 186.86599476630303,
+        "min": 3600,
+        "max": 4242,
+        "n": 10
+      },
+      "ordinary_interactions": {
+        "mean": 924.5,
+        "sd": 61.5544023157113,
+        "min": 864,
+        "max": 1047,
+        "n": 10
+      },
+      "interactions_per_message": {
+        "mean": 0.24098406549166757,
+        "sd": 0.01576366421538405,
+        "min": 0.219000471475719,
+        "max": 0.26842105263157895,
+        "n": 10
+      },
+      "frequency_changes": {
+        "mean": 562.7,
+        "sd": 181.50362714465697,
+        "min": 300,
+        "max": 907,
+        "n": 10
+      },
+      "direction_reversals": {
+        "mean": 159.3,
+        "sd": 96.08104218141405,
+        "min": 0,
+        "max": 298,
+        "n": 10
+      },
+      "constraint_violations": {
+        "mean": 0,
+        "sd": 0,
+        "min": 0,
+        "max": 0,
+        "n": 10
+      },
+      "share_at_minimum": {
+        "mean": 0.9380000000000001,
+        "sd": 0.043363949298529436,
+        "min": 0.8575,
+        "max": 1,
+        "n": 10
+      }
+    }
+  },
+  "paired_contrasts_interactions_per_message": {
+    "model_minus_fixed_1": {
+      "mean": 0.004209599988045487,
+      "sd": 0.003867512498480718,
+      "min": -0.0015555110041878262,
+      "max": 0.009809941520467824,
+      "n": 10,
+      "wins": 9,
+      "seeds": 10
+    },
+    "model_minus_fixed_2": {
+      "mean": 0.0009318222102677077,
+      "sd": 0.014167357425816785,
+      "min": -0.017095240228134606,
+      "max": 0.03133771929824561,
+      "n": 10,
+      "wins": 4,
+      "seeds": 10
+    },
+    "model_minus_deterministic": {
+      "mean": -0.014686539736845153,
+      "sd": 0.01247333474882679,
+      "min": -0.03374126451918713,
+      "max": 0.00834079274241406,
+      "n": 10,
+      "wins": 1,
+      "seeds": 10
+    },
+    "retrained_minus_deterministic": {
+      "mean": -0.013689852011000888,
+      "sd": 0.01319931023149118,
+      "min": -0.02959440158639362,
+      "max": 0.00834079274241406,
+      "n": 10,
+      "wins": 1,
+      "seeds": 10
+    }
+  },
+  "per_seed": [
+    {
+      "seed": 5128,
+      "training_prevalence": 0.19696176008381353,
+      "evaluation": {
+        "validation": {
+          "rows": 118,
+          "positive_rows": 19,
+          "prevalence": 0.16101694915254236,
+          "brier_score": 0.11276248439730868,
+          "constant_brier_score": 0.13638252067103465,
+          "log_loss": 0.3758749720966816,
+          "pr_auc": 0.47868323641279614
+        },
+        "test": {
+          "rows": 109,
+          "positive_rows": 24,
+          "prevalence": 0.22018348623853212,
+          "brier_score": 0.13716115380054356,
+          "constant_brier_score": 0.17224196719198281,
+          "log_loss": 0.4351575437315968,
+          "pr_auc": 0.5185184992852644
+        }
+      },
+      "policies_frozen_model": [
+        {
+          "policy": "fixed_1",
+          "delivered_messages": 3600,
+          "ordinary_interactions": 931,
+          "interactions_per_message": 0.2586111111111111,
+          "messages_per_interaction": 3.866809881847476,
+          "frequency_changes": 300,
+          "direction_reversals": 0,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 3600,
+            "2": 0,
+            "3": 0
+          },
+          "selected_frequency_share": {
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            }
+          ]
+        },
+        {
+          "policy": "fixed_2",
+          "delivered_messages": 7200,
+          "ordinary_interactions": 1707,
+          "interactions_per_message": 0.23708333333333334,
+          "messages_per_interaction": 4.21792618629174,
+          "frequency_changes": 0,
+          "direction_reversals": 0,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 0,
+            "2": 3600,
+            "3": 0
+          },
+          "selected_frequency_share": {
+            "1": 0,
+            "2": 1,
+            "3": 0
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            }
+          ]
+        },
+        {
+          "policy": "fixed_3",
+          "delivered_messages": 10800,
+          "ordinary_interactions": 1790,
+          "interactions_per_message": 0.16574074074074074,
+          "messages_per_interaction": 6.033519553072626,
+          "frequency_changes": 300,
+          "direction_reversals": 0,
+          "constraint_violations": 300,
+          "selected_frequency_counts": {
+            "1": 0,
+            "2": 0,
+            "3": 3600
+          },
+          "selected_frequency_share": {
+            "1": 0,
+            "2": 0,
+            "3": 1
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            }
+          ]
+        },
+        {
+          "policy": "deterministic",
+          "delivered_messages": 5233,
+          "ordinary_interactions": 1361,
+          "interactions_per_message": 0.2600802598891649,
+          "messages_per_interaction": 3.8449669360764145,
+          "frequency_changes": 557,
+          "direction_reversals": 35,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 2318,
+            "2": 931,
+            "3": 351
+          },
+          "selected_frequency_share": {
+            "1": 0.6438888888888888,
+            "2": 0.2586111111111111,
+            "3": 0.0975
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 255,
+              "3": 45
+            },
+            {
+              "1": 163,
+              "2": 100,
+              "3": 37
+            },
+            {
+              "1": 204,
+              "2": 54,
+              "3": 42
+            },
+            {
+              "1": 235,
+              "2": 35,
+              "3": 30
+            },
+            {
+              "1": 243,
+              "2": 28,
+              "3": 29
+            },
+            {
+              "1": 240,
+              "2": 28,
+              "3": 32
+            },
+            {
+              "1": 240,
+              "2": 29,
+              "3": 31
+            },
+            {
+              "1": 241,
+              "2": 30,
+              "3": 29
+            },
+            {
+              "1": 246,
+              "2": 30,
+              "3": 24
+            },
+            {
+              "1": 253,
+              "2": 21,
+              "3": 26
+            },
+            {
+              "1": 253,
+              "2": 21,
+              "3": 26
+            }
+          ]
+        },
+        {
+          "policy": "model_plus_safety",
+          "delivered_messages": 3800,
+          "ordinary_interactions": 1020,
+          "interactions_per_message": 0.26842105263157895,
+          "messages_per_interaction": 3.7254901960784315,
+          "frequency_changes": 523,
+          "direction_reversals": 157,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 3400,
+            "2": 200,
+            "3": 0
+          },
+          "selected_frequency_share": {
+            "1": 0.9444444444444444,
+            "2": 0.05555555555555555,
+            "3": 0
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 218,
+              "2": 82,
+              "3": 0
+            },
+            {
+              "1": 277,
+              "2": 23,
+              "3": 0
+            },
+            {
+              "1": 287,
+              "2": 13,
+              "3": 0
+            },
+            {
+              "1": 292,
+              "2": 8,
+              "3": 0
+            },
+            {
+              "1": 287,
+              "2": 13,
+              "3": 0
+            },
+            {
+              "1": 287,
+              "2": 13,
+              "3": 0
+            },
+            {
+              "1": 289,
+              "2": 11,
+              "3": 0
+            },
+            {
+              "1": 288,
+              "2": 12,
+              "3": 0
+            },
+            {
+              "1": 292,
+              "2": 8,
+              "3": 0
+            },
+            {
+              "1": 294,
+              "2": 6,
+              "3": 0
+            },
+            {
+              "1": 289,
+              "2": 11,
+              "3": 0
+            }
+          ]
+        },
+        {
+          "policy": "oracle_preferred",
+          "delivered_messages": 6972,
+          "ordinary_interactions": 2778,
+          "interactions_per_message": 0.3984509466437177,
+          "messages_per_interaction": 2.509719222462203,
+          "frequency_changes": 195,
+          "direction_reversals": 0,
+          "constraint_violations": 88,
+          "selected_frequency_counts": {
+            "1": 1284,
+            "2": 1260,
+            "3": 1056
+          },
+          "selected_frequency_share": {
+            "1": 0.3566666666666667,
+            "2": 0.35,
+            "3": 0.29333333333333333
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 107,
+              "2": 105,
+              "3": 88
+            },
+            {
+              "1": 107,
+              "2": 105,
+              "3": 88
+            },
+            {
+              "1": 107,
+              "2": 105,
+              "3": 88
+            },
+            {
+              "1": 107,
+              "2": 105,
+              "3": 88
+            },
+            {
+              "1": 107,
+              "2": 105,
+              "3": 88
+            },
+            {
+              "1": 107,
+              "2": 105,
+              "3": 88
+            },
+            {
+              "1": 107,
+              "2": 105,
+              "3": 88
+            },
+            {
+              "1": 107,
+              "2": 105,
+              "3": 88
+            },
+            {
+              "1": 107,
+              "2": 105,
+              "3": 88
+            },
+            {
+              "1": 107,
+              "2": 105,
+              "3": 88
+            },
+            {
+              "1": 107,
+              "2": 105,
+              "3": 88
+            },
+            {
+              "1": 107,
+              "2": 105,
+              "3": 88
+            }
+          ]
+        }
+      ],
+      "model_plus_safety_retrained": {
+        "policy": "model_plus_safety",
+        "delivered_messages": 3800,
+        "ordinary_interactions": 1020,
+        "interactions_per_message": 0.26842105263157895,
+        "messages_per_interaction": 3.7254901960784315,
+        "frequency_changes": 523,
+        "direction_reversals": 157,
+        "constraint_violations": 0,
+        "selected_frequency_counts": {
+          "1": 3400,
+          "2": 200,
+          "3": 0
+        },
+        "selected_frequency_share": {
+          "1": 0.9444444444444444,
+          "2": 0.05555555555555555,
+          "3": 0
+        },
+        "weekly_selected_frequency_counts": [
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 218,
+            "2": 82,
+            "3": 0
+          },
+          {
+            "1": 277,
+            "2": 23,
+            "3": 0
+          },
+          {
+            "1": 287,
+            "2": 13,
+            "3": 0
+          },
+          {
+            "1": 292,
+            "2": 8,
+            "3": 0
+          },
+          {
+            "1": 287,
+            "2": 13,
+            "3": 0
+          },
+          {
+            "1": 287,
+            "2": 13,
+            "3": 0
+          },
+          {
+            "1": 289,
+            "2": 11,
+            "3": 0
+          },
+          {
+            "1": 288,
+            "2": 12,
+            "3": 0
+          },
+          {
+            "1": 292,
+            "2": 8,
+            "3": 0
+          },
+          {
+            "1": 294,
+            "2": 6,
+            "3": 0
+          },
+          {
+            "1": 289,
+            "2": 11,
+            "3": 0
+          }
+        ]
+      }
+    },
+    {
+      "seed": 1,
+      "training_prevalence": 0.19429916317991633,
+      "evaluation": {
+        "validation": {
+          "rows": 118,
+          "positive_rows": 16,
+          "prevalence": 0.13559322033898305,
+          "brier_score": 0.10095351584241512,
+          "constant_brier_score": 0.12065408666192982,
+          "log_loss": 0.33690263756170935,
+          "pr_auc": 0.3656328440259912
+        },
+        "test": {
+          "rows": 124,
+          "positive_rows": 24,
+          "prevalence": 0.1935483870967742,
+          "brier_score": 0.13548181574329798,
+          "constant_brier_score": 0.1560879726137387,
+          "log_loss": 0.4251772342358811,
+          "pr_auc": 0.43236392534130835
+        }
+      },
+      "policies_frozen_model": [
+        {
+          "policy": "fixed_1",
+          "delivered_messages": 3600,
+          "ordinary_interactions": 808,
+          "interactions_per_message": 0.22444444444444445,
+          "messages_per_interaction": 4.455445544554456,
+          "frequency_changes": 300,
+          "direction_reversals": 0,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 3600,
+            "2": 0,
+            "3": 0
+          },
+          "selected_frequency_share": {
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            }
+          ]
+        },
+        {
+          "policy": "fixed_2",
+          "delivered_messages": 7200,
+          "ordinary_interactions": 1762,
+          "interactions_per_message": 0.24472222222222223,
+          "messages_per_interaction": 4.0862656072644725,
+          "frequency_changes": 0,
+          "direction_reversals": 0,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 0,
+            "2": 3600,
+            "3": 0
+          },
+          "selected_frequency_share": {
+            "1": 0,
+            "2": 1,
+            "3": 0
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            }
+          ]
+        },
+        {
+          "policy": "fixed_3",
+          "delivered_messages": 10800,
+          "ordinary_interactions": 1858,
+          "interactions_per_message": 0.17203703703703704,
+          "messages_per_interaction": 5.8127018299246505,
+          "frequency_changes": 300,
+          "direction_reversals": 0,
+          "constraint_violations": 300,
+          "selected_frequency_counts": {
+            "1": 0,
+            "2": 0,
+            "3": 3600
+          },
+          "selected_frequency_share": {
+            "1": 0,
+            "2": 0,
+            "3": 1
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            }
+          ]
+        },
+        {
+          "policy": "deterministic",
+          "delivered_messages": 5335,
+          "ordinary_interactions": 1350,
+          "interactions_per_message": 0.2530459231490159,
+          "messages_per_interaction": 3.9518518518518517,
+          "frequency_changes": 557,
+          "direction_reversals": 37,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 2261,
+            "2": 943,
+            "3": 396
+          },
+          "selected_frequency_share": {
+            "1": 0.6280555555555556,
+            "2": 0.2619444444444444,
+            "3": 0.11
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 257,
+              "3": 43
+            },
+            {
+              "1": 156,
+              "2": 98,
+              "3": 46
+            },
+            {
+              "1": 193,
+              "2": 50,
+              "3": 57
+            },
+            {
+              "1": 219,
+              "2": 40,
+              "3": 41
+            },
+            {
+              "1": 238,
+              "2": 24,
+              "3": 38
+            },
+            {
+              "1": 237,
+              "2": 28,
+              "3": 35
+            },
+            {
+              "1": 242,
+              "2": 29,
+              "3": 29
+            },
+            {
+              "1": 244,
+              "2": 30,
+              "3": 26
+            },
+            {
+              "1": 244,
+              "2": 28,
+              "3": 28
+            },
+            {
+              "1": 245,
+              "2": 28,
+              "3": 27
+            },
+            {
+              "1": 243,
+              "2": 31,
+              "3": 26
+            }
+          ]
+        },
+        {
+          "policy": "model_plus_safety",
+          "delivered_messages": 3721,
+          "ordinary_interactions": 847,
+          "interactions_per_message": 0.22762698199408762,
+          "messages_per_interaction": 4.3931523022432115,
+          "frequency_changes": 473,
+          "direction_reversals": 125,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 3479,
+            "2": 121,
+            "3": 0
+          },
+          "selected_frequency_share": {
+            "1": 0.9663888888888889,
+            "2": 0.03361111111111111,
+            "3": 0
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 240,
+              "2": 60,
+              "3": 0
+            },
+            {
+              "1": 282,
+              "2": 18,
+              "3": 0
+            },
+            {
+              "1": 294,
+              "2": 6,
+              "3": 0
+            },
+            {
+              "1": 297,
+              "2": 3,
+              "3": 0
+            },
+            {
+              "1": 295,
+              "2": 5,
+              "3": 0
+            },
+            {
+              "1": 290,
+              "2": 10,
+              "3": 0
+            },
+            {
+              "1": 295,
+              "2": 5,
+              "3": 0
+            },
+            {
+              "1": 295,
+              "2": 5,
+              "3": 0
+            },
+            {
+              "1": 296,
+              "2": 4,
+              "3": 0
+            },
+            {
+              "1": 296,
+              "2": 4,
+              "3": 0
+            },
+            {
+              "1": 299,
+              "2": 1,
+              "3": 0
+            }
+          ]
+        },
+        {
+          "policy": "oracle_preferred",
+          "delivered_messages": 6960,
+          "ordinary_interactions": 2793,
+          "interactions_per_message": 0.40129310344827585,
+          "messages_per_interaction": 2.4919441460794842,
+          "frequency_changes": 196,
+          "direction_reversals": 0,
+          "constraint_violations": 88,
+          "selected_frequency_counts": {
+            "1": 1296,
+            "2": 1248,
+            "3": 1056
+          },
+          "selected_frequency_share": {
+            "1": 0.36,
+            "2": 0.3466666666666667,
+            "3": 0.29333333333333333
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 108,
+              "2": 104,
+              "3": 88
+            },
+            {
+              "1": 108,
+              "2": 104,
+              "3": 88
+            },
+            {
+              "1": 108,
+              "2": 104,
+              "3": 88
+            },
+            {
+              "1": 108,
+              "2": 104,
+              "3": 88
+            },
+            {
+              "1": 108,
+              "2": 104,
+              "3": 88
+            },
+            {
+              "1": 108,
+              "2": 104,
+              "3": 88
+            },
+            {
+              "1": 108,
+              "2": 104,
+              "3": 88
+            },
+            {
+              "1": 108,
+              "2": 104,
+              "3": 88
+            },
+            {
+              "1": 108,
+              "2": 104,
+              "3": 88
+            },
+            {
+              "1": 108,
+              "2": 104,
+              "3": 88
+            },
+            {
+              "1": 108,
+              "2": 104,
+              "3": 88
+            },
+            {
+              "1": 108,
+              "2": 104,
+              "3": 88
+            }
+          ]
+        }
+      ],
+      "model_plus_safety_retrained": {
+        "policy": "model_plus_safety",
+        "delivered_messages": 3921,
+        "ordinary_interactions": 881,
+        "interactions_per_message": 0.22468757969905637,
+        "messages_per_interaction": 4.4506242905788875,
+        "frequency_changes": 680,
+        "direction_reversals": 215,
+        "constraint_violations": 0,
+        "selected_frequency_counts": {
+          "1": 3321,
+          "2": 237,
+          "3": 42
+        },
+        "selected_frequency_share": {
+          "1": 0.9225,
+          "2": 0.06583333333333333,
+          "3": 0.011666666666666667
+        },
+        "weekly_selected_frequency_counts": [
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 240,
+            "2": 60,
+            "3": 0
+          },
+          {
+            "1": 273,
+            "2": 9,
+            "3": 18
+          },
+          {
+            "1": 252,
+            "2": 45,
+            "3": 3
+          },
+          {
+            "1": 282,
+            "2": 13,
+            "3": 5
+          },
+          {
+            "1": 278,
+            "2": 19,
+            "3": 3
+          },
+          {
+            "1": 280,
+            "2": 18,
+            "3": 2
+          },
+          {
+            "1": 285,
+            "2": 11,
+            "3": 4
+          },
+          {
+            "1": 282,
+            "2": 17,
+            "3": 1
+          },
+          {
+            "1": 288,
+            "2": 10,
+            "3": 2
+          },
+          {
+            "1": 279,
+            "2": 19,
+            "3": 2
+          },
+          {
+            "1": 282,
+            "2": 16,
+            "3": 2
+          }
+        ]
+      }
+    },
+    {
+      "seed": 2,
+      "training_prevalence": 0.19070841889117043,
+      "evaluation": {
+        "validation": {
+          "rows": 116,
+          "positive_rows": 30,
+          "prevalence": 0.25862068965517243,
+          "brier_score": 0.16732258816785123,
+          "constant_brier_score": 0.19634810505777828,
+          "log_loss": 0.5110058951933449,
+          "pr_auc": 0.5066029031613616
+        },
+        "test": {
+          "rows": 113,
+          "positive_rows": 19,
+          "prevalence": 0.168141592920354,
+          "brier_score": 0.1300084062225904,
+          "constant_brier_score": 0.14037925928495684,
+          "log_loss": 0.42145680689201204,
+          "pr_auc": 0.4214255386246485
+        }
+      },
+      "policies_frozen_model": [
+        {
+          "policy": "fixed_1",
+          "delivered_messages": 3600,
+          "ordinary_interactions": 889,
+          "interactions_per_message": 0.24694444444444444,
+          "messages_per_interaction": 4.049493813273341,
+          "frequency_changes": 300,
+          "direction_reversals": 0,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 3600,
+            "2": 0,
+            "3": 0
+          },
+          "selected_frequency_share": {
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            }
+          ]
+        },
+        {
+          "policy": "fixed_2",
+          "delivered_messages": 7200,
+          "ordinary_interactions": 1648,
+          "interactions_per_message": 0.2288888888888889,
+          "messages_per_interaction": 4.368932038834951,
+          "frequency_changes": 0,
+          "direction_reversals": 0,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 0,
+            "2": 3600,
+            "3": 0
+          },
+          "selected_frequency_share": {
+            "1": 0,
+            "2": 1,
+            "3": 0
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            }
+          ]
+        },
+        {
+          "policy": "fixed_3",
+          "delivered_messages": 10800,
+          "ordinary_interactions": 1699,
+          "interactions_per_message": 0.15731481481481482,
+          "messages_per_interaction": 6.356680400235432,
+          "frequency_changes": 300,
+          "direction_reversals": 0,
+          "constraint_violations": 300,
+          "selected_frequency_counts": {
+            "1": 0,
+            "2": 0,
+            "3": 3600
+          },
+          "selected_frequency_share": {
+            "1": 0,
+            "2": 0,
+            "3": 1
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            }
+          ]
+        },
+        {
+          "policy": "deterministic",
+          "delivered_messages": 5192,
+          "ordinary_interactions": 1300,
+          "interactions_per_message": 0.25038520801232667,
+          "messages_per_interaction": 3.993846153846154,
+          "frequency_changes": 563,
+          "direction_reversals": 45,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 2319,
+            "2": 970,
+            "3": 311
+          },
+          "selected_frequency_share": {
+            "1": 0.6441666666666667,
+            "2": 0.26944444444444443,
+            "3": 0.08638888888888889
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 268,
+              "3": 32
+            },
+            {
+              "1": 168,
+              "2": 95,
+              "3": 37
+            },
+            {
+              "1": 201,
+              "2": 62,
+              "3": 37
+            },
+            {
+              "1": 225,
+              "2": 44,
+              "3": 31
+            },
+            {
+              "1": 242,
+              "2": 29,
+              "3": 29
+            },
+            {
+              "1": 244,
+              "2": 33,
+              "3": 23
+            },
+            {
+              "1": 243,
+              "2": 26,
+              "3": 31
+            },
+            {
+              "1": 247,
+              "2": 27,
+              "3": 26
+            },
+            {
+              "1": 248,
+              "2": 34,
+              "3": 18
+            },
+            {
+              "1": 250,
+              "2": 27,
+              "3": 23
+            },
+            {
+              "1": 251,
+              "2": 25,
+              "3": 24
+            }
+          ]
+        },
+        {
+          "policy": "model_plus_safety",
+          "delivered_messages": 3741,
+          "ordinary_interactions": 918,
+          "interactions_per_message": 0.2453889334402566,
+          "messages_per_interaction": 4.07516339869281,
+          "frequency_changes": 493,
+          "direction_reversals": 136,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 3459,
+            "2": 141,
+            "3": 0
+          },
+          "selected_frequency_share": {
+            "1": 0.9608333333333333,
+            "2": 0.03916666666666667,
+            "3": 0
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 232,
+              "2": 68,
+              "3": 0
+            },
+            {
+              "1": 279,
+              "2": 21,
+              "3": 0
+            },
+            {
+              "1": 292,
+              "2": 8,
+              "3": 0
+            },
+            {
+              "1": 297,
+              "2": 3,
+              "3": 0
+            },
+            {
+              "1": 290,
+              "2": 10,
+              "3": 0
+            },
+            {
+              "1": 297,
+              "2": 3,
+              "3": 0
+            },
+            {
+              "1": 294,
+              "2": 6,
+              "3": 0
+            },
+            {
+              "1": 293,
+              "2": 7,
+              "3": 0
+            },
+            {
+              "1": 297,
+              "2": 3,
+              "3": 0
+            },
+            {
+              "1": 297,
+              "2": 3,
+              "3": 0
+            },
+            {
+              "1": 291,
+              "2": 9,
+              "3": 0
+            }
+          ]
+        },
+        {
+          "policy": "oracle_preferred",
+          "delivered_messages": 6900,
+          "ordinary_interactions": 2695,
+          "interactions_per_message": 0.39057971014492754,
+          "messages_per_interaction": 2.560296846011132,
+          "frequency_changes": 205,
+          "direction_reversals": 0,
+          "constraint_violations": 90,
+          "selected_frequency_counts": {
+            "1": 1380,
+            "2": 1140,
+            "3": 1080
+          },
+          "selected_frequency_share": {
+            "1": 0.38333333333333336,
+            "2": 0.31666666666666665,
+            "3": 0.3
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 115,
+              "2": 95,
+              "3": 90
+            },
+            {
+              "1": 115,
+              "2": 95,
+              "3": 90
+            },
+            {
+              "1": 115,
+              "2": 95,
+              "3": 90
+            },
+            {
+              "1": 115,
+              "2": 95,
+              "3": 90
+            },
+            {
+              "1": 115,
+              "2": 95,
+              "3": 90
+            },
+            {
+              "1": 115,
+              "2": 95,
+              "3": 90
+            },
+            {
+              "1": 115,
+              "2": 95,
+              "3": 90
+            },
+            {
+              "1": 115,
+              "2": 95,
+              "3": 90
+            },
+            {
+              "1": 115,
+              "2": 95,
+              "3": 90
+            },
+            {
+              "1": 115,
+              "2": 95,
+              "3": 90
+            },
+            {
+              "1": 115,
+              "2": 95,
+              "3": 90
+            },
+            {
+              "1": 115,
+              "2": 95,
+              "3": 90
+            }
+          ]
+        }
+      ],
+      "model_plus_safety_retrained": {
+        "policy": "model_plus_safety",
+        "delivered_messages": 3600,
+        "ordinary_interactions": 889,
+        "interactions_per_message": 0.24694444444444444,
+        "messages_per_interaction": 4.049493813273341,
+        "frequency_changes": 300,
+        "direction_reversals": 0,
+        "constraint_violations": 0,
+        "selected_frequency_counts": {
+          "1": 3600,
+          "2": 0,
+          "3": 0
+        },
+        "selected_frequency_share": {
+          "1": 1,
+          "2": 0,
+          "3": 0
+        },
+        "weekly_selected_frequency_counts": [
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          }
+        ]
+      }
+    },
+    {
+      "seed": 3,
+      "training_prevalence": 0.20786663193539984,
+      "evaluation": {
+        "validation": {
+          "rows": 112,
+          "positive_rows": 20,
+          "prevalence": 0.17857142857142858,
+          "brier_score": 0.12264714170603139,
+          "constant_brier_score": 0.1475418824095239,
+          "log_loss": 0.39522863299801964,
+          "pr_auc": 0.4393459749991352
+        },
+        "test": {
+          "rows": 113,
+          "positive_rows": 26,
+          "prevalence": 0.23008849557522124,
+          "brier_score": 0.15626999979732276,
+          "constant_brier_score": 0.1776415910027794,
+          "log_loss": 0.49046128165600694,
+          "pr_auc": 0.5211106102523353
+        }
+      },
+      "policies_frozen_model": [
+        {
+          "policy": "fixed_1",
+          "delivered_messages": 3600,
+          "ordinary_interactions": 864,
+          "interactions_per_message": 0.24,
+          "messages_per_interaction": 4.166666666666667,
+          "frequency_changes": 300,
+          "direction_reversals": 0,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 3600,
+            "2": 0,
+            "3": 0
+          },
+          "selected_frequency_share": {
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            }
+          ]
+        },
+        {
+          "policy": "fixed_2",
+          "delivered_messages": 7200,
+          "ordinary_interactions": 1777,
+          "interactions_per_message": 0.24680555555555556,
+          "messages_per_interaction": 4.051772650534609,
+          "frequency_changes": 0,
+          "direction_reversals": 0,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 0,
+            "2": 3600,
+            "3": 0
+          },
+          "selected_frequency_share": {
+            "1": 0,
+            "2": 1,
+            "3": 0
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            }
+          ]
+        },
+        {
+          "policy": "fixed_3",
+          "delivered_messages": 10800,
+          "ordinary_interactions": 2058,
+          "interactions_per_message": 0.19055555555555556,
+          "messages_per_interaction": 5.247813411078718,
+          "frequency_changes": 300,
+          "direction_reversals": 0,
+          "constraint_violations": 300,
+          "selected_frequency_counts": {
+            "1": 0,
+            "2": 0,
+            "3": 3600
+          },
+          "selected_frequency_share": {
+            "1": 0,
+            "2": 0,
+            "3": 1
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            }
+          ]
+        },
+        {
+          "policy": "deterministic",
+          "delivered_messages": 5322,
+          "ordinary_interactions": 1367,
+          "interactions_per_message": 0.25685832393836905,
+          "messages_per_interaction": 3.8931967812728603,
+          "frequency_changes": 576,
+          "direction_reversals": 44,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 2260,
+            "2": 958,
+            "3": 382
+          },
+          "selected_frequency_share": {
+            "1": 0.6277777777777778,
+            "2": 0.26611111111111113,
+            "3": 0.10611111111111111
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 257,
+              "3": 43
+            },
+            {
+              "1": 164,
+              "2": 90,
+              "3": 46
+            },
+            {
+              "1": 191,
+              "2": 63,
+              "3": 46
+            },
+            {
+              "1": 216,
+              "2": 47,
+              "3": 37
+            },
+            {
+              "1": 233,
+              "2": 34,
+              "3": 33
+            },
+            {
+              "1": 239,
+              "2": 27,
+              "3": 34
+            },
+            {
+              "1": 236,
+              "2": 40,
+              "3": 24
+            },
+            {
+              "1": 239,
+              "2": 34,
+              "3": 27
+            },
+            {
+              "1": 245,
+              "2": 24,
+              "3": 31
+            },
+            {
+              "1": 248,
+              "2": 24,
+              "3": 28
+            },
+            {
+              "1": 249,
+              "2": 18,
+              "3": 33
+            }
+          ]
+        },
+        {
+          "policy": "model_plus_safety",
+          "delivered_messages": 3802,
+          "ordinary_interactions": 926,
+          "interactions_per_message": 0.24355602314571279,
+          "messages_per_interaction": 4.105831533477322,
+          "frequency_changes": 530,
+          "direction_reversals": 149,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 3398,
+            "2": 202,
+            "3": 0
+          },
+          "selected_frequency_share": {
+            "1": 0.9438888888888889,
+            "2": 0.05611111111111111,
+            "3": 0
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 225,
+              "2": 75,
+              "3": 0
+            },
+            {
+              "1": 276,
+              "2": 24,
+              "3": 0
+            },
+            {
+              "1": 286,
+              "2": 14,
+              "3": 0
+            },
+            {
+              "1": 294,
+              "2": 6,
+              "3": 0
+            },
+            {
+              "1": 287,
+              "2": 13,
+              "3": 0
+            },
+            {
+              "1": 283,
+              "2": 17,
+              "3": 0
+            },
+            {
+              "1": 284,
+              "2": 16,
+              "3": 0
+            },
+            {
+              "1": 289,
+              "2": 11,
+              "3": 0
+            },
+            {
+              "1": 286,
+              "2": 14,
+              "3": 0
+            },
+            {
+              "1": 294,
+              "2": 6,
+              "3": 0
+            },
+            {
+              "1": 294,
+              "2": 6,
+              "3": 0
+            }
+          ]
+        },
+        {
+          "policy": "oracle_preferred",
+          "delivered_messages": 7584,
+          "ordinary_interactions": 2977,
+          "interactions_per_message": 0.39253691983122363,
+          "messages_per_interaction": 2.547531071548539,
+          "frequency_changes": 192,
+          "direction_reversals": 0,
+          "constraint_violations": 112,
+          "selected_frequency_counts": {
+            "1": 960,
+            "2": 1296,
+            "3": 1344
+          },
+          "selected_frequency_share": {
+            "1": 0.26666666666666666,
+            "2": 0.36,
+            "3": 0.37333333333333335
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 80,
+              "2": 108,
+              "3": 112
+            },
+            {
+              "1": 80,
+              "2": 108,
+              "3": 112
+            },
+            {
+              "1": 80,
+              "2": 108,
+              "3": 112
+            },
+            {
+              "1": 80,
+              "2": 108,
+              "3": 112
+            },
+            {
+              "1": 80,
+              "2": 108,
+              "3": 112
+            },
+            {
+              "1": 80,
+              "2": 108,
+              "3": 112
+            },
+            {
+              "1": 80,
+              "2": 108,
+              "3": 112
+            },
+            {
+              "1": 80,
+              "2": 108,
+              "3": 112
+            },
+            {
+              "1": 80,
+              "2": 108,
+              "3": 112
+            },
+            {
+              "1": 80,
+              "2": 108,
+              "3": 112
+            },
+            {
+              "1": 80,
+              "2": 108,
+              "3": 112
+            },
+            {
+              "1": 80,
+              "2": 108,
+              "3": 112
+            }
+          ]
+        }
+      ],
+      "model_plus_safety_retrained": {
+        "policy": "model_plus_safety",
+        "delivered_messages": 3600,
+        "ordinary_interactions": 864,
+        "interactions_per_message": 0.24,
+        "messages_per_interaction": 4.166666666666667,
+        "frequency_changes": 300,
+        "direction_reversals": 0,
+        "constraint_violations": 0,
+        "selected_frequency_counts": {
+          "1": 3600,
+          "2": 0,
+          "3": 0
+        },
+        "selected_frequency_share": {
+          "1": 1,
+          "2": 0,
+          "3": 0
+        },
+        "weekly_selected_frequency_counts": [
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          }
+        ]
+      }
+    },
+    {
+      "seed": 4,
+      "training_prevalence": 0.21379853095487933,
+      "evaluation": {
+        "validation": {
+          "rows": 117,
+          "positive_rows": 22,
+          "prevalence": 0.18803418803418803,
+          "brier_score": 0.12005408171606555,
+          "constant_brier_score": 0.1533411335306467,
+          "log_loss": 0.39133594520720505,
+          "pr_auc": 0.5652512947947358
+        },
+        "test": {
+          "rows": 128,
+          "positive_rows": 18,
+          "prevalence": 0.140625,
+          "brier_score": 0.11717256941436298,
+          "constant_brier_score": 0.12620397500740507,
+          "log_loss": 0.38325923036929854,
+          "pr_auc": 0.2528913685164849
+        }
+      },
+      "policies_frozen_model": [
+        {
+          "policy": "fixed_1",
+          "delivered_messages": 3600,
+          "ordinary_interactions": 784,
+          "interactions_per_message": 0.21777777777777776,
+          "messages_per_interaction": 4.591836734693878,
+          "frequency_changes": 300,
+          "direction_reversals": 0,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 3600,
+            "2": 0,
+            "3": 0
+          },
+          "selected_frequency_share": {
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            }
+          ]
+        },
+        {
+          "policy": "fixed_2",
+          "delivered_messages": 7200,
+          "ordinary_interactions": 1656,
+          "interactions_per_message": 0.23,
+          "messages_per_interaction": 4.3478260869565215,
+          "frequency_changes": 0,
+          "direction_reversals": 0,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 0,
+            "2": 3600,
+            "3": 0
+          },
+          "selected_frequency_share": {
+            "1": 0,
+            "2": 1,
+            "3": 0
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            }
+          ]
+        },
+        {
+          "policy": "fixed_3",
+          "delivered_messages": 10800,
+          "ordinary_interactions": 2134,
+          "interactions_per_message": 0.1975925925925926,
+          "messages_per_interaction": 5.060918462980319,
+          "frequency_changes": 300,
+          "direction_reversals": 0,
+          "constraint_violations": 300,
+          "selected_frequency_counts": {
+            "1": 0,
+            "2": 0,
+            "3": 3600
+          },
+          "selected_frequency_share": {
+            "1": 0,
+            "2": 0,
+            "3": 1
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            }
+          ]
+        },
+        {
+          "policy": "deterministic",
+          "delivered_messages": 5143,
+          "ordinary_interactions": 1197,
+          "interactions_per_message": 0.2327435349018083,
+          "messages_per_interaction": 4.296574770258981,
+          "frequency_changes": 522,
+          "direction_reversals": 32,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 2354,
+            "2": 949,
+            "3": 297
+          },
+          "selected_frequency_share": {
+            "1": 0.6538888888888889,
+            "2": 0.26361111111111113,
+            "3": 0.0825
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 263,
+              "3": 37
+            },
+            {
+              "1": 163,
+              "2": 101,
+              "3": 36
+            },
+            {
+              "1": 198,
+              "2": 69,
+              "3": 33
+            },
+            {
+              "1": 226,
+              "2": 45,
+              "3": 29
+            },
+            {
+              "1": 243,
+              "2": 31,
+              "3": 26
+            },
+            {
+              "1": 250,
+              "2": 24,
+              "3": 26
+            },
+            {
+              "1": 251,
+              "2": 30,
+              "3": 19
+            },
+            {
+              "1": 254,
+              "2": 22,
+              "3": 24
+            },
+            {
+              "1": 253,
+              "2": 22,
+              "3": 25
+            },
+            {
+              "1": 257,
+              "2": 20,
+              "3": 23
+            },
+            {
+              "1": 259,
+              "2": 22,
+              "3": 19
+            }
+          ]
+        },
+        {
+          "policy": "model_plus_safety",
+          "delivered_messages": 3733,
+          "ordinary_interactions": 819,
+          "interactions_per_message": 0.21939458880257165,
+          "messages_per_interaction": 4.557997557997558,
+          "frequency_changes": 472,
+          "direction_reversals": 122,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 3467,
+            "2": 133,
+            "3": 0
+          },
+          "selected_frequency_share": {
+            "1": 0.9630555555555556,
+            "2": 0.036944444444444446,
+            "3": 0
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 238,
+              "2": 62,
+              "3": 0
+            },
+            {
+              "1": 282,
+              "2": 18,
+              "3": 0
+            },
+            {
+              "1": 293,
+              "2": 7,
+              "3": 0
+            },
+            {
+              "1": 297,
+              "2": 3,
+              "3": 0
+            },
+            {
+              "1": 294,
+              "2": 6,
+              "3": 0
+            },
+            {
+              "1": 289,
+              "2": 11,
+              "3": 0
+            },
+            {
+              "1": 292,
+              "2": 8,
+              "3": 0
+            },
+            {
+              "1": 292,
+              "2": 8,
+              "3": 0
+            },
+            {
+              "1": 299,
+              "2": 1,
+              "3": 0
+            },
+            {
+              "1": 295,
+              "2": 5,
+              "3": 0
+            },
+            {
+              "1": 296,
+              "2": 4,
+              "3": 0
+            }
+          ]
+        },
+        {
+          "policy": "oracle_preferred",
+          "delivered_messages": 7644,
+          "ordinary_interactions": 3017,
+          "interactions_per_message": 0.3946886446886447,
+          "messages_per_interaction": 2.5336426914153134,
+          "frequency_changes": 207,
+          "direction_reversals": 0,
+          "constraint_violations": 122,
+          "selected_frequency_counts": {
+            "1": 1020,
+            "2": 1116,
+            "3": 1464
+          },
+          "selected_frequency_share": {
+            "1": 0.2833333333333333,
+            "2": 0.31,
+            "3": 0.4066666666666667
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 85,
+              "2": 93,
+              "3": 122
+            },
+            {
+              "1": 85,
+              "2": 93,
+              "3": 122
+            },
+            {
+              "1": 85,
+              "2": 93,
+              "3": 122
+            },
+            {
+              "1": 85,
+              "2": 93,
+              "3": 122
+            },
+            {
+              "1": 85,
+              "2": 93,
+              "3": 122
+            },
+            {
+              "1": 85,
+              "2": 93,
+              "3": 122
+            },
+            {
+              "1": 85,
+              "2": 93,
+              "3": 122
+            },
+            {
+              "1": 85,
+              "2": 93,
+              "3": 122
+            },
+            {
+              "1": 85,
+              "2": 93,
+              "3": 122
+            },
+            {
+              "1": 85,
+              "2": 93,
+              "3": 122
+            },
+            {
+              "1": 85,
+              "2": 93,
+              "3": 122
+            },
+            {
+              "1": 85,
+              "2": 93,
+              "3": 122
+            }
+          ]
+        }
+      ],
+      "model_plus_safety_retrained": {
+        "policy": "model_plus_safety",
+        "delivered_messages": 4242,
+        "ordinary_interactions": 929,
+        "interactions_per_message": 0.219000471475719,
+        "messages_per_interaction": 4.566200215285253,
+        "frequency_changes": 907,
+        "direction_reversals": 298,
+        "constraint_violations": 0,
+        "selected_frequency_counts": {
+          "1": 3087,
+          "2": 384,
+          "3": 129
+        },
+        "selected_frequency_share": {
+          "1": 0.8575,
+          "2": 0.10666666666666667,
+          "3": 0.035833333333333335
+        },
+        "weekly_selected_frequency_counts": [
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 238,
+            "2": 62,
+            "3": 0
+          },
+          {
+            "1": 227,
+            "2": 47,
+            "3": 26
+          },
+          {
+            "1": 254,
+            "2": 31,
+            "3": 15
+          },
+          {
+            "1": 259,
+            "2": 32,
+            "3": 9
+          },
+          {
+            "1": 257,
+            "2": 32,
+            "3": 11
+          },
+          {
+            "1": 252,
+            "2": 33,
+            "3": 15
+          },
+          {
+            "1": 256,
+            "2": 34,
+            "3": 10
+          },
+          {
+            "1": 262,
+            "2": 27,
+            "3": 11
+          },
+          {
+            "1": 262,
+            "2": 26,
+            "3": 12
+          },
+          {
+            "1": 257,
+            "2": 31,
+            "3": 12
+          },
+          {
+            "1": 263,
+            "2": 29,
+            "3": 8
+          }
+        ]
+      }
+    },
+    {
+      "seed": 5,
+      "training_prevalence": 0.18031060805475124,
+      "evaluation": {
+        "validation": {
+          "rows": 120,
+          "positive_rows": 18,
+          "prevalence": 0.15,
+          "brier_score": 0.1090333811913841,
+          "constant_brier_score": 0.12841873296064907,
+          "log_loss": 0.35625014501621727,
+          "pr_auc": 0.4570561841506609
+        },
+        "test": {
+          "rows": 128,
+          "positive_rows": 15,
+          "prevalence": 0.1171875,
+          "brier_score": 0.10485793093919986,
+          "constant_brier_score": 0.1074391166142421,
+          "log_loss": 0.354641178939067,
+          "pr_auc": 0.20341038667274008
+        }
+      },
+      "policies_frozen_model": [
+        {
+          "policy": "fixed_1",
+          "delivered_messages": 3600,
+          "ordinary_interactions": 851,
+          "interactions_per_message": 0.2363888888888889,
+          "messages_per_interaction": 4.230317273795535,
+          "frequency_changes": 300,
+          "direction_reversals": 0,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 3600,
+            "2": 0,
+            "3": 0
+          },
+          "selected_frequency_share": {
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            }
+          ]
+        },
+        {
+          "policy": "fixed_2",
+          "delivered_messages": 7200,
+          "ordinary_interactions": 1691,
+          "interactions_per_message": 0.2348611111111111,
+          "messages_per_interaction": 4.257835600236547,
+          "frequency_changes": 0,
+          "direction_reversals": 0,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 0,
+            "2": 3600,
+            "3": 0
+          },
+          "selected_frequency_share": {
+            "1": 0,
+            "2": 1,
+            "3": 0
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            }
+          ]
+        },
+        {
+          "policy": "fixed_3",
+          "delivered_messages": 10800,
+          "ordinary_interactions": 1733,
+          "interactions_per_message": 0.16046296296296297,
+          "messages_per_interaction": 6.23196768609348,
+          "frequency_changes": 300,
+          "direction_reversals": 0,
+          "constraint_violations": 300,
+          "selected_frequency_counts": {
+            "1": 0,
+            "2": 0,
+            "3": 3600
+          },
+          "selected_frequency_share": {
+            "1": 0,
+            "2": 0,
+            "3": 1
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            }
+          ]
+        },
+        {
+          "policy": "deterministic",
+          "delivered_messages": 5302,
+          "ordinary_interactions": 1308,
+          "interactions_per_message": 0.24669935873255375,
+          "messages_per_interaction": 4.053516819571866,
+          "frequency_changes": 589,
+          "direction_reversals": 45,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 2272,
+            "2": 954,
+            "3": 374
+          },
+          "selected_frequency_share": {
+            "1": 0.6311111111111111,
+            "2": 0.265,
+            "3": 0.10388888888888889
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 254,
+              "3": 46
+            },
+            {
+              "1": 160,
+              "2": 95,
+              "3": 45
+            },
+            {
+              "1": 193,
+              "2": 63,
+              "3": 44
+            },
+            {
+              "1": 223,
+              "2": 39,
+              "3": 38
+            },
+            {
+              "1": 234,
+              "2": 40,
+              "3": 26
+            },
+            {
+              "1": 245,
+              "2": 29,
+              "3": 26
+            },
+            {
+              "1": 247,
+              "2": 24,
+              "3": 29
+            },
+            {
+              "1": 243,
+              "2": 24,
+              "3": 33
+            },
+            {
+              "1": 237,
+              "2": 33,
+              "3": 30
+            },
+            {
+              "1": 246,
+              "2": 22,
+              "3": 32
+            },
+            {
+              "1": 244,
+              "2": 31,
+              "3": 25
+            }
+          ]
+        },
+        {
+          "policy": "model_plus_safety",
+          "delivered_messages": 3767,
+          "ordinary_interactions": 907,
+          "interactions_per_message": 0.24077515264135918,
+          "messages_per_interaction": 4.153252480705623,
+          "frequency_changes": 512,
+          "direction_reversals": 147,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 3433,
+            "2": 167,
+            "3": 0
+          },
+          "selected_frequency_share": {
+            "1": 0.9536111111111111,
+            "2": 0.04638888888888889,
+            "3": 0
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 228,
+              "2": 72,
+              "3": 0
+            },
+            {
+              "1": 280,
+              "2": 20,
+              "3": 0
+            },
+            {
+              "1": 291,
+              "2": 9,
+              "3": 0
+            },
+            {
+              "1": 293,
+              "2": 7,
+              "3": 0
+            },
+            {
+              "1": 292,
+              "2": 8,
+              "3": 0
+            },
+            {
+              "1": 290,
+              "2": 10,
+              "3": 0
+            },
+            {
+              "1": 295,
+              "2": 5,
+              "3": 0
+            },
+            {
+              "1": 291,
+              "2": 9,
+              "3": 0
+            },
+            {
+              "1": 288,
+              "2": 12,
+              "3": 0
+            },
+            {
+              "1": 289,
+              "2": 11,
+              "3": 0
+            },
+            {
+              "1": 296,
+              "2": 4,
+              "3": 0
+            }
+          ]
+        },
+        {
+          "policy": "oracle_preferred",
+          "delivered_messages": 7044,
+          "ordinary_interactions": 2652,
+          "interactions_per_message": 0.37649063032367974,
+          "messages_per_interaction": 2.6561085972850678,
+          "frequency_changes": 191,
+          "direction_reversals": 0,
+          "constraint_violations": 89,
+          "selected_frequency_counts": {
+            "1": 1224,
+            "2": 1308,
+            "3": 1068
+          },
+          "selected_frequency_share": {
+            "1": 0.34,
+            "2": 0.36333333333333334,
+            "3": 0.2966666666666667
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 102,
+              "2": 109,
+              "3": 89
+            },
+            {
+              "1": 102,
+              "2": 109,
+              "3": 89
+            },
+            {
+              "1": 102,
+              "2": 109,
+              "3": 89
+            },
+            {
+              "1": 102,
+              "2": 109,
+              "3": 89
+            },
+            {
+              "1": 102,
+              "2": 109,
+              "3": 89
+            },
+            {
+              "1": 102,
+              "2": 109,
+              "3": 89
+            },
+            {
+              "1": 102,
+              "2": 109,
+              "3": 89
+            },
+            {
+              "1": 102,
+              "2": 109,
+              "3": 89
+            },
+            {
+              "1": 102,
+              "2": 109,
+              "3": 89
+            },
+            {
+              "1": 102,
+              "2": 109,
+              "3": 89
+            },
+            {
+              "1": 102,
+              "2": 109,
+              "3": 89
+            },
+            {
+              "1": 102,
+              "2": 109,
+              "3": 89
+            }
+          ]
+        }
+      ],
+      "model_plus_safety_retrained": {
+        "policy": "model_plus_safety",
+        "delivered_messages": 3767,
+        "ordinary_interactions": 907,
+        "interactions_per_message": 0.24077515264135918,
+        "messages_per_interaction": 4.153252480705623,
+        "frequency_changes": 512,
+        "direction_reversals": 147,
+        "constraint_violations": 0,
+        "selected_frequency_counts": {
+          "1": 3433,
+          "2": 167,
+          "3": 0
+        },
+        "selected_frequency_share": {
+          "1": 0.9536111111111111,
+          "2": 0.04638888888888889,
+          "3": 0
+        },
+        "weekly_selected_frequency_counts": [
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 228,
+            "2": 72,
+            "3": 0
+          },
+          {
+            "1": 280,
+            "2": 20,
+            "3": 0
+          },
+          {
+            "1": 291,
+            "2": 9,
+            "3": 0
+          },
+          {
+            "1": 293,
+            "2": 7,
+            "3": 0
+          },
+          {
+            "1": 292,
+            "2": 8,
+            "3": 0
+          },
+          {
+            "1": 290,
+            "2": 10,
+            "3": 0
+          },
+          {
+            "1": 295,
+            "2": 5,
+            "3": 0
+          },
+          {
+            "1": 291,
+            "2": 9,
+            "3": 0
+          },
+          {
+            "1": 288,
+            "2": 12,
+            "3": 0
+          },
+          {
+            "1": 289,
+            "2": 11,
+            "3": 0
+          },
+          {
+            "1": 296,
+            "2": 4,
+            "3": 0
+          }
+        ]
+      }
+    },
+    {
+      "seed": 6,
+      "training_prevalence": 0.20363636363636364,
+      "evaluation": {
+        "validation": {
+          "rows": 113,
+          "positive_rows": 14,
+          "prevalence": 0.12389380530973451,
+          "brier_score": 0.10172817198731439,
+          "constant_brier_score": 0.11490300592408412,
+          "log_loss": 0.34394552190419225,
+          "pr_auc": 0.3762056319471561
+        },
+        "test": {
+          "rows": 129,
+          "positive_rows": 27,
+          "prevalence": 0.20930232558139536,
+          "brier_score": 0.14835026115848718,
+          "constant_brier_score": 0.16552696521237742,
+          "log_loss": 0.47228208932608984,
+          "pr_auc": 0.4635398750779083
+        }
+      },
+      "policies_frozen_model": [
+        {
+          "policy": "fixed_1",
+          "delivered_messages": 3600,
+          "ordinary_interactions": 846,
+          "interactions_per_message": 0.235,
+          "messages_per_interaction": 4.25531914893617,
+          "frequency_changes": 300,
+          "direction_reversals": 0,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 3600,
+            "2": 0,
+            "3": 0
+          },
+          "selected_frequency_share": {
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            }
+          ]
+        },
+        {
+          "policy": "fixed_2",
+          "delivered_messages": 7200,
+          "ordinary_interactions": 1707,
+          "interactions_per_message": 0.23708333333333334,
+          "messages_per_interaction": 4.21792618629174,
+          "frequency_changes": 0,
+          "direction_reversals": 0,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 0,
+            "2": 3600,
+            "3": 0
+          },
+          "selected_frequency_share": {
+            "1": 0,
+            "2": 1,
+            "3": 0
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            }
+          ]
+        },
+        {
+          "policy": "fixed_3",
+          "delivered_messages": 10800,
+          "ordinary_interactions": 2098,
+          "interactions_per_message": 0.19425925925925927,
+          "messages_per_interaction": 5.147759771210676,
+          "frequency_changes": 300,
+          "direction_reversals": 0,
+          "constraint_violations": 300,
+          "selected_frequency_counts": {
+            "1": 0,
+            "2": 0,
+            "3": 3600
+          },
+          "selected_frequency_share": {
+            "1": 0,
+            "2": 0,
+            "3": 1
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            }
+          ]
+        },
+        {
+          "policy": "deterministic",
+          "delivered_messages": 5370,
+          "ordinary_interactions": 1421,
+          "interactions_per_message": 0.2646182495344507,
+          "messages_per_interaction": 3.7790288529204785,
+          "frequency_changes": 557,
+          "direction_reversals": 37,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 2251,
+            "2": 928,
+            "3": 421
+          },
+          "selected_frequency_share": {
+            "1": 0.6252777777777778,
+            "2": 0.2577777777777778,
+            "3": 0.11694444444444445
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 259,
+              "3": 41
+            },
+            {
+              "1": 160,
+              "2": 92,
+              "3": 48
+            },
+            {
+              "1": 194,
+              "2": 46,
+              "3": 60
+            },
+            {
+              "1": 213,
+              "2": 37,
+              "3": 50
+            },
+            {
+              "1": 225,
+              "2": 36,
+              "3": 39
+            },
+            {
+              "1": 230,
+              "2": 37,
+              "3": 33
+            },
+            {
+              "1": 234,
+              "2": 31,
+              "3": 35
+            },
+            {
+              "1": 245,
+              "2": 20,
+              "3": 35
+            },
+            {
+              "1": 249,
+              "2": 19,
+              "3": 32
+            },
+            {
+              "1": 249,
+              "2": 26,
+              "3": 25
+            },
+            {
+              "1": 252,
+              "2": 25,
+              "3": 23
+            }
+          ]
+        },
+        {
+          "policy": "model_plus_safety",
+          "delivered_messages": 3758,
+          "ordinary_interactions": 884,
+          "interactions_per_message": 0.23523150612027674,
+          "messages_per_interaction": 4.251131221719457,
+          "frequency_changes": 497,
+          "direction_reversals": 137,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 3442,
+            "2": 158,
+            "3": 0
+          },
+          "selected_frequency_share": {
+            "1": 0.9561111111111111,
+            "2": 0.04388888888888889,
+            "3": 0
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 231,
+              "2": 69,
+              "3": 0
+            },
+            {
+              "1": 280,
+              "2": 20,
+              "3": 0
+            },
+            {
+              "1": 290,
+              "2": 10,
+              "3": 0
+            },
+            {
+              "1": 296,
+              "2": 4,
+              "3": 0
+            },
+            {
+              "1": 292,
+              "2": 8,
+              "3": 0
+            },
+            {
+              "1": 290,
+              "2": 10,
+              "3": 0
+            },
+            {
+              "1": 290,
+              "2": 10,
+              "3": 0
+            },
+            {
+              "1": 293,
+              "2": 7,
+              "3": 0
+            },
+            {
+              "1": 294,
+              "2": 6,
+              "3": 0
+            },
+            {
+              "1": 295,
+              "2": 5,
+              "3": 0
+            },
+            {
+              "1": 291,
+              "2": 9,
+              "3": 0
+            }
+          ]
+        },
+        {
+          "policy": "oracle_preferred",
+          "delivered_messages": 7380,
+          "ordinary_interactions": 3027,
+          "interactions_per_message": 0.41016260162601625,
+          "messages_per_interaction": 2.4380574826560952,
+          "frequency_changes": 205,
+          "direction_reversals": 0,
+          "constraint_violations": 110,
+          "selected_frequency_counts": {
+            "1": 1140,
+            "2": 1140,
+            "3": 1320
+          },
+          "selected_frequency_share": {
+            "1": 0.31666666666666665,
+            "2": 0.31666666666666665,
+            "3": 0.36666666666666664
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 95,
+              "2": 95,
+              "3": 110
+            },
+            {
+              "1": 95,
+              "2": 95,
+              "3": 110
+            },
+            {
+              "1": 95,
+              "2": 95,
+              "3": 110
+            },
+            {
+              "1": 95,
+              "2": 95,
+              "3": 110
+            },
+            {
+              "1": 95,
+              "2": 95,
+              "3": 110
+            },
+            {
+              "1": 95,
+              "2": 95,
+              "3": 110
+            },
+            {
+              "1": 95,
+              "2": 95,
+              "3": 110
+            },
+            {
+              "1": 95,
+              "2": 95,
+              "3": 110
+            },
+            {
+              "1": 95,
+              "2": 95,
+              "3": 110
+            },
+            {
+              "1": 95,
+              "2": 95,
+              "3": 110
+            },
+            {
+              "1": 95,
+              "2": 95,
+              "3": 110
+            },
+            {
+              "1": 95,
+              "2": 95,
+              "3": 110
+            }
+          ]
+        }
+      ],
+      "model_plus_safety_retrained": {
+        "policy": "model_plus_safety",
+        "delivered_messages": 3758,
+        "ordinary_interactions": 884,
+        "interactions_per_message": 0.23523150612027674,
+        "messages_per_interaction": 4.251131221719457,
+        "frequency_changes": 497,
+        "direction_reversals": 137,
+        "constraint_violations": 0,
+        "selected_frequency_counts": {
+          "1": 3442,
+          "2": 158,
+          "3": 0
+        },
+        "selected_frequency_share": {
+          "1": 0.9561111111111111,
+          "2": 0.04388888888888889,
+          "3": 0
+        },
+        "weekly_selected_frequency_counts": [
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 231,
+            "2": 69,
+            "3": 0
+          },
+          {
+            "1": 280,
+            "2": 20,
+            "3": 0
+          },
+          {
+            "1": 290,
+            "2": 10,
+            "3": 0
+          },
+          {
+            "1": 296,
+            "2": 4,
+            "3": 0
+          },
+          {
+            "1": 292,
+            "2": 8,
+            "3": 0
+          },
+          {
+            "1": 290,
+            "2": 10,
+            "3": 0
+          },
+          {
+            "1": 290,
+            "2": 10,
+            "3": 0
+          },
+          {
+            "1": 293,
+            "2": 7,
+            "3": 0
+          },
+          {
+            "1": 294,
+            "2": 6,
+            "3": 0
+          },
+          {
+            "1": 295,
+            "2": 5,
+            "3": 0
+          },
+          {
+            "1": 291,
+            "2": 9,
+            "3": 0
+          }
+        ]
+      }
+    },
+    {
+      "seed": 7,
+      "training_prevalence": 0.19826264690853346,
+      "evaluation": {
+        "validation": {
+          "rows": 110,
+          "positive_rows": 25,
+          "prevalence": 0.22727272727272727,
+          "brier_score": 0.12269672609452853,
+          "constant_brier_score": 0.17646141947348035,
+          "log_loss": 0.38667553893256323,
+          "pr_auc": 0.6638929962477009
+        },
+        "test": {
+          "rows": 111,
+          "positive_rows": 9,
+          "prevalence": 0.08108108108108109,
+          "brier_score": 0.07926804089017767,
+          "constant_brier_score": 0.0882384587415777,
+          "log_loss": 0.29349027489979257,
+          "pr_auc": 0.2769454161032565
+        }
+      },
+      "policies_frozen_model": [
+        {
+          "policy": "fixed_1",
+          "delivered_messages": 3600,
+          "ordinary_interactions": 814,
+          "interactions_per_message": 0.22611111111111112,
+          "messages_per_interaction": 4.422604422604422,
+          "frequency_changes": 300,
+          "direction_reversals": 0,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 3600,
+            "2": 0,
+            "3": 0
+          },
+          "selected_frequency_share": {
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            }
+          ]
+        },
+        {
+          "policy": "fixed_2",
+          "delivered_messages": 7200,
+          "ordinary_interactions": 1770,
+          "interactions_per_message": 0.24583333333333332,
+          "messages_per_interaction": 4.067796610169491,
+          "frequency_changes": 0,
+          "direction_reversals": 0,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 0,
+            "2": 3600,
+            "3": 0
+          },
+          "selected_frequency_share": {
+            "1": 0,
+            "2": 1,
+            "3": 0
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            }
+          ]
+        },
+        {
+          "policy": "fixed_3",
+          "delivered_messages": 10800,
+          "ordinary_interactions": 1965,
+          "interactions_per_message": 0.18194444444444444,
+          "messages_per_interaction": 5.4961832061068705,
+          "frequency_changes": 300,
+          "direction_reversals": 0,
+          "constraint_violations": 300,
+          "selected_frequency_counts": {
+            "1": 0,
+            "2": 0,
+            "3": 3600
+          },
+          "selected_frequency_share": {
+            "1": 0,
+            "2": 0,
+            "3": 1
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            }
+          ]
+        },
+        {
+          "policy": "deterministic",
+          "delivered_messages": 5358,
+          "ordinary_interactions": 1443,
+          "interactions_per_message": 0.26931690929451285,
+          "messages_per_interaction": 3.713097713097713,
+          "frequency_changes": 578,
+          "direction_reversals": 42,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 2218,
+            "2": 1006,
+            "3": 376
+          },
+          "selected_frequency_share": {
+            "1": 0.6161111111111112,
+            "2": 0.27944444444444444,
+            "3": 0.10444444444444445
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 264,
+              "3": 36
+            },
+            {
+              "1": 156,
+              "2": 97,
+              "3": 47
+            },
+            {
+              "1": 187,
+              "2": 59,
+              "3": 54
+            },
+            {
+              "1": 209,
+              "2": 47,
+              "3": 44
+            },
+            {
+              "1": 223,
+              "2": 41,
+              "3": 36
+            },
+            {
+              "1": 232,
+              "2": 41,
+              "3": 27
+            },
+            {
+              "1": 237,
+              "2": 37,
+              "3": 26
+            },
+            {
+              "1": 242,
+              "2": 29,
+              "3": 29
+            },
+            {
+              "1": 248,
+              "2": 21,
+              "3": 31
+            },
+            {
+              "1": 243,
+              "2": 34,
+              "3": 23
+            },
+            {
+              "1": 241,
+              "2": 36,
+              "3": 23
+            }
+          ]
+        },
+        {
+          "policy": "model_plus_safety",
+          "delivered_messages": 3761,
+          "ordinary_interactions": 886,
+          "interactions_per_message": 0.23557564477532572,
+          "messages_per_interaction": 4.244920993227991,
+          "frequency_changes": 484,
+          "direction_reversals": 126,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 3439,
+            "2": 161,
+            "3": 0
+          },
+          "selected_frequency_share": {
+            "1": 0.9552777777777778,
+            "2": 0.04472222222222222,
+            "3": 0
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 235,
+              "2": 65,
+              "3": 0
+            },
+            {
+              "1": 278,
+              "2": 22,
+              "3": 0
+            },
+            {
+              "1": 291,
+              "2": 9,
+              "3": 0
+            },
+            {
+              "1": 295,
+              "2": 5,
+              "3": 0
+            },
+            {
+              "1": 292,
+              "2": 8,
+              "3": 0
+            },
+            {
+              "1": 288,
+              "2": 12,
+              "3": 0
+            },
+            {
+              "1": 292,
+              "2": 8,
+              "3": 0
+            },
+            {
+              "1": 295,
+              "2": 5,
+              "3": 0
+            },
+            {
+              "1": 292,
+              "2": 8,
+              "3": 0
+            },
+            {
+              "1": 289,
+              "2": 11,
+              "3": 0
+            },
+            {
+              "1": 292,
+              "2": 8,
+              "3": 0
+            }
+          ]
+        },
+        {
+          "policy": "oracle_preferred",
+          "delivered_messages": 7056,
+          "ordinary_interactions": 2901,
+          "interactions_per_message": 0.4111394557823129,
+          "messages_per_interaction": 2.4322647362978285,
+          "frequency_changes": 198,
+          "direction_reversals": 0,
+          "constraint_violations": 93,
+          "selected_frequency_counts": {
+            "1": 1260,
+            "2": 1224,
+            "3": 1116
+          },
+          "selected_frequency_share": {
+            "1": 0.35,
+            "2": 0.34,
+            "3": 0.31
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 105,
+              "2": 102,
+              "3": 93
+            },
+            {
+              "1": 105,
+              "2": 102,
+              "3": 93
+            },
+            {
+              "1": 105,
+              "2": 102,
+              "3": 93
+            },
+            {
+              "1": 105,
+              "2": 102,
+              "3": 93
+            },
+            {
+              "1": 105,
+              "2": 102,
+              "3": 93
+            },
+            {
+              "1": 105,
+              "2": 102,
+              "3": 93
+            },
+            {
+              "1": 105,
+              "2": 102,
+              "3": 93
+            },
+            {
+              "1": 105,
+              "2": 102,
+              "3": 93
+            },
+            {
+              "1": 105,
+              "2": 102,
+              "3": 93
+            },
+            {
+              "1": 105,
+              "2": 102,
+              "3": 93
+            },
+            {
+              "1": 105,
+              "2": 102,
+              "3": 93
+            },
+            {
+              "1": 105,
+              "2": 102,
+              "3": 93
+            }
+          ]
+        }
+      ],
+      "model_plus_safety_retrained": {
+        "policy": "model_plus_safety",
+        "delivered_messages": 3892,
+        "ordinary_interactions": 933,
+        "interactions_per_message": 0.23972250770811923,
+        "messages_per_interaction": 4.171489817792069,
+        "frequency_changes": 612,
+        "direction_reversals": 194,
+        "constraint_violations": 0,
+        "selected_frequency_counts": {
+          "1": 3308,
+          "2": 292,
+          "3": 0
+        },
+        "selected_frequency_share": {
+          "1": 0.9188888888888889,
+          "2": 0.0811111111111111,
+          "3": 0
+        },
+        "weekly_selected_frequency_counts": [
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 235,
+            "2": 65,
+            "3": 0
+          },
+          {
+            "1": 278,
+            "2": 22,
+            "3": 0
+          },
+          {
+            "1": 278,
+            "2": 22,
+            "3": 0
+          },
+          {
+            "1": 282,
+            "2": 18,
+            "3": 0
+          },
+          {
+            "1": 270,
+            "2": 30,
+            "3": 0
+          },
+          {
+            "1": 282,
+            "2": 18,
+            "3": 0
+          },
+          {
+            "1": 279,
+            "2": 21,
+            "3": 0
+          },
+          {
+            "1": 275,
+            "2": 25,
+            "3": 0
+          },
+          {
+            "1": 280,
+            "2": 20,
+            "3": 0
+          },
+          {
+            "1": 275,
+            "2": 25,
+            "3": 0
+          },
+          {
+            "1": 274,
+            "2": 26,
+            "3": 0
+          }
+        ]
+      }
+    },
+    {
+      "seed": 8,
+      "training_prevalence": 0.2314422057264051,
+      "evaluation": {
+        "validation": {
+          "rows": 114,
+          "positive_rows": 18,
+          "prevalence": 0.15789473684210525,
+          "brier_score": 0.12139906345771463,
+          "constant_brier_score": 0.13837321909895425,
+          "log_loss": 0.4015049734128085,
+          "pr_auc": 0.40977269234042235
+        },
+        "test": {
+          "rows": 122,
+          "positive_rows": 8,
+          "prevalence": 0.06557377049180328,
+          "brier_score": 0.0666848802287325,
+          "constant_brier_score": 0.08878618892246669,
+          "log_loss": 0.2548274144214354,
+          "pr_auc": 0.23366323988611837
+        }
+      },
+      "policies_frozen_model": [
+        {
+          "policy": "fixed_1",
+          "delivered_messages": 3600,
+          "ordinary_interactions": 893,
+          "interactions_per_message": 0.24805555555555556,
+          "messages_per_interaction": 4.031354983202688,
+          "frequency_changes": 300,
+          "direction_reversals": 0,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 3600,
+            "2": 0,
+            "3": 0
+          },
+          "selected_frequency_share": {
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            }
+          ]
+        },
+        {
+          "policy": "fixed_2",
+          "delivered_messages": 7200,
+          "ordinary_interactions": 1818,
+          "interactions_per_message": 0.2525,
+          "messages_per_interaction": 3.9603960396039604,
+          "frequency_changes": 0,
+          "direction_reversals": 0,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 0,
+            "2": 3600,
+            "3": 0
+          },
+          "selected_frequency_share": {
+            "1": 0,
+            "2": 1,
+            "3": 0
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            }
+          ]
+        },
+        {
+          "policy": "fixed_3",
+          "delivered_messages": 10800,
+          "ordinary_interactions": 2265,
+          "interactions_per_message": 0.20972222222222223,
+          "messages_per_interaction": 4.768211920529802,
+          "frequency_changes": 300,
+          "direction_reversals": 0,
+          "constraint_violations": 300,
+          "selected_frequency_counts": {
+            "1": 0,
+            "2": 0,
+            "3": 3600
+          },
+          "selected_frequency_share": {
+            "1": 0,
+            "2": 0,
+            "3": 1
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            }
+          ]
+        },
+        {
+          "policy": "deterministic",
+          "delivered_messages": 5323,
+          "ordinary_interactions": 1410,
+          "interactions_per_message": 0.2648882209280481,
+          "messages_per_interaction": 3.775177304964539,
+          "frequency_changes": 581,
+          "direction_reversals": 52,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 2259,
+            "2": 959,
+            "3": 382
+          },
+          "selected_frequency_share": {
+            "1": 0.6275,
+            "2": 0.2663888888888889,
+            "3": 0.10611111111111111
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 255,
+              "3": 45
+            },
+            {
+              "1": 154,
+              "2": 111,
+              "3": 35
+            },
+            {
+              "1": 195,
+              "2": 57,
+              "3": 48
+            },
+            {
+              "1": 213,
+              "2": 39,
+              "3": 48
+            },
+            {
+              "1": 229,
+              "2": 40,
+              "3": 31
+            },
+            {
+              "1": 241,
+              "2": 30,
+              "3": 29
+            },
+            {
+              "1": 243,
+              "2": 24,
+              "3": 33
+            },
+            {
+              "1": 244,
+              "2": 25,
+              "3": 31
+            },
+            {
+              "1": 246,
+              "2": 26,
+              "3": 28
+            },
+            {
+              "1": 244,
+              "2": 31,
+              "3": 25
+            },
+            {
+              "1": 250,
+              "2": 21,
+              "3": 29
+            }
+          ]
+        },
+        {
+          "policy": "model_plus_safety",
+          "delivered_messages": 3787,
+          "ordinary_interactions": 951,
+          "interactions_per_message": 0.25112226036440455,
+          "messages_per_interaction": 3.982124079915878,
+          "frequency_changes": 533,
+          "direction_reversals": 154,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 3413,
+            "2": 187,
+            "3": 0
+          },
+          "selected_frequency_share": {
+            "1": 0.9480555555555555,
+            "2": 0.051944444444444446,
+            "3": 0
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 227,
+              "2": 73,
+              "3": 0
+            },
+            {
+              "1": 282,
+              "2": 18,
+              "3": 0
+            },
+            {
+              "1": 289,
+              "2": 11,
+              "3": 0
+            },
+            {
+              "1": 296,
+              "2": 4,
+              "3": 0
+            },
+            {
+              "1": 289,
+              "2": 11,
+              "3": 0
+            },
+            {
+              "1": 287,
+              "2": 13,
+              "3": 0
+            },
+            {
+              "1": 287,
+              "2": 13,
+              "3": 0
+            },
+            {
+              "1": 289,
+              "2": 11,
+              "3": 0
+            },
+            {
+              "1": 286,
+              "2": 14,
+              "3": 0
+            },
+            {
+              "1": 290,
+              "2": 10,
+              "3": 0
+            },
+            {
+              "1": 291,
+              "2": 9,
+              "3": 0
+            }
+          ]
+        },
+        {
+          "policy": "oracle_preferred",
+          "delivered_messages": 7452,
+          "ordinary_interactions": 3185,
+          "interactions_per_message": 0.4274020397208803,
+          "messages_per_interaction": 2.339717425431711,
+          "frequency_changes": 205,
+          "direction_reversals": 0,
+          "constraint_violations": 113,
+          "selected_frequency_counts": {
+            "1": 1104,
+            "2": 1140,
+            "3": 1356
+          },
+          "selected_frequency_share": {
+            "1": 0.30666666666666664,
+            "2": 0.31666666666666665,
+            "3": 0.37666666666666665
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 92,
+              "2": 95,
+              "3": 113
+            },
+            {
+              "1": 92,
+              "2": 95,
+              "3": 113
+            },
+            {
+              "1": 92,
+              "2": 95,
+              "3": 113
+            },
+            {
+              "1": 92,
+              "2": 95,
+              "3": 113
+            },
+            {
+              "1": 92,
+              "2": 95,
+              "3": 113
+            },
+            {
+              "1": 92,
+              "2": 95,
+              "3": 113
+            },
+            {
+              "1": 92,
+              "2": 95,
+              "3": 113
+            },
+            {
+              "1": 92,
+              "2": 95,
+              "3": 113
+            },
+            {
+              "1": 92,
+              "2": 95,
+              "3": 113
+            },
+            {
+              "1": 92,
+              "2": 95,
+              "3": 113
+            },
+            {
+              "1": 92,
+              "2": 95,
+              "3": 113
+            },
+            {
+              "1": 92,
+              "2": 95,
+              "3": 113
+            }
+          ]
+        }
+      ],
+      "model_plus_safety_retrained": {
+        "policy": "model_plus_safety",
+        "delivered_messages": 3958,
+        "ordinary_interactions": 1047,
+        "interactions_per_message": 0.26452753916119254,
+        "messages_per_interaction": 3.780324737344795,
+        "frequency_changes": 667,
+        "direction_reversals": 231,
+        "constraint_violations": 0,
+        "selected_frequency_counts": {
+          "1": 3242,
+          "2": 358,
+          "3": 0
+        },
+        "selected_frequency_share": {
+          "1": 0.9005555555555556,
+          "2": 0.09944444444444445,
+          "3": 0
+        },
+        "weekly_selected_frequency_counts": [
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 227,
+            "2": 73,
+            "3": 0
+          },
+          {
+            "1": 282,
+            "2": 18,
+            "3": 0
+          },
+          {
+            "1": 274,
+            "2": 26,
+            "3": 0
+          },
+          {
+            "1": 271,
+            "2": 29,
+            "3": 0
+          },
+          {
+            "1": 265,
+            "2": 35,
+            "3": 0
+          },
+          {
+            "1": 270,
+            "2": 30,
+            "3": 0
+          },
+          {
+            "1": 268,
+            "2": 32,
+            "3": 0
+          },
+          {
+            "1": 272,
+            "2": 28,
+            "3": 0
+          },
+          {
+            "1": 268,
+            "2": 32,
+            "3": 0
+          },
+          {
+            "1": 272,
+            "2": 28,
+            "3": 0
+          },
+          {
+            "1": 273,
+            "2": 27,
+            "3": 0
+          }
+        ]
+      }
+    },
+    {
+      "seed": 9,
+      "training_prevalence": 0.19633986928104574,
+      "evaluation": {
+        "validation": {
+          "rows": 116,
+          "positive_rows": 18,
+          "prevalence": 0.15517241379310345,
+          "brier_score": 0.10534037712563148,
+          "constant_brier_score": 0.1327886951820773,
+          "log_loss": 0.3431031412458547,
+          "pr_auc": 0.48956241301944076
+        },
+        "test": {
+          "rows": 118,
+          "positive_rows": 17,
+          "prevalence": 0.1440677966101695,
+          "brier_score": 0.1022260277237598,
+          "constant_brier_score": 0.1260446361713701,
+          "log_loss": 0.34450741373624544,
+          "pr_auc": 0.4765707646817883
+        }
+      },
+      "policies_frozen_model": [
+        {
+          "policy": "fixed_1",
+          "delivered_messages": 3600,
+          "ordinary_interactions": 808,
+          "interactions_per_message": 0.22444444444444445,
+          "messages_per_interaction": 4.455445544554456,
+          "frequency_changes": 300,
+          "direction_reversals": 0,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 3600,
+            "2": 0,
+            "3": 0
+          },
+          "selected_frequency_share": {
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            }
+          ]
+        },
+        {
+          "policy": "fixed_2",
+          "delivered_messages": 7200,
+          "ordinary_interactions": 1676,
+          "interactions_per_message": 0.23277777777777778,
+          "messages_per_interaction": 4.2959427207637235,
+          "frequency_changes": 0,
+          "direction_reversals": 0,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 0,
+            "2": 3600,
+            "3": 0
+          },
+          "selected_frequency_share": {
+            "1": 0,
+            "2": 1,
+            "3": 0
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            }
+          ]
+        },
+        {
+          "policy": "fixed_3",
+          "delivered_messages": 10800,
+          "ordinary_interactions": 1825,
+          "interactions_per_message": 0.16898148148148148,
+          "messages_per_interaction": 5.917808219178082,
+          "frequency_changes": 300,
+          "direction_reversals": 0,
+          "constraint_violations": 300,
+          "selected_frequency_counts": {
+            "1": 0,
+            "2": 0,
+            "3": 3600
+          },
+          "selected_frequency_share": {
+            "1": 0,
+            "2": 0,
+            "3": 1
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            },
+            {
+              "1": 0,
+              "2": 0,
+              "3": 300
+            }
+          ]
+        },
+        {
+          "policy": "deterministic",
+          "delivered_messages": 5272,
+          "ordinary_interactions": 1308,
+          "interactions_per_message": 0.248103186646434,
+          "messages_per_interaction": 4.030581039755352,
+          "frequency_changes": 568,
+          "direction_reversals": 43,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 2310,
+            "2": 908,
+            "3": 382
+          },
+          "selected_frequency_share": {
+            "1": 0.6416666666666667,
+            "2": 0.25222222222222224,
+            "3": 0.10611111111111111
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 257,
+              "3": 43
+            },
+            {
+              "1": 165,
+              "2": 89,
+              "3": 46
+            },
+            {
+              "1": 198,
+              "2": 53,
+              "3": 49
+            },
+            {
+              "1": 226,
+              "2": 38,
+              "3": 36
+            },
+            {
+              "1": 240,
+              "2": 26,
+              "3": 34
+            },
+            {
+              "1": 240,
+              "2": 25,
+              "3": 35
+            },
+            {
+              "1": 245,
+              "2": 27,
+              "3": 28
+            },
+            {
+              "1": 247,
+              "2": 29,
+              "3": 24
+            },
+            {
+              "1": 247,
+              "2": 22,
+              "3": 31
+            },
+            {
+              "1": 248,
+              "2": 22,
+              "3": 30
+            },
+            {
+              "1": 254,
+              "2": 20,
+              "3": 26
+            }
+          ]
+        },
+        {
+          "policy": "model_plus_safety",
+          "delivered_messages": 3746,
+          "ordinary_interactions": 872,
+          "interactions_per_message": 0.23278163374265884,
+          "messages_per_interaction": 4.295871559633028,
+          "frequency_changes": 490,
+          "direction_reversals": 135,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 3454,
+            "2": 146,
+            "3": 0
+          },
+          "selected_frequency_share": {
+            "1": 0.9594444444444444,
+            "2": 0.04055555555555555,
+            "3": 0
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 234,
+              "2": 66,
+              "3": 0
+            },
+            {
+              "1": 280,
+              "2": 20,
+              "3": 0
+            },
+            {
+              "1": 291,
+              "2": 9,
+              "3": 0
+            },
+            {
+              "1": 294,
+              "2": 6,
+              "3": 0
+            },
+            {
+              "1": 293,
+              "2": 7,
+              "3": 0
+            },
+            {
+              "1": 294,
+              "2": 6,
+              "3": 0
+            },
+            {
+              "1": 298,
+              "2": 2,
+              "3": 0
+            },
+            {
+              "1": 297,
+              "2": 3,
+              "3": 0
+            },
+            {
+              "1": 289,
+              "2": 11,
+              "3": 0
+            },
+            {
+              "1": 292,
+              "2": 8,
+              "3": 0
+            },
+            {
+              "1": 292,
+              "2": 8,
+              "3": 0
+            }
+          ]
+        },
+        {
+          "policy": "oracle_preferred",
+          "delivered_messages": 7248,
+          "ordinary_interactions": 2769,
+          "interactions_per_message": 0.3820364238410596,
+          "messages_per_interaction": 2.617551462621885,
+          "frequency_changes": 194,
+          "direction_reversals": 0,
+          "constraint_violations": 99,
+          "selected_frequency_counts": {
+            "1": 1140,
+            "2": 1272,
+            "3": 1188
+          },
+          "selected_frequency_share": {
+            "1": 0.31666666666666665,
+            "2": 0.35333333333333333,
+            "3": 0.33
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 95,
+              "2": 106,
+              "3": 99
+            },
+            {
+              "1": 95,
+              "2": 106,
+              "3": 99
+            },
+            {
+              "1": 95,
+              "2": 106,
+              "3": 99
+            },
+            {
+              "1": 95,
+              "2": 106,
+              "3": 99
+            },
+            {
+              "1": 95,
+              "2": 106,
+              "3": 99
+            },
+            {
+              "1": 95,
+              "2": 106,
+              "3": 99
+            },
+            {
+              "1": 95,
+              "2": 106,
+              "3": 99
+            },
+            {
+              "1": 95,
+              "2": 106,
+              "3": 99
+            },
+            {
+              "1": 95,
+              "2": 106,
+              "3": 99
+            },
+            {
+              "1": 95,
+              "2": 106,
+              "3": 99
+            },
+            {
+              "1": 95,
+              "2": 106,
+              "3": 99
+            },
+            {
+              "1": 95,
+              "2": 106,
+              "3": 99
+            }
+          ]
+        }
+      ],
+      "model_plus_safety_retrained": {
+        "policy": "model_plus_safety",
+        "delivered_messages": 3865,
+        "ordinary_interactions": 891,
+        "interactions_per_message": 0.23053040103492886,
+        "messages_per_interaction": 4.337822671156005,
+        "frequency_changes": 629,
+        "direction_reversals": 214,
+        "constraint_violations": 0,
+        "selected_frequency_counts": {
+          "1": 3335,
+          "2": 265,
+          "3": 0
+        },
+        "selected_frequency_share": {
+          "1": 0.9263888888888889,
+          "2": 0.07361111111111111,
+          "3": 0
+        },
+        "weekly_selected_frequency_counts": [
+          {
+            "1": 300,
+            "2": 0,
+            "3": 0
+          },
+          {
+            "1": 234,
+            "2": 66,
+            "3": 0
+          },
+          {
+            "1": 280,
+            "2": 20,
+            "3": 0
+          },
+          {
+            "1": 279,
+            "2": 21,
+            "3": 0
+          },
+          {
+            "1": 280,
+            "2": 20,
+            "3": 0
+          },
+          {
+            "1": 282,
+            "2": 18,
+            "3": 0
+          },
+          {
+            "1": 283,
+            "2": 17,
+            "3": 0
+          },
+          {
+            "1": 286,
+            "2": 14,
+            "3": 0
+          },
+          {
+            "1": 278,
+            "2": 22,
+            "3": 0
+          },
+          {
+            "1": 271,
+            "2": 29,
+            "3": 0
+          },
+          {
+            "1": 277,
+            "2": 23,
+            "3": 0
+          },
+          {
+            "1": 285,
+            "2": 15,
+            "3": 0
+          }
+        ]
+      }
+    }
+  ]
+}

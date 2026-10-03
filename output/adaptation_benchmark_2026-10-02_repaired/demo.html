@@ -1,0 +1,3289 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Bounded adaptation benchmark</title><style>body{font:17px system-ui;max-width:1100px;margin:40px auto;padding:0 24px;color:#172a3a}table{border-collapse:collapse;width:100%;margin:20px 0}td,th{padding:10px;border-bottom:1px solid #ddd;text-align:left}th{background:#edf3f7}details{margin:14px 0;padding:15px;background:#f5f7f9}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px}img{width:100%}.pass{color:#17664d}.fail{color:#963e29}</style><h1>Bounded adaptation benchmark</h1><p>INCOMPLETE model comparison: daily Gemini quota exhausted. All fixed and rules cases ran; two hybrid first runs and remaining repetitions are pending. The hybrid interpreter uses the repaired Gemini schema. These results do not establish real-user or clinical performance.</p><table><tr><th>Arm</th><th>Task success</th><th>Supported requests</th><th>Constraint violations</th></tr><tr><td>Fixed schedule</td><td>9/24</td><td>0/12</td><td>0</td></tr><tr><td>Rules interpreter</td><td>12/24</td><td>3/12</td><td>5</td></tr><tr><td>Hybrid interpreter</td><td>12/22</td><td>5/12</td><td>5</td></tr></table><img src="before_after.png" alt="Observed before and after schedule comparison for case time-1"><h2>Every case</h2><details><summary>media-1 — Fixed schedule: FAIL | Rules interpreter: PASS | Hybrid interpreter: PASS</summary><pre>{
+  &quot;arm&quot;: &quot;fixed&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;I prefer videos&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;video&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: &quot;video&quot;,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:expected_format&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;rules&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;I prefer videos&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;video&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: &quot;video&quot;,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;video&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: true,
+      &quot;format&quot;: &quot;video&quot;,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;hybrid&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;I prefer videos&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;video&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: &quot;video&quot;,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;video&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: true,
+      &quot;format&quot;: &quot;video&quot;,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre></details><details><summary>media-2 — Fixed schedule: FAIL | Rules interpreter: FAIL | Hybrid interpreter: PASS</summary><pre>{
+  &quot;arm&quot;: &quot;fixed&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Could future resources be in video form?&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;video&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: &quot;video&quot;,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:expected_format&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;rules&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Could future resources be in video form?&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;video&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: &quot;video&quot;,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:expected_format&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;hybrid&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Could future resources be in video form?&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;video&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: &quot;video&quot;,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;video&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: true,
+      &quot;format&quot;: &quot;video&quot;,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre></details><details><summary>media-3 — Fixed schedule: FAIL | Rules interpreter: FAIL | Hybrid interpreter: PASS</summary><pre>{
+  &quot;arm&quot;: &quot;fixed&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;For future resources, use moving pictures rather than written articles.&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;video&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: &quot;video&quot;,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:expected_format&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;rules&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;For future resources, use moving pictures rather than written articles.&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;video&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: &quot;video&quot;,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:expected_format&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;hybrid&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;For future resources, use moving pictures rather than written articles.&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;video&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: &quot;video&quot;,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;video&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: true,
+      &quot;format&quot;: &quot;video&quot;,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre></details><details><summary>summary-1 — Fixed schedule: FAIL | Rules interpreter: PASS | Hybrid interpreter: PASS</summary><pre>{
+  &quot;arm&quot;: &quot;fixed&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Please make it shorter&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;short&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: &quot;short&quot;,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:expected_summary&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;rules&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Please make it shorter&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;short&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: &quot;short&quot;,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;short&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: true,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: &quot;short&quot;,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;hybrid&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Please make it shorter&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;short&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: &quot;short&quot;,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;short&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: true,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: &quot;short&quot;,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre></details><details><summary>summary-2 — Fixed schedule: FAIL | Rules interpreter: PASS | Hybrid interpreter: PASS</summary><pre>{
+  &quot;arm&quot;: &quot;fixed&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Use a concise summary in future messages.&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;short&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: &quot;short&quot;,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:expected_summary&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;rules&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Use a concise summary in future messages.&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;short&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: &quot;short&quot;,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;short&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: true,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: &quot;short&quot;,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;hybrid&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Use a concise summary in future messages.&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;short&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: &quot;short&quot;,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;short&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: true,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: &quot;short&quot;,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre></details><details><summary>summary-3 — Fixed schedule: FAIL | Rules interpreter: FAIL | Hybrid interpreter: FAIL</summary><pre>{
+  &quot;arm&quot;: &quot;fixed&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Going forward, condense the explanation into a few words.&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;short&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: &quot;short&quot;,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:expected_summary&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;rules&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Going forward, condense the explanation into a few words.&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;short&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: &quot;short&quot;,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:expected_summary&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;hybrid&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Going forward, condense the explanation into a few words.&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;short&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: &quot;short&quot;,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:expected_summary&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre></details><details><summary>time-1 — Fixed schedule: FAIL | Rules interpreter: FAIL | Hybrid interpreter: FAIL</summary><pre>{
+  &quot;arm&quot;: &quot;fixed&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Send at 18:30&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;18:30&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: &quot;18:30&quot;,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:expected_time&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;rules&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Send at 18:30&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;18:30&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: &quot;18:30&quot;,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;18:30&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:sent_nudge_unchanged&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: true,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: &quot;18:30&quot;,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;hybrid&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Send at 18:30&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;18:30&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: &quot;18:30&quot;,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;18:30&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:sent_nudge_unchanged&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: true,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: &quot;18:30&quot;,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre></details><details><summary>time-2 — Fixed schedule: FAIL | Rules interpreter: FAIL | Hybrid interpreter: FAIL</summary><pre>{
+  &quot;arm&quot;: &quot;fixed&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Move the reminders to half past six in the evening.&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;18:30&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: &quot;18:30&quot;,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:expected_time&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;rules&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Move the reminders to half past six in the evening.&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;18:30&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: &quot;18:30&quot;,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:expected_time&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;hybrid&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Move the reminders to half past six in the evening.&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;18:30&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: &quot;18:30&quot;,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:expected_time&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre></details><details><summary>time-3 — Fixed schedule: FAIL | Rules interpreter: FAIL | Hybrid interpreter: FAIL</summary><pre>{
+  &quot;arm&quot;: &quot;fixed&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;For future reminders, use eighteen thirty as the delivery time.&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;18:30&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: &quot;18:30&quot;,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:expected_time&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;rules&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;For future reminders, use eighteen thirty as the delivery time.&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;18:30&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: &quot;18:30&quot;,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:expected_time&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;hybrid&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;For future reminders, use eighteen thirty as the delivery time.&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;18:30&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: &quot;18:30&quot;,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:expected_time&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre></details><details><summary>frequency-1 — Fixed schedule: FAIL | Rules interpreter: FAIL | Hybrid interpreter: FAIL</summary><pre>{
+  &quot;arm&quot;: &quot;fixed&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Send fewer messages&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 1,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: -1,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:expected_frequency&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;rules&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Send fewer messages&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 1,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: -1,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 1,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:sent_nudge_unchanged&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: true,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: -1,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;hybrid&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Send fewer messages&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 1,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: -1,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 1,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:sent_nudge_unchanged&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: true,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: -1,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre></details><details><summary>frequency-2 — Fixed schedule: FAIL | Rules interpreter: FAIL | Hybrid interpreter: FAIL</summary><pre>{
+  &quot;arm&quot;: &quot;fixed&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Reduce the weekly message count by one.&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 1,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: -1,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:expected_frequency&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;rules&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Reduce the weekly message count by one.&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 1,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: -1,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:expected_frequency&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;hybrid&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Reduce the weekly message count by one.&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 1,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: -1,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:expected_frequency&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre></details><details><summary>frequency-3 — Fixed schedule: FAIL | Rules interpreter: FAIL | Hybrid interpreter: FAIL</summary><pre>{
+  &quot;arm&quot;: &quot;fixed&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;The current two reminders are excessive; one each week is enough.&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 1,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: -1,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:expected_frequency&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;rules&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;The current two reminders are excessive; one each week is enough.&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 1,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: -1,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:expected_frequency&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;hybrid&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;The current two reminders are excessive; one each week is enough.&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 1,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: -1,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:expected_frequency&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre></details><details><summary>nochange-ambiguous — Fixed schedule: PASS | Rules interpreter: PASS | Hybrid interpreter: PENDING</summary><pre>{
+  &quot;arm&quot;: &quot;fixed&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Something about these reminders is not right.&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: false,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;rules&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Something about these reminders is not right.&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: false,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><p>Not evaluated: daily Gemini quota exhausted.</p></details><details><summary>nochange-negated — Fixed schedule: PASS | Rules interpreter: FAIL | Hybrid interpreter: FAIL</summary><pre>{
+  &quot;arm&quot;: &quot;fixed&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Do not send more often; keep the current frequency.&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: false,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;rules&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Do not send more often; keep the current frequency.&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: false,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 3,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:expected_frequency&quot;,
+    &quot;0:unrelated_preferences_preserved&quot;,
+    &quot;0:sent_nudge_unchanged&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: true,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 1,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;hybrid&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Do not send more often; keep the current frequency.&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: false,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 3,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:expected_frequency&quot;,
+    &quot;0:unrelated_preferences_preserved&quot;,
+    &quot;0:sent_nudge_unchanged&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: true,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 1,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre></details><details><summary>nochange-unrelated — Fixed schedule: PASS | Rules interpreter: PASS | Hybrid interpreter: PENDING</summary><pre>{
+  &quot;arm&quot;: &quot;fixed&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Thank you, I received the message.&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: false,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;rules&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Thank you, I received the message.&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: false,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><p>Not evaluated: daily Gemini quota exhausted.</p></details><details><summary>nochange-missing — Fixed schedule: PASS | Rules interpreter: PASS | Hybrid interpreter: PASS</summary><pre>{
+  &quot;arm&quot;: &quot;fixed&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: null,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: false,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    null
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;rules&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: null,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: false,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    null
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;hybrid&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: null,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: false,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    null
+  ]
+}</pre></details><details><summary>boundary-time — Fixed schedule: PASS | Rules interpreter: PASS | Hybrid interpreter: PASS</summary><pre>{
+  &quot;arm&quot;: &quot;fixed&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Send at 23:30&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: &quot;23:30&quot;,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;rules&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Send at 23:30&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: &quot;23:30&quot;,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: true,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: &quot;23:30&quot;,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;hybrid&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Send at 23:30&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: &quot;23:30&quot;,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: true,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: &quot;23:30&quot;,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre></details><details><summary>boundary-frequency — Fixed schedule: PASS | Rules interpreter: PASS | Hybrid interpreter: PASS</summary><pre>{
+  &quot;arm&quot;: &quot;fixed&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Send fewer messages&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: -1,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;rules&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Send fewer messages&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: -1,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: true,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: -1,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;hybrid&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Send fewer messages&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: -1,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: true,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: -1,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre></details><details><summary>boundary-media — Fixed schedule: PASS | Rules interpreter: PASS | Hybrid interpreter: PASS</summary><pre>{
+  &quot;arm&quot;: &quot;fixed&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;I prefer videos&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: &quot;video&quot;,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;rules&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;I prefer videos&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: &quot;video&quot;,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: true,
+      &quot;format&quot;: &quot;video&quot;,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;hybrid&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;I prefer videos&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: &quot;video&quot;,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: true,
+      &quot;format&quot;: &quot;video&quot;,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre></details><details><summary>boundary-override — Fixed schedule: PASS | Rules interpreter: PASS | Hybrid interpreter: PASS</summary><pre>{
+  &quot;arm&quot;: &quot;fixed&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;I prefer videos&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: &quot;video&quot;,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;rules&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;I prefer videos&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: &quot;video&quot;,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: true,
+      &quot;format&quot;: &quot;video&quot;,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;hybrid&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;I prefer videos&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: &quot;video&quot;,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: true,
+      &quot;format&quot;: &quot;video&quot;,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre></details><details><summary>operational-stop — Fixed schedule: PASS | Rules interpreter: PASS | Hybrid interpreter: PASS</summary><pre>{
+  &quot;arm&quot;: &quot;fixed&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;STOP&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;,
+        &quot;blocked&quot;: true
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: false,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: null,
+      &quot;summary&quot;: null,
+      &quot;blocked&quot;: true,
+      &quot;user_status&quot;: &quot;opted_out&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    null
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;rules&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;STOP&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;,
+        &quot;blocked&quot;: true
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: false,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: null,
+      &quot;summary&quot;: null,
+      &quot;blocked&quot;: true,
+      &quot;user_status&quot;: &quot;opted_out&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    null
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;hybrid&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;STOP&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;,
+        &quot;blocked&quot;: true
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: false,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: null,
+      &quot;summary&quot;: null,
+      &quot;blocked&quot;: true,
+      &quot;user_status&quot;: &quot;opted_out&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    null
+  ]
+}</pre></details><details><summary>operational-duplicate — Fixed schedule: FAIL | Rules interpreter: FAIL | Hybrid interpreter: FAIL</summary><pre>{
+  &quot;arm&quot;: &quot;fixed&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Send fewer messages&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 1,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: -1,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:expected_frequency&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;rules&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Send fewer messages&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 1,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: -1,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 1,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:sent_nudge_unchanged&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: true,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: -1,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;hybrid&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Send fewer messages&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 1,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: -1,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 1,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:sent_nudge_unchanged&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: true,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: -1,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre></details><details><summary>operational-history — Fixed schedule: FAIL | Rules interpreter: FAIL | Hybrid interpreter: FAIL</summary><pre>{
+  &quot;arm&quot;: &quot;fixed&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Send at 18:30&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;18:30&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: &quot;18:30&quot;,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:expected_time&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;rules&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Send at 18:30&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;18:30&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: &quot;18:30&quot;,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;18:30&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:sent_nudge_unchanged&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: true,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: &quot;18:30&quot;,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;hybrid&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;Send at 18:30&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;18:30&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: null,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: &quot;18:30&quot;,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;18:30&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:sent_nudge_unchanged&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: true,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: &quot;18:30&quot;,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre></details><details><summary>operational-sequence — Fixed schedule: FAIL | Rules interpreter: PASS | Hybrid interpreter: PASS</summary><pre>{
+  &quot;arm&quot;: &quot;fixed&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;I prefer videos&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;video&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: &quot;video&quot;,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    },
+    {
+      &quot;body&quot;: &quot;I prefer papers&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    },
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [
+    &quot;0:expected_format&quot;
+  ],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    },
+    {
+      &quot;explicit&quot;: false,
+      &quot;format&quot;: null,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;rules&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;I prefer videos&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;video&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: &quot;video&quot;,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    },
+    {
+      &quot;body&quot;: &quot;I prefer papers&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;video&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    },
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: true,
+      &quot;format&quot;: &quot;video&quot;,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    },
+    {
+      &quot;explicit&quot;: true,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre><pre>{
+  &quot;arm&quot;: &quot;hybrid&quot;,
+  &quot;input&quot;: [
+    {
+      &quot;body&quot;: &quot;I prefer videos&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;video&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: &quot;video&quot;,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    },
+    {
+      &quot;body&quot;: &quot;I prefer papers&quot;,
+      &quot;expected&quot;: {
+        &quot;time&quot;: &quot;09:00&quot;,
+        &quot;frequency&quot;: 2,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary&quot;: &quot;detailed&quot;
+      },
+      &quot;interpretation&quot;: {
+        &quot;explicit&quot;: true,
+        &quot;format&quot;: &quot;paper&quot;,
+        &quot;summary_length&quot;: null,
+        &quot;tone&quot;: null,
+        &quot;time&quot;: null,
+        &quot;frequency_delta&quot;: 0,
+        &quot;action&quot;: null
+      }
+    }
+  ],
+  &quot;observed&quot;: [
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;video&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    },
+    {
+      &quot;time&quot;: &quot;09:00&quot;,
+      &quot;frequency&quot;: 2,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary&quot;: &quot;detailed&quot;,
+      &quot;blocked&quot;: false,
+      &quot;user_status&quot;: &quot;active&quot;
+    }
+  ],
+  &quot;failed_checks&quot;: [],
+  &quot;errors&quot;: [],
+  &quot;interpretations&quot;: [
+    {
+      &quot;explicit&quot;: true,
+      &quot;format&quot;: &quot;video&quot;,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    },
+    {
+      &quot;explicit&quot;: true,
+      &quot;format&quot;: &quot;paper&quot;,
+      &quot;summary_length&quot;: null,
+      &quot;tone&quot;: null,
+      &quot;time&quot;: null,
+      &quot;frequency_delta&quot;: 0,
+      &quot;action&quot;: null
+    }
+  ]
+}</pre></details><h2>Evidence</h2><p>See REPORT.md, results.json, api-attempts.jsonl, manifest.json and traces/ beside this page. API failures remain distinct from valid model interpretations. The fixed arm is a reference; rules versus hybrid is the primary comparison.</p></html>

@@ -1,0 +1,27 @@
+Synthetic clinician · Doctor
+Patient summaries
+Sign out
+← Home
+Provide a prescription
+
+Add the patient and drop in the clinician’s prescription. The system prepares a message plan for your approval.
+
+Patient details
+Full name
+WhatsApp number
+Email
+Prescription
+Prescriber
+Synthetic clinician
+Doctors are assigned from the signed-in account. Administrators may select another active clinician.
+Date issued
+Prescription document
+Upload a scan or photo
+Drop an image or PDF here · up to 5 MB
+or type it
+Consent
+ The patient consents to receiving lifestyle nudge messages via WhatsApp and understands they can reply STOP at any time to opt out and halt all future messages.
+Prepare message plan
+Clear form
+
+Authenticated clinician intake · records are saved directly to the patient workflow.

@@ -1,0 +1,726 @@
+{
+  "status": "INCOMPLETE",
+  "rows": [
+    {
+      "arm": "fixed",
+      "completed": 24,
+      "success": 9,
+      "total": 24,
+      "supported_success": 0,
+      "supported_total": 12,
+      "no_change_failures": 0,
+      "no_change_total": 4,
+      "constraint_violations": 0,
+      "interpretation_correct": 3,
+      "interpretation_total": 23,
+      "mean_local_ms": 2.1847672499986217,
+      "categories": {
+        "supported": {
+          "success": 0,
+          "total": 12
+        },
+        "no_change": {
+          "success": 4,
+          "total": 4
+        },
+        "boundary": {
+          "success": 4,
+          "total": 4
+        },
+        "operational": {
+          "success": 1,
+          "total": 4
+        }
+      }
+    },
+    {
+      "arm": "rules",
+      "completed": 24,
+      "success": 12,
+      "total": 24,
+      "supported_success": 3,
+      "supported_total": 12,
+      "no_change_failures": 1,
+      "no_change_total": 4,
+      "constraint_violations": 5,
+      "interpretation_correct": 15,
+      "interpretation_total": 23,
+      "mean_local_ms": 3.3905052083347424,
+      "categories": {
+        "supported": {
+          "success": 3,
+          "total": 12
+        },
+        "no_change": {
+          "success": 3,
+          "total": 4
+        },
+        "boundary": {
+          "success": 4,
+          "total": 4
+        },
+        "operational": {
+          "success": 2,
+          "total": 4
+        }
+      }
+    },
+    {
+      "arm": "hybrid",
+      "completed": 22,
+      "success": 12,
+      "total": 24,
+      "supported_success": 5,
+      "supported_total": 12,
+      "no_change_failures": 1,
+      "no_change_total": 2,
+      "constraint_violations": 5,
+      "interpretation_correct": 15,
+      "interpretation_total": 21,
+      "mean_local_ms": 3.9977613636357243,
+      "categories": {
+        "supported": {
+          "success": 5,
+          "total": 12
+        },
+        "no_change": {
+          "success": 1,
+          "total": 2
+        },
+        "boundary": {
+          "success": 4,
+          "total": 4
+        },
+        "operational": {
+          "success": 2,
+          "total": 4
+        }
+      }
+    }
+  ],
+  "paired": [
+    {
+      "case_id": "media-1",
+      "category": "supported",
+      "fixed": false,
+      "rules": true,
+      "hybrid": true
+    },
+    {
+      "case_id": "media-2",
+      "category": "supported",
+      "fixed": false,
+      "rules": false,
+      "hybrid": true
+    },
+    {
+      "case_id": "media-3",
+      "category": "supported",
+      "fixed": false,
+      "rules": false,
+      "hybrid": true
+    },
+    {
+      "case_id": "summary-1",
+      "category": "supported",
+      "fixed": false,
+      "rules": true,
+      "hybrid": true
+    },
+    {
+      "case_id": "summary-2",
+      "category": "supported",
+      "fixed": false,
+      "rules": true,
+      "hybrid": true
+    },
+    {
+      "case_id": "summary-3",
+      "category": "supported",
+      "fixed": false,
+      "rules": false,
+      "hybrid": false
+    },
+    {
+      "case_id": "time-1",
+      "category": "supported",
+      "fixed": false,
+      "rules": false,
+      "hybrid": false
+    },
+    {
+      "case_id": "time-2",
+      "category": "supported",
+      "fixed": false,
+      "rules": false,
+      "hybrid": false
+    },
+    {
+      "case_id": "time-3",
+      "category": "supported",
+      "fixed": false,
+      "rules": false,
+      "hybrid": false
+    },
+    {
+      "case_id": "frequency-1",
+      "category": "supported",
+      "fixed": false,
+      "rules": false,
+      "hybrid": false
+    },
+    {
+      "case_id": "frequency-2",
+      "category": "supported",
+      "fixed": false,
+      "rules": false,
+      "hybrid": false
+    },
+    {
+      "case_id": "frequency-3",
+      "category": "supported",
+      "fixed": false,
+      "rules": false,
+      "hybrid": false
+    },
+    {
+      "case_id": "nochange-ambiguous",
+      "category": "no_change",
+      "fixed": true,
+      "rules": true,
+      "hybrid": null
+    },
+    {
+      "case_id": "nochange-negated",
+      "category": "no_change",
+      "fixed": true,
+      "rules": false,
+      "hybrid": false
+    },
+    {
+      "case_id": "nochange-unrelated",
+      "category": "no_change",
+      "fixed": true,
+      "rules": true,
+      "hybrid": null
+    },
+    {
+      "case_id": "nochange-missing",
+      "category": "no_change",
+      "fixed": true,
+      "rules": true,
+      "hybrid": true
+    },
+    {
+      "case_id": "boundary-time",
+      "category": "boundary",
+      "fixed": true,
+      "rules": true,
+      "hybrid": true
+    },
+    {
+      "case_id": "boundary-frequency",
+      "category": "boundary",
+      "fixed": true,
+      "rules": true,
+      "hybrid": true
+    },
+    {
+      "case_id": "boundary-media",
+      "category": "boundary",
+      "fixed": true,
+      "rules": true,
+      "hybrid": true
+    },
+    {
+      "case_id": "boundary-override",
+      "category": "boundary",
+      "fixed": true,
+      "rules": true,
+      "hybrid": true
+    },
+    {
+      "case_id": "operational-stop",
+      "category": "operational",
+      "fixed": true,
+      "rules": true,
+      "hybrid": true
+    },
+    {
+      "case_id": "operational-duplicate",
+      "category": "operational",
+      "fixed": false,
+      "rules": false,
+      "hybrid": false
+    },
+    {
+      "case_id": "operational-history",
+      "category": "operational",
+      "fixed": false,
+      "rules": false,
+      "hybrid": false
+    },
+    {
+      "case_id": "operational-sequence",
+      "category": "operational",
+      "fixed": false,
+      "rules": true,
+      "hybrid": true
+    }
+  ],
+  "hybrid_minus_rules_percentage_points": 9.090909090909092,
+  "primary": "first execution of each case; repeats reported separately",
+  "repeat_consistency": {
+    "all_three_success": 0,
+    "completed_three": 6,
+    "eligible": 7
+  },
+  "api": {
+    "attempts": 20,
+    "successful_http": 5,
+    "failed_attempts": 15,
+    "invalid_payloads": 0,
+    "prompt_tokens": 592,
+    "output_tokens": 209,
+    "thought_tokens": 1555,
+    "latency_ms": 22429.263125999998
+  },
+  "failures": [
+    {
+      "case_id": "frequency-1",
+      "arm": "fixed",
+      "repeat": 1,
+      "failed_checks": [
+        "0:expected_frequency"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "frequency-1",
+      "arm": "hybrid",
+      "repeat": 1,
+      "failed_checks": [
+        "0:sent_nudge_unchanged"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "frequency-1",
+      "arm": "rules",
+      "repeat": 1,
+      "failed_checks": [
+        "0:sent_nudge_unchanged"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "frequency-2",
+      "arm": "fixed",
+      "repeat": 1,
+      "failed_checks": [
+        "0:expected_frequency"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "frequency-2",
+      "arm": "hybrid",
+      "repeat": 1,
+      "failed_checks": [
+        "0:expected_frequency"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "frequency-2",
+      "arm": "hybrid",
+      "repeat": 2,
+      "failed_checks": [
+        "0:expected_frequency"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "frequency-2",
+      "arm": "hybrid",
+      "repeat": 3,
+      "failed_checks": [
+        "0:expected_frequency"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "frequency-2",
+      "arm": "rules",
+      "repeat": 1,
+      "failed_checks": [
+        "0:expected_frequency"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "frequency-3",
+      "arm": "fixed",
+      "repeat": 1,
+      "failed_checks": [
+        "0:expected_frequency"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "frequency-3",
+      "arm": "hybrid",
+      "repeat": 1,
+      "failed_checks": [
+        "0:expected_frequency"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "frequency-3",
+      "arm": "hybrid",
+      "repeat": 2,
+      "failed_checks": [
+        "0:expected_frequency"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "frequency-3",
+      "arm": "rules",
+      "repeat": 1,
+      "failed_checks": [
+        "0:expected_frequency"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "media-1",
+      "arm": "fixed",
+      "repeat": 1,
+      "failed_checks": [
+        "0:expected_format"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "media-2",
+      "arm": "fixed",
+      "repeat": 1,
+      "failed_checks": [
+        "0:expected_format"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "media-2",
+      "arm": "hybrid",
+      "repeat": 2,
+      "failed_checks": [
+        "0:expected_format"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "media-2",
+      "arm": "rules",
+      "repeat": 1,
+      "failed_checks": [
+        "0:expected_format"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "media-3",
+      "arm": "fixed",
+      "repeat": 1,
+      "failed_checks": [
+        "0:expected_format"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "media-3",
+      "arm": "hybrid",
+      "repeat": 3,
+      "failed_checks": [
+        "0:expected_format"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "media-3",
+      "arm": "rules",
+      "repeat": 1,
+      "failed_checks": [
+        "0:expected_format"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "nochange-negated",
+      "arm": "hybrid",
+      "repeat": 1,
+      "failed_checks": [
+        "0:expected_frequency",
+        "0:unrelated_preferences_preserved",
+        "0:sent_nudge_unchanged"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "nochange-negated",
+      "arm": "rules",
+      "repeat": 1,
+      "failed_checks": [
+        "0:expected_frequency",
+        "0:unrelated_preferences_preserved",
+        "0:sent_nudge_unchanged"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "operational-duplicate",
+      "arm": "fixed",
+      "repeat": 1,
+      "failed_checks": [
+        "0:expected_frequency"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "operational-duplicate",
+      "arm": "hybrid",
+      "repeat": 1,
+      "failed_checks": [
+        "0:sent_nudge_unchanged"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "operational-duplicate",
+      "arm": "rules",
+      "repeat": 1,
+      "failed_checks": [
+        "0:sent_nudge_unchanged"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "operational-history",
+      "arm": "fixed",
+      "repeat": 1,
+      "failed_checks": [
+        "0:expected_time"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "operational-history",
+      "arm": "hybrid",
+      "repeat": 1,
+      "failed_checks": [
+        "0:sent_nudge_unchanged"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "operational-history",
+      "arm": "rules",
+      "repeat": 1,
+      "failed_checks": [
+        "0:sent_nudge_unchanged"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "operational-sequence",
+      "arm": "fixed",
+      "repeat": 1,
+      "failed_checks": [
+        "0:expected_format"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "summary-1",
+      "arm": "fixed",
+      "repeat": 1,
+      "failed_checks": [
+        "0:expected_summary"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "summary-2",
+      "arm": "fixed",
+      "repeat": 1,
+      "failed_checks": [
+        "0:expected_summary"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "summary-3",
+      "arm": "fixed",
+      "repeat": 1,
+      "failed_checks": [
+        "0:expected_summary"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "summary-3",
+      "arm": "hybrid",
+      "repeat": 1,
+      "failed_checks": [
+        "0:expected_summary"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "summary-3",
+      "arm": "hybrid",
+      "repeat": 2,
+      "failed_checks": [
+        "0:expected_summary"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "summary-3",
+      "arm": "hybrid",
+      "repeat": 3,
+      "failed_checks": [
+        "0:expected_summary"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "summary-3",
+      "arm": "rules",
+      "repeat": 1,
+      "failed_checks": [
+        "0:expected_summary"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "time-1",
+      "arm": "fixed",
+      "repeat": 1,
+      "failed_checks": [
+        "0:expected_time"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "time-1",
+      "arm": "hybrid",
+      "repeat": 1,
+      "failed_checks": [
+        "0:sent_nudge_unchanged"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "time-1",
+      "arm": "rules",
+      "repeat": 1,
+      "failed_checks": [
+        "0:sent_nudge_unchanged"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "time-2",
+      "arm": "fixed",
+      "repeat": 1,
+      "failed_checks": [
+        "0:expected_time"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "time-2",
+      "arm": "hybrid",
+      "repeat": 1,
+      "failed_checks": [
+        "0:expected_time"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "time-2",
+      "arm": "hybrid",
+      "repeat": 2,
+      "failed_checks": [
+        "0:expected_time"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "time-2",
+      "arm": "hybrid",
+      "repeat": 3,
+      "failed_checks": [
+        "0:expected_time"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "time-2",
+      "arm": "rules",
+      "repeat": 1,
+      "failed_checks": [
+        "0:expected_time"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "time-3",
+      "arm": "fixed",
+      "repeat": 1,
+      "failed_checks": [
+        "0:expected_time"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "time-3",
+      "arm": "hybrid",
+      "repeat": 1,
+      "failed_checks": [
+        "0:expected_time"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "time-3",
+      "arm": "hybrid",
+      "repeat": 2,
+      "failed_checks": [
+        "0:sent_nudge_unchanged"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "time-3",
+      "arm": "hybrid",
+      "repeat": 3,
+      "failed_checks": [
+        "0:expected_time"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "time-3",
+      "arm": "rules",
+      "repeat": 1,
+      "failed_checks": [
+        "0:expected_time"
+      ],
+      "errors": []
+    }
+  ]
+}

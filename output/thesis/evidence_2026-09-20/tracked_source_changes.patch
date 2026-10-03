@@ -1,0 +1,304 @@
+diff --git a/landing/api/_lib/schedule-store.js b/landing/api/_lib/schedule-store.js
+index 5f4ebf8..cb779a6 100644
+--- a/landing/api/_lib/schedule-store.js
++++ b/landing/api/_lib/schedule-store.js
+@@ -105,6 +105,8 @@ function slotInput(row) {
+ }
+ 
+ async function applyAdaptiveSchedule(input, snapshot) {
++  const evaluationTime = new Date(input.now || Date.now());
++  if (!Number.isFinite(evaluationTime.getTime())) throw httpError(400, "Invalid evaluation time");
+   const data = snapshot || await loadClinicalData();
+   const userId = String(input.user_id || ""); const key = String(input.behaviour_key || "");
+   const active = data.weekly_schedule.rows.filter(row => String(row.user_id) === userId && String(row.status || "active") === "active");
+@@ -112,10 +114,10 @@ async function applyAdaptiveSchedule(input, snapshot) {
+   if (!current.length) return { applied: false, reason: "no_active_schedule_for_behaviour", weekly_schedule: active };
+   const target = Math.max(1, Math.min(3, Math.round(Number(input.target_frequency) || current.length)));
+   let adapted = target < current.length ? evenlySpacedRows(current, target) : addFrequencyRows(current, target, {
+-    user_id: userId, behaviour_key: key, now: input.now || new Date().toISOString()
++    user_id: userId, behaviour_key: key, now: evaluationTime.toISOString()
+   });
+   const targetTime = TIME_RE.test(String(input.target_time || "")) ? String(input.target_time) : null;
+-  if (targetTime) adapted = adapted.map(row => Object.assign({}, row, { scheduled_time: targetTime, updated_at: input.now || new Date().toISOString() }));
++  if (targetTime) adapted = adapted.map(row => Object.assign({}, row, { scheduled_time: targetTime, updated_at: evaluationTime.toISOString() }));
+   const retainedIds = new Set(current.map(row => String(row.schedule_slot_id)));
+   const combined = active.filter(row => !retainedIds.has(String(row.schedule_slot_id))).concat(adapted);
+   const beforeShape = current.map(row => `${row.schedule_slot_id}|${row.day}|${row.scheduled_time}`).sort();
+@@ -125,8 +127,8 @@ async function applyAdaptiveSchedule(input, snapshot) {
+   }
+   const starts = active.map(row => String(row.start_date || "")).filter(DATE_RE.test.bind(DATE_RE)).sort();
+   const ends = active.map(row => String(row.end_date || "")).filter(DATE_RE.test.bind(DATE_RE)).sort();
+-  const startDate = starts[0] || melbourneIso(); const endDate = ends.at(-1) || addDays(startDate, 84);
+-  const result = await saveSchedule({ user_id: userId, start_date: startDate, end_date: endDate, slots: combined.map(slotInput) }, "approve", data);
++  const startDate = starts[0] || melbourneIso(evaluationTime); const endDate = ends.at(-1) || addDays(startDate, 84);
++  const result = await saveSchedule({ user_id: userId, start_date: startDate, end_date: endDate, slots: combined.map(slotInput) }, "approve", data, evaluationTime);
+   return Object.assign({ applied: true, reason: "future_unsent_schedule_updated", before: current, after: adapted }, result);
+ }
+ 
+@@ -200,7 +202,8 @@ function stateRow(nudge, prior, now) {
+   });
+ }
+ 
+-async function saveSchedule(body, decision = "approve", snapshot) {
++async function saveSchedule(body, decision = "approve", snapshot, evaluationTime = new Date()) {
++  // Internal clock injection keeps synthetic replay consistent; never read it from the HTTP body.
+   const { userId, slots } = validate(body, decision);
+   const data = snapshot || await loadClinicalData();
+   const user = data.user.rows.find(row => String(row.user_id) === userId);
+@@ -227,7 +230,7 @@ async function saveSchedule(body, decision = "approve", snapshot) {
+       throw httpError(400, `slots[${index}].source_nudge_id belongs to a different prescription`);
+     }
+   });
+-  const now = new Date().toISOString();
++  const now = evaluationTime.toISOString();
+   const existingWeekly = data.weekly_schedule.rows.filter(row => String(row.user_id) === userId && row.schedule_slot_id);
+   const existingWeeklyById = new Map(existingWeekly.map(row => [String(row.schedule_slot_id), row]));
+ 
+@@ -252,8 +255,8 @@ async function saveSchedule(body, decision = "approve", snapshot) {
+   if (scopeWeekStart && !existingWeekly.some(row => String(row.status) === "active")) {
+     throw httpError(409, "Approve the recurring intake schedule before planning an individual week");
+   }
+-  const todayIso = melbourneIso();
+-  const nowTime = melbourneTime();
++  const todayIso = melbourneIso(evaluationTime);
++  const nowTime = melbourneTime(evaluationTime);
+   const effectiveStart = [scopeWeekStart || startDate, startDate, todayIso].sort().at(-1);
+   const generationEnd = scopeWeekStart ? [addDays(scopeWeekStart, 6), endDate].sort().at(0) : endDate;
+   if (effectiveStart > generationEnd) throw httpError(400, "The selected week is outside the active future schedule range");
+diff --git a/landing/index.html b/landing/index.html
+index 0e7681c..b12e207 100644
+--- a/landing/index.html
++++ b/landing/index.html
+@@ -145,7 +145,7 @@
+             <path d="M4 14v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4" />
+           </svg>
+         </span>
+-        <h2>New intake</h2>
++        <h2>Provide prescription</h2>
+         <p>Register a patient and submit their prescription. The AI parses it into a first-week
+            nudge plan and writes it for review.</p>
+         <span class="go">Start intake
+@@ -162,10 +162,10 @@
+             <path d="M9 11l3 3L22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+           </svg>
+         </span>
+-        <h2>Review &amp; monitor</h2>
+-        <p>Open a patient’s parsed schedule, edit or approve nudges before delivery, and track the
+-           plan’s status. The human-in-the-loop gate.</p>
+-        <span class="go">Open monitor
++        <h2>Patient summaries</h2>
++        <p>See the prescription, delivery and interaction evidence, recorded adaptations,
++           and anything awaiting your approval.</p>
++        <span class="go">Open summaries
+           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="M13 6l6 6-6 6" /></svg>
+         </span>
+diff --git a/landing/input.html b/landing/input.html
+index 69c042c..1c32cfe 100644
+--- a/landing/input.html
++++ b/landing/input.html
+@@ -220,12 +220,12 @@
+   </style>
+ </head>
+ <body>
+-  <div class="session-bar"><span id="identity"></span><a id="adminLink" href="admin.html" hidden>Admin</a><a href="monitor.html">Monitor</a><button id="logoutBtn" type="button">Sign out</button></div>
++  <div class="session-bar"><span id="identity"></span><a id="adminLink" href="admin.html" hidden>Admin</a><a href="monitor.html">Patient summaries</a><button id="logoutBtn" type="button">Sign out</button></div>
+   <main class="page">
+     <a class="home" href="index.html">← Home</a>
+     <header class="hero">
+-      <h1>Patient Intake</h1>
+-      <p>Register a patient and submit their doctor’s lifestyle prescription to begin their personalised nudge plan.</p>
++      <h1>Provide a prescription</h1>
++      <p>Add the patient and drop in the clinician’s prescription. The system prepares a message plan for your approval.</p>
+     </header>
+ 
+     <form id="intakeForm" novalidate>
+@@ -281,7 +281,7 @@
+               </svg>
+             </span>
+             <span class="primary"><b>Upload</b> a scan or photo</span>
+-            <span class="sub">Image or PDF · up to 5 MB · read by the AI parser at intake</span>
++            <span class="sub">Drop an image or PDF here · up to 5 MB</span>
+             <input type="file" id="fileInput" accept="image/*,application/pdf" hidden />
+           </div>
+ 
+@@ -317,7 +317,7 @@
+       </section>
+ 
+       <div class="actions">
+-        <button type="submit" class="btn-primary" id="submitBtn">Create intake</button>
++        <button type="submit" class="btn-primary" id="submitBtn">Prepare message plan</button>
+         <button type="reset" class="btn-text">Clear form</button>
+         <div class="submit-status" id="submitStatus" role="status" aria-live="polite"></div>
+       </div>
+@@ -499,7 +499,7 @@
+ 
+     function setSubmitting(active) {
+       submitBtn.disabled = active;
+-      submitBtn.textContent = active ? "Creating patient…" : "Create intake";
++      submitBtn.textContent = active ? "Creating patient…" : "Prepare message plan";
+     }
+ 
+     function closeDuplicateDialog() {
+diff --git a/landing/monitor.html b/landing/monitor.html
+index b87607e..4bffbfd 100644
+--- a/landing/monitor.html
++++ b/landing/monitor.html
+@@ -3,7 +3,7 @@
+ <head>
+   <meta charset="utf-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+-  <title>Weekly nudge monitor</title>
++  <title>Lifestyle care overview</title>
+   <style>
+     :root{color-scheme:light;--bg:#f3f5f8;--card:#fff;--ink:#172033;--muted:#667085;--line:#dfe3ea;--blue:#2457d6;--blue-soft:#eef4ff;--green:#167a50;--green-soft:#eaf8f1;--amber:#9a5b00;--amber-soft:#fff4dc;--red:#b42318;--red-soft:#fff0ee;--shadow:0 1px 3px rgba(16,24,40,.08);--radius:18px}
+     *{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:16px;line-height:1.45}button,input,select,textarea{font:inherit;color:inherit}button,select,input{min-height:44px}.hidden{display:none!important}
+@@ -18,27 +18,37 @@
+     .savebar{position:fixed;left:0;right:0;bottom:0;z-index:25;background:rgba(255,255,255,.96);backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:10px max(20px,env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) max(20px,env(safe-area-inset-left))}.saveinner{max-width:1140px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:14px}.statusmsg{font-size:14px;color:var(--muted)}.statusmsg.error{color:var(--red)}.statusmsg.good{color:var(--green)}
+     @media(max-width:720px){main{padding:18px 12px 112px}.topbar{padding:9px 12px}.brand span:last-child{display:none}.intro{align-items:flex-start}.intro h1{font-size:25px}.selector{grid-template-columns:1fr}.patient-head{align-items:flex-start}.patient-actions{flex-direction:column;align-items:flex-end}.patient-actions .ghost{max-width:170px}.adapt-summary{grid-template-columns:repeat(2,minmax(0,1fr))}.adapt-summary button{grid-column:1/3;width:100%}.adapt-event{grid-template-columns:1fr}.week-head{grid-template-columns:auto 1fr auto}.todaybtn{display:none}.week-title strong{font-size:16px}.period{grid-template-columns:1fr 1fr}.nudge-top{grid-template-columns:minmax(0,1fr) 104px 44px}.mode{grid-column:1/4;grid-row:2}.edit-grid{grid-template-columns:1fr}.occurrence{grid-template-columns:1fr}.saveinner{align-items:stretch}.statusmsg{align-self:center}.primary{min-width:130px}.top-actions .linkbtn{display:none}}
+     @media(max-width:410px){.period{grid-template-columns:1fr}.nudge-top{grid-template-columns:minmax(0,1fr) 98px 44px}.dayhead,.nudge{padding-left:13px;padding-right:13px}.patient-meta{word-break:break-word}.statusmsg{font-size:12px}}
+-  </style>
++  .adapt-stat strong{white-space:normal;overflow:visible;overflow-wrap:anywhere}.clinician-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}.clinician-grid p{white-space:pre-line;line-height:1.6}#overviewStatus{font-size:20px}#attentionList{line-height:1.8}#scheduleDetails>summary{cursor:pointer;font-weight:700;padding:8px 0}body:not(.editing-plan) .savebar{display:none}@media(max-width:720px){.clinician-grid{grid-template-columns:1fr;gap:12px}}
++</style>
+ </head>
+ <body>
+-  <header><div class="topbar"><div class="brand"><span class="mark">W</span><span>Weekly nudge monitor</span></div><div class="top-actions"><a class="linkbtn" href="admin.html" id="adminLink">Accounts</a><button class="ghost" type="button" id="signOut">Sign out</button></div></div></header>
++  <header><div class="topbar"><div class="brand"><span class="mark">W</span><span>Lifestyle care overview</span></div><div class="top-actions"><a class="linkbtn" href="admin.html" id="adminLink">Accounts</a><button class="ghost" type="button" id="signOut">Sign out</button></div></div></header>
+   <main>
+-    <section class="intro"><div><h1>Patient messages</h1><p>Review this week, prepare future messages, and see delivery evidence.</p></div></section>
++    <section class="intro"><div><h1>Patient overview</h1><p>Approve the prescription and plan. Review what the system delivered and how it adapted.</p><p><a href="input.html">＋ New prescription</a></p></div></section>
+     <section class="selector" aria-label="Patient selection">
+       <div class="field"><label for="patientSearch">Find patient</label><input id="patientSearch" type="search" placeholder="Search name, phone, or ID" autocomplete="off" /></div>
+       <div class="field"><label for="patientSelect">Patient</label><select id="patientSelect"><option value="">Loading patients…</option></select></div>
+     </section>
+     <section id="workspace" class="hidden">
+-      <div class="patient-head"><div class="identity"><div class="avatar" id="avatar">—</div><div><div class="patient-name" id="patientName">—</div><div class="patient-meta" id="patientMeta"></div></div></div><div class="patient-actions"><button type="button" class="ghost" id="populateMedia">Populate media</button><span class="state" id="patientState">Active</span></div></div>
+-      <section class="adapt-summary hidden" id="adaptSummary" aria-label="Adaptation summary"><div class="adapt-stat"><span>Planned</span><strong id="adaptPlanned">—</strong></div><div class="adapt-stat"><span>Delivered</span><strong id="adaptDelivered">—</strong></div><div class="adapt-stat"><span>Observed</span><strong id="adaptObserved">—</strong></div><div class="adapt-stat"><span>Media</span><strong id="adaptMedia">—</strong></div><div class="adapt-stat"><span>Delivery time</span><strong id="adaptTime">—</strong></div><div class="adapt-stat"><span>Frequency model</span><strong id="adaptModel">Awaiting evidence</strong></div><button type="button" class="ghost" id="adaptDetails">View adaptation history</button></section>
+-      <section class="adapt-panel hidden" id="adaptPanel" aria-label="Adaptation history"><h3>Passive behavior evidence</h3><div class="adapt-evidence" id="adaptEvidence"></div><div class="policy-result" id="adaptPolicy"></div><h3>Change over time</h3><div class="adapt-weeks" id="adaptWeeks"></div><div class="adapt-timeline" id="adaptTimeline"></div></section>
++      <div class="patient-head"><div class="identity"><div class="avatar" id="avatar">—</div><div><div class="patient-name" id="patientName">—</div><div class="patient-meta" id="patientMeta"></div></div></div><div class="patient-actions"><span class="state" id="patientState">Active</span></div></div>
++      <section class="adapt-summary hidden" id="adaptSummary" aria-label="Adaptation summary"><div class="adapt-stat"><span>Planned</span><strong id="adaptPlanned">—</strong></div><div class="adapt-stat"><span>Delivered</span><strong id="adaptDelivered">—</strong></div><div class="adapt-stat"><span>Interactions</span><strong id="adaptObserved">—</strong></div><div class="adapt-stat"><span>Media</span><strong id="adaptMedia">—</strong></div><div class="adapt-stat"><span>Delivery time</span><strong id="adaptTime">—</strong></div><div class="adapt-stat"><span>Schedule suggestion</span><strong id="adaptModel">Awaiting evidence</strong></div><button type="button" class="ghost" id="adaptDetails">View adaptation history</button></section>
++      <section class="adapt-panel hidden" id="adaptPanel" aria-label="Adaptation history"><h3>Delivery and interaction evidence</h3><div class="adapt-evidence" id="adaptEvidence"></div><div class="policy-result" id="adaptPolicy"></div><h3>Change over time</h3><div class="adapt-weeks" id="adaptWeeks"></div><div class="adapt-timeline" id="adaptTimeline"></div></section>
++      <section class="adapt-panel" aria-label="Clinician summary" aria-live="polite">
++        <h2 id="overviewStatus">Loading summary…</h2>
++        <div class="clinician-grid"><div><h3>Clinician prescription</h3><p id="prescriptionSummary"></p></div><div><h3>Latest schedule adaptation</h3><p id="changeSummary"></p></div></div>
++        <h3>Needs your attention</h3><ul id="attentionList"></ul>
++        <p class="help" id="summaryFreshness"></p><button type="button" class="ghost" id="refreshSummary">Refresh summary</button>
++        <p class="help">Delivery and interaction records describe system activity, not patient adherence or health outcomes.</p>
++      </section>
++      <details id="scheduleDetails" class="adapt-panel"><summary>Review plan or adjust future messages</summary><button type="button" class="ghost" id="populateMedia">Populate media</button>
++      <p class="help">The system prepares the messages from the prescription. Review the initial plan and any pending resource approvals here. Routine adaptation stays within approved limits.</p>
+       <div class="week-head"><div><button type="button" class="weeknav" id="prevWeek" aria-label="Previous week">‹</button><button type="button" class="weeknav todaybtn" id="currentWeek">Today</button></div><div class="week-title"><strong id="weekRange">—</strong><span id="weekMode">Current week</span></div><div class="right"><button type="button" class="weeknav" id="nextWeek" aria-label="Next week">›</button></div></div>
+       <div class="period"><div class="field"><label for="startDate">Schedule starts</label><input id="startDate" type="date" /></div><div class="field"><label for="endDate">Schedule stops</label><input id="endDate" type="date" /></div></div>
+-      <div id="week" class="week"></div>
++      <div id="week" class="week"></div></details>
+     </section>
+   </main>
+   <div class="savebar"><div class="saveinner"><div class="statusmsg" id="statusMsg">Select a patient.</div><button type="button" class="primary" id="saveBtn" disabled>Save schedule</button></div></div>
+-  <script src="auth.js"></script><script src="review-state.js"></script>
++  <script src="clinician-summary.js"></script><script src="auth.js"></script><script src="review-state.js"></script>
+   <script>
+   (function(){
+     "use strict";
+@@ -55,7 +65,17 @@
+     function renderPatients(){var q=el("patientSearch").value.trim().toLowerCase();state.filtered=state.patients.filter(function(p){return!q||[p.name,p.phone,p.user_id].some(function(v){return String(v||"").toLowerCase().includes(q)})});var select=el("patientSelect"),chosen=state.selected&&state.selected.user_id;select.innerHTML='<option value="">Choose a patient…</option>'+state.filtered.map(function(p){return'<option value="'+esc(p.user_id)+'">'+esc(p.name||p.user_id)+' · '+esc(p.phone||"No phone")+'</option>'}).join("");if(chosen)select.value=chosen}
+     function renderWeekHeader(){var start=weekStart(),end=addDays(start,6);el("weekRange").textContent=formatDate(start,{day:"numeric",month:"short"})+" – "+formatDate(end,{day:"numeric",month:"short",year:"numeric"});el("weekMode").textContent=state.weekOffset===0?"Current week":state.weekOffset>0?(state.weekOffset===1?"Plan next week":"Future week"):"Past week"}
+     function durationLabel(hours){if(hours==null||!isFinite(Number(hours)))return"unknown";var minutes=Math.round(Number(hours)*60);return minutes<60?minutes+" min":(Math.round(Number(hours)*10)/10)+" h"}function stateDelta(item){var before=item.previous_state||{},after=item.new_state||{},parts=[];[["Frequency","planned_frequency"," / week"],["Time","preferred_time",""] ,["Media","preferred_format",""]].forEach(function(field){var left=before[field[1]],right=after[field[1]];if(left!=null||right!=null)parts.push(field[0]+" "+String(left==null?"—":left)+" → "+String(right==null?"—":right)+field[2])});return parts.join(" · ")}
+-    function renderDictionary(){var d=state.dictionary,summary=el("adaptSummary"),panel=el("adaptPanel");if(!d){summary.classList.add("hidden");panel.classList.add("hidden");return}summary.classList.remove("hidden");el("adaptPlanned").textContent=String(d.summary.planned_frequency||0)+" / week";el("adaptDelivered").textContent=String(d.summary.delivered_frequency||0)+" delivered";el("adaptObserved").textContent=String(d.summary.observed_frequency||0)+" interactions";el("adaptMedia").textContent=String(d.summary.media_preference||"automatic").replace(/_/g," ");el("adaptTime").textContent=d.summary.delivery_time||"Schedule unchanged";var model=d.summary.frequency_model,mode=model&&model.mode||"shadow";el("adaptModel").textContent=model?String(model.current_frequency)+" → "+String(model.recommended_frequency)+" ("+(mode==="apply"?"policy":"shadow")+")":"Awaiting 24h evidence";el("adaptDetails").textContent=state.adaptationOpen?"Hide adaptation history":"View adaptation history";panel.classList.toggle("hidden",!state.adaptationOpen);if(!state.adaptationOpen)return;var evidence=d.summary.passive_evidence||{},readText=evidence.read_count?String(evidence.read_count)+" read · median "+durationLabel(evidence.median_send_to_read_hours):"No read receipt yet";el("adaptEvidence").innerHTML='<div class="evidence-card"><strong>'+esc(evidence.delivered_count||0)+'</strong><span>confirmed deliveries</span></div><div class="evidence-card"><strong>'+esc(readText)+'</strong><span>'+esc(evidence.read_unknown_count||0)+' read status unknown</span></div><div class="evidence-card"><strong>'+esc(evidence.visit_count||0)+' visits · '+esc(evidence.reply_count||0)+' replies</strong><span>ordinary interaction evidence</span></div><div class="evidence-card"><strong>'+esc(evidence.no_observable_interaction_count||0)+'</strong><span>closed 24h windows with no observable interaction</span></div>';var policy=d.summary.latest_policy||{},policyEl=el("adaptPolicy"),beforeAfter=policy.previous_state||policy.next_state?stateDelta({previous_state:policy.previous_state,new_state:policy.next_state}):"No applied change yet";policyEl.className="policy-result"+(policy.mode==="shadow"?" shadow":"");policyEl.innerHTML='<strong>'+(policy.outcome==="applied"?"Applied to future unsent messages":"Latest policy: "+esc(policy.mode||"awaiting evidence"))+'</strong><div>'+esc(beforeAfter)+'</div><div class="help">'+esc(policy.reason||"The 24-hour outcome window has not closed yet.")+'</div>';var weeks=el("adaptWeeks");weeks.innerHTML=(d.weekly||[]).slice(-4).map(function(w){var f=w.frequency||{},requested=f.requested_frequency==null?"—":f.requested_frequency+" / week";return'<div class="adapt-week"><strong>'+esc(w.week_start)+" – "+esc(w.week_end)+'</strong><span>Planned '+esc(f.planned_frequency||0)+" · delivered "+esc(f.delivered_frequency||0)+'</span><span>Requested '+esc(requested)+" · observed "+esc(f.observed_frequency||0)+'</span><span>'+esc(Object.keys((w.media||{}).kinds||{}).join(", ")||"text only")+'</span></div>'}).join("")||'<div class="help">No weekly activity recorded yet.</div>';var labels={inbound_reply:"Patient request",link_visit:"Natural link visit",adaptation_decision:"Adaptation decision",delivery_status:"Delivery status",clinician_schedule_change:"Clinician schedule change",frequency_model_recommendation:"Frequency model recommendation",frequency_policy_shadow:"Frequency policy (shadow)",adaptive_policy_shadow:"Adaptive policy (shadow)",adaptive_policy_applied:"Applied schedule adaptation",adaptive_policy_no_change:"Adaptive policy held"};el("adaptTimeline").innerHTML=(d.timeline||[]).slice().reverse().slice(0,16).map(function(item){var delta=stateDelta(item),detail=[item.outcome,item.reason,delta].filter(Boolean).join(" · ");return'<div class="adapt-event"><time>'+esc(formatEvent(item.at))+'</time><p><strong>'+esc(labels[item.signal]||labels[item.event_type]||item.signal||"Observed event")+'</strong><span class="detail">'+esc(detail)+'</span></p></div>'}).join("")||'<div class="help">No adaptation events recorded yet.</div>'}
++    function renderOverview(){
++      if(!state.selected)return;
++      var view=ClinicianSummary.summarize(state.selected,state.adaptive,state.dictionary);
++      el("overviewStatus").textContent=view.status;
++      el("prescriptionSummary").textContent=view.prescriptions.join("\n\n")||"No prescription text available in the loaded record.";
++      el("changeSummary").textContent=view.change;
++      el("attentionList").innerHTML="";
++      (view.actions.length?view.actions:["No pending action found. You can inspect the message plan below."]).forEach(function(action){var li=document.createElement("li");li.textContent=action;el("attentionList").appendChild(li)});
++      el("summaryFreshness").textContent=view.evidenceAt?"Evidence snapshot: "+formatEvent(view.evidenceAt)+". Refresh to check for new activity.":"No evidence snapshot available.";
++    }
++    function renderDictionary(){renderOverview();var d=state.dictionary,summary=el("adaptSummary"),panel=el("adaptPanel");if(!d){summary.classList.add("hidden");panel.classList.add("hidden");return}summary.classList.remove("hidden");el("adaptPlanned").textContent=String(d.summary.planned_frequency||0)+" / week";el("adaptDelivered").textContent=String(d.summary.delivered_frequency||0)+" delivered";el("adaptObserved").textContent=String(d.summary.observed_frequency||0)+" interactions";el("adaptMedia").textContent=String(d.summary.media_preference||"automatic").replace(/_/g," ");el("adaptTime").textContent=d.summary.delivery_time||"Schedule unchanged";var model=d.summary.frequency_model,mode=model&&model.mode||"shadow";el("adaptModel").textContent=model?String(model.current_frequency)+" → "+String(model.recommended_frequency)+" ("+(mode==="apply"?"policy":"shadow")+")":"Awaiting 24h evidence";el("adaptDetails").textContent=state.adaptationOpen?"Hide adaptation history":"View adaptation history";panel.classList.toggle("hidden",!state.adaptationOpen);if(!state.adaptationOpen)return;var evidence=d.summary.passive_evidence||{},readText=evidence.read_count?String(evidence.read_count)+" read · median "+durationLabel(evidence.median_send_to_read_hours):"No read receipt yet";el("adaptEvidence").innerHTML='<div class="evidence-card"><strong>'+esc(evidence.delivered_count||0)+'</strong><span>confirmed deliveries</span></div><div class="evidence-card"><strong>'+esc(readText)+'</strong><span>'+esc(evidence.read_unknown_count||0)+' read status unknown</span></div><div class="evidence-card"><strong>'+esc(evidence.visit_count||0)+' visits · '+esc(evidence.reply_count||0)+' replies</strong><span>ordinary interaction evidence</span></div><div class="evidence-card"><strong>'+esc(evidence.no_observable_interaction_count||0)+'</strong><span>closed 24h windows with no observable interaction</span></div>';var policy=d.summary.latest_policy||{},policyEl=el("adaptPolicy"),beforeAfter=policy.previous_state||policy.next_state?stateDelta({previous_state:policy.previous_state,new_state:policy.next_state}):"No applied change yet";policyEl.className="policy-result"+(policy.mode==="shadow"?" shadow":"");policyEl.innerHTML='<strong>'+(policy.outcome==="applied"?"Applied to future unsent messages":"Latest policy: "+esc(policy.mode||"awaiting evidence"))+'</strong><div>'+esc(beforeAfter)+'</div><div class="help">'+esc(policy.reason||"The 24-hour outcome window has not closed yet.")+'</div>';var weeks=el("adaptWeeks");weeks.innerHTML=(d.weekly||[]).slice(-4).map(function(w){var f=w.frequency||{},requested=f.requested_frequency==null?"—":f.requested_frequency+" / week";return'<div class="adapt-week"><strong>'+esc(w.week_start)+" – "+esc(w.week_end)+'</strong><span>Planned '+esc(f.planned_frequency||0)+" · delivered "+esc(f.delivered_frequency||0)+'</span><span>Requested '+esc(requested)+" · observed "+esc(f.observed_frequency||0)+'</span><span>'+esc(Object.keys((w.media||{}).kinds||{}).join(", ")||"text only")+'</span></div>'}).join("")||'<div class="help">No weekly activity recorded yet.</div>';var labels={inbound_reply:"Patient request",link_visit:"Natural link visit",adaptation_decision:"Adaptation decision",delivery_status:"Delivery status",clinician_schedule_change:"Clinician schedule change",frequency_model_recommendation:"Frequency model recommendation",frequency_policy_shadow:"Frequency policy (shadow)",adaptive_policy_shadow:"Adaptive policy (shadow)",adaptive_policy_applied:"Applied schedule adaptation",adaptive_policy_no_change:"Adaptive policy held"};el("adaptTimeline").innerHTML=(d.timeline||[]).slice().reverse().slice(0,16).map(function(item){var delta=stateDelta(item),detail=[item.outcome,item.reason,delta].filter(Boolean).join(" · ");return'<div class="adapt-event"><time>'+esc(formatEvent(item.at))+'</time><p><strong>'+esc(labels[item.signal]||labels[item.event_type]||item.signal||"Observed event")+'</strong><span class="detail">'+esc(detail)+'</span></p></div>'}).join("")||'<div class="help">No adaptation events recorded yet.</div>'}
+     function renderWorkspace(){var p=state.selected;el("workspace").classList.toggle("hidden",!p);if(!p){refreshPopulate();renderDictionary();return}el("avatar").textContent=String(p.name||"?").trim().slice(0,1).toUpperCase();el("patientName").textContent=p.name||p.user_id;el("patientMeta").textContent=[p.phone,p.user_id].filter(Boolean).join(" · ");el("patientState").textContent=p.user_status||"active";el("startDate").value=state.period.start;el("endDate").value=state.period.end;renderDictionary();renderWeekHeader();renderWeek();refreshSave();refreshPopulate()}
+     function renderWeek(){var root=el("week"),start=weekStart();root.innerHTML="";DAYS.forEach(function(day,index){var slots=state.week[day]||[],section=document.createElement("section");section.className="day";section.innerHTML='<div class="dayhead"><div><span class="dayname">'+LABEL[day]+'</span><span class="daydate">'+formatDate(addDays(start,index))+'</span></div><span class="count">'+slots.length+' nudge'+(slots.length===1?'':'s')+'</span></div>';var list=document.createElement("div");if(!slots.length)list.innerHTML='<div class="empty">No nudge scheduled.</div>';slots.forEach(function(slot){list.appendChild(renderNudge(slot))});section.appendChild(list);root.appendChild(section)})}
+     function renderNudge(slot){var card=document.createElement("article"),expanded=Boolean(state.expanded[slot.schedule_slot_id]);card.className="nudge";var top=document.createElement("div");top.className="nudge-top";top.innerHTML='<div><div class="message-title">'+esc(slot.action_text||"Patient message")+'</div><div class="message-preview">'+esc(String(slot.message_body||"").slice(0,110)||"Message is empty")+'</div></div>';var time=document.createElement("input");time.className="time";time.type="time";time.value=slot.time;time.disabled=slot._historical;time.setAttribute("aria-label","Send time");time.addEventListener("change",function(){slot.time=time.value;markDirty()});top.appendChild(time);var mode=document.createElement("select");mode.className="mode";mode.disabled=slot._historical;mode.setAttribute("aria-label","Message content");mode.innerHTML='<option value="automatic">Auto media</option><option value="text_only">Text only</option><option value="clinician_selected">'+esc(clinicianOptionLabel(slot))+'</option>';mode.value=slot.media_selection_mode;mode.addEventListener("change",function(){slot.media_selection_mode=mode.value;if(mode.value!=="clinician_selected")slot.media_override_asset_id="";state.expanded[slot.schedule_slot_id]=true;markDirty();renderWeek()});top.appendChild(mode);var open=document.createElement("button");open.type="button";open.className="expand";open.setAttribute("aria-label",expanded?"Close nudge details":"Open nudge details");open.textContent=expanded?"⌃":"⌄";open.addEventListener("click",function(){state.expanded[slot.schedule_slot_id]=!expanded;renderWeek()});top.appendChild(open);card.appendChild(top);var chips=document.createElement("div");chips.className="chips";chips.innerHTML=statusChips(slot);card.appendChild(chips);if(expanded)card.appendChild(renderNudgeBody(slot));return card}
+@@ -67,17 +87,19 @@
+     function formatEvent(value){var d=new Date(value);return isNaN(d)?"time unavailable":d.toLocaleString("en-AU",{timeZone:"Australia/Melbourne",day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})}
+     async function uploadFile(slot,file){try{state.uploading[slot.schedule_slot_id]="Preparing secure upload…";renderWeek();var common={user_id:state.selected.user_id,source_nudge_id:slot.source_nudge_id,file_name:file.name,mime_type:file.type,file_size:file.size},signed=await Auth.api("/api/media-upload",{method:"POST",body:JSON.stringify(Object.assign({operation:"sign"},common))});state.uploading[slot.schedule_slot_id]="Uploading "+file.name+"…";renderWeek();var form=new FormData();form.append("cacheControl","3600");form.append("",file);var uploaded=await fetch(signed.signed_upload_url,{method:"PUT",headers:{"x-upsert":"false"},body:form});if(!uploaded.ok)throw new Error("File upload failed (HTTP "+uploaded.status+")");state.uploading[slot.schedule_slot_id]="Confirming upload…";renderWeek();var done=await Auth.api("/api/media-upload",{method:"POST",body:JSON.stringify(Object.assign({operation:"complete",storage_path:signed.path},common))});slot.media_selection_mode="clinician_selected";slot.media_override_asset_id=done.asset.asset_id;delete state.uploading[slot.schedule_slot_id];markDirty();await loadAdaptive()}catch(error){delete state.uploading[slot.schedule_slot_id];showError(error);renderWeek()}}
+     function initPeriod(){var p=state.selected,starts=(p.weekly_schedule||[]).map(function(r){return r.start_date}).filter(Boolean).sort(),ends=(p.weekly_schedule||[]).map(function(r){return r.end_date}).filter(Boolean).sort(),start=p.schedule_start_date||starts[0]||iso(currentMonday()),end=p.schedule_end_date||ends[ends.length-1]||iso(addDays(dateAt(start),27));state.period={start:start,end:end}}
+-    async function selectPatient(id){var found=state.patients.find(function(p){return String(p.user_id)===String(id)});state.selected=found?ReviewState.hydratePatient(found):null;state.adaptive=null;state.dictionary=null;state.adaptationOpen=false;state.expanded={};state.weekOffset=0;state.dirty=false;if(!state.selected){renderWorkspace();return}buildWeek();initPeriod();renderWorkspace();await Promise.all([loadAdaptive(),loadDictionary()])}
++    async function selectPatient(id){var found=state.patients.find(function(p){return String(p.user_id)===String(id)});state.selected=found?ReviewState.hydratePatient(found):null;state.adaptive=null;state.dictionary=null;state.adaptationOpen=false;state.expanded={};state.weekOffset=0;state.dirty=false;el("scheduleDetails").open=Boolean(state.selected&&!state.selected.has_canonical_schedule);document.body.classList.toggle("editing-plan",el("scheduleDetails").open);if(!state.selected){renderWorkspace();return}buildWeek();initPeriod();renderWorkspace();await Promise.all([loadAdaptive(),loadDictionary()])}
+     function populateLabel(){if(state.populateBusy)return"Queuing media…";var jobs=(state.adaptive&&state.adaptive.jobs)||[];if(jobs.some(function(job){return job.status==="pending"||job.status==="processing"}))return"Media search running…";return jobs.some(function(job){return job.status==="complete"})?"Refresh media search":"Populate media"}
+     function refreshPopulate(){var button=el("populateMedia");if(!button)return;button.textContent=populateLabel();button.disabled=!state.selected||state.populateBusy}
+-    async function loadAdaptive(){if(!state.selected)return;try{state.adaptive=await Auth.api("/api/adaptive-plan?user_id="+encodeURIComponent(state.selected.user_id));renderWeek();refreshPopulate()}catch(error){state.adaptive={envelopes:[],assets:[],events:[],jobs:[],error:error.message};renderWeek();refreshPopulate()}}
+-    async function loadDictionary(){if(!state.selected)return;try{state.dictionary=await Auth.api("/api/patient-dictionary?user_id="+encodeURIComponent(state.selected.user_id)+"&export=1");renderDictionary()}catch(error){state.dictionary=null;renderDictionary()}}
++    async function loadAdaptive(){if(!state.selected)return;var selectedId=state.selected.user_id;try{var adaptive=await Auth.api("/api/adaptive-plan?user_id="+encodeURIComponent(selectedId));if(!state.selected||state.selected.user_id!==selectedId)return;state.adaptive=adaptive;renderWeek();refreshPopulate();renderOverview()}catch(error){if(!state.selected||state.selected.user_id!==selectedId)return;state.adaptive={envelopes:[],assets:[],events:[],jobs:[],error:error.message};renderWeek();refreshPopulate();renderOverview()}}
++    async function loadDictionary(){if(!state.selected)return;var selectedId=state.selected.user_id;try{var dictionary=await Auth.api("/api/patient-dictionary?user_id="+encodeURIComponent(selectedId));if(!state.selected||state.selected.user_id!==selectedId)return;state.dictionary=dictionary;renderDictionary()}catch(error){if(!state.selected||state.selected.user_id!==selectedId)return;state.dictionary=null;renderDictionary()}}
+     async function populateMedia(){if(!state.selected||state.populateBusy)return;try{state.populateBusy=true;refreshPopulate();setStatus("Queueing trusted video and paper searches…");var out=await Auth.api("/api/adaptive-plan",{method:"POST",body:JSON.stringify({operation:"populate",user_id:state.selected.user_id})});setStatus("Media search queued. The paper summary will be prepared asynchronously.","good");await loadAdaptive();if((out.jobs||[]).some(function(job){return job.status==="pending"||job.status==="processing"}))setTimeout(function(){loadAdaptive().catch(function(){})},4000)}catch(error){showError(error)}finally{state.populateBusy=false;refreshPopulate()}}
+     function buildPayload(){return{user_id:state.selected.user_id,start_date:state.period.start,end_date:state.period.end,scope_week_start:state.selected.has_canonical_schedule?iso(weekStart()):"",slots:allSlots().map(function(s){return{schedule_slot_id:s.schedule_slot_id,source_nudge_id:s.source_nudge_id,prescription_id:s.prescription_id,day:s.day,time:s.time,nudge_type:s.nudge_type,pillar:s.pillar,category:s.category,action_text:s.action_text,tone_variant:s.tone_variant,message_body:String(s.message_body||"").trim(),message_body_alt:s.message_body_alt||"",template_name:s.template_name,media_selection_mode:s.media_selection_mode,media_override_asset_id:s.media_override_asset_id||""}})}}
+-    function refreshSave(){var slots=allSlots(),valid=state.selected&&slots.length&&state.period.start&&state.period.end&&state.period.end>=state.period.start&&slots.every(function(s){return/^([01]\d|2[0-3]):[0-5]\d$/.test(s.time)&&String(s.message_body||"").trim()&&(s.media_selection_mode!=="clinician_selected"||s.media_override_asset_id)});el("saveBtn").disabled=!valid||!state.dirty||state.saving;if(!state.selected)setStatus("Select a patient.");else if(!slots.length)setStatus("No intake-generated nudges are available.","error");else if(!valid)setStatus("Every nudge needs a time, message, and complete media choice; the date range must also be valid.","error");else if(state.dirty)setStatus("Unsaved changes to future occurrences.");else setStatus("Schedule is saved.","good")}
++    function refreshSave(){el("saveBtn").textContent=state.selected&&!state.selected.has_canonical_schedule?"Approve message plan":"Save schedule";var slots=allSlots(),valid=state.selected&&slots.length&&state.period.start&&state.period.end&&state.period.end>=state.period.start&&slots.every(function(s){return/^([01]\d|2[0-3]):[0-5]\d$/.test(s.time)&&String(s.message_body||"").trim()&&(s.media_selection_mode!=="clinician_selected"||s.media_override_asset_id)});el("saveBtn").disabled=!valid||(state.selected.has_canonical_schedule&&!state.dirty)||state.saving;if(!state.selected)setStatus("Select a patient.");else if(!slots.length)setStatus("No intake-generated nudges are available.","error");else if(!valid)setStatus("Every nudge needs a time, message, and complete media choice; the date range must also be valid.","error");else if(!state.selected.has_canonical_schedule)setStatus("Review the prepared plan, then approve it for scheduling.");else if(state.dirty)setStatus("Unsaved changes to future occurrences.");else setStatus("Schedule is saved.","good")}
+     function setStatus(text,kind){el("statusMsg").textContent=text;el("statusMsg").className="statusmsg"+(kind?" "+kind:"")}function showError(error){setStatus(error.message||"Something went wrong.","error")}
+     async function save(){try{state.saving=true;refreshSave();setStatus("Saving selected week…");var canonical=state.selected.has_canonical_schedule,endpoint=canonical?"/api/schedule":"/api/approve",options={method:canonical?"PUT":"POST",body:JSON.stringify(Object.assign(canonical?{}:{decision:"approve"},buildPayload()))},out=await Auth.api(endpoint,options);state.selected.weekly_schedule=out.weekly_schedule||[];if(out.scope_week_start){var end=iso(addDays(dateAt(out.scope_week_start),6));state.selected.schedule_nudges=(state.selected.schedule_nudges||[]).filter(function(n){return String(n.scheduled_date||"")<out.scope_week_start||String(n.scheduled_date||"")>end}).concat(out.dated_nudges||[])}state.selected.has_canonical_schedule=true;state.selected=ReviewState.hydratePatient(state.selected);buildWeek();initPeriod();state.dirty=false;setStatus("Selected week saved and confirmed.","good");renderWorkspace();await loadDictionary()}catch(error){showError(error)}finally{state.saving=false;refreshSave()}}
+     async function boot(){try{state.profile=await Auth.guard();el("adminLink").classList.toggle("hidden",state.profile.role!=="admin");var data=await Auth.api("/api/patients");state.patients=(data.patients||[]).map(ReviewState.hydratePatient);renderPatients();var query=new URLSearchParams(location.search),requested=query.get("patient")||query.get("user_id");if(requested&&state.patients.some(function(p){return p.user_id===requested})){el("patientSelect").value=requested;await selectPatient(requested)}}catch(error){showError(error)}}
++    el("scheduleDetails").addEventListener("toggle",function(){document.body.classList.toggle("editing-plan",this.open)});
++    el("refreshSummary").addEventListener("click",async function(){if(state.dirty){setStatus("Save your changes before refreshing.","error");return}var button=this;button.disabled=true;button.textContent="Refreshing…";try{var data=await Auth.api("/api/patients"),id=state.selected&&state.selected.user_id;state.patients=(data.patients||[]).map(ReviewState.hydratePatient);renderPatients();await selectPatient(id)}catch(error){el("summaryFreshness").textContent="Refresh failed. The displayed records may be outdated."}finally{button.disabled=false;button.textContent="Refresh summary"}});
+     function changeWeek(offset){if(state.dirty){setStatus("Save this week before moving to another week.","error");return}state.weekOffset=offset;state.expanded={};buildWeek();renderWeekHeader();renderWeek();refreshSave()}el("patientSearch").addEventListener("input",renderPatients);el("patientSelect").addEventListener("change",function(){selectPatient(this.value)});el("prevWeek").addEventListener("click",function(){changeWeek(state.weekOffset-1)});el("nextWeek").addEventListener("click",function(){changeWeek(state.weekOffset+1)});el("currentWeek").addEventListener("click",function(){changeWeek(0)});el("startDate").addEventListener("change",function(){state.period.start=this.value;markDirty()});el("endDate").addEventListener("change",function(){state.period.end=this.value;markDirty()});el("populateMedia").addEventListener("click",populateMedia);el("adaptDetails").addEventListener("click",function(){state.adaptationOpen=!state.adaptationOpen;renderDictionary()});el("saveBtn").addEventListener("click",save);el("signOut").addEventListener("click",Auth.signOut);window.addEventListener("beforeunload",function(event){if(state.dirty){event.preventDefault();event.returnValue=""}});boot();
+   })();
+   </script>
+diff --git a/landing/tests/adaptive-schedule.test.js b/landing/tests/adaptive-schedule.test.js
+index b2d8671..90b6db7 100644
+--- a/landing/tests/adaptive-schedule.test.js
++++ b/landing/tests/adaptive-schedule.test.js
+@@ -29,6 +29,42 @@ test("adaptive schedule application changes only future unsent recurring occurre
+   assert.ok(future.every(row => row.scheduled_time === "18:30"));
+ });
+ 
++test("schedule-change experiment preserves sent history and rejects only stale unsent rows", async function (t) {
++  const behaviour = { pillar: "sleep", category: "establish", action_text: "Be in bed by 10pm" };
++  const fx = fixture(Object.assign({}, baseSeed(), {
++    weekly_schedule: [
++      Object.assign({}, slot("slot-mon", "monday"), { user_id: "patient-1", start_date: "2026-09-07", end_date: "2026-10-04", status: "active" }),
++      Object.assign({}, slot("slot-thu", "thursday"), { user_id: "patient-1", start_date: "2026-09-07", end_date: "2026-10-04", status: "active" })
++    ],
++    nudges: [
++      ...baseSeed().nudges,
++      Object.assign({}, behaviour, { nudge_id: "schd_slot-mon_20260907", schedule_slot_id: "slot-mon", prescription_id: "rx-1", user_id: "patient-1", scheduled_date: "2026-09-07", scheduled_time: "09:00", status: "sent", sent_at: "2026-09-07T09:00:00.000Z", message_body: "Monday history" }),
++      Object.assign({}, behaviour, { nudge_id: "schd_slot-mon_20260914", schedule_slot_id: "slot-mon", prescription_id: "rx-1", user_id: "patient-1", scheduled_date: "2026-09-14", scheduled_time: "09:00", status: "approved", sent_at: "", message_body: "Monday future" }),
++      Object.assign({}, behaviour, { nudge_id: "schd_slot-thu_20260910", schedule_slot_id: "slot-thu", prescription_id: "rx-1", user_id: "patient-1", scheduled_date: "2026-09-10", scheduled_time: "09:00", status: "approved", sent_at: "", message_body: "Thursday future" })
++    ],
++    schedule_state: [
++      { schedule_id: "sch_sent", nudge_id: "schd_slot-mon_20260907", user_id: "patient-1", status: "sent", sent_at: "2026-09-07T09:00:00.000Z", delivered_at: "2026-09-07T09:01:00.000Z", wa_message_id: "SM-history", last_updated: "2026-09-07T09:01:00.000Z" },
++      { schedule_id: "sch_future_mon", nudge_id: "schd_slot-mon_20260914", user_id: "patient-1", status: "approved", sent_at: "", delivered_at: "", wa_message_id: "", last_updated: "2026-09-01T00:00:00.000Z" },
++      { schedule_id: "sch_future_thu", nudge_id: "schd_slot-thu_20260910", user_id: "patient-1", status: "approved", sent_at: "", delivered_at: "", wa_message_id: "", last_updated: "2026-09-01T00:00:00.000Z" }
++    ]
++  })); t.after(fx.restore);
++  const key = behaviourKey(behaviour);
++  const sentBefore = JSON.stringify(fx.tables.nudges.rows.find(row => row.nudge_id === "schd_slot-mon_20260907"));
++  const stateBefore = JSON.stringify(fx.tables.schedule_state.rows.find(row => row.nudge_id === "schd_slot-mon_20260907"));
++
++  const result = await applyAdaptiveSchedule({ user_id: "patient-1", behaviour_key: key,
++    target_frequency: 1, target_time: "18:30", now: "2026-09-09T00:00:00.000Z" });
++
++  assert.equal(result.applied, true);
++  assert.equal(result.reason, "future_unsent_schedule_updated");
++  assert.deepEqual(fx.tables.weekly_schedule.rows.filter(row => row.status === "active").map(row => [row.schedule_slot_id, row.day, row.scheduled_time]), [["slot-mon", "monday", "18:30"]]);
++  assert.equal(JSON.stringify(fx.tables.nudges.rows.find(row => row.nudge_id === "schd_slot-mon_20260907")), sentBefore);
++  assert.equal(JSON.stringify(fx.tables.schedule_state.rows.find(row => row.nudge_id === "schd_slot-mon_20260907")), stateBefore);
++  assert.equal(fx.tables.nudges.rows.find(row => row.nudge_id === "schd_slot-mon_20260914").scheduled_time, "18:30");
++  assert.equal(fx.tables.nudges.rows.find(row => row.nudge_id === "schd_slot-thu_20260910").status, "rejected");
++  assert.equal(fx.tables.schedule_state.rows.find(row => row.nudge_id === "schd_slot-thu_20260910").status, "rejected");
++});
++
+ test("frequency expansion creates stable, unique, evenly separated weekdays", function () {
+   const rows = [{ schedule_slot_id: "slot-mon", day: "monday", scheduled_time: "09:00" }];
+   const expanded = addFrequencyRows(rows, 3, { user_id: "patient-1", behaviour_key: "behaviour-1", now: "2026-09-01T00:00:00Z" });
+diff --git a/landing/tests/prescription-api.test.js b/landing/tests/prescription-api.test.js
+index 4053ee0..059be57 100644
+--- a/landing/tests/prescription-api.test.js
++++ b/landing/tests/prescription-api.test.js
+@@ -367,7 +367,7 @@ test("the weekly monitor leaves prescription management out of the monitoring wo
+   assert.doesNotMatch(monitorHtml, /rxDialog|rxArchiveDialog|openPrescriptionDialog|\/api\/prescription/);
+   // Still a free-text input: this is the *first* nudge of a brand-new
+   // prescription, where no behaviour list exists to pick from yet.
+-  assert.match(monitorHtml, /Patient messages/);
++  assert.match(monitorHtml, /Patient overview/);
+   // The ＋ Add prescription button is built in JS, and carries an id so
+   // refreshPrescriptionControls does not have to key off a leading "＋" — which
+   // the weekly ＋ Add nudge buttons also carry.

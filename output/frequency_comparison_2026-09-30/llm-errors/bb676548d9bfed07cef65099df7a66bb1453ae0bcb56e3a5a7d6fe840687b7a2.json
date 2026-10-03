@@ -1,0 +1,20 @@
+{
+  "cache_key": "bb676548d9bfed07cef65099df7a66bb1453ae0bcb56e3a5a7d6fe840687b7a2",
+  "attempts": [
+    {
+      "status": "transport_error",
+      "error": "TypeError",
+      "latency_ms": 39
+    },
+    {
+      "status": "transport_error",
+      "error": "TypeError",
+      "latency_ms": 3
+    },
+    {
+      "status": "transport_error",
+      "error": "TypeError",
+      "latency_ms": 3
+    }
+  ]
+}

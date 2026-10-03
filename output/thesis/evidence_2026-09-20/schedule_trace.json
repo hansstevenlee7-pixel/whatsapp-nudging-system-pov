@@ -1,0 +1,180 @@
+{
+  "experiment_id": "modelled-schedule-change-2026-09-09",
+  "evidence_level": "verified-local-synthetic",
+  "model_id": "frequency-logistic-v1",
+  "behaviour_key": "085911262764f34d2832fdf8cb9785d3",
+  "evaluation_time": "2026-08-27T00:00:00.000Z",
+  "before": {
+    "recurring_slots": [
+      {
+        "id": "slot-mon",
+        "day": "monday",
+        "time": "09:00"
+      },
+      {
+        "id": "slot-thu",
+        "day": "thursday",
+        "time": "09:00"
+      }
+    ],
+    "closed_deliveries": [
+      {
+        "nudge_id": "past-1",
+        "delivered_at": "2026-08-20T00:01:00.000Z",
+        "read_at": null,
+        "scheduled_time": "09:00",
+        "media_kind": null,
+        "first_visit_at": null,
+        "first_reply_at": null,
+        "first_interaction_at": null,
+        "read_latency_minutes": null,
+        "visit_latency_minutes": null,
+        "reply_latency_minutes": null,
+        "interaction_window": null,
+        "link_visit_count": 0,
+        "ordinary_reply_count": 0,
+        "closed_24h": true,
+        "interacted_within_24h": 0,
+        "outcome": "no_observable_interaction"
+      },
+      {
+        "nudge_id": "past-2",
+        "delivered_at": "2026-08-21T00:01:00.000Z",
+        "read_at": null,
+        "scheduled_time": "09:00",
+        "media_kind": null,
+        "first_visit_at": null,
+        "first_reply_at": null,
+        "first_interaction_at": null,
+        "read_latency_minutes": null,
+        "visit_latency_minutes": null,
+        "reply_latency_minutes": null,
+        "interaction_window": null,
+        "link_visit_count": 0,
+        "ordinary_reply_count": 0,
+        "closed_24h": true,
+        "interacted_within_24h": 0,
+        "outcome": "no_observable_interaction"
+      }
+    ]
+  },
+  "model": {
+    "features": {
+      "recent_interaction_rate": 0,
+      "noninteraction_streak": 2,
+      "has_previous_interaction": false,
+      "has_recent_interaction": false
+    },
+    "candidate_scores": {
+      "1": 0.1901798842561066,
+      "2": 0.1472630357473584,
+      "3": 0.11268339200742673
+    },
+    "model_recommended_frequency": 1
+  },
+  "policy": {
+    "current_frequency": 2,
+    "recommended_frequency": 1,
+    "direction": "decrease",
+    "reason": "lowest_near_best_candidate",
+    "time": {
+      "recommended_time": "09:00",
+      "direction": "hold",
+      "source": "policy",
+      "reason": "delivery_window_is_fixed",
+      "evidence_count": 0
+    },
+    "media": {
+      "recommended_format": null,
+      "direction": "rotate",
+      "source": "novelty_policy",
+      "reason": "no_format_signal_rotate_least_recently_used",
+      "evidence_count": 0
+    }
+  },
+  "schedule_application": {
+    "applied": true,
+    "reason": "future_unsent_schedule_updated",
+    "active_slots": [
+      {
+        "id": "slot-mon",
+        "day": "monday",
+        "time": "09:00"
+      }
+    ]
+  },
+  "sent_history": {
+    "nudge_rows": [
+      {
+        "nudge_id": "past-1",
+        "status": "delivered",
+        "scheduled_time": "09:00",
+        "sent_at": "2026-08-20T00:00:00Z",
+        "wa_message_id": "SM-past-1"
+      },
+      {
+        "nudge_id": "past-2",
+        "status": "delivered",
+        "scheduled_time": "09:00",
+        "sent_at": "2026-08-21T00:00:00Z",
+        "wa_message_id": "SM-past-2"
+      }
+    ],
+    "schedule_state_before": [
+      {
+        "nudge_id": "past-1",
+        "status": "delivered",
+        "sent_at": "2026-08-20T00:00:00Z",
+        "delivered_at": "2026-08-20T00:01:00Z",
+        "wa_message_id": "SM-past-1"
+      },
+      {
+        "nudge_id": "past-2",
+        "status": "delivered",
+        "sent_at": "2026-08-21T00:00:00Z",
+        "delivered_at": "2026-08-21T00:01:00Z",
+        "wa_message_id": "SM-past-2"
+      }
+    ],
+    "schedule_state_after": [
+      {
+        "nudge_id": "past-1",
+        "status": "delivered",
+        "sent_at": "2026-08-20T00:00:00Z",
+        "delivered_at": "2026-08-20T00:01:00Z",
+        "wa_message_id": "SM-past-1"
+      },
+      {
+        "nudge_id": "past-2",
+        "status": "delivered",
+        "sent_at": "2026-08-21T00:00:00Z",
+        "delivered_at": "2026-08-21T00:01:00Z",
+        "wa_message_id": "SM-past-2"
+      }
+    ],
+    "schedule_state_unchanged": true
+  },
+  "audit_rows": [
+    {
+      "signal_type": "frequency_model_recommendation",
+      "outcome": "no_change",
+      "frequency_before": 2,
+      "frequency_after": 1,
+      "rule_applied": "regularized_logistic_regression",
+      "reason": "Model recommendation: 1 per week"
+    },
+    {
+      "signal_type": "adaptive_policy_applied",
+      "outcome": "applied",
+      "frequency_before": 2,
+      "frequency_after": 1,
+      "rule_applied": "bounded_frequency_time_media_policy",
+      "reason": "Applied future schedule: frequency 2 to 1; time 09:00 to 09:00; media automatic to automatic"
+    }
+  ],
+  "limitations": [
+    "synthetic rows only",
+    "no live Sheet or WhatsApp write",
+    "no adherence or clinical outcome claim"
+  ]
+}

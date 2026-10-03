@@ -1,0 +1,91 @@
+W
+Lifestyle care overview
+Sign out
+Patient overview
+
+Approve the prescription and plan. Review what the system delivered and how it adapted.
+
+＋ New prescription
+
+Find patient
+Patient
+Choose a patient…
+Synthetic Benchmark · +61400000000
+S
+Synthetic Benchmark
++61400000000 · synthetic-1
+active
+PLANNED
+0 / week
+DELIVERED
+0 delivered
+INTERACTIONS
+1 interactions
+MEDIA
+paper
+DELIVERY TIME
+09:00
+SCHEDULE SUGGESTION
+2 → 1 (policy)
+Hide adaptation history
+Delivery and interaction evidence
+0
+confirmed deliveries
+No read receipt yet
+0 read status unknown
+0 visits · 0 replies
+ordinary interaction evidence
+0
+closed 24h windows with no observable interaction
+Applied to future unsent messages
+Frequency 2 → 1 / week · Time 09:00 → 09:00 · Media paper → paper
+Applied future schedule: frequency 2 to 1; time 09:00 to 09:00; media paper to automatic
+Change over time
+2026-09-28 – 2026-10-04
+Planned 0 · delivered 0
+Requested 1 / week · observed 1
+text only
+2 Oct, 10:00 am
+
+Adaptation decision
+applied · no explicit preference; rotated approved media · Time 09:00 → 09:00 · Media paper → paper
+
+2 Oct, 10:00 am
+
+Frequency model recommendation
+no_change · Model recommendation: 2 per week · Frequency 2 → 2 / week · Time 09:00 → 09:00 · Media paper → paper
+
+2 Oct, 10:00 am
+
+Patient request
+applied · explicit request fitted approved envelope · Time 09:00 → 09:00 · Media paper → paper
+
+2 Oct, 10:00 am
+
+Applied schedule adaptation
+applied · Applied future schedule: frequency 2 to 1; time 09:00 to 09:00; media paper to automatic · Frequency 2 → 1 / week · Time 09:00 → 09:00 · Media paper → paper
+
+28 Sept, 10:05 am
+
+Patient request
+observed · Interaction evidence only
+
+No pending approval found in the loaded records
+Clinician prescription
+
+No prescription text available in the loaded record.
+
+Latest schedule adaptation
+
+An adaptation was recorded as applied to future messages. Applied future schedule: frequency 2 to 1; time 09:00 to 09:00; media paper to automatic
+
+Needs your attention
+No pending action found. You can inspect the message plan below.
+
+Evidence snapshot: 2 Oct, 10:00 am. Refresh to check for new activity.
+
+Refresh summary
+
+Delivery and interaction records describe system activity, not patient adherence or health outcomes.
+
+Review plan or adjust future messages

@@ -1,0 +1,149 @@
+{
+  "generated_at": "2026-10-03T15:00:05.993Z",
+  "git_commit": "869cbe4efbbdeb4ad2eaa08ee180ddcd53801adf",
+  "git_last_commit_date": "2026-09-01",
+  "git_changed_or_untracked_entries": 1139,
+  "node": "v24.13.1",
+  "os": "27.2",
+  "runtime_dependencies": {
+    "google-auth-library": "10.9.1",
+    "twilio": "6.1.0"
+  },
+  "declared_node_engine": "24.x",
+  "python": "3.13.1",
+  "matplotlib": "3.10.0",
+  "frozen_model_sha256": "971e347d95f2d2eaf207db7d0d9978defe97df871eeb94068903eb989321aaa2",
+  "synthetic_dataset": {
+    "seed": 5128,
+    "users": 300,
+    "weeks": 12,
+    "rows": 7208,
+    "positive_rows": 1380,
+    "dataset_sha256": "b332923d43e528836c39259fbc35f99485601c60d5db33eddb0d9b3348f3a523"
+  },
+  "evidence_folders": {
+    "output/adaptability_scenarios_2026-10-02": {
+      "files": 20,
+      "bytes": 511006
+    },
+    "output/adaptation_benchmark_2026-10-02": {
+      "files": 61,
+      "bytes": 1456044
+    },
+    "output/adaptation_benchmark_2026-10-02_network": {
+      "files": 61,
+      "bytes": 1461390
+    },
+    "output/adaptation_benchmark_2026-10-02_postfix": {
+      "files": 105,
+      "bytes": 5969268
+    },
+    "output/adaptation_benchmark_2026-10-02_repaired": {
+      "files": 156,
+      "bytes": 13244900
+    },
+    "output/adaptation_benchmark_2026-10-02_tracefix": {
+      "files": 106,
+      "bytes": 5982338
+    },
+    "output/appendix_screenshots_2026-10-04": {
+      "files": 12,
+      "bytes": 1187157
+    },
+    "output/data": {
+      "files": 2,
+      "bytes": 272442
+    },
+    "output/frequency_comparison_2026-09-30": {
+      "files": 230,
+      "bytes": 10665859
+    },
+    "output/frequency_comparison_2026-09-30_pilot_per_decision": {
+      "files": 136,
+      "bytes": 5551612
+    },
+    "output/patient_schema_synthetic_v3_2026-09-30": {
+      "files": 9,
+      "bytes": 22769922
+    },
+    "output/taxonomy_frequency_v2_2026-09-30": {
+      "files": 67,
+      "bytes": 18793862
+    },
+    "output/thesis": {
+      "files": 93,
+      "bytes": 1050235
+    }
+  },
+  "code_summary": [
+    {
+      "group": "Clinician web pages and browser scripts",
+      "files": 11,
+      "lines": 1646,
+      "committed_unchanged": 7,
+      "committed_modified": 3,
+      "not_committed": 1
+    },
+    {
+      "group": "Server API handlers and libraries",
+      "files": 38,
+      "lines": 3966,
+      "committed_unchanged": 33,
+      "committed_modified": 5,
+      "not_committed": 0
+    },
+    {
+      "group": "Frozen model artifact",
+      "files": 1,
+      "lines": 106,
+      "committed_unchanged": 1,
+      "committed_modified": 0,
+      "not_committed": 0
+    },
+    {
+      "group": "Automated tests and fixtures",
+      "files": 36,
+      "lines": 3742,
+      "committed_unchanged": 22,
+      "committed_modified": 5,
+      "not_committed": 9
+    },
+    {
+      "group": "n8n workflow definitions",
+      "files": 3,
+      "lines": 1256,
+      "committed_unchanged": 3,
+      "committed_modified": 0,
+      "not_committed": 0
+    },
+    {
+      "group": "Database migrations",
+      "files": 6,
+      "lines": 297,
+      "committed_unchanged": 6,
+      "committed_modified": 0,
+      "not_committed": 0
+    },
+    {
+      "group": "Evaluation, simulation and evidence scripts",
+      "files": 38,
+      "lines": 4537,
+      "committed_unchanged": 7,
+      "committed_modified": 0,
+      "not_committed": 31
+    },
+    {
+      "group": "Protocols and method notes for scripts",
+      "files": 6,
+      "lines": 343,
+      "committed_unchanged": 0,
+      "committed_modified": 0,
+      "not_committed": 6
+    }
+  ],
+  "tests": {
+    "files": 35,
+    "passed": 226,
+    "failed": 0
+  }
+}

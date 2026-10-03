@@ -1,0 +1,17 @@
+{
+  "cache_key": "146ac86fb6b0f5337b8aff631ac848c2a37240d31b345d503ea7f3e35f2e3840",
+  "error": {
+    "http_status": 503,
+    "status": "UNAVAILABLE",
+    "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+    "quota": []
+  },
+  "attempts": [
+    {
+      "status": 503,
+      "latency_ms": 4785,
+      "usage": null,
+      "model_version": null
+    }
+  ]
+}

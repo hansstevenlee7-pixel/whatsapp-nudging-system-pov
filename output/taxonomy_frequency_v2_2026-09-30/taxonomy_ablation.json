@@ -1,0 +1,383 @@
+{
+  "version": "taxonomy-frequency-ablation-v1",
+  "seed_count": 10,
+  "shared_prior_precision": 0.05,
+  "full_feature_names": [
+    "candidate_frequency",
+    "current_frequency",
+    "recent_interaction_rate",
+    "noninteraction_streak",
+    "has_previous_interaction",
+    "candidate_x_recent_rate",
+    "candidate_x_streak",
+    "recent_type_exposures",
+    "recent_type_interaction_rate",
+    "recent_pillar_exposures",
+    "recent_pillar_interaction_rate",
+    "pillar=physical_activity",
+    "pillar=sleep",
+    "pillar=stress_management",
+    "pillar=substance_use",
+    "pillar=social_connection",
+    "category=reduce",
+    "category=maintain",
+    "category=avoid",
+    "category=establish",
+    "nudge_type=reflection",
+    "nudge_type=challenge",
+    "nudge_type=affirmation",
+    "tone_variant=neutral_informational",
+    "candidate_x_type_recent_rate",
+    "candidate_x_pillar_recent_rate"
+  ],
+  "reduced_feature_names": [
+    "candidate_frequency",
+    "current_frequency",
+    "recent_interaction_rate",
+    "noninteraction_streak",
+    "has_previous_interaction",
+    "candidate_x_recent_rate",
+    "candidate_x_streak"
+  ],
+  "note": "Predictive ablation on the new synthetic generator; tests whether added taxonomy context helps predict logged outcomes, not whether it improves sequential frequency choices.",
+  "across_seeds": {
+    "validation": {
+      "full_brier": 0.12965085476405194,
+      "frequency_only_brier": 0.13270538474855945,
+      "full_pr_auc": 0.404155854630845,
+      "frequency_only_pr_auc": 0.36809916805461396,
+      "brier_improved_seeds": 9,
+      "pr_auc_improved_seeds": 8
+    },
+    "test": {
+      "full_brier": 0.1313829575391924,
+      "frequency_only_brier": 0.1316859685025253,
+      "full_pr_auc": 0.3449166254480828,
+      "frequency_only_pr_auc": 0.3452191813796894,
+      "brier_improved_seeds": 5,
+      "pr_auc_improved_seeds": 4
+    }
+  },
+  "per_seed": [
+    {
+      "seed": 5128,
+      "train_rows": 3803,
+      "validation": {
+        "full": {
+          "rows": 119,
+          "positives": 22,
+          "brier": 0.1325843949674181,
+          "pr_auc": 0.46895256742362235
+        },
+        "frequency_only": {
+          "rows": 119,
+          "positives": 22,
+          "brier": 0.13401972682780977,
+          "pr_auc": 0.3659991392803798
+        }
+      },
+      "test": {
+        "full": {
+          "rows": 230,
+          "positives": 39,
+          "brier": 0.11851782267726309,
+          "pr_auc": 0.4381564633425549
+        },
+        "frequency_only": {
+          "rows": 230,
+          "positives": 39,
+          "brier": 0.12205409822589593,
+          "pr_auc": 0.4021404611265597
+        }
+      }
+    },
+    {
+      "seed": 1,
+      "train_rows": 3858,
+      "validation": {
+        "full": {
+          "rows": 126,
+          "positives": 25,
+          "brier": 0.13688661168833974,
+          "pr_auc": 0.42259821677382675
+        },
+        "frequency_only": {
+          "rows": 126,
+          "positives": 25,
+          "brier": 0.1430398193893228,
+          "pr_auc": 0.37700177791256095
+        }
+      },
+      "test": {
+        "full": {
+          "rows": 233,
+          "positives": 43,
+          "brier": 0.1428985853024951,
+          "pr_auc": 0.3566275106639587
+        },
+        "frequency_only": {
+          "rows": 233,
+          "positives": 43,
+          "brier": 0.1476309688829459,
+          "pr_auc": 0.31289633349433216
+        }
+      }
+    },
+    {
+      "seed": 2,
+      "train_rows": 3844,
+      "validation": {
+        "full": {
+          "rows": 132,
+          "positives": 31,
+          "brier": 0.15452022092524742,
+          "pr_auc": 0.4895744617667709
+        },
+        "frequency_only": {
+          "rows": 132,
+          "positives": 31,
+          "brier": 0.1558974344201666,
+          "pr_auc": 0.49777601579982506
+        }
+      },
+      "test": {
+        "full": {
+          "rows": 237,
+          "positives": 31,
+          "brier": 0.11181291485352297,
+          "pr_auc": 0.22978688525933585
+        },
+        "frequency_only": {
+          "rows": 237,
+          "positives": 31,
+          "brier": 0.10736124194139489,
+          "pr_auc": 0.2881065999990746
+        }
+      }
+    },
+    {
+      "seed": 3,
+      "train_rows": 3848,
+      "validation": {
+        "full": {
+          "rows": 107,
+          "positives": 12,
+          "brier": 0.09346228615833352,
+          "pr_auc": 0.34700091633859315
+        },
+        "frequency_only": {
+          "rows": 107,
+          "positives": 12,
+          "brier": 0.09444003134499411,
+          "pr_auc": 0.3201041967707614
+        }
+      },
+      "test": {
+        "full": {
+          "rows": 248,
+          "positives": 44,
+          "brier": 0.12320231071809994,
+          "pr_auc": 0.4561657082756975
+        },
+        "frequency_only": {
+          "rows": 248,
+          "positives": 44,
+          "brier": 0.12284187427096897,
+          "pr_auc": 0.5081138593085686
+        }
+      }
+    },
+    {
+      "seed": 4,
+      "train_rows": 3857,
+      "validation": {
+        "full": {
+          "rows": 108,
+          "positives": 22,
+          "brier": 0.14807862624981263,
+          "pr_auc": 0.39200999491636673
+        },
+        "frequency_only": {
+          "rows": 108,
+          "positives": 22,
+          "brier": 0.14687791140981973,
+          "pr_auc": 0.3727429549448612
+        }
+      },
+      "test": {
+        "full": {
+          "rows": 226,
+          "positives": 49,
+          "brier": 0.16387107608810342,
+          "pr_auc": 0.3057044673570132
+        },
+        "frequency_only": {
+          "rows": 226,
+          "positives": 49,
+          "brier": 0.16791499651567418,
+          "pr_auc": 0.2764417357452357
+        }
+      }
+    },
+    {
+      "seed": 5,
+      "train_rows": 3804,
+      "validation": {
+        "full": {
+          "rows": 109,
+          "positives": 18,
+          "brier": 0.11550757350847901,
+          "pr_auc": 0.3942196397724781
+        },
+        "frequency_only": {
+          "rows": 109,
+          "positives": 18,
+          "brier": 0.11869303154237436,
+          "pr_auc": 0.4046633882034027
+        }
+      },
+      "test": {
+        "full": {
+          "rows": 231,
+          "positives": 31,
+          "brier": 0.1149867792427538,
+          "pr_auc": 0.21754699743912492
+        },
+        "frequency_only": {
+          "rows": 231,
+          "positives": 31,
+          "brier": 0.11502984347316715,
+          "pr_auc": 0.225473155783504
+        }
+      }
+    },
+    {
+      "seed": 6,
+      "train_rows": 3903,
+      "validation": {
+        "full": {
+          "rows": 123,
+          "positives": 22,
+          "brier": 0.13641360762911556,
+          "pr_auc": 0.360550449183572
+        },
+        "frequency_only": {
+          "rows": 123,
+          "positives": 22,
+          "brier": 0.14038143201932118,
+          "pr_auc": 0.3086072089031568
+        }
+      },
+      "test": {
+        "full": {
+          "rows": 249,
+          "positives": 45,
+          "brier": 0.1324594588552193,
+          "pr_auc": 0.4048386968041337
+        },
+        "frequency_only": {
+          "rows": 249,
+          "positives": 45,
+          "brier": 0.13466956727020368,
+          "pr_auc": 0.3644920005179092
+        }
+      }
+    },
+    {
+      "seed": 7,
+      "train_rows": 3842,
+      "validation": {
+        "full": {
+          "rows": 124,
+          "positives": 26,
+          "brier": 0.14879194068006374,
+          "pr_auc": 0.42446025247200275
+        },
+        "frequency_only": {
+          "rows": 124,
+          "positives": 26,
+          "brier": 0.15662920185716753,
+          "pr_auc": 0.3846626630843175
+        }
+      },
+      "test": {
+        "full": {
+          "rows": 226,
+          "positives": 38,
+          "brier": 0.1371847844617796,
+          "pr_auc": 0.257540450944621
+        },
+        "frequency_only": {
+          "rows": 226,
+          "positives": 38,
+          "brier": 0.13435786973709302,
+          "pr_auc": 0.25850507714899296
+        }
+      }
+    },
+    {
+      "seed": 8,
+      "train_rows": 3835,
+      "validation": {
+        "full": {
+          "rows": 118,
+          "positives": 25,
+          "brier": 0.1459156323311653,
+          "pr_auc": 0.4455491292157201
+        },
+        "frequency_only": {
+          "rows": 118,
+          "positives": 25,
+          "brier": 0.14958411396342688,
+          "pr_auc": 0.42370144609343996
+        }
+      },
+      "test": {
+        "full": {
+          "rows": 241,
+          "positives": 44,
+          "brier": 0.13189842911357394,
+          "pr_auc": 0.4176539275007172
+        },
+        "frequency_only": {
+          "rows": 241,
+          "positives": 44,
+          "brier": 0.13138082910186907,
+          "pr_auc": 0.41814279297991647
+        }
+      }
+    },
+    {
+      "seed": 9,
+      "train_rows": 3815,
+      "validation": {
+        "full": {
+          "rows": 121,
+          "positives": 12,
+          "brier": 0.08434765350254453,
+          "pr_auc": 0.29664291844549723
+        },
+        "frequency_only": {
+          "rows": 121,
+          "positives": 12,
+          "brier": 0.08749114471119145,
+          "pr_auc": 0.22573288955343487
+        }
+      },
+      "test": {
+        "full": {
+          "rows": 241,
+          "positives": 44,
+          "brier": 0.1369974140791131,
+          "pr_auc": 0.3651451468936711
+        },
+        "frequency_only": {
+          "rows": 241,
+          "positives": 44,
+          "brier": 0.13361839560604039,
+          "pr_auc": 0.3978797976928007
+        }
+      }
+    }
+  ]
+}

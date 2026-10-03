@@ -1,0 +1,75 @@
+{
+  "audited_at": "2026-10-03T07:27:13.489Z",
+  "passed": true,
+  "trajectories": [
+    {
+      "seed": 5128,
+      "messages": 278,
+      "interactions": 62,
+      "passed": true
+    },
+    {
+      "seed": 1,
+      "messages": 212,
+      "interactions": 45,
+      "passed": true
+    },
+    {
+      "seed": 2,
+      "messages": 232,
+      "interactions": 44,
+      "passed": true
+    },
+    {
+      "seed": 3,
+      "messages": 243,
+      "interactions": 59,
+      "passed": true
+    },
+    {
+      "seed": 4,
+      "messages": 252,
+      "interactions": 46,
+      "passed": true
+    },
+    {
+      "seed": 5,
+      "messages": 242,
+      "interactions": 34,
+      "passed": true
+    },
+    {
+      "seed": 6,
+      "messages": 236,
+      "interactions": 21,
+      "passed": true
+    },
+    {
+      "seed": 7,
+      "messages": 162,
+      "interactions": 26,
+      "passed": true
+    },
+    {
+      "seed": 8,
+      "messages": 240,
+      "interactions": 43,
+      "passed": true
+    },
+    {
+      "seed": 9,
+      "messages": 256,
+      "interactions": 42,
+      "passed": true
+    }
+  ],
+  "checks": [
+    "source and dataset hashes",
+    "cached proposed decisions",
+    "eligible and applied frequencies",
+    "clinician-owned slots",
+    "chronological history",
+    "seeded outcomes",
+    "summary counts"
+  ]
+}

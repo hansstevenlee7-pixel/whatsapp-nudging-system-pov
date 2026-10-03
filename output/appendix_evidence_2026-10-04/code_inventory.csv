@@ -1,0 +1,140 @@
+group,path,lines,git_status
+Clinician web pages and browser scripts,landing/admin.html,24,committed_unchanged
+Clinician web pages and browser scripts,landing/auth.css,20,committed_unchanged
+Clinician web pages and browser scripts,landing/auth.js,141,committed_unchanged
+Clinician web pages and browser scripts,landing/clinician-summary.js,37,not_committed
+Clinician web pages and browser scripts,landing/forgot-password.html,9,committed_unchanged
+Clinician web pages and browser scripts,landing/index.html,189,committed_modified
+Clinician web pages and browser scripts,landing/input.html,594,committed_modified
+Clinician web pages and browser scripts,landing/login.html,22,committed_unchanged
+Clinician web pages and browser scripts,landing/monitor.html,108,committed_modified
+Clinician web pages and browser scripts,landing/review-state.js,491,committed_unchanged
+Clinician web pages and browser scripts,landing/set-password.html,11,committed_unchanged
+Server API handlers and libraries,landing/api/_lib/adaptive-core.js,224,committed_modified
+Server API handlers and libraries,landing/api/_lib/adaptive-handlers.js,353,committed_modified
+Server API handlers and libraries,landing/api/_lib/adaptive-service.js,73,committed_unchanged
+Server API handlers and libraries,landing/api/_lib/adaptive-store.js,289,committed_unchanged
+Server API handlers and libraries,landing/api/_lib/auth.js,26,committed_unchanged
+Server API handlers and libraries,landing/api/_lib/behaviour-policy.js,153,committed_unchanged
+Server API handlers and libraries,landing/api/_lib/clinical-data.js,174,committed_unchanged
+Server API handlers and libraries,landing/api/_lib/clinician-adaptation.js,37,committed_unchanged
+Server API handlers and libraries,landing/api/_lib/delivery-store.js,71,committed_unchanged
+Server API handlers and libraries,landing/api/_lib/frequency-model.js,104,committed_unchanged
+Server API handlers and libraries,landing/api/_lib/frequency-shadow.js,201,committed_modified
+Server API handlers and libraries,landing/api/_lib/google-sheets.js,164,committed_unchanged
+Server API handlers and libraries,landing/api/_lib/http.js,70,committed_unchanged
+Server API handlers and libraries,landing/api/_lib/internal-auth.js,18,committed_unchanged
+Server API handlers and libraries,landing/api/_lib/media-discovery.js,112,committed_unchanged
+Server API handlers and libraries,landing/api/_lib/media-upload-handler.js,60,committed_unchanged
+Server API handlers and libraries,landing/api/_lib/n8n.js,25,committed_unchanged
+Server API handlers and libraries,landing/api/_lib/patient-dictionary-export.js,36,committed_unchanged
+Server API handlers and libraries,landing/api/_lib/patient-dictionary.js,323,committed_unchanged
+Server API handlers and libraries,landing/api/_lib/policy.js,39,committed_unchanged
+Server API handlers and libraries,landing/api/_lib/prescription-store.js,270,committed_unchanged
+Server API handlers and libraries,landing/api/_lib/reply-classifier.js,43,committed_modified
+Server API handlers and libraries,landing/api/_lib/schedule-store.js,404,committed_modified
+Server API handlers and libraries,landing/api/_lib/supabase.js,75,committed_unchanged
+Server API handlers and libraries,landing/api/_lib/taxonomy.js,54,committed_unchanged
+Server API handlers and libraries,landing/api/_lib/twilio.js,98,committed_unchanged
+Server API handlers and libraries,landing/api/adaptive.js,14,committed_unchanged
+Server API handlers and libraries,landing/api/admin/users.js,91,committed_unchanged
+Server API handlers and libraries,landing/api/approve.js,32,committed_unchanged
+Server API handlers and libraries,landing/api/config.js,12,committed_unchanged
+Server API handlers and libraries,landing/api/intake.js,34,committed_unchanged
+Server API handlers and libraries,landing/api/me.js,13,committed_unchanged
+Server API handlers and libraries,landing/api/patient.js,36,committed_unchanged
+Server API handlers and libraries,landing/api/patients.js,45,committed_unchanged
+Server API handlers and libraries,landing/api/prescription.js,58,committed_unchanged
+Server API handlers and libraries,landing/api/schedule.js,27,committed_unchanged
+Server API handlers and libraries,landing/api/whatsapp-inbound.js,85,committed_unchanged
+Server API handlers and libraries,landing/api/whatsapp-status.js,23,committed_unchanged
+Frozen model artifact,landing/api/_models/frequency-logistic-v1.json,106,committed_unchanged
+Automated tests and fixtures,landing/tests/action-list.test.js,398,committed_unchanged
+Automated tests and fixtures,landing/tests/action-taxonomy.test.js,402,committed_unchanged
+Automated tests and fixtures,landing/tests/adaptability-scenarios.test.js,79,not_committed
+Automated tests and fixtures,landing/tests/adaptation-benchmark.test.js,24,not_committed
+Automated tests and fixtures,landing/tests/adaptation-fixture.test.js,27,committed_unchanged
+Automated tests and fixtures,landing/tests/adaptive-core.test.js,96,committed_modified
+Automated tests and fixtures,landing/tests/adaptive-delivery.test.js,97,committed_unchanged
+Automated tests and fixtures,landing/tests/adaptive-schedule.test.js,97,committed_modified
+Automated tests and fixtures,landing/tests/auth-integration.test.js,33,committed_unchanged
+Automated tests and fixtures,landing/tests/behaviour-policy.test.js,55,committed_unchanged
+Automated tests and fixtures,landing/tests/clinician-summary.test.js,24,not_committed
+Automated tests and fixtures,landing/tests/delivery-status.test.js,35,committed_unchanged
+Automated tests and fixtures,landing/tests/direct-sheets-api.test.js,95,committed_unchanged
+Automated tests and fixtures,landing/tests/frequency-comparison.test.js,143,not_committed
+Automated tests and fixtures,landing/tests/frequency-model.test.js,49,committed_unchanged
+Automated tests and fixtures,landing/tests/frequency-shadow.test.js,51,committed_unchanged
+Automated tests and fixtures,landing/tests/frequency-worker.test.js,98,committed_modified
+Automated tests and fixtures,landing/tests/manual-media.test.js,79,committed_unchanged
+Automated tests and fixtures,landing/tests/media-discovery.test.js,51,committed_unchanged
+Automated tests and fixtures,landing/tests/media-populate.test.js,44,committed_unchanged
+Automated tests and fixtures,landing/tests/media-upload.test.js,77,committed_unchanged
+Automated tests and fixtures,landing/tests/message-options.test.js,232,committed_unchanged
+Automated tests and fixtures,landing/tests/patient-api.test.js,66,committed_unchanged
+Automated tests and fixtures,landing/tests/patient-dictionary.test.js,110,committed_unchanged
+Automated tests and fixtures,landing/tests/patient-schema-synthetic.test.js,26,not_committed
+Automated tests and fixtures,landing/tests/prescription-api.test.js,384,committed_modified
+Automated tests and fixtures,landing/tests/reply-classifier-schema.test.js,13,not_committed
+Automated tests and fixtures,landing/tests/schedule-api.test.js,252,committed_modified
+Automated tests and fixtures,landing/tests/security.test.js,230,committed_unchanged
+Automated tests and fixtures,landing/tests/sheets-fixture.js,83,committed_unchanged
+Automated tests and fixtures,landing/tests/stop-safety.test.js,71,committed_unchanged
+Automated tests and fixtures,landing/tests/taxonomy-frequency-gemini.test.js,87,not_committed
+Automated tests and fixtures,landing/tests/taxonomy-frequency-generator.test.js,42,not_committed
+Automated tests and fixtures,landing/tests/taxonomy-frequency-model.test.js,32,not_committed
+Automated tests and fixtures,landing/tests/weekly-schedule-migration.test.js,19,committed_unchanged
+Automated tests and fixtures,landing/tests/whatsapp-status-handler.test.js,41,committed_unchanged
+n8n workflow definitions,workflows/workflow_a_intake.json,714,committed_unchanged
+n8n workflow definitions,workflows/workflow_b_delivery_twilio.json,460,committed_unchanged
+n8n workflow definitions,workflows/workflow_c_adaptive_media.json,82,committed_unchanged
+Database migrations,supabase/migrations/001_clinician_auth.sql,37,committed_unchanged
+Database migrations,supabase/migrations/002_adaptive_media.sql,165,committed_unchanged
+Database migrations,supabase/migrations/003_clinician_media_uploads.sql,30,committed_unchanged
+Database migrations,supabase/migrations/004_patient_adaptation_dictionary.sql,48,committed_unchanged
+Database migrations,supabase/migrations/005_adaptation_state_media_mode.sql,6,committed_unchanged
+Database migrations,supabase/migrations/006_bounded_schedule_apply.sql,11,committed_unchanged
+"Evaluation, simulation and evidence scripts",scripts/adaptability-scenarios/core.js,270,not_committed
+"Evaluation, simulation and evidence scripts",scripts/adaptability-scenarios/plot.py,65,not_committed
+"Evaluation, simulation and evidence scripts",scripts/adaptability-scenarios/run.js,209,not_committed
+"Evaluation, simulation and evidence scripts",scripts/adaptation-benchmark/cases.js,31,not_committed
+"Evaluation, simulation and evidence scripts",scripts/adaptation-benchmark/engine.js,147,not_committed
+"Evaluation, simulation and evidence scripts",scripts/adaptation-benchmark/local-store.js,50,not_committed
+"Evaluation, simulation and evidence scripts",scripts/adaptation-benchmark/run.js,92,not_committed
+"Evaluation, simulation and evidence scripts",scripts/adaptation-benchmark/trace-completeness.js,94,not_committed
+"Evaluation, simulation and evidence scripts",scripts/appendix/evidence-index.js,104,not_committed
+"Evaluation, simulation and evidence scripts",scripts/bootstrap-admins.mjs,33,committed_unchanged
+"Evaluation, simulation and evidence scripts",scripts/experiment-modelled-schedule-change.js,91,not_committed
+"Evaluation, simulation and evidence scripts",scripts/finish-adaptation-benchmark-local.js,23,not_committed
+"Evaluation, simulation and evidence scripts",scripts/frequency-comparison/audit.js,96,not_committed
+"Evaluation, simulation and evidence scripts",scripts/frequency-comparison/core.js,155,not_committed
+"Evaluation, simulation and evidence scripts",scripts/frequency-comparison/gemini.js,161,not_committed
+"Evaluation, simulation and evidence scripts",scripts/frequency-comparison/plot.py,82,not_committed
+"Evaluation, simulation and evidence scripts",scripts/frequency-comparison/report.js,119,not_committed
+"Evaluation, simulation and evidence scripts",scripts/frequency-comparison/run.js,198,not_committed
+"Evaluation, simulation and evidence scripts",scripts/generate-adaptation-fixture.js,68,committed_unchanged
+"Evaluation, simulation and evidence scripts",scripts/generate-frequency-dataset.js,86,committed_unchanged
+"Evaluation, simulation and evidence scripts",scripts/local-preview/capture.js,139,not_committed
+"Evaluation, simulation and evidence scripts",scripts/local-preview/server.js,186,not_committed
+"Evaluation, simulation and evidence scripts",scripts/migrate-adaptive-sheet.mjs,53,committed_unchanged
+"Evaluation, simulation and evidence scripts",scripts/patient-schema-synthetic/generate.js,156,not_committed
+"Evaluation, simulation and evidence scripts",scripts/policy-baselines.js,323,not_committed
+"Evaluation, simulation and evidence scripts",scripts/render-adaptation-benchmark.py,141,not_committed
+"Evaluation, simulation and evidence scripts",scripts/seed-weekly-schedule.js,115,committed_unchanged
+"Evaluation, simulation and evidence scripts",scripts/smoke-auth.mjs,62,committed_unchanged
+"Evaluation, simulation and evidence scripts",scripts/taxonomy-frequency/ablation.js,95,not_committed
+"Evaluation, simulation and evidence scripts",scripts/taxonomy-frequency/audit.js,76,not_committed
+"Evaluation, simulation and evidence scripts",scripts/taxonomy-frequency/gemini-audit.js,83,not_committed
+"Evaluation, simulation and evidence scripts",scripts/taxonomy-frequency/gemini-run.js,256,not_committed
+"Evaluation, simulation and evidence scripts",scripts/taxonomy-frequency/generate.js,143,not_committed
+"Evaluation, simulation and evidence scripts",scripts/taxonomy-frequency/local-run.js,168,not_committed
+"Evaluation, simulation and evidence scripts",scripts/taxonomy-frequency/model.js,100,not_committed
+"Evaluation, simulation and evidence scripts",scripts/taxonomy-frequency/plot.py,67,not_committed
+"Evaluation, simulation and evidence scripts",scripts/taxonomy-frequency/report.js,60,not_committed
+"Evaluation, simulation and evidence scripts",scripts/train-frequency-model.js,140,committed_unchanged
+Protocols and method notes for scripts,scripts/adaptability-scenarios/PROTOCOL.md,90,not_committed
+Protocols and method notes for scripts,scripts/adaptation-benchmark/AMENDMENT.md,10,not_committed
+Protocols and method notes for scripts,scripts/adaptation-benchmark/README.md,43,not_committed
+Protocols and method notes for scripts,scripts/frequency-comparison/README.md,99,not_committed
+Protocols and method notes for scripts,scripts/patient-schema-synthetic/README.md,12,not_committed
+Protocols and method notes for scripts,scripts/taxonomy-frequency/README.md,89,not_committed

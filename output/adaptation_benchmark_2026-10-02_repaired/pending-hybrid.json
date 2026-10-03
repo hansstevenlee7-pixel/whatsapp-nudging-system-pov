@@ -1,0 +1,13 @@
+{
+  "reason": "Gemini GenerateRequestsPerDayPerProjectPerModel-FreeTier limit 20 reached; do not interpret missing or fallback outcomes as model accuracy",
+  "missing_first_runs": [
+    {
+      "case_id": "nochange-ambiguous",
+      "reason": "Daily Gemini quota exhausted; not evaluated"
+    },
+    {
+      "case_id": "nochange-unrelated",
+      "reason": "Daily Gemini quota exhausted; not evaluated"
+    }
+  ]
+}

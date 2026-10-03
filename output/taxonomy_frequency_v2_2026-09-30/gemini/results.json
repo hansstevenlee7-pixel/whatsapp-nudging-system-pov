@@ -1,0 +1,141 @@
+{
+  "complete": true,
+  "completed_seeds": 10,
+  "requested_seeds": 10,
+  "pause": null,
+  "gemini_per_seed": [
+    {
+      "seed": 1,
+      "delivered_messages": 212,
+      "ordinary_interactions": 45,
+      "interactions_per_message": 0.21226415094339623,
+      "constraint_violations": 0,
+      "fallback_decisions": 0
+    },
+    {
+      "seed": 2,
+      "delivered_messages": 232,
+      "ordinary_interactions": 44,
+      "interactions_per_message": 0.1896551724137931,
+      "constraint_violations": 0,
+      "fallback_decisions": 0
+    },
+    {
+      "seed": 3,
+      "delivered_messages": 243,
+      "ordinary_interactions": 59,
+      "interactions_per_message": 0.24279835390946503,
+      "constraint_violations": 0,
+      "fallback_decisions": 0
+    },
+    {
+      "seed": 4,
+      "delivered_messages": 252,
+      "ordinary_interactions": 46,
+      "interactions_per_message": 0.18253968253968253,
+      "constraint_violations": 0,
+      "fallback_decisions": 0
+    },
+    {
+      "seed": 5,
+      "delivered_messages": 242,
+      "ordinary_interactions": 34,
+      "interactions_per_message": 0.14049586776859505,
+      "constraint_violations": 0,
+      "fallback_decisions": 0
+    },
+    {
+      "seed": 5128,
+      "delivered_messages": 278,
+      "ordinary_interactions": 62,
+      "interactions_per_message": 0.22302158273381295,
+      "constraint_violations": 0,
+      "fallback_decisions": 0
+    },
+    {
+      "seed": 6,
+      "delivered_messages": 236,
+      "ordinary_interactions": 21,
+      "interactions_per_message": 0.08898305084745763,
+      "constraint_violations": 0,
+      "fallback_decisions": 0
+    },
+    {
+      "seed": 7,
+      "delivered_messages": 162,
+      "ordinary_interactions": 26,
+      "interactions_per_message": 0.16049382716049382,
+      "constraint_violations": 0,
+      "fallback_decisions": 0
+    },
+    {
+      "seed": 8,
+      "delivered_messages": 240,
+      "ordinary_interactions": 43,
+      "interactions_per_message": 0.17916666666666667,
+      "constraint_violations": 0,
+      "fallback_decisions": 0
+    },
+    {
+      "seed": 9,
+      "delivered_messages": 256,
+      "ordinary_interactions": 42,
+      "interactions_per_message": 0.1640625,
+      "constraint_violations": 0,
+      "fallback_decisions": 0
+    }
+  ],
+  "matched_logistic_comparison": [
+    {
+      "seed": 1,
+      "gemini_minus_logistic": -0.0328971393791844,
+      "gemini_messages_minus_logistic": 57
+    },
+    {
+      "seed": 2,
+      "gemini_minus_logistic": -0.012798815316268253,
+      "gemini_messages_minus_logistic": 69
+    },
+    {
+      "seed": 3,
+      "gemini_minus_logistic": -0.017405727723188047,
+      "gemini_messages_minus_logistic": 47
+    },
+    {
+      "seed": 4,
+      "gemini_minus_logistic": -0.05609668109668112,
+      "gemini_messages_minus_logistic": 76
+    },
+    {
+      "seed": 5,
+      "gemini_minus_logistic": -0.05822208094935366,
+      "gemini_messages_minus_logistic": 86
+    },
+    {
+      "seed": 5128,
+      "gemini_minus_logistic": -0.013464903752673535,
+      "gemini_messages_minus_logistic": 130
+    },
+    {
+      "seed": 6,
+      "gemini_minus_logistic": -0.049703080539403685,
+      "gemini_messages_minus_logistic": 99
+    },
+    {
+      "seed": 7,
+      "gemini_minus_logistic": -0.01597676107480031,
+      "gemini_messages_minus_logistic": 26
+    },
+    {
+      "seed": 8,
+      "gemini_minus_logistic": 0.025833333333333347,
+      "gemini_messages_minus_logistic": 90
+    },
+    {
+      "seed": 9,
+      "gemini_minus_logistic": -0.038318452380952384,
+      "gemini_messages_minus_logistic": 88
+    }
+  ],
+  "note": "Gemini receives a compressed training contingency table, while the fitted LR and bandit use all row-level features. This limits direct algorithmic fairness claims. Do not compare across different simulator versions."
+}

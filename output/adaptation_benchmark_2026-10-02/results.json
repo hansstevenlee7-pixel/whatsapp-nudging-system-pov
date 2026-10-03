@@ -1,0 +1,335 @@
+{
+  "status": "INCOMPLETE",
+  "rows": [
+    {
+      "arm": "fixed",
+      "completed": 2,
+      "success": 0,
+      "total": 24,
+      "supported_success": 0,
+      "supported_total": 2,
+      "no_change_failures": 0,
+      "no_change_total": 0,
+      "constraint_violations": 0,
+      "interpretation_correct": 0,
+      "interpretation_total": 2,
+      "mean_local_ms": 5.710312500000001,
+      "categories": {
+        "supported": {
+          "success": 0,
+          "total": 2
+        },
+        "no_change": {
+          "success": 0,
+          "total": 0
+        },
+        "boundary": {
+          "success": 0,
+          "total": 0
+        },
+        "operational": {
+          "success": 0,
+          "total": 0
+        }
+      }
+    },
+    {
+      "arm": "rules",
+      "completed": 2,
+      "success": 1,
+      "total": 24,
+      "supported_success": 1,
+      "supported_total": 2,
+      "no_change_failures": 0,
+      "no_change_total": 0,
+      "constraint_violations": 0,
+      "interpretation_correct": 1,
+      "interpretation_total": 2,
+      "mean_local_ms": 13.201,
+      "categories": {
+        "supported": {
+          "success": 1,
+          "total": 2
+        },
+        "no_change": {
+          "success": 0,
+          "total": 0
+        },
+        "boundary": {
+          "success": 0,
+          "total": 0
+        },
+        "operational": {
+          "success": 0,
+          "total": 0
+        }
+      }
+    },
+    {
+      "arm": "hybrid",
+      "completed": 2,
+      "success": 1,
+      "total": 24,
+      "supported_success": 1,
+      "supported_total": 2,
+      "no_change_failures": 0,
+      "no_change_total": 0,
+      "constraint_violations": 0,
+      "interpretation_correct": 1,
+      "interpretation_total": 2,
+      "mean_local_ms": 3.9303124999994807,
+      "categories": {
+        "supported": {
+          "success": 1,
+          "total": 2
+        },
+        "no_change": {
+          "success": 0,
+          "total": 0
+        },
+        "boundary": {
+          "success": 0,
+          "total": 0
+        },
+        "operational": {
+          "success": 0,
+          "total": 0
+        }
+      }
+    }
+  ],
+  "paired": [
+    {
+      "case_id": "media-1",
+      "category": "supported",
+      "fixed": false,
+      "rules": true,
+      "hybrid": true
+    },
+    {
+      "case_id": "media-2",
+      "category": "supported",
+      "fixed": false,
+      "rules": false,
+      "hybrid": false
+    },
+    {
+      "case_id": "media-3",
+      "category": "supported",
+      "fixed": null,
+      "rules": null,
+      "hybrid": null
+    },
+    {
+      "case_id": "summary-1",
+      "category": "supported",
+      "fixed": null,
+      "rules": null,
+      "hybrid": null
+    },
+    {
+      "case_id": "summary-2",
+      "category": "supported",
+      "fixed": null,
+      "rules": null,
+      "hybrid": null
+    },
+    {
+      "case_id": "summary-3",
+      "category": "supported",
+      "fixed": null,
+      "rules": null,
+      "hybrid": null
+    },
+    {
+      "case_id": "time-1",
+      "category": "supported",
+      "fixed": null,
+      "rules": null,
+      "hybrid": null
+    },
+    {
+      "case_id": "time-2",
+      "category": "supported",
+      "fixed": null,
+      "rules": null,
+      "hybrid": null
+    },
+    {
+      "case_id": "time-3",
+      "category": "supported",
+      "fixed": null,
+      "rules": null,
+      "hybrid": null
+    },
+    {
+      "case_id": "frequency-1",
+      "category": "supported",
+      "fixed": null,
+      "rules": null,
+      "hybrid": null
+    },
+    {
+      "case_id": "frequency-2",
+      "category": "supported",
+      "fixed": null,
+      "rules": null,
+      "hybrid": null
+    },
+    {
+      "case_id": "frequency-3",
+      "category": "supported",
+      "fixed": null,
+      "rules": null,
+      "hybrid": null
+    },
+    {
+      "case_id": "nochange-ambiguous",
+      "category": "no_change",
+      "fixed": null,
+      "rules": null,
+      "hybrid": null
+    },
+    {
+      "case_id": "nochange-negated",
+      "category": "no_change",
+      "fixed": null,
+      "rules": null,
+      "hybrid": null
+    },
+    {
+      "case_id": "nochange-unrelated",
+      "category": "no_change",
+      "fixed": null,
+      "rules": null,
+      "hybrid": null
+    },
+    {
+      "case_id": "nochange-missing",
+      "category": "no_change",
+      "fixed": null,
+      "rules": null,
+      "hybrid": null
+    },
+    {
+      "case_id": "boundary-time",
+      "category": "boundary",
+      "fixed": null,
+      "rules": null,
+      "hybrid": null
+    },
+    {
+      "case_id": "boundary-frequency",
+      "category": "boundary",
+      "fixed": null,
+      "rules": null,
+      "hybrid": null
+    },
+    {
+      "case_id": "boundary-media",
+      "category": "boundary",
+      "fixed": null,
+      "rules": null,
+      "hybrid": null
+    },
+    {
+      "case_id": "boundary-override",
+      "category": "boundary",
+      "fixed": null,
+      "rules": null,
+      "hybrid": null
+    },
+    {
+      "case_id": "operational-stop",
+      "category": "operational",
+      "fixed": null,
+      "rules": null,
+      "hybrid": null
+    },
+    {
+      "case_id": "operational-duplicate",
+      "category": "operational",
+      "fixed": null,
+      "rules": null,
+      "hybrid": null
+    },
+    {
+      "case_id": "operational-history",
+      "category": "operational",
+      "fixed": null,
+      "rules": null,
+      "hybrid": null
+    },
+    {
+      "case_id": "operational-sequence",
+      "category": "operational",
+      "fixed": null,
+      "rules": null,
+      "hybrid": null
+    }
+  ],
+  "hybrid_minus_rules_percentage_points": 0,
+  "primary": "first execution of each case; repeats reported separately",
+  "repeat_consistency": {
+    "all_three_success": 0,
+    "completed_three": 0,
+    "eligible": 1
+  },
+  "api": {
+    "attempts": 2,
+    "successful_http": 0,
+    "failed_attempts": 2,
+    "invalid_payloads": 0,
+    "prompt_tokens": 0,
+    "output_tokens": 0,
+    "thought_tokens": 0,
+    "latency_ms": 20.114125999998578
+  },
+  "failures": [
+    {
+      "case_id": "media-1",
+      "arm": "fixed",
+      "repeat": 1,
+      "failed_checks": [
+        "0:expected_format"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "media-2",
+      "arm": "fixed",
+      "repeat": 1,
+      "failed_checks": [
+        "0:expected_format"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "media-2",
+      "arm": "hybrid",
+      "repeat": 1,
+      "failed_checks": [
+        "0:expected_format"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "media-2",
+      "arm": "hybrid",
+      "repeat": 2,
+      "failed_checks": [
+        "0:expected_format"
+      ],
+      "errors": []
+    },
+    {
+      "case_id": "media-2",
+      "arm": "rules",
+      "repeat": 1,
+      "failed_checks": [
+        "0:expected_format"
+      ],
+      "errors": []
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "last_run": "2026-10-01T07:14:48.082Z",
+  "pause": null,
+  "requested_policies": [
+    "logistic_regression",
+    "contextual_thompson",
+    "gemini"
+  ],
+  "api_attempts_this_process": 18,
+  "frozen_artifact_unchanged": true
+}

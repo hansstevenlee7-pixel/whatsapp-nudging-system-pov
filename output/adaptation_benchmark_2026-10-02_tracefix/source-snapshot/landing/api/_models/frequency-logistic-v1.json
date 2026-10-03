@@ -1,0 +1,105 @@
+{
+  "model_id": "frequency-logistic-v1",
+  "model_type": "regularized_logistic_regression",
+  "mode": "shadow",
+  "target": "ordinary_reply_or_tracked_link_visit_within_24h_of_confirmed_delivery",
+  "feature_names": [
+    "candidate_frequency",
+    "current_frequency",
+    "recent_interaction_rate",
+    "noninteraction_streak",
+    "has_previous_interaction",
+    "candidate_x_recent_rate",
+    "candidate_x_noninteraction_streak"
+  ],
+  "intercept": -1.6002436176913715,
+  "coefficients": [
+    -0.17558697648494598,
+    -0.0008024513979443711,
+    0.3499501015651668,
+    -0.23628605152785126,
+    -0.09737238471736433,
+    0.25342715713323266,
+    -0.16412242051476575
+  ],
+  "feature_mean": [
+    2.3268727082242013,
+    1.999214248297538,
+    0.191657936092195,
+    2.250130958617077,
+    0.40544787847040337,
+    0.448293172690763,
+    5.337087480356208
+  ],
+  "feature_scale": [
+    0.7511232831704492,
+    0.7725987051705668,
+    0.28299784199638867,
+    1.6684391169871229,
+    0.4909785090146557,
+    0.7080644041006543,
+    4.458444657261136
+  ],
+  "training": {
+    "seed": 5128,
+    "synthetic_users": 300,
+    "simulated_weeks": 12,
+    "dataset_sha256": "b332923d43e528836c39259fbc35f99485601c60d5db33eddb0d9b3348f3a523",
+    "train_rows": 3818,
+    "validation_rows": 118,
+    "test_rows": 109,
+    "split": "users 001-240 weeks 1-8 train; users 241-270 weeks 9-10 validation; users 271-300 weeks 11-12 test"
+  },
+  "evaluation": {
+    "validation": {
+      "rows": 118,
+      "positive_rows": 19,
+      "prevalence": 0.16101694915254236,
+      "brier_score": 0.11276248439730868,
+      "constant_brier_score": 0.13638252067103465,
+      "log_loss": 0.3758749720966816,
+      "pr_auc": 0.47868323641279614
+    },
+    "test": {
+      "rows": 109,
+      "positive_rows": 24,
+      "prevalence": 0.22018348623853212,
+      "brier_score": 0.13716115380054356,
+      "constant_brier_score": 0.17224196719198281,
+      "log_loss": 0.4351575437315968,
+      "pr_auc": 0.5185184992852644
+    }
+  },
+  "policy_comparison": [
+    {
+      "policy": "fixed",
+      "delivered_messages": 7200,
+      "ordinary_interactions": 1707,
+      "interactions_per_message": 0.23708333333333334,
+      "messages_per_interaction": 4.21792618629174,
+      "frequency_changes": 0,
+      "direction_reversals": 0,
+      "constraint_violations": 0
+    },
+    {
+      "policy": "deterministic",
+      "delivered_messages": 5233,
+      "ordinary_interactions": 1361,
+      "interactions_per_message": 0.2600802598891649,
+      "messages_per_interaction": 3.8449669360764145,
+      "frequency_changes": 557,
+      "direction_reversals": 35,
+      "constraint_violations": 0
+    },
+    {
+      "policy": "model",
+      "delivered_messages": 3800,
+      "ordinary_interactions": 1020,
+      "interactions_per_message": 0.26842105263157895,
+      "messages_per_interaction": 3.7254901960784315,
+      "frequency_changes": 523,
+      "direction_reversals": 157,
+      "constraint_violations": 0
+    }
+  ]
+}

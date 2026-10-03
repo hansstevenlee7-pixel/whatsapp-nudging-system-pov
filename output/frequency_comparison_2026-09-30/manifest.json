@@ -1,0 +1,380 @@
+{
+  "created_at": "2026-09-29T14:27:57.705Z",
+  "node_version": "v24.13.1",
+  "git_commit": "869cbe4efbbdeb4ad2eaa08ee180ddcd53801adf",
+  "working_tree_dirty": true,
+  "config_sha256": "2fa92567caf5f61e5262365121caf4907b4328817edae67c73c9dcfc45d6b553",
+  "configuration": {
+    "version": 1,
+    "seeds": [
+      5128,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "policies": [
+      "logistic_regression",
+      "contextual_thompson",
+      "gemini"
+    ],
+    "weeks": [
+      9,
+      10,
+      11,
+      12
+    ],
+    "evaluation_users": [
+      271,
+      300
+    ],
+    "train_users": [
+      1,
+      240
+    ],
+    "train_weeks": [
+      1,
+      8
+    ],
+    "validation_users": [
+      241,
+      270
+    ],
+    "validation_weeks": [
+      9,
+      10
+    ],
+    "initial_history_weeks": [
+      1,
+      8
+    ],
+    "history_window": 4,
+    "training_cells": "exact counts grouped by all observable model inputs; identical representation for all policies",
+    "feedback": "all decisions in a week precede all outcomes; each arm updates on its own observed outcomes",
+    "train_scaling": "fixed from each seed's initial training rows",
+    "lr": {
+      "iterations": 2200,
+      "learning_rate": 0.08,
+      "coefficient_l2": 0.05,
+      "intercept_l2": 0
+    },
+    "bandit": {
+      "prior_mean": 0,
+      "prior_precision_all_parameters": 0.05,
+      "approximation": "full Hessian Laplace",
+      "posterior_max_iterations": 100,
+      "gradient_tolerance": 0.000001,
+      "draws_per_decision": 1
+    },
+    "gemini": {
+      "model": "gemini-2.5-flash",
+      "temperature": 0,
+      "thinking_budget": 0,
+      "max_output_tokens": 4096,
+      "prompt_sha256": "e16cf666345ffe5c71ae2631ef6a835b05f6e32ab3878e18449102ba5d799f5c",
+      "attempts": 3,
+      "cache": "one exhaustive observable-context decision table per weekly training-cell snapshot",
+      "billing": "free tier only, confirmed by user",
+      "pacing_ms": 13000
+    },
+    "response_namespace": "frequency-comparison-v1",
+    "bootstrap_seed": 20260930,
+    "bootstrap_replicates": 10000,
+    "constraints": "1-3/week; change at most 1/week; no increase unless recent four outcomes contain an interaction",
+    "primary_metric": "interactions per delivered message",
+    "secondary_metrics": [
+      "interactions",
+      "messages",
+      "weekly rates",
+      "changes",
+      "reversals",
+      "constraint violations",
+      "LLM fallback and invalid attempt rates"
+    ],
+    "interpretation": "stationary synthetic technical evaluation, not clinical efficacy or nudge-type evidence",
+    "source_sha256": {
+      "scripts/frequency-comparison/core.js": "24d23a87e257e371c45d2985047d8a78a71550376e1f0cda3c844ed57b965ce3",
+      "scripts/frequency-comparison/gemini.js": "7fe6f418975d96bc62d562bff8d35159829100ff5a8b5ef29527537accdac136",
+      "scripts/frequency-comparison/run.js": "df41eddba9f56b5c1669e559ef484b458b70c993d97f1ed51d5f769ede8f02f7",
+      "scripts/frequency-comparison/report.js": "135bf060384c56fcb91d443786432b1189e5d6fa23a6609e360768d5db499eb8",
+      "scripts/generate-frequency-dataset.js": "56322a7cf8dab59b18d463095fd7f2cbc3dc47ddee1cc47f5b1047c6dae2de8b",
+      "scripts/train-frequency-model.js": "35ca8e722a32a5f465d4746693cf389f1c2586d2a121e222bbb71cbfd1803f0a",
+      "scripts/policy-baselines.js": "c2794fbaa3bb9f8419be889a3204845fcc893df58335314cd755dd435325aee4",
+      "landing/api/_lib/frequency-model.js": "888c25e75b8806e73323eb6b74a8949e1e7059791d6446494d58ebe9f601cc94",
+      "landing/api/_models/frequency-logistic-v1.json": "971e347d95f2d2eaf207db7d0d9978defe97df871eeb94068903eb989321aaa2"
+    }
+  },
+  "reproduction": {
+    "matched": true,
+    "frozen_sha256": "971e347d95f2d2eaf207db7d0d9978defe97df871eeb94068903eb989321aaa2",
+    "dataset_sha256": "b332923d43e528836c39259fbc35f99485601c60d5db33eddb0d9b3348f3a523",
+    "checks": [
+      {
+        "policy": "fixed_2",
+        "matched": true,
+        "mismatches": [],
+        "result": {
+          "policy": "fixed_2",
+          "delivered_messages": 7200,
+          "ordinary_interactions": 1707,
+          "interactions_per_message": 0.23708333333333334,
+          "messages_per_interaction": 4.21792618629174,
+          "frequency_changes": 0,
+          "direction_reversals": 0,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 0,
+            "2": 3600,
+            "3": 0
+          },
+          "selected_frequency_share": {
+            "1": 0,
+            "2": 1,
+            "3": 0
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            }
+          ]
+        }
+      },
+      {
+        "policy": "deterministic",
+        "matched": true,
+        "mismatches": [],
+        "result": {
+          "policy": "deterministic",
+          "delivered_messages": 5233,
+          "ordinary_interactions": 1361,
+          "interactions_per_message": 0.2600802598891649,
+          "messages_per_interaction": 3.8449669360764145,
+          "frequency_changes": 557,
+          "direction_reversals": 35,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 2318,
+            "2": 931,
+            "3": 351
+          },
+          "selected_frequency_share": {
+            "1": 0.6438888888888888,
+            "2": 0.2586111111111111,
+            "3": 0.0975
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 0,
+              "2": 300,
+              "3": 0
+            },
+            {
+              "1": 0,
+              "2": 255,
+              "3": 45
+            },
+            {
+              "1": 163,
+              "2": 100,
+              "3": 37
+            },
+            {
+              "1": 204,
+              "2": 54,
+              "3": 42
+            },
+            {
+              "1": 235,
+              "2": 35,
+              "3": 30
+            },
+            {
+              "1": 243,
+              "2": 28,
+              "3": 29
+            },
+            {
+              "1": 240,
+              "2": 28,
+              "3": 32
+            },
+            {
+              "1": 240,
+              "2": 29,
+              "3": 31
+            },
+            {
+              "1": 241,
+              "2": 30,
+              "3": 29
+            },
+            {
+              "1": 246,
+              "2": 30,
+              "3": 24
+            },
+            {
+              "1": 253,
+              "2": 21,
+              "3": 26
+            },
+            {
+              "1": 253,
+              "2": 21,
+              "3": 26
+            }
+          ]
+        }
+      },
+      {
+        "policy": "model_plus_safety",
+        "matched": true,
+        "mismatches": [],
+        "result": {
+          "policy": "model_plus_safety",
+          "delivered_messages": 3800,
+          "ordinary_interactions": 1020,
+          "interactions_per_message": 0.26842105263157895,
+          "messages_per_interaction": 3.7254901960784315,
+          "frequency_changes": 523,
+          "direction_reversals": 157,
+          "constraint_violations": 0,
+          "selected_frequency_counts": {
+            "1": 3400,
+            "2": 200,
+            "3": 0
+          },
+          "selected_frequency_share": {
+            "1": 0.9444444444444444,
+            "2": 0.05555555555555555,
+            "3": 0
+          },
+          "weekly_selected_frequency_counts": [
+            {
+              "1": 300,
+              "2": 0,
+              "3": 0
+            },
+            {
+              "1": 218,
+              "2": 82,
+              "3": 0
+            },
+            {
+              "1": 277,
+              "2": 23,
+              "3": 0
+            },
+            {
+              "1": 287,
+              "2": 13,
+              "3": 0
+            },
+            {
+              "1": 292,
+              "2": 8,
+              "3": 0
+            },
+            {
+              "1": 287,
+              "2": 13,
+              "3": 0
+            },
+            {
+              "1": 287,
+              "2": 13,
+              "3": 0
+            },
+            {
+              "1": 289,
+              "2": 11,
+              "3": 0
+            },
+            {
+              "1": 288,
+              "2": 12,
+              "3": 0
+            },
+            {
+              "1": 292,
+              "2": 8,
+              "3": 0
+            },
+            {
+              "1": 294,
+              "2": 6,
+              "3": 0
+            },
+            {
+              "1": 289,
+              "2": 11,
+              "3": 0
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

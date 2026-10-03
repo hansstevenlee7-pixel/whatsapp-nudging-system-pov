@@ -1,0 +1,63 @@
+{
+  "captured_at": "2026-10-03T14:58:08.795Z",
+  "preview_base": "http://127.0.0.1:8790",
+  "browser": "Chrome/154.0.8037.93",
+  "viewport": {
+    "width": 1366,
+    "height": 900,
+    "device_scale_factor": 1.5
+  },
+  "session": "Synthetic session token placed in localStorage; the sign-in form was not submitted and no credentials were used.",
+  "server": "scripts/local-preview/server.js (frozen server clock 2026-10-02T00:00:00Z; outbound requests other than local stand-ins refused)",
+  "git_commit": "869cbe4efbbdeb4ad2eaa08ee180ddcd53801adf",
+  "working_tree": "dirty; source hashes below identify the exact files served",
+  "source_sha256": {
+    "landing/monitor.html": "902daa29f1da8f323f9097aa1bc0a24801da107d728f3f66b50a19e43b78b576",
+    "landing/login.html": "7c84ca850c1b8ac914f8b577b670f3842773e5fea1527875963c9de463c18be6",
+    "landing/input.html": "d7c281e40a97cb72e0903138e4a53533031ba2e19d822a63ddeffd97f1e1ad88",
+    "landing/auth.js": "6ff6cc1347ba2120587e36c9def7be833aedb829b8010827478f2fbd9d1cbe1e",
+    "landing/review-state.js": "b70d1abb95929e28de3b39a6bce8b84e5398cf887192651198ca56f23f556d5b",
+    "landing/clinician-summary.js": "6186b4e77f778ed1c45ff9e8355f6326df9d354021c1843193e1699f420612dc",
+    "scripts/local-preview/server.js": "98699e2bc79945e3d527b914c135055d81357aedf187433238b39865dada1632",
+    "scripts/local-preview/capture.js": "b5276592ff6b03fb150679c5b6cd38155f3773b7bb21ff430a9cdacb675c3fca",
+    "scripts/adaptation-benchmark/engine.js": "42d0d9fd99a83f63d29803af0bfae69c34514ddb17d2f698c4958ee332c36936",
+    "scripts/adaptation-benchmark/local-store.js": "34e04b8e4cc1a4de22e9efc567a9c6b1c3a7b71ff2ad0ac173bead97767e5069"
+  },
+  "screenshots": [
+    {
+      "file": "01_clinician_sign_in.png",
+      "text": "01_clinician_sign_in.txt",
+      "url": "/login.html",
+      "description": "Clinician sign-in page before authentication",
+      "sha256": "95f2b798dbc9efdc0f325401b629ae2b10e9e926a5596bba57b9284f563fabf1"
+    },
+    {
+      "file": "02_patient_overview.png",
+      "text": "02_patient_overview.txt",
+      "url": "/monitor.html?user_id=synthetic-1",
+      "description": "Patient overview for the synthetic patient after the pipeline run",
+      "sha256": "4fd786c3caae0461b0430d53c9dc0426dfbd9bf43ba949d6da8e70c6c7f5a635"
+    },
+    {
+      "file": "03_adaptation_history.png",
+      "text": "03_adaptation_history.txt",
+      "url": "/monitor.html?user_id=synthetic-1",
+      "description": "Adaptation history panel opened from the overview",
+      "sha256": "5d71939ff5434baf0e8582c16a58bd7035c2949da2c6ce9f09db245ec530f04f"
+    },
+    {
+      "file": "04_schedule_review.png",
+      "text": "04_schedule_review.txt",
+      "url": "/monitor.html?user_id=synthetic-1",
+      "description": "Schedule review panel, week of 5-11 October, first message expanded",
+      "sha256": "084e847847739b650a5b076d3fc72f279a0f9d3d7a45db9cdc0fda12faab9b0d"
+    },
+    {
+      "file": "05_prescription_input.png",
+      "text": "05_prescription_input.txt",
+      "url": "/input.html",
+      "description": "New prescription page",
+      "sha256": "d75ff3490447ed524a57514372d9386743b2a4abf345162e916bf7bccdebd280"
+    }
+  ]
+}

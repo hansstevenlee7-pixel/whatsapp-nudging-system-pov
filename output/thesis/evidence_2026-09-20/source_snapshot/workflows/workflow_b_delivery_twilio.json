@@ -1,0 +1,459 @@
+{
+  "id": "bTwilioB20260727",
+  "name": "Workflow B — Adaptive Delivery (Twilio)",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Workflow B — Adaptive Nudge Delivery (Twilio)\n\n### Delivery contract\n- Polls every 5 minutes in Australia/Melbourne.\n- Sends only approved generated schedule rows due in the current five-minute window.\n- Calls the signed prepare-delivery endpoint first; it checks active consent, prepares text or an approved tracked resource, and reserves the occurrence before Twilio is called.\n- Sandbox uses a free-form Body inside the participant-opened 24-hour window. Production uses a Messaging Service plus an approved Content Template and never falls back to Body.\n- Stores Twilio's Message SID and initial status in schedule_state.\n- Supplies the Vercel /api/whatsapp-status callback so provider delivery states are recorded.\n\n### Required environment variables\nGOOGLE_SHEETS_SPREADSHEET_ID, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_WHATSAPP_FROM, TWILIO_MESSAGING_SERVICE_SID, TWILIO_SEND_ONLY_CONTENT_SID, PORTAL_BASE_URL, N8N_PROXY_SECRET, N8N_BLOCK_ENV_ACCESS_IN_NODE=false. Set TWILIO_SANDBOX_MODE=true only for the controlled Sandbox test.\n\n### Safety\nThe narrow delivery window prevents activation from flushing old rows. A prepared occurrence must carry a delivery reservation. Typed STOP remains immediate; media selection never changes adherence state.",
+        "height": 820,
+        "width": 600,
+        "color": 7
+      },
+      "id": "b1000001-0000-0000-0000-000000000001",
+      "name": "Setup Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        240,
+        -420
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 5
+            }
+          ]
+        }
+      },
+      "id": "b1000001-0000-0000-0000-000000000002",
+      "name": "Melbourne Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        240,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "user",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "id": "b1000001-0000-0000-0000-000000000003",
+      "name": "Read Users",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        460,
+        380
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_AFTER_IMPORT",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Consolidate users so the nudges sheet is read exactly once.\nreturn [{ json: { users: items.map(i => i.json) } }];"
+      },
+      "id": "b1000001-0000-0000-0000-000000000004",
+      "name": "Aggregate Users",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        680,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "nudges",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "id": "b1000001-0000-0000-0000-000000000005",
+      "name": "Read Nudges",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        900,
+        380
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_AFTER_IMPORT",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Defensive guard for schedules created before stable approval IDs existed.\n// Group old time-bearing IDs and new stable IDs by source/date/occurrence, then\n// retain only the most recently reviewed approved row.\nconst latest = new Map();\nfor (const item of items) {\n  const n = item.json;\n  if (n.status !== 'approved' || !String(n.nudge_id || '').startsWith('schd_')) continue;\n  const id = String(n.nudge_id);\n  const oldMatch = id.match(/^(schd_.+_\\d{8})_\\d{4}_(\\d+)$/);\n  const stableMatch = id.match(/^(schd_.+_\\d{8})_(\\d+)$/);\n  const key = oldMatch ? oldMatch[1] + '_' + oldMatch[2] : stableMatch ? stableMatch[1] + '_' + stableMatch[2] : id;\n  const previous = latest.get(key);\n  if (!previous || String(n.reviewed_at || '') >= String(previous.json.reviewed_at || '')) latest.set(key, item);\n}\nreturn [...latest.values()];"
+      },
+      "id": "b1000001-0000-0000-0000-000000000012",
+      "name": "Deduplicate Generated Schedule",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1010,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Select generated delivery rows due in the current five-minute Melbourne window.\nconst users = $('Aggregate Users').first().json.users;\nconst userById = new Map(users.map(u => [String(u.user_id), u]));\nconst now = $now.setZone('Australia/Melbourne');\nconst today = now.toISODate();\nconst phoneRe = /^\\+[1-9]\\d{7,14}$/;\n\nreturn items.flatMap(item => {\n  const n = item.json;\n  if (n.status !== 'approved' || !String(n.nudge_id || '').startsWith('schd_')) return [];\n  if (n.scheduled_date !== today || !/^([01]\\d|2[0-3]):[0-5]\\d$/.test(String(n.scheduled_time || ''))) return [];\n  const scheduled = now.startOf('day').plus({ minutes: Number(n.scheduled_time.slice(0, 2)) * 60 + Number(n.scheduled_time.slice(3, 5)) });\n  const ageMinutes = now.diff(scheduled, 'minutes').minutes;\n  if (ageMinutes < 0 || ageMinutes >= 5) return [];\n  const user = userById.get(String(n.user_id));\n  if (!user || user.user_status !== 'active') return [];\n  const phone = String(user.phone || '').trim();\n  if (!phoneRe.test(phone)) throw new Error('Invalid or missing E.164 phone for user_id ' + n.user_id);\n  if (!String(n.message_body || '').trim()) throw new Error('Missing message_body for nudge_id ' + n.nudge_id);\n  return [{ json: { ...n, recipient_phone: phone, recipient_name: user.name || '', schedule_id: 'sch_' + n.nudge_id } }];\n});"
+      },
+      "id": "b1000001-0000-0000-0000-000000000006",
+      "name": "Prepare Due Nudges",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ String($env.PORTAL_BASE_URL || '').replace(/\\/$/, '') + '/api/internal/prepare-delivery' }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-N8N-Proxy-Secret",
+              "value": "={{ $env.N8N_PROXY_SECRET }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({ nudge_id: $json.nudge_id }) }}",
+        "options": {}
+      },
+      "id": "b1000001-0000-0000-0000-000000000013",
+      "name": "Prepare Adaptive Media",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1300,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Restore delivery context after the adaptive API response. The API may return the original message when no approved media plan exists.\nconst due = $('Prepare Due Nudges').all();\nreturn items.map((item, i) => {\n  const original = due[i] ? due[i].json : {};\n  const prepared = item.json || {};\n  return { json: { ...original, ...prepared, message_body: String(prepared.message_body || original.message_body || '') } };\n});"
+      },
+      "id": "b1000001-0000-0000-0000-000000000014",
+      "name": "Merge Adaptive Media",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1480,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Build one button-free Twilio request per reserved nudge. Sandbox uses a free-form Body only inside the participant-opened 24-hour window. Production requires a Messaging Service and an approved Content Template; it never falls back to Body.\nconst sid = String($env.TWILIO_ACCOUNT_SID || '').trim();\nconst token = String($env.TWILIO_AUTH_TOKEN || '').trim();\nconst from = String($env.TWILIO_WHATSAPP_FROM || '').trim();\nconst messagingServiceSid = String($env.TWILIO_MESSAGING_SERVICE_SID || '').trim();\nconst contentSid = String($env.TWILIO_SEND_ONLY_CONTENT_SID || '').trim();\nconst sandboxMode = String($env.TWILIO_SANDBOX_MODE || '').trim().toLowerCase() === 'true';\nconst portal = String($env.PORTAL_BASE_URL || '').trim().replace(/\\/$/, '');\nif (!sid || !token) throw new Error('Missing Twilio account credentials');\nif (sandboxMode && !/^whatsapp:\\+[1-9]\\d{7,14}$/.test(from)) throw new Error('TWILIO_WHATSAPP_FROM must use whatsapp:+E164 format in Sandbox mode');\nif (!sandboxMode && !/^MG[a-fA-F0-9]{32}$/.test(messagingServiceSid)) throw new Error('TWILIO_MESSAGING_SERVICE_SID is missing or invalid');\nif (!sandboxMode && !/^HX[a-fA-F0-9]{32}$/.test(contentSid)) throw new Error('TWILIO_SEND_ONLY_CONTENT_SID is missing or invalid');\nif (!/^https:\\/\\/[^/]+/.test(portal)) throw new Error('PORTAL_BASE_URL must be an https origin');\nconst authorization = 'Basic ' + Buffer.from(sid + ':' + token).toString('base64');\nconst encodeForm = pairs => pairs.map(([k, v]) => encodeURIComponent(k) + '=' + encodeURIComponent(String(v))).join('&');\nreturn items.map(item => {\n  const n = item.json;\n  if (!String(n.delivery_attempt_id || '').startsWith('att_')) throw new Error('Prepared delivery is missing its reservation');\n  const recipientName = String(n.recipient_name || 'there').trim() || 'there';\n  const messageBody = String(n.message_body || '').trim();\n  const pairs = [['To', 'whatsapp:' + n.recipient_phone]];\n  if (sandboxMode) {\n    pairs.push(['From', from]);\n    pairs.push(['Body', 'Hi ' + recipientName + ', ' + messageBody + '\\n\\nReply STOP to stop receiving messages.']);\n  } else {\n    pairs.push(['MessagingServiceSid', messagingServiceSid]);\n    pairs.push(['ContentSid', contentSid]);\n    pairs.push(['ContentVariables', JSON.stringify({ 1: recipientName, 2: messageBody })]);\n  }\n  pairs.push(['StatusCallback', portal + '/api/whatsapp-status']);\n  return { json: { ...n, twilio_url: 'https://api.twilio.com/2010-04-01/Accounts/' + sid + '/Messages.json', twilio_authorization: authorization, twilio_form: encodeForm(pairs), twilio_mode: sandboxMode ? 'sandbox_body' : 'approved_content_template' } };\n});"
+      },
+      "id": "b1000001-0000-0000-0000-000000000007",
+      "name": "Build Twilio Requests",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1340,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.twilio_url }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $json.twilio_authorization }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/x-www-form-urlencoded",
+        "body": "={{ $json.twilio_form }}",
+        "options": {}
+      },
+      "id": "b1000001-0000-0000-0000-000000000008",
+      "name": "Send via Twilio",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1560,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Merge Twilio acceptance responses back into their scheduled rows.\nconst requests = $('Build Twilio Requests').all();\nconst sentAt = $now.setZone('Australia/Melbourne').toISO();\nreturn items.map((responseItem, i) => {\n  const request = requests[i] ? requests[i].json : {};\n  const response = responseItem.json || {};\n  if (!response.sid) throw new Error('Twilio response missing Message SID for nudge_id ' + request.nudge_id);\n  return { json: { ...request, wa_message_id: response.sid, twilio_status: response.status || 'queued', sent_at: sentAt, state_status: response.status || 'queued' } };\n});"
+      },
+      "id": "b1000001-0000-0000-0000-000000000009",
+      "name": "Merge Twilio Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1780,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "nudges",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "nudge_id": "={{ $json.nudge_id }}",
+            "status": "sent",
+            "sent_at": "={{ $json.sent_at }}"
+          },
+          "matchingColumns": [
+            "nudge_id"
+          ],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "b1000001-0000-0000-0000-000000000010",
+      "name": "Mark Nudge Sent",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        2000,
+        380
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_AFTER_IMPORT",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $env.GOOGLE_SHEETS_SPREADSHEET_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "schedule_state",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "schedule_id": "={{ $json.schedule_id }}",
+            "nudge_id": "={{ $json.nudge_id }}",
+            "user_id": "={{ $json.user_id }}",
+            "parent_nudge_id": "={{ $json.nudge_id }}",
+            "status": "={{ $json.state_status }}",
+            "sent_at": "={{ $json.sent_at }}",
+            "wa_message_id": "={{ $json.wa_message_id }}",
+            "tone_sent": "={{ $json.tone_variant }}",
+            "last_updated": "={{ $json.sent_at }}"
+          },
+          "matchingColumns": [
+            "nudge_id"
+          ],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "b1000001-0000-0000-0000-000000000011",
+      "name": "Update Schedule State",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        2000,
+        540
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_AFTER_IMPORT",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Melbourne Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Read Users",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Users": {
+      "main": [
+        [
+          {
+            "node": "Aggregate Users",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate Users": {
+      "main": [
+        [
+          {
+            "node": "Read Nudges",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Nudges": {
+      "main": [
+        [
+          {
+            "node": "Deduplicate Generated Schedule",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Deduplicate Generated Schedule": {
+      "main": [
+        [
+          {
+            "node": "Prepare Due Nudges",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Due Nudges": {
+      "main": [
+        [
+          {
+            "node": "Prepare Adaptive Media",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Adaptive Media": {
+      "main": [
+        [
+          {
+            "node": "Merge Adaptive Media",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Adaptive Media": {
+      "main": [
+        [
+          {
+            "node": "Build Twilio Requests",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Twilio Requests": {
+      "main": [
+        [
+          {
+            "node": "Send via Twilio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send via Twilio": {
+      "main": [
+        [
+          {
+            "node": "Merge Twilio Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Twilio Response": {
+      "main": [
+        [
+          {
+            "node": "Mark Nudge Sent",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Update Schedule State",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Australia/Melbourne"
+  }
+}

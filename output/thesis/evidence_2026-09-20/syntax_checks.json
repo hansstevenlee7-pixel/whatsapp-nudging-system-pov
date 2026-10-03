@@ -1,0 +1,207 @@
+[
+  {
+    "file": "landing/api/patient.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/approve.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/whatsapp-inbound.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/intake.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/config.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/me.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/schedule.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/prescription.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/whatsapp-status.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/patients.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/adaptive.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/admin/users.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/_lib/media-discovery.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/_lib/n8n.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/_lib/clinician-adaptation.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/_lib/reply-classifier.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/_lib/delivery-store.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/_lib/policy.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/_lib/auth.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/_lib/schedule-store.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/_lib/behaviour-policy.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/_lib/supabase.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/_lib/frequency-model.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/_lib/frequency-shadow.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/_lib/google-sheets.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/_lib/adaptive-handlers.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/_lib/prescription-store.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/_lib/adaptive-core.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/_lib/adaptive-service.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/_lib/twilio.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/_lib/internal-auth.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/_lib/media-upload-handler.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/_lib/taxonomy.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/_lib/adaptive-store.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/_lib/patient-dictionary.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/_lib/patient-dictionary-export.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/_lib/clinical-data.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/api/_lib/http.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/auth.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/review-state.js",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "file": "landing/clinician-summary.js",
+    "exit_code": 0,
+    "stderr": ""
+  }
+]

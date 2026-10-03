@@ -1,0 +1,9 @@
+persona,name,rule,fixed_2_pass,fixed_2_frequencies,deterministic_pass,deterministic_frequencies,model_selector_pass,model_selector_frequencies,model_operative_pass,model_operative_frequencies
+P1,always-responds,"never decreases",true,222222222222,true,233333333333,false,122222222222,true,222222222222
+P2,never-responds,"frequency 1 in week 12 and never increases",false,222222222222,true,221111111111,true,111111111111,true,211111111111
+P3,responsive-then-silent,"no decrease decided in weeks 1-7 and frequency 1 in week 12",false,222222222222,true,233333321111,false,122222211111,true,222222211111
+P4,silent-then-responsive,"no increase decided in weeks 1-7 and at least one increase decided in weeks 8-12",false,222222222222,true,221111111233,true,111111111122,true,211111111122
+P5,alternating,"at most one direction reversal and no increase after a silent last-4 window",true,222222222222,true,222222222222,false,121111111111,true,222222222222
+P6,prefers-minimum,"frequency 1 in week 12 and at most one direction reversal",false,222222222222,false,221112211122,false,121111211112,false,211112111121
+P7,avoids-minimum,"frequency never 1",true,222222222222,true,233333333333,false,111111111111,true,222222222222
+P8,delivery-failure,"frequency stays 2 in every week",true,222222222222,true,222222222222,false,111111111111,true,222222222222
