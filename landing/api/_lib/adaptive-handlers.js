@@ -172,7 +172,11 @@ async function adaptationWorker(req, res) {
         if (patient) await exportPatientDictionary(buildPatientDictionary({ patient, adaptive }));
       } catch (error) { console.error("patient dictionary export failed", error); }
     }
-    if (decision && decision.outcome === "applied" && event.event_type === "inbound_reply" && event.raw_payload && event.raw_payload.from) {
+    // Acknowledge only an explicit request that was applied; an ordinary reply also
+    // yields an applied media-rotation decision but asked for nothing.
+    let interpretation = decision && decision.interpretation || {};
+    if (typeof interpretation === "string") { try { interpretation = JSON.parse(interpretation); } catch (_) { interpretation = {}; } }
+    if (decision && decision.outcome === "applied" && interpretation.explicit && event.event_type === "inbound_reply" && event.raw_payload && event.raw_payload.from) {
       await sendMessage({ to: event.raw_payload.from, body: "Got it — your request will be used for future messages within your approved plan." });
     }
     return sendJson(res, 200, { status: "complete", interaction_id: event.interaction_id, decision });

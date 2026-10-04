@@ -381,3 +381,29 @@ test("the weekly monitor leaves prescription management out of the monitoring wo
 
   // The action-list work this builds on must survive the renderTrace restructure.
 });
+
+test("a correction keeps the LLM's value in an append-only revision history", async function (t) {
+  const seed = baseSeed();
+  Object.assign(seed.prescriptions[0], { translation_model: "gemini-2.5-flash", translation_prompt_sha256: "a".repeat(64) });
+  const store = start(t, seed);
+  const first = await call(handler, "PATCH", { user_id: "patient-1", prescription_id: "rx-1", category: "maintain" });
+  assert.equal(first.statusCode, 200);
+  assert.equal(store.tables.prescriptions.rows[0].category, "maintain");
+  assert.deepEqual(store.tables.prescription_revisions.rows.map(row => [row.field, row.previous_value, row.new_value, row.changed_by, row.previous_source, row.reason]),
+    [["category", "establish", "maintain", "auth-1", "workflow_a:gemini-2.5-flash", "clinician_edit"]]);
+  // A second edit of the same field replaces a clinician value, not the LLM's; the
+  // unchanged duration writes nothing.
+  await call(handler, "PATCH", { user_id: "patient-1", prescription_id: "rx-1", category: "increase", duration_weeks: 8 });
+  assert.deepEqual(store.tables.prescription_revisions.rows.slice(1).map(row => [row.field, row.previous_value, row.new_value, row.previous_source]),
+    [["category", "maintain", "increase", "clinician"]]);
+  await call(handler, "DELETE", { user_id: "patient-1", prescription_id: "rx-1" });
+  const archive = store.tables.prescription_revisions.rows.at(-1);
+  assert.deepEqual([archive.field, archive.previous_value, archive.new_value, archive.reason], ["status", "active", "archived", "clinician_archive"]);
+});
+
+test("an unchanged value writes no revision", async function (t) {
+  const store = start(t);
+  const result = await call(handler, "PATCH", { user_id: "patient-1", prescription_id: "rx-1", category: "establish" });
+  assert.equal(result.statusCode, 200);
+  assert.equal(store.tables.prescription_revisions.rows.length, 0);
+});

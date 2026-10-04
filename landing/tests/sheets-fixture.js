@@ -5,17 +5,20 @@ const sheets = require("../api/_lib/google-sheets");
 const HEADERS = {
   user: ["user_id", "name", "phone", "email", "user_status", "doctor_id"],
   questionnaire: ["questionnaire_id", "user_id", "preferred_nudge_time", "opt_in_whatsapp"],
-  prescriptions: ["prescription_id", "user_id", "doctor_id", "issued_date", "pillar", "category", "target_behavior", "frequency_per_week", "duration_weeks", "prescription_raw_text", "status"],
+  prescriptions: ["prescription_id", "user_id", "doctor_id", "issued_date", "pillar", "category", "target_behavior", "frequency_per_week", "duration_weeks", "prescription_raw_text", "status",
+    "translation_model", "translation_prompt_sha256", "translation_response_id", "translated_at", "translation_normalised"],
   // `category` is last on both tabs on purpose: that is where the live migration
   // appends it, so the fixture proves the read path is order-independent.
-  nudges: ["nudge_id", "prescription_id", "user_id", "nudge_type", "pillar", "action_text", "scheduled_date", "scheduled_time", "message_body", "message_body_alt", "tone_variant", "template_name", "status", "sent_at", "reviewed_at", "week_number", "schedule_slot_id", "category", "media_selection_mode", "media_override_asset_id", "media_asset_id", "adaptation_decision_id"],
-  weekly_schedule: ["schedule_slot_id", "user_id", "source_nudge_id", "prescription_id", "day", "scheduled_time", "nudge_type", "pillar", "action_text", "tone_variant", "message_body", "message_body_alt", "template_name", "status", "start_date", "end_date", "created_at", "updated_at", "category", "media_selection_mode", "media_override_asset_id", "media_asset_id", "adaptation_decision_id"],
+  nudges: ["nudge_id", "prescription_id", "user_id", "nudge_type", "pillar", "action_text", "scheduled_date", "scheduled_time", "message_body", "message_body_alt", "tone_variant", "template_name", "status", "sent_at", "reviewed_at", "week_number", "schedule_slot_id", "category", "media_selection_mode", "media_override_asset_id", "media_asset_id", "adaptation_decision_id",
+    "translation_model", "translation_prompt_sha256", "translation_response_id", "translated_at"],
+  weekly_schedule: ["schedule_slot_id", "user_id", "source_nudge_id", "prescription_id", "day", "scheduled_time", "nudge_type", "pillar", "action_text", "tone_variant", "message_body", "message_body_alt", "template_name", "status", "start_date", "end_date", "created_at", "updated_at", "category", "media_selection_mode", "media_override_asset_id", "media_asset_id", "adaptation_decision_id", "approved_by", "approved_at"],
   schedule_state: ["schedule_id", "nudge_id", "user_id", "parent_nudge_id", "status", "sent_at", "delivered_at", "wa_message_id", "tone_sent", "last_updated", "read_at", "interacted_at", "last_inbound_message_sid", "delivery_attempt_id", "submission_started_at"],
   delivery_events: ["event_id", "event_at", "wa_message_id", "nudge_id", "user_id", "status", "error_code", "error_message", "channel_to", "raw_payload"],
   media_assignments: ["assignment_id", "assigned_at", "user_id", "nudge_id", "behaviour_key", "media_asset_id", "adaptation_decision_id", "media_kind", "selection_mode", "source_url", "tracked_url", "planned_frequency", "scheduled_at", "sent_at", "delivered_at", "read_at", "visited_at", "replied_at", "send_to_read_hours", "send_to_visit_hours", "send_to_reply_hours"],
   interaction_events: ["interaction_id", "event_at", "inbound_message_sid", "user_id", "from_phone", "reply_to_wa_message_id", "nudge_id", "body", "media_count", "correlation_method", "ack_status"],
   adaptation_decisions: ["decision_id", "decided_at", "user_id", "behaviour_key", "interaction_id", "signal_type", "rule_applied", "outcome", "reason", "selected_asset_id", "interpretation", "previous_state", "next_state", "scope", "decision_source", "effective_at", "state_version", "changed_fields", "frequency_before", "frequency_after", "media_mode_before", "media_mode_after", "media_kind_before", "media_kind_after", "nudge_id"],
   patient_adaptation_state: ["user_id", "scope", "behaviour_key", "state_version", "preferred_format", "preferred_frequency", "planned_frequency", "delivered_frequency", "observed_frequency", "last_change_at", "updated_at"],
+  prescription_revisions: ["revision_id", "prescription_id", "user_id", "changed_at", "changed_by", "field", "previous_value", "new_value", "previous_source", "reason"],
   patient_adaptation_timeline: ["user_id", "event_id", "event_at", "event_type", "source", "scope", "behaviour_key", "signal", "rule_applied", "outcome", "reason", "previous_state", "new_state", "changed_fields", "selected_asset_id", "selected_media_kind", "nudge_id", "interaction_id"]
 };
 

@@ -11,7 +11,7 @@ const TEMPLATES = new Set(["health_plan_reminder", "hello_world"]);
 const MEDIA_SELECTION_MODES = new Set(["automatic", "text_only", "clinician_selected"]);
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const TIME_RE = /^([01]\d|2[0-3]):[0-5]\d$/;
-const VERIFY_FIELDS = ["schedule_slot_id", "user_id", "source_nudge_id", "prescription_id", "day", "scheduled_time", "nudge_type", "pillar", "category", "action_text", "tone_variant", "message_body", "message_body_alt", "template_name", "status", "start_date", "end_date", "media_selection_mode", "media_override_asset_id", "media_asset_id", "adaptation_decision_id"];
+const VERIFY_FIELDS = ["schedule_slot_id", "user_id", "source_nudge_id", "prescription_id", "day", "scheduled_time", "nudge_type", "pillar", "category", "action_text", "tone_variant", "message_body", "message_body_alt", "template_name", "status", "start_date", "end_date", "media_selection_mode", "media_override_asset_id", "media_asset_id", "adaptation_decision_id", "approved_by", "approved_at"];
 
 function token(value) {
   return String(value || "").replace(/[^A-Za-z0-9_-]/g, "").slice(-60);
@@ -214,7 +214,10 @@ function stateRow(nudge, prior, now) {
 
 async function saveSchedule(body, decision = "approve", snapshot, evaluationTime = new Date(), links = {}) {
   // Internal clock and decision-link injection keep synthetic replay consistent
-  // and provenance trustworthy; neither is ever read from the HTTP body.
+  // and provenance trustworthy; neither is ever read from the HTTP body. The same
+  // holds for links.approved_by, the authenticated clinician who approved the save:
+  // a slot records who last approved it and when, and a policy write keeps that
+  // attribution (its own decision is named by adaptation_decision_id).
   const { userId, slots } = validate(body, decision);
   const data = snapshot || await loadClinicalData();
   const user = data.user.rows.find(row => String(row.user_id) === userId);
@@ -294,11 +297,12 @@ async function saveSchedule(body, decision = "approve", snapshot, evaluationTime
       media_override_asset_id: String(slot.media_override_asset_id || ""),
       media_asset_id: "", adaptation_decision_id: slotDecisionLink(scheduleSlotId, slot, prior, links),
       start_date: startDate, end_date: endDate, created_at: prior && prior.created_at || now, updated_at: now
-    });
+    }, links.approved_by ? { approved_by: String(links.approved_by), approved_at: now } : {});
   });
   const inactive = scopeWeekStart ? [] : existingWeekly.filter(row => !usedIds.has(String(row.schedule_slot_id)) && String(row.status) !== "inactive")
     .map(row => Object.assign({}, row, { status: "inactive", updated_at: now },
-      links.slot_ids && links.slot_ids.has(String(row.schedule_slot_id)) ? { adaptation_decision_id: links.decision_id } : {}));
+      links.slot_ids && links.slot_ids.has(String(row.schedule_slot_id)) ? { adaptation_decision_id: links.decision_id } : {},
+      links.approved_by ? { approved_by: String(links.approved_by), approved_at: now } : {}));
 
   const desiredNudges = [];
   for (const iso of datesBetween(effectiveStart, generationEnd)) {
@@ -328,14 +332,20 @@ async function saveSchedule(body, decision = "approve", snapshot, evaluationTime
   const desiredIds = new Set(desiredNudges.map(row => row.nudge_id));
   const existingNudgesById = new Map(data.nudges.rows.map(row => [String(row.nudge_id), row]));
   const existingStatesByNudge = new Map(data.schedule_state.rows.map(row => [String(row.nudge_id), row]));
+  // An occurrence whose delivery is reserved or already submitted is history as
+  // well, even before sent_at reaches the nudge row: neither rejected nor rebuilt,
+  // so its selected media and decision link survive (isolation test, 4 Oct 2026).
+  const protectedNudge = row => historicalNudge(row) ||
+    Boolean(existingStatesByNudge.has(String(row.nudge_id)) && historicalState(existingStatesByNudge.get(String(row.nudge_id))));
   const staleNudges = data.nudges.rows.filter(row => String(row.user_id) === userId && String(row.nudge_id).startsWith("schd_") &&
     String(row.scheduled_date) >= effectiveStart && String(row.scheduled_date) <= generationEnd && String(row.status) === "approved" &&
-    !desiredIds.has(String(row.nudge_id)) && !historicalNudge(row));
+    !desiredIds.has(String(row.nudge_id)) && !protectedNudge(row));
 
   const operations = [];
   if (scopeWeekStart) {
     for (const row of existingWeekly.filter(item => String(item.status) === "active")) {
-      operations.push(operation("weekly_schedule", data.weekly_schedule, Object.assign({}, row, { start_date: startDate, end_date: endDate, updated_at: now }), row));
+      operations.push(operation("weekly_schedule", data.weekly_schedule, Object.assign({}, row, { start_date: startDate, end_date: endDate, updated_at: now },
+        links.approved_by ? { approved_by: String(links.approved_by), approved_at: now } : {}), row));
     }
   } else {
     for (const row of active) operations.push(operation("weekly_schedule", data.weekly_schedule, row, existingWeeklyById.get(String(row.schedule_slot_id))));
@@ -362,7 +372,7 @@ async function saveSchedule(body, decision = "approve", snapshot, evaluationTime
   }
   for (const nudge of desiredNudges) {
     const prior = existingNudgesById.get(nudge.nudge_id);
-    if (!prior || !historicalNudge(prior)) operations.push(operation("nudges", data.nudges, Object.assign({}, prior || {}, nudge), prior));
+    if (!prior || !protectedNudge(prior)) operations.push(operation("nudges", data.nudges, Object.assign({}, prior || {}, nudge), prior));
     const priorState = existingStatesByNudge.get(nudge.nudge_id);
     if (!priorState || !historicalState(priorState)) operations.push(operation("schedule_state", data.schedule_state, stateRow(nudge, priorState, now), priorState));
   }

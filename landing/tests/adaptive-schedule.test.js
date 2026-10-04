@@ -94,3 +94,21 @@ test("frequency expansion creates stable, unique, evenly separated weekdays", fu
   assert.equal(new Set(expanded.map(row => row.day)).size, 3);
   assert.equal(new Set(expanded.map(row => row.schedule_slot_id)).size, 3);
 });
+
+test("a clinician save records who approved each slot and when; a policy write keeps it and the body cannot set it", async function (t) {
+  const fx = fixture(baseSeed()); t.after(fx.restore);
+  await saveSchedule({ user_id: "patient-1", start_date: "2026-09-07", end_date: "2026-10-04",
+    slots: [Object.assign(slot("slot-mon", "monday"), { approved_by: "spoofed" }), slot("slot-thu", "thursday")] }, "approve", undefined,
+    new Date("2026-09-01T00:00:00Z"), { approved_by: "auth-clinician" });
+  assert.deepEqual(fx.tables.weekly_schedule.rows.map(row => [row.approved_by, row.approved_at]),
+    [["auth-clinician", "2026-09-01T00:00:00.000Z"], ["auth-clinician", "2026-09-01T00:00:00.000Z"]]);
+  const key = behaviourKey({ action_text: "Be in bed by 10pm", pillar: "sleep", category: "establish" });
+  await applyAdaptiveSchedule({ user_id: "patient-1", behaviour_key: key, target_frequency: 1, adaptation_decision_id: "policy-1", now: "2026-09-02T00:00:00Z" });
+  const kept = fx.tables.weekly_schedule.rows.find(row => row.status === "active");
+  assert.deepEqual([kept.approved_by, kept.approved_at, kept.adaptation_decision_id], ["auth-clinician", "2026-09-01T00:00:00.000Z", "policy-1"]);
+  // Without an authenticated approver (no links), nothing is attributed.
+  const unattributed = fixture(baseSeed()); t.after(unattributed.restore);
+  await saveSchedule({ user_id: "patient-1", start_date: "2026-09-07", end_date: "2026-10-04",
+    slots: [Object.assign(slot("slot-mon", "monday"), { approved_by: "spoofed" })] }, "approve", undefined, new Date("2026-09-01T00:00:00Z"));
+  assert.equal(unattributed.tables.weekly_schedule.rows[0].approved_by || "", "");
+});

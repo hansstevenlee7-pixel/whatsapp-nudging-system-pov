@@ -37,15 +37,15 @@ module.exports = async function handler(req, res) {
       const prescriptionId = String(body.prescription_id || "").trim();
       if (!prescriptionId) throw httpError(400, "prescription_id is required");
       if (req.method === "DELETE") {
-        result = await archivePrescription(patient.user_id, prescriptionId);
+        result = await archivePrescription(patient.user_id, prescriptionId, profile.auth_user_id);
       } else if (body.status != null) {
         if (String(body.status) !== "active") throw httpError(400, "Only reactivation to active is supported here; use DELETE to archive");
         if (!active) throw httpError(409, "Reactivate this patient before reactivating a prescription");
-        result = await reactivatePrescription(patient.user_id, prescriptionId);
+        result = await reactivatePrescription(patient.user_id, prescriptionId, profile.auth_user_id);
       } else {
         const changes = {};
         for (const key of EDITABLE) if (body[key] != null) changes[key] = body[key];
-        result = { prescription: await updatePrescription(patient.user_id, prescriptionId, changes) };
+        result = { prescription: await updatePrescription(patient.user_id, prescriptionId, changes, profile.auth_user_id) };
       }
     }
 

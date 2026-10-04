@@ -4,6 +4,8 @@ const { behaviourKey, defaultEnvelope, decide, explicitInterpretation } = requir
 const { httpError } = require("./http");
 const store = require("./adaptive-store");
 const { classifyReply } = require("./reply-classifier");
+const { allPatients } = require("./clinical-data");
+const { currentFrequency } = require("./frequency-shadow");
 
 async function queuePatientBehaviours(userId, slots, prescriptions) {
   if (!store.configured()) return [];
@@ -47,9 +49,20 @@ async function processInteraction(event) {
   const assets = await store.call("assetsFor", event.behaviour_key, envelope.approved_asset_ids || []);
   const selectedAsset = event.asset_id ? assets.find(asset => asset.asset_id === event.asset_id) : null;
   const interpretation = event.event_type === "inbound_reply" ? await classifyReply(event.body, envelope) : undefined;
+  // A patient's first frequency request is a step from the approved plan: the
+  // planned frequency the frequency policy itself uses (translation-trace
+  // finding, 4 Oct 2026), not the envelope minimum.
+  const requested = interpretation || (event.event_type === "inbound_reply" ? explicitInterpretation(event.body) : {});
+  const planned = requested && requested.frequency_delta && !Number(state.preferred_frequency)
+    ? await plannedFrequency(event.user_id, event.behaviour_key) : null;
   const decision = decide({ event_type: event.event_type, body: event.body, asset_kind: selectedAsset && selectedAsset.media_kind,
-    state, envelope, assets, interpretation });
+    state, envelope, assets, interpretation, planned_frequency: planned });
   return store.call("saveDecision", event, decision);
+}
+
+async function plannedFrequency(userId, key) {
+  const patient = (await allPatients()).find(item => String(item.user_id) === String(userId));
+  return patient ? currentFrequency(patient, key) : null;
 }
 
 async function validateMediaSelections(userId, slots, prescriptions) {

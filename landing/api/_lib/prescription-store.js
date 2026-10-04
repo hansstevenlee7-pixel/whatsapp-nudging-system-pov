@@ -14,6 +14,7 @@
 const crypto = require("node:crypto");
 const { httpError } = require("./http");
 const { loadClinicalData, batchWrite, operation, isArchivedPrescription } = require("./clinical-data");
+const { ensureTabs } = require("./google-sheets");
 const { melbourneIso, historicalNudge, historicalState } = require("./schedule-store");
 const { PILLARS, CATEGORIES, NUDGE_TYPES, assertAction, normalizeAction } = require("./taxonomy");
 
@@ -22,6 +23,12 @@ const TIME_RE = /^([01]\d|2[0-3]):[0-5]\d$/;
 const TONES = new Set(["encouraging", "neutral_informational"]);
 const TEMPLATES = new Set(["health_plan_reminder", "hello_world"]);
 const RAW_TEXT_MAX = 4000;
+// Append-only correction history. An edit, archive or reactivation never erases
+// the value it replaces, including one Workflow A's LLM proposed (RQ1 translation
+// trace, 4 Oct 2026). previous_source says whether that value came from the LLM.
+const REVISION_TAB = "prescription_revisions";
+const REVISION_HEADERS = ["revision_id", "prescription_id", "user_id", "changed_at", "changed_by", "field", "previous_value", "new_value",
+  "previous_source", "reason"];
 const MESSAGE_MAX = 1024;
 
 // Sheets returns FORMATTED_VALUE, so a number written as 3 reads back as "3".
@@ -59,6 +66,30 @@ function clean(row) {
   const copy = Object.assign({}, row);
   delete copy.row_number;
   return copy;
+}
+
+async function revisionTable() {
+  await ensureTabs([REVISION_TAB], { [REVISION_TAB]: REVISION_HEADERS });
+  return (await loadClinicalData([REVISION_TAB]))[REVISION_TAB];
+}
+
+function revisionRows(table, existing, next, actor, reason, now) {
+  return Object.keys(next).filter(field => !same(existing[field], next[field])).map(field => {
+    const revisedBefore = table.rows.some(row => same(row.prescription_id, existing.prescription_id) && same(row.field, field));
+    return {
+      revision_id: `rev_${crypto.randomUUID()}`, prescription_id: existing.prescription_id, user_id: existing.user_id, changed_at: now,
+      changed_by: text(actor), field, previous_value: existing[field] == null ? "" : String(existing[field]), new_value: String(next[field]),
+      previous_source: !revisedBefore && text(existing.translation_model) ? `workflow_a:${text(existing.translation_model)}` : "clinician", reason
+    };
+  });
+}
+
+async function confirmRevisions(revisions) {
+  if (!revisions.length) return;
+  const saved = (await loadClinicalData([REVISION_TAB]))[REVISION_TAB].rows;
+  if (!revisions.every(revision => saved.some(row => same(row.revision_id, revision.revision_id)))) {
+    throw httpError(409, "The prescription revision history was not confirmed in Google Sheets. Please retry.");
+  }
 }
 
 function findPrescription(rows, userId, prescriptionId) {
@@ -146,7 +177,7 @@ async function createPrescription(userId, doctorId, fields) {
 // new behaviours, not a lock the schedule inherits, so changing one must not
 // touch — or be refused because of — the behaviours already scheduled under it.
 // Re-filing a behaviour is done per behaviour in the Monitor trace card.
-async function updatePrescription(userId, prescriptionId, changes) {
+async function updatePrescription(userId, prescriptionId, changes, actor = "") {
   const data = await loadClinicalData(["prescriptions"]);
   const existing = findPrescription(data.prescriptions.rows, userId, prescriptionId);
   const next = {};
@@ -164,7 +195,10 @@ async function updatePrescription(userId, prescriptionId, changes) {
   if (!Object.keys(next).length) throw httpError(400, "No prescription fields to update");
 
   const row = Object.assign({}, existing, next, { prescription_id: existing.prescription_id, user_id: existing.user_id });
-  await batchWrite([operation("prescriptions", data.prescriptions, row, existing)]);
+  const history = await revisionTable();
+  const revisions = revisionRows(history, existing, next, actor, "clinician_edit", new Date().toISOString());
+  await batchWrite([operation("prescriptions", data.prescriptions, row, existing),
+    ...revisions.map(revision => operation(REVISION_TAB, history, revision))]);
 
   const verified = await loadClinicalData(["prescriptions"]);
   const saved = verified.prescriptions.rows.find(item =>
@@ -176,10 +210,11 @@ async function updatePrescription(userId, prescriptionId, changes) {
   if (!rowOk) {
     throw httpError(409, "The prescription update was not confirmed in Google Sheets. Please retry.");
   }
+  await confirmRevisions(revisions);
   return clean(saved);
 }
 
-async function archivePrescription(userId, prescriptionId) {
+async function archivePrescription(userId, prescriptionId, actor = "") {
   const data = await loadClinicalData(["prescriptions", "nudges", "weekly_schedule", "schedule_state"]);
   const existing = findPrescription(data.prescriptions.rows, userId, prescriptionId);
   const now = new Date().toISOString();
@@ -204,8 +239,10 @@ async function archivePrescription(userId, prescriptionId) {
     historicalNudge(row)).length;
 
   const statesByNudge = new Map(data.schedule_state.rows.map(row => [String(row.nudge_id), row]));
+  const history = await revisionTable();
+  const revisions = revisionRows(history, existing, { status: "archived" }, actor, "clinician_archive", now);
   const operations = [operation("prescriptions", data.prescriptions,
-    Object.assign({}, existing, { status: "archived" }), existing)];
+    Object.assign({}, existing, { status: "archived" }), existing), ...revisions.map(revision => operation(REVISION_TAB, history, revision))];
   for (const slot of slots) {
     operations.push(operation("weekly_schedule", data.weekly_schedule,
       Object.assign({}, slot, { status: "inactive", updated_at: now }), slot));
@@ -238,6 +275,7 @@ async function archivePrescription(userId, prescriptionId) {
   if (!saved || !same(saved.status, "archived") || liveSlots.length || liveFuture.length) {
     throw httpError(409, "The archive was not confirmed in Google Sheets. Please retry.");
   }
+  await confirmRevisions(revisions);
   return {
     prescription: clean(saved),
     deactivated_slot_count: slots.length,
@@ -249,21 +287,24 @@ async function archivePrescription(userId, prescriptionId) {
 // Deliberately restores the prescription only. Un-rejecting the cancelled nudges
 // would re-arm deliveries for dates that may already have passed, and the
 // tombstoned slots describe a week the clinician chose to stop.
-async function reactivatePrescription(userId, prescriptionId) {
+async function reactivatePrescription(userId, prescriptionId, actor = "") {
   const data = await loadClinicalData(["prescriptions"]);
   const existing = findPrescription(data.prescriptions.rows, userId, prescriptionId);
   const row = Object.assign({}, existing, { status: "active" });
-  await batchWrite([operation("prescriptions", data.prescriptions, row, existing)]);
+  const history = await revisionTable();
+  const revisions = revisionRows(history, existing, { status: "active" }, actor, "clinician_reactivate", new Date().toISOString());
+  await batchWrite([operation("prescriptions", data.prescriptions, row, existing), ...revisions.map(revision => operation(REVISION_TAB, history, revision))]);
   const verified = await loadClinicalData(["prescriptions"]);
   const saved = verified.prescriptions.rows.find(item =>
     String(item.user_id) === String(userId) && String(item.prescription_id) === String(prescriptionId));
   if (!saved || !same(saved.status, "active")) {
     throw httpError(409, "The reactivation was not confirmed in Google Sheets. Please retry.");
   }
+  await confirmRevisions(revisions);
   return { prescription: clean(saved), schedule_restored: false };
 }
 
 module.exports = {
   createPrescription, updatePrescription, archivePrescription, reactivatePrescription,
-  isArchivedPrescription, normalizeAction
+  isArchivedPrescription, normalizeAction, REVISION_TAB, REVISION_HEADERS
 };

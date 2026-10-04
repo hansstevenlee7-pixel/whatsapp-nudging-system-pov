@@ -165,12 +165,14 @@ function affirmedPhrase(value, pattern) {
   return false;
 }
 
-function insideEnvelope(change, envelope, current = {}) {
+// Until a frequency preference is recorded, a requested step is taken from the
+// approved plan (plannedFrequency), not from the envelope minimum.
+function insideEnvelope(change, envelope, current = {}, plannedFrequency = null) {
   if (change.format && !envelope.formats.includes(change.format)) return { allowed: false, reason: "format_outside_envelope" };
   if (change.summary_length && !envelope.summary_lengths.includes(change.summary_length)) return { allowed: false, reason: "summary_length_outside_envelope" };
   if (change.tone && !envelope.tones.includes(change.tone)) return { allowed: false, reason: "tone_outside_envelope" };
   if (change.time && (change.time < envelope.earliest_time || change.time > envelope.latest_time)) return { allowed: false, reason: "time_outside_envelope" };
-  const frequency = Number(current.preferred_frequency || envelope.frequency_min) + Number(change.frequency_delta || 0);
+  const frequency = Number(current.preferred_frequency || plannedFrequency || envelope.frequency_min) + Number(change.frequency_delta || 0);
   if (change.frequency_delta && (frequency < envelope.frequency_min || frequency > envelope.frequency_max)) return { allowed: false, reason: "frequency_outside_envelope" };
   if (change.action && !envelope.action_alternatives.includes(change.action)) return { allowed: false, reason: "action_outside_envelope" };
   return { allowed: true, frequency };
@@ -185,7 +187,7 @@ function decide(input) {
       interpretation, previous_state: state, next_state: state, selected_asset: null,
       scores_before: state.format_scores, scores_after: state.format_scores };
   }
-  const check = insideEnvelope(interpretation, envelope, state);
+  const check = insideEnvelope(interpretation, envelope, state, input.planned_frequency);
   if (!check.allowed) return { outcome: "outside_envelope", rule: "explicit_request_guarded", reason: check.reason,
     interpretation, previous_state: state, next_state: state, scores_before: state.format_scores, scores_after: state.format_scores };
   const next = Object.assign({}, state);

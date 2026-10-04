@@ -121,6 +121,24 @@ test("intake rejects a blank or oversized action and stops writing target_behavi
   assert.equal(intakeGate(intakePayload()).prescriptions[0].target_behavior, "");
 });
 
+test("intake rejects a draft that names no prescription when more than one exists, and a prescription with no draft", function () {
+  const two = intakePayload();
+  two.prescriptions.push({ ref: "p2", pillar: "sleep", category: "maintain", frequency_per_week: 1, duration_weeks: 8 });
+  two.nudges.push(Object.assign({}, two.nudges[0], { prescription_ref: "p2", scheduled_date: "2026-08-04" }));
+  assert.equal(intakeGate(two).validation_passed, true);
+
+  const unresolved = JSON.parse(JSON.stringify(two)); unresolved.nudges[1].prescription_ref = "p9";
+  assert.match(intakeGate(unresolved).errors.join(" "), /unresolved prescription_ref: p9/);
+  const missing = JSON.parse(JSON.stringify(two)); delete missing.nudges[1].prescription_ref;
+  assert.match(intakeGate(missing).errors.join(" "), /unresolved prescription_ref/);
+  const orphan = JSON.parse(JSON.stringify(two)); orphan.nudges.pop();
+  assert.match(intakeGate(orphan).errors.join(" "), /rx\[1\] has no nudges/);
+
+  // With a single prescription the draft can only belong to it.
+  const single = intakePayload({ prescription_ref: undefined });
+  assert.equal(intakeGate(single).validation_passed, true);
+});
+
 test("saving rejects a blank or oversized action and an out-of-enum taxonomy", async function (t) {
   start(t);
   assert.match(JSON.parse((await save([slot("slot-a", "sunday", "source-sun", { action_text: "   " })])).body).error, /action_text is required/);

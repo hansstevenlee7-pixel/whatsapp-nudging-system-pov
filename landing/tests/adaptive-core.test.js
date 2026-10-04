@@ -93,3 +93,19 @@ test("a link visit raises that format score while a read state does not", () => 
   assert.equal(read.rule, "exposure_only");
   assert.equal(read.selected_asset, null);
 });
+
+test("a first frequency request steps from the approved plan, not the envelope minimum", () => {
+  const envelope = Object.assign(core.defaultEnvelope(Object.assign({}, behaviour, { scheduled_time: "09:00" })), { frequency_min: 1, frequency_max: 3 });
+  // No frequency preference recorded yet; three messages a week are planned.
+  const fewer = core.decide({ body: "Send fewer messages", event_type: "inbound_reply", envelope, assets: [], state: {}, planned_frequency: 3 });
+  assert.equal(fewer.outcome, "applied");
+  assert.equal(fewer.next_state.preferred_frequency, 2);
+  const more = core.decide({ body: "Send more messages", event_type: "inbound_reply", envelope, assets: [], state: {}, planned_frequency: 2 });
+  assert.equal(more.next_state.preferred_frequency, 3);
+  // A recorded preference still takes precedence over the plan.
+  const recorded = core.decide({ body: "Send fewer messages", event_type: "inbound_reply", envelope, assets: [], state: { preferred_frequency: 2 }, planned_frequency: 3 });
+  assert.equal(recorded.next_state.preferred_frequency, 1);
+  // The envelope still bounds the step.
+  const floor = core.decide({ body: "Send fewer messages", event_type: "inbound_reply", envelope, assets: [], state: {}, planned_frequency: 1 });
+  assert.equal(floor.outcome, "outside_envelope");
+});

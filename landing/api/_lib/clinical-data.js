@@ -34,14 +34,21 @@ const PATIENT_ADAPTATION_TIMELINE_HEADERS = [
   "outcome", "reason", "previous_state", "new_state", "changed_fields", "selected_asset_id", "selected_media_kind", "nudge_id", "interaction_id"
 ];
 
+// Provenance columns (RQ1 translation trace, 4 Oct 2026): which model and prompt
+// template produced a Workflow A row, and which clinician approved a weekly slot.
+const TRANSLATION_FIELDS = ["translation_model", "translation_prompt_sha256", "translation_response_id", "translated_at"];
+const PRESCRIPTION_TRANSLATION_FIELDS = TRANSLATION_FIELDS.concat(["translation_normalised"]);
+const APPROVAL_FIELDS = ["approved_by", "approved_at"];
+
 async function loadClinicalData(names = TAB_NAMES) {
   const data = await readTabs(names);
   // These columns were introduced after the original Sheet was provisioned.
   // Add only the missing headers on first authenticated access so a production
   // deployment can self-heal an older isolated Sheet without exporting secrets
   // or requiring a manual CLI migration step.
-  if (data.nudges) await ensureHeaders("nudges", data.nudges, ["media_selection_mode", "media_override_asset_id", "media_asset_id", "adaptation_decision_id"]);
-  if (data.weekly_schedule) await ensureHeaders("weekly_schedule", data.weekly_schedule, ["media_selection_mode", "media_override_asset_id", "media_asset_id", "adaptation_decision_id"]);
+  if (data.prescriptions) await ensureHeaders("prescriptions", data.prescriptions, PRESCRIPTION_TRANSLATION_FIELDS);
+  if (data.nudges) await ensureHeaders("nudges", data.nudges, ["media_selection_mode", "media_override_asset_id", "media_asset_id", "adaptation_decision_id"].concat(TRANSLATION_FIELDS));
+  if (data.weekly_schedule) await ensureHeaders("weekly_schedule", data.weekly_schedule, ["media_selection_mode", "media_override_asset_id", "media_asset_id", "adaptation_decision_id"].concat(APPROVAL_FIELDS));
   if (data.schedule_state) await ensureHeaders("schedule_state", data.schedule_state,
     ["read_at", "interacted_at", "last_inbound_message_sid", "delivery_attempt_id", "submission_started_at"]);
   if (data.interaction_events) await ensureHeaders("interaction_events", data.interaction_events, INTERACTION_EVENT_HEADERS);
@@ -169,5 +176,5 @@ async function updateUser(userId, changes) {
 module.exports = {
   loadClinicalData, buildPatients, allPatients, updateUser, isArchivedPrescription,
   batchWrite, operation, DELIVERY_EVENT_HEADERS, INTERACTION_EVENT_HEADERS, MEDIA_ASSIGNMENT_HEADERS, ADAPTATION_DECISION_HEADERS,
-  PATIENT_ADAPTATION_STATE_HEADERS, PATIENT_ADAPTATION_TIMELINE_HEADERS
+  PATIENT_ADAPTATION_STATE_HEADERS, PATIENT_ADAPTATION_TIMELINE_HEADERS, TRANSLATION_FIELDS, PRESCRIPTION_TRANSLATION_FIELDS, APPROVAL_FIELDS
 };

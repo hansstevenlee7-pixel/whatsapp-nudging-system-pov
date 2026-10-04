@@ -21,7 +21,7 @@ module.exports = async function handler(req, res) {
       throw httpError(409, "Reactivate this patient before approving a schedule");
     }
     if (body.decision !== "reject") await validateMediaSelections(body.user_id, body.slots, data.prescriptions.rows);
-    const result = await saveSchedule(body, body.decision === "reject" ? "reject" : "approve", data);
+    const result = await saveSchedule(body, body.decision === "reject" ? "reject" : "approve", data, new Date(), { approved_by: profile.auth_user_id });
     if (body.decision !== "reject") {
       await recordClinicianChanges(body.user_id, patient.weekly_schedule || [], result.weekly_schedule || []);
       await queuePatientBehaviours(body.user_id, result.weekly_schedule, data.prescriptions.rows).catch(error => console.error("media search queue failed", error));
