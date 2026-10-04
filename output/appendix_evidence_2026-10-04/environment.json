@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-03T15:11:27.675Z",
-  "git_commit": "42935b3f4982bc105472115bf5d12ad144450b09",
+  "generated_at": "2026-10-04T09:16:52.463Z",
+  "git_commit": "b3855cda8adf1d6724d81c85916c6ff68417773b",
   "git_last_commit_date": "2026-10-04",
   "git_changed_or_untracked_entries": 1,
   "node": "v24.13.1",
@@ -46,6 +46,18 @@
       "files": 106,
       "bytes": 5982338
     },
+    "output/adaptation_benchmark_2026-10-04_provenance": {
+      "files": 105,
+      "bytes": 6092167
+    },
+    "output/adaptation_benchmark_2026-10-04_reservefix": {
+      "files": 109,
+      "bytes": 6010896
+    },
+    "output/adaptation_benchmark_2026-10-04_translationfix": {
+      "files": 105,
+      "bytes": 5981871
+    },
     "output/appendix_screenshots_2026-10-04": {
       "files": 13,
       "bytes": 1187385
@@ -62,6 +74,10 @@
       "files": 136,
       "bytes": 5551612
     },
+    "output/frozen_model_calibration_2026-10-04": {
+      "files": 6,
+      "bytes": 208228
+    },
     "output/patient_schema_synthetic_v3_2026-09-30": {
       "files": 9,
       "bytes": 22769922
@@ -73,6 +89,26 @@
     "output/thesis": {
       "files": 93,
       "bytes": 1050235
+    },
+    "output/translation_fidelity_live_2026-10-04": {
+      "files": 15,
+      "bytes": 1969479
+    },
+    "output/translation_fidelity_live_2026-10-04_completion": {
+      "files": 4,
+      "bytes": 92705
+    },
+    "output/translation_trace_2026-10-04": {
+      "files": 11,
+      "bytes": 956512
+    },
+    "output/translation_trace_2026-10-04_iteration1": {
+      "files": 15,
+      "bytes": 1093703
+    },
+    "output/translation_trace_2026-10-04_iteration2": {
+      "files": 13,
+      "bytes": 1131330
     }
   },
   "code_summary": [
@@ -87,7 +123,7 @@
     {
       "group": "Server API handlers and libraries",
       "files": 38,
-      "lines": 3966,
+      "lines": 4043,
       "committed_unchanged": 38,
       "committed_modified": 0,
       "not_committed": 0
@@ -102,9 +138,9 @@
     },
     {
       "group": "Automated tests and fixtures",
-      "files": 36,
-      "lines": 3742,
-      "committed_unchanged": 36,
+      "files": 39,
+      "lines": 4111,
+      "committed_unchanged": 39,
       "committed_modified": 0,
       "not_committed": 0
     },
@@ -126,24 +162,24 @@
     },
     {
       "group": "Evaluation, simulation and evidence scripts",
-      "files": 38,
-      "lines": 4537,
-      "committed_unchanged": 38,
+      "files": 46,
+      "lines": 5888,
+      "committed_unchanged": 46,
       "committed_modified": 0,
       "not_committed": 0
     },
     {
       "group": "Protocols and method notes for scripts",
-      "files": 6,
-      "lines": 343,
-      "committed_unchanged": 6,
+      "files": 9,
+      "lines": 567,
+      "committed_unchanged": 9,
       "committed_modified": 0,
       "not_committed": 0
     }
   ],
   "tests": {
-    "files": 35,
-    "passed": 226,
+    "files": 38,
+    "passed": 241,
     "failed": 0
   }
 }
