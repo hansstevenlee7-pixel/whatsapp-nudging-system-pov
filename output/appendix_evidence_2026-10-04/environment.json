@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-04T09:16:52.463Z",
-  "git_commit": "b3855cda8adf1d6724d81c85916c6ff68417773b",
+  "generated_at": "2026-10-04T12:11:02.049Z",
+  "git_commit": "3ae184a925788cc6f91896b5378ac40207f2b271",
   "git_last_commit_date": "2026-10-04",
   "git_changed_or_untracked_entries": 1,
   "node": "v24.13.1",
@@ -98,6 +98,10 @@
       "files": 4,
       "bytes": 92705
     },
+    "output/translation_fidelity_live_2026-10-04_completion2": {
+      "files": 5,
+      "bytes": 186108
+    },
     "output/translation_trace_2026-10-04": {
       "files": 11,
       "bytes": 956512
@@ -163,16 +167,16 @@
     {
       "group": "Evaluation, simulation and evidence scripts",
       "files": 46,
-      "lines": 5888,
+      "lines": 5906,
       "committed_unchanged": 46,
       "committed_modified": 0,
       "not_committed": 0
     },
     {
       "group": "Protocols and method notes for scripts",
-      "files": 9,
-      "lines": 567,
-      "committed_unchanged": 9,
+      "files": 10,
+      "lines": 593,
+      "committed_unchanged": 10,
       "committed_modified": 0,
       "not_committed": 0
     }

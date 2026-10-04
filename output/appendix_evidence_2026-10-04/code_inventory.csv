@@ -140,7 +140,7 @@ Database migrations,supabase/migrations/006_bounded_schedule_apply.sql,11,commit
 "Evaluation, simulation and evidence scripts",scripts/translation-trace/cases.js,102,committed_unchanged
 "Evaluation, simulation and evidence scripts",scripts/translation-trace/fidelity-cases.js,39,committed_unchanged
 "Evaluation, simulation and evidence scripts",scripts/translation-trace/links.js,148,committed_unchanged
-"Evaluation, simulation and evidence scripts",scripts/translation-trace/live-fidelity.js,239,committed_unchanged
+"Evaluation, simulation and evidence scripts",scripts/translation-trace/live-fidelity.js,257,committed_unchanged
 "Evaluation, simulation and evidence scripts",scripts/translation-trace/n8n-runtime.js,186,committed_unchanged
 "Evaluation, simulation and evidence scripts",scripts/translation-trace/run.js,416,committed_unchanged
 Protocols and method notes for scripts,scripts/adaptability-scenarios/PROTOCOL.md,90,committed_unchanged
@@ -150,5 +150,6 @@ Protocols and method notes for scripts,scripts/frequency-comparison/README.md,99
 Protocols and method notes for scripts,scripts/patient-schema-synthetic/README.md,12,committed_unchanged
 Protocols and method notes for scripts,scripts/taxonomy-frequency/README.md,89,committed_unchanged
 Protocols and method notes for scripts,scripts/translation-trace/FIDELITY_AMENDMENT_1.md,26,committed_unchanged
+Protocols and method notes for scripts,scripts/translation-trace/FIDELITY_AMENDMENT_2.md,26,committed_unchanged
 Protocols and method notes for scripts,scripts/translation-trace/FIDELITY_PROTOCOL.md,62,committed_unchanged
 Protocols and method notes for scripts,scripts/translation-trace/PROTOCOL.md,136,committed_unchanged
