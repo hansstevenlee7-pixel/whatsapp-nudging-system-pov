@@ -51,3 +51,26 @@ Run with Hans's clinician session; he signed in himself. The patient is syntheti
 **Not yet verified in production:** translation provenance.
 
 **Safety.** No schedule was approved, so the second synthetic patient has no deliverable occurrence, whichever workbook holds its draft rows.
+
+## Correction after reading the n8n executions (5 October 2026)
+
+Hans signed in to n8n (`n8n-production-db630.up.railway.app`); the executions were read only.
+
+**Workflow A runs.**
+
+| Run | Started (AEDT) | Duration | Outcome |
+|---|---|---|---|
+| 40713 | 00:15:04 | 269 ms | **Error** in *Call Gemini Vision*: "The service is receiving too many requests from you" (Gemini rate limit) |
+| 40704 | 00:05:08 | 1.264 s | **Error**; its details would not load, but the duration fits the same early failure |
+| 40710 | 00:11:50 | 44 ms | Success: the unauthenticated probe answered 401 |
+
+Runs 40713 and 40704 match intake checks 3 and 2.
+
+**Corrected interpretation.** The spreadsheet-mismatch explanation given above was wrong. Intake checks 2 and 3 never reached the Sheets nodes: Workflow A failed at the Gemini call, so the new patients were never written anywhere.
+
+**Two findings.**
+
+1. **Silent intake failure (defect).** The portal reported success for both failed intakes: the form redirected as if the patient existed. A failed n8n execution must not reach the clinician as a created patient.
+2. **Quota.** The production Gemini key was rate-limited. The free tier allows 20 requests per day per project per model, and the live-fidelity runs of 4 October very likely used the same project's quota (first key in `n8n.env`). This is an evaluation side effect on the deployed system, reported here.
+
+**Translation provenance in production remains unverified.** Check again after the quota resets, or with another key.
