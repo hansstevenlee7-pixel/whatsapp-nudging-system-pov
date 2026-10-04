@@ -35,3 +35,19 @@ Run with Hans's clinician session; he signed in himself. The patient is syntheti
    - no older Workflow A is also active on `/webhook/intake`.
 2. Prescription correction and archiving exist in the API but not in the clinician UI.
 3. The test rows stay in the shared Sheet, labelled as synthetic and archived.
+
+## Re-run of the intake check after Hans re-imported Workflow A (5 October 2026)
+
+**Procedure.** Hans imported `workflows/workflow_a_intake.json` (SHA-256 `7e8a2385…`), attached the Sheets credential and activated it. A second synthetic patient was submitted through the portal intake form: "Synthetic provenance check 2", ACMA fictitious mobile +61491570156, `user_id` `5d190e28-090c-4083-b05a-6909bc8a8378`. No plan was approved.
+
+**Observed.**
+
+- `POST /api/intake` returned success: the form redirected to the Monitor, which it does only on a 2xx response. So the workflow reached *Respond Success* after its five Sheets appends.
+- The patient and its rows are **not** in the workbook the portal reads: `/api/patients` returns two patients, neither of them this one.
+- The local `n8n.env` sets `GOOGLE_SHEETS_SPREADSHEET_ID` to the shared legacy workbook named in `CLAUDE.md`. The workflow's Sheets nodes write to `$env.GOOGLE_SHEETS_SPREADSHEET_ID`.
+
+**Interpretation.** The re-imported Workflow A most likely writes to a different spreadsheet from the one the deployed portal reads. That points to a Railway-versus-Vercel `GOOGLE_SHEETS_SPREADSHEET_ID` mismatch, or a spreadsheet the old workflow had set directly in its nodes. This is the resource-isolation risk Part 2 already names. It cannot be confirmed from here: Railway variables and n8n executions are not visible to this check.
+
+**Not yet verified in production:** translation provenance.
+
+**Safety.** No schedule was approved, so the second synthetic patient has no deliverable occurrence, whichever workbook holds its draft rows.
