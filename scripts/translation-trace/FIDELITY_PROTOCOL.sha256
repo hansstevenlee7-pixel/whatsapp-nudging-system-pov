@@ -3,3 +3,5 @@ d81c0960e8cc265a554a0d40fe25a78889e0d5e32caedf5337ccfb3cb4e45c77  fidelity-cases
 2026-10-04T09:02:59Z hashed before the fidelity runner was written and before any live call
 2be870a0d1aa5af18ab1f3c4eb5c2352ec7799a76e1e83a3fe52fe6ea5c764f2  FIDELITY_AMENDMENT_1.md
 2026-10-04T09:09:50Z amendment hashed before the completion runner change and before any further live call
+58867ae815b254d55a8c2ce7696792e86714a637418e8676e9b2fbc99c29ae9a  FIDELITY_AMENDMENT_2.md
+2026-10-04T09:21:27Z amendment 2 hashed before the runner change and before any call with the second key

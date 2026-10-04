@@ -18,8 +18,24 @@ const OUT = path.resolve(ROOT, process.argv[2] || "output/translation_fidelity_l
 const DRY = process.argv.includes("--dry-run");
 // FIDELITY_AMENDMENT_1.md: --complete <first-run dir> re-makes only the calls that got no response,
 // at least 13 s apart, capped at the number missing, with zero retries.
-const COMPLETE = process.argv.includes("--complete") ? path.resolve(ROOT, process.argv[process.argv.indexOf("--complete") + 1]) : null;
-const PRIOR = COMPLETE ? JSON.parse(fs.readFileSync(path.join(COMPLETE, "results.json"), "utf8")) : null;
+// FIDELITY_AMENDMENT_2.md: --complete takes a comma-separated list of earlier runs, merged in order
+// (the earliest response per call wins), and --key-line N picks the Nth GEMINI_API_KEY line of n8n.env.
+const COMPLETE = process.argv.includes("--complete") ? process.argv[process.argv.indexOf("--complete") + 1].split(",").map(d => path.resolve(ROOT, d)) : null;
+const KEY_LINE = process.argv.includes("--key-line") ? Number(process.argv[process.argv.indexOf("--key-line") + 1]) : 1;
+function mergePriors(dirs) {
+  const runs = dirs.map(dir => ({ dir: path.relative(ROOT, dir), results: JSON.parse(fs.readFileSync(path.join(dir, "results.json"), "utf8")) }));
+  const byId = new Map();
+  for (const run of runs) {
+    for (const call of run.results.calls) {
+      const held = byId.get(call.id);
+      if (!held || held.status !== 200) byId.set(call.id, Object.assign({}, call, { source: run.dir }));
+    }
+  }
+  const chains = new Map();
+  for (const run of runs) for (const ch of run.results.chains) { const held = chains.get(ch.case); if (!held || !held.ran) chains.set(ch.case, ch); }
+  return { calls: [...byId.values()], chains: [...chains.values()], dirs: runs.map(r => r.dir) };
+}
+const PRIOR = COMPLETE ? mergePriors(COMPLETE) : null;
 const MISSING = PRIOR ? PRIOR.calls.filter(r => r.status !== 200).map(r => r.id) : null;
 const harness = require("./run");
 const fidelity = require("./fidelity-cases");
@@ -33,7 +49,7 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const tidy = v => String(v == null ? "" : v).trim().toLowerCase().replace(/[\s-]+/g, "_");
 
 function geminiKey() {
-  const line = fs.readFileSync(path.join(ROOT, "n8n.env"), "utf8").split(/\r?\n/).find(l => l.startsWith("GEMINI_API_KEY="));
+  const line = fs.readFileSync(path.join(ROOT, "n8n.env"), "utf8").split(/\r?\n/).filter(l => l.startsWith("GEMINI_API_KEY="))[KEY_LINE - 1];
   const key = line ? line.slice("GEMINI_API_KEY=".length).trim().replace(/^["']|["']$/g, "") : "";
   if (!key) throw new Error("GEMINI_API_KEY is not set in n8n.env");
   return key;
@@ -131,7 +147,8 @@ async function main() {
   }
   // M10: the full chain on the first accepted real output of each text (no new call).
   // In completion mode, only for texts that had no chain in the first run.
-  const combined = PRIOR ? PRIOR.calls.map(r => r.status === 200 ? r : (calls.find(n => n.id === r.id) || r)) : calls;
+  const fresh = id => calls.find(n => n.id === id);
+  const combined = PRIOR ? PRIOR.calls.map(r => r.status === 200 || !fresh(r.id) ? r : Object.assign({}, fresh(r.id), { source: path.relative(ROOT, OUT) })) : calls;
   const chains = [];
   for (const c of FIDELITY_CASES) {
     if (PRIOR && (PRIOR.chains.find(ch => ch.case === c.id) || {}).ran) continue;
@@ -146,20 +163,21 @@ async function main() {
   }
   harness.restoreDate();
   const summary = summarise(calls, chains);
-  const results = { protocol: "translation-fidelity-v1", amendment: PRIOR ? "FIDELITY_AMENDMENT_1.md" : null, first_run: PRIOR ? path.relative(ROOT, COMPLETE) : null,
+  const results = { protocol: "translation-fidelity-v1", amendment: PRIOR ? (PRIOR.dirs.length > 1 ? "FIDELITY_AMENDMENT_2.md" : "FIDELITY_AMENDMENT_1.md") : null,
+    first_run: PRIOR ? PRIOR.dirs.join(", ") : null, key_line: KEY_LINE,
     dry_run: DRY, attempts, summary, calls, chains, refused_outbound: harness.refused };
   if (PRIOR) {
     const allChains = PRIOR.chains.map(ch => ch.ran ? ch : (chains.find(n => n.case === ch.case) || ch));
-    results.combined = { note: "first-run response where one exists, otherwise the completion run's (FIDELITY_AMENDMENT_1.md)",
-      summary: summarise(combined, allChains), calls: combined.map(r => ({ id: r.id, status: r.status, from: r.status === 200 && PRIOR.calls.includes(r) ? "first_run" : "completion",
+    results.combined = { note: "earliest response per call across " + PRIOR.dirs.concat([path.relative(ROOT, OUT)]).join(", "),
+      summary: summarise(combined, allChains), calls: combined.map(r => ({ id: r.id, status: r.status, from: r.source || path.relative(ROOT, OUT),
         accepted: r.accepted, matches: r.score ? r.score.matches : null, rules: r.score ? r.score.rules : null })), chains: allChains };
   }
   const text = `${JSON.stringify(results, null, 2)}\n`;
   if (KEY && text.includes(KEY)) throw new Error("refusing to write: key found in results");
   fs.writeFileSync(path.join(OUT, "results.json"), text);
-  const files = ["FIDELITY_PROTOCOL.md", "FIDELITY_AMENDMENT_1.md", "fidelity-cases.js", "live-fidelity.js", "run.js", "n8n-runtime.js", "links.js"].map(f => `scripts/translation-trace/${f}`)
+  const files = ["FIDELITY_PROTOCOL.md", "FIDELITY_AMENDMENT_1.md", "FIDELITY_AMENDMENT_2.md", "fidelity-cases.js", "live-fidelity.js", "run.js", "n8n-runtime.js", "links.js"].map(f => `scripts/translation-trace/${f}`)
     .concat(["workflows/workflow_a_intake.json"]);
-  fs.writeFileSync(path.join(OUT, "manifest.json"), `${JSON.stringify({ created_at: new Date().toISOString(), dry_run: DRY, node: process.version,
+  fs.writeFileSync(path.join(OUT, "manifest.json"), `${JSON.stringify({ created_at: new Date().toISOString(), dry_run: DRY, key_line: KEY_LINE, node: process.version,
     git_commit: require("node:child_process").execFileSync("git", ["rev-parse", "HEAD"], { cwd: ROOT, encoding: "utf8" }).trim(),
     working_tree: "dirty; source_sha256 identifies the exact files run", attempts, attempt_cap: ATTEMPT_CAP, min_interval_ms: MIN_INTERVAL_MS,
     model_versions: [...new Set(calls.map(r => r.response && r.response.modelVersion).filter(Boolean))],
@@ -221,7 +239,7 @@ function writeReport(results) {
   }
   if (results.combined) {
     const c = results.combined.summary;
-    lines.push("", "## Combined with the first run (FIDELITY_AMENDMENT_1.md)", "", results.combined.note, "", "| Measure | Combined |", "|---|---|",
+    lines.push("", `## Combined (${results.amendment})`, "", results.combined.note, "", "| Measure | Combined |", "|---|---|",
       `| M1 HTTP 200 with a candidate | ${pct(c.http_ok, c.calls)} |`, `| M2 Accepted | ${pct(c.accepted, c.calls)}; refused ${c.refused}; rows written on refusal ${c.rows_written_on_refusal} |`,
       `| M3 Count | ${pct(c.count_matches, c.scored_calls)} |`, `| M4 Pillar | ${pct(c.pillar, c.gold_prescriptions)} |`,
       `| M5 Category exact / with alternatives | ${pct(c.category_exact, c.gold_prescriptions)} / ${pct(c.category_accepted, c.gold_prescriptions)} |`,

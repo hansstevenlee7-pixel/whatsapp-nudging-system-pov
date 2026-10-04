@@ -1,0 +1,26 @@
+{
+  "created_at": "2026-10-04T12:04:31.439Z",
+  "dry_run": false,
+  "key_line": 2,
+  "node": "v24.13.1",
+  "git_commit": "a96342d67ce537f479fef3b18e823b33a1f17b8c",
+  "working_tree": "dirty; source_sha256 identifies the exact files run",
+  "attempts": 12,
+  "attempt_cap": 12,
+  "min_interval_ms": 13000,
+  "model_versions": [
+    "gemini-2.5-flash"
+  ],
+  "source_sha256": {
+    "scripts/translation-trace/FIDELITY_PROTOCOL.md": "2b89e8413ea093e0ef2f251c2a52e9ac863dcad0bc3e106cd431493050266e85",
+    "scripts/translation-trace/FIDELITY_AMENDMENT_1.md": "2be870a0d1aa5af18ab1f3c4eb5c2352ec7799a76e1e83a3fe52fe6ea5c764f2",
+    "scripts/translation-trace/FIDELITY_AMENDMENT_2.md": "58867ae815b254d55a8c2ce7696792e86714a637418e8676e9b2fbc99c29ae9a",
+    "scripts/translation-trace/fidelity-cases.js": "d81c0960e8cc265a554a0d40fe25a78889e0d5e32caedf5337ccfb3cb4e45c77",
+    "scripts/translation-trace/live-fidelity.js": "6fe4dc5e74ba3102dbfc38c8961973f2ea95322eb95db62fdc2fb0c17dd080f4",
+    "scripts/translation-trace/run.js": "3a9aeedc5bc19952359d115ee2c6daf7fa0c311d18347807209035b68ee1a7d0",
+    "scripts/translation-trace/n8n-runtime.js": "d11e34ac004fbfadc613167ee06a14a0d2231e0d942ca6b01011c4004097f7de",
+    "scripts/translation-trace/links.js": "4d868ee2d5322ee1611510223790a4bcc0fa426fa98b942a1cd613b976daf393",
+    "workflows/workflow_a_intake.json": "7e8a23857c4853561c55eae58e50619bd3f0f38bc99bde2457d1908ef6a0fc50"
+  },
+  "results_sha256": "9153b6943fa768160ac1d8f92eb31c3cf30e75e5075ea122797d9514a6e3ad63"
+}
