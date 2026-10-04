@@ -74,3 +74,24 @@ Runs 40713 and 40704 match intake checks 3 and 2.
 2. **Quota.** The production Gemini key was rate-limited. The free tier allows 20 requests per day per project per model, and the live-fidelity runs of 4 October very likely used the same project's quota (first key in `n8n.env`). This is an evaluation side effect on the deployed system, reported here.
 
 **Translation provenance in production remains unverified.** Check again after the quota resets, or with another key.
+
+## Fix for the silent intake failure (5 October 2026, repository only, not yet deployed)
+
+**Cause.** `landing/api/intake.js` passed on whatever n8n answered whenever the HTTP status was 2xx. When Workflow A stopped before any Respond node, the portal got a 2xx with no confirmation. The intake page then redirected using the `user_id` it had generated itself (`out.user_id || payload.user.user_id`), so a patient that was never written looked created.
+
+**Change.**
+
+- `landing/api/intake.js`: an intake succeeds only when Workflow A's *Respond Success* returns `status: "ok"` with the submitted `user_id`. Any other answer becomes HTTP 502 `intake_not_confirmed`, with a message telling the clinician to check the Monitor before resubmitting. This covers an empty 2xx, a missing status, another patient's id, n8n errors, an inactive webhook and a proxy-secret mismatch. A mismatch is no longer passed on as 401, which would have made the browser refresh its session and submit again. *Respond Rejected* (422, before any Sheets write) becomes `intake_rejected`, "nothing was saved".
+- `landing/input.html`: redirects only on `status: "ok"` naming the submitted patient; the fallback to the browser-generated id is removed.
+- `landing/tests/intake-api.test.js`: 10 tests. Against the previous code, 9 fail; the success case passes either way. Full suite: 251/251 pass.
+
+**Deployment.** Hans deployed from `landing/` at about 00:58 AEDT on 5 October: deployment `whatsapp-nudging-system-b688o0kzt-stevenleehans-projects.vercel.app`, aliased to `whatsapp-nudging-system-pov.vercel.app`.
+
+Checked read-only at 00:59:
+- the production `input.html` is byte-identical to the repository file (SHA-256 `6ad6ccdf…`);
+- it carries the confirmation check and no longer has the fallback;
+- `POST /api/intake` without a session answers 401.
+
+The server-side behaviour on an unconfirmed intake is verified only by the tests so far. The scheduled re-test checks it in production.
+
+**Spreadsheet setting.** On 5 October Hans confirmed that Railway's `GOOGLE_SHEETS_SPREADSHEET_ID` equals Vercel's. Workflow A and the portal therefore use the same workbook. He had changed the setting earlier, following the wrong diagnosis above.

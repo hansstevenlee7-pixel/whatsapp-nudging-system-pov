@@ -543,8 +543,10 @@
       submitStatus.className = "submit-status";
       try {
         var out = await Auth.api("/api/intake", { method: "POST", body: JSON.stringify(payload) });
-        var uid = out.user_id || payload.user.user_id;
-        window.location.href = "monitor.html?user_id=" + encodeURIComponent(uid);
+        if (!out || out.status !== "ok" || out.user_id !== payload.user.user_id) {
+          throw new Error("the intake workflow did not confirm that the patient was created. Check the Monitor before submitting again.");
+        }
+        window.location.href = "monitor.html?user_id=" + encodeURIComponent(out.user_id);
       } catch (err) {
         if (err.status === 409 && err.body && err.body.code === "duplicate_phone") {
           submitStatus.textContent = "No new patient was created.";
