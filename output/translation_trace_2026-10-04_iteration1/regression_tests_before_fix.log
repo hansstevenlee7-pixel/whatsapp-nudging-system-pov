@@ -1,0 +1,97 @@
+✔ intake rejects an invalid pillar or category but accepts any sensible action wording (1.878416ms)
+✔ intake rejects a blank or oversized action and stops writing target_behavior (0.187167ms)
+✖ intake rejects a draft that names no prescription when more than one exists, and a prescription with no draft (0.239791ms)
+✔ saving rejects a blank or oversized action and an out-of-enum taxonomy (17.53425ms)
+✔ a legacy plan with no action can still be rejected (0.5525ms)
+✔ two slots under one prescription keep different actions (1.329916ms)
+✔ one prescription persists behaviours in two different pillars (1.078375ms)
+✔ a slot that names no category inherits its prescription's (0.56ms)
+✔ a dated delivery carries its slot's pillar and category, not its prescription's (0.908916ms)
+✔ save, materialization and reload preserve the action byte for byte (0.806666ms)
+✔ editing a future slot leaves an already-sent delivery and its action untouched (1.094083ms)
+✔ a custom nudge cannot borrow a source row from another prescription (0.656834ms)
+✔ the monitoring screen removes nudge and prescription creation (0.126708ms)
+✔ the monitor opens on the current Monday-to-Sunday week (0.033875ms)
+✔ a doctor's own wording survives save, reload and re-edit (0.606958ms)
+✔ the weekly editor exposes no add or remove entry point (0.109292ms)
+✔ clinicians can drag approved uploads onto an existing nudge (0.046042ms)
+✔ the monitor exposes a clinician-controlled media population action (0.038834ms)
+✔ the monitor can add a resource manually without waiting for Gemini (0.04075ms)
+✔ the weekly editor supports automatic, text-only and clinician-selected media (0.052042ms)
+✔ the monitor hides clinical filing while preserving it in the save payload (0.156667ms)
+✔ the monitor exposes the patient adaptation summary and time-ordered drill-down (0.046916ms)
+✔ legacy rows read as readable action text without losing their schedule (0.069791ms)
+✔ the migration seed converts a retired action token and keeps the recurring slot (0.21025ms)
+✔ taxonomy queries use only the behaviour triple and are stable (0.7055ms)
+✔ candidate ranking is deterministic and trusted open access sources win (0.487792ms)
+✔ paper summaries enforce source and word limits (0.261041ms)
+✔ explicit format requests apply within an approved envelope (1.038625ms)
+✔ time and frequency changes outside the envelope are not applied (0.226333ms)
+✔ negated frequency wording requests no frequency change (0.542458ms)
+✔ silence rotates least recently used media and never changes frequency (0.109459ms)
+✔ rotation remains least-recently-used after every approved resource has appeared (0.082666ms)
+✔ a link visit raises that format score while a read state does not (0.102416ms)
+✖ a first frequency request steps from the approved plan, not the envelope minimum (0.549417ms)
+✖ an ordinary reply is not acknowledged as a request (8.534709ms)
+✔ an applied explicit request is acknowledged once (0.953583ms)
+ℹ tests 36
+ℹ suites 0
+ℹ pass 33
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 105.700417
+
+✖ failing tests:
+
+test at tests/action-taxonomy.test.js:124:1
+✖ intake rejects a draft that names no prescription when more than one exists, and a prescription with no draft (0.239791ms)
+  TypeError: Cannot read properties of undefined (reading 'join')
+      at TestContext.<anonymous> (~/Documents/Documents - Hans’s MacBook Pro/Uni - Masters - Monash University/Research/Whatsapp Nudging System - System POV/landing/tests/action-taxonomy.test.js:131:45)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1103:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:785:18)
+      at Test.postRun (node:internal/test_runner/test:1232:19)
+      at Test.run (node:internal/test_runner/test:1160:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:785:7)
+
+test at tests/adaptive-core.test.js:97:1
+✖ a first frequency request steps from the approved plan, not the envelope minimum (0.549417ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'outside_envelope'
+  - 'applied'
+  
+      at TestContext.<anonymous> (~/Documents/Documents - Hans’s MacBook Pro/Uni - Masters - Monash University/Research/Whatsapp Nudging System - System POV/landing/tests/adaptive-core.test.js:101:10)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1103:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:785:18)
+      at Test.postRun (node:internal/test_runner/test:1232:19)
+      at Test.run (node:internal/test_runner/test:1160:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:785:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'outside_envelope',
+    expected: 'applied',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/reply-acknowledgement.test.js:49:1
+✖ an ordinary reply is not acknowledged as a request (8.534709ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (~/Documents/Documents - Hans’s MacBook Pro/Uni - Masters - Monash University/Research/Whatsapp Nudging System - System POV/landing/tests/reply-acknowledgement.test.js:54:10)
+      at async Test.run (node:internal/test_runner/test:1110:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

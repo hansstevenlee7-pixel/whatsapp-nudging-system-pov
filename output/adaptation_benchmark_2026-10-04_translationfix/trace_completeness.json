@@ -1,0 +1,98 @@
+{
+  "source": "adaptation_benchmark_2026-10-04_translationfix",
+  "measure": "derived from existing first-run traces; descriptive, not pre-registered",
+  "link_definitions": {
+    "reply_to_interaction": "Inbound reply stored as an interaction event with its interaction_id and source nudge_id",
+    "interaction_to_decision": "Interaction decision persisted with a decision_id that carries the same interaction_id",
+    "decision_to_envelope": "Decision behaviour_key resolves to an approved envelope carrying the taxonomy triple",
+    "policy_to_audit": "Model recommendation and policy outcome persisted as separate rows sharing the evaluation_key",
+    "schedule_change_to_decision": "Changed recurring schedule rows name the persisted applied policy decision that changed them",
+    "next_message_to_decision": "Prepared next message names a persisted adaptation decision",
+    "next_message_to_prescription": "Prepared next message resolves to an active prescription",
+    "tracked_link_to_next_message": "Tracked media link names the prepared next message"
+  },
+  "arms": {
+    "fixed": {
+      "steps": 25,
+      "complete_steps": 25,
+      "links": {
+        "reply_to_interaction": {
+          "applicable": 23,
+          "present": 23,
+          "missing_cases": []
+        },
+        "interaction_to_decision": {
+          "applicable": 23,
+          "present": 23,
+          "missing_cases": []
+        },
+        "decision_to_envelope": {
+          "applicable": 23,
+          "present": 23,
+          "missing_cases": []
+        },
+        "next_message_to_decision": {
+          "applicable": 24,
+          "present": 24,
+          "missing_cases": []
+        },
+        "next_message_to_prescription": {
+          "applicable": 24,
+          "present": 24,
+          "missing_cases": []
+        },
+        "tracked_link_to_next_message": {
+          "applicable": 24,
+          "present": 24,
+          "missing_cases": []
+        }
+      }
+    },
+    "rules": {
+      "steps": 25,
+      "complete_steps": 25,
+      "links": {
+        "reply_to_interaction": {
+          "applicable": 23,
+          "present": 23,
+          "missing_cases": []
+        },
+        "interaction_to_decision": {
+          "applicable": 23,
+          "present": 23,
+          "missing_cases": []
+        },
+        "decision_to_envelope": {
+          "applicable": 23,
+          "present": 23,
+          "missing_cases": []
+        },
+        "policy_to_audit": {
+          "applicable": 23,
+          "present": 23,
+          "missing_cases": []
+        },
+        "next_message_to_decision": {
+          "applicable": 24,
+          "present": 24,
+          "missing_cases": []
+        },
+        "next_message_to_prescription": {
+          "applicable": 24,
+          "present": 24,
+          "missing_cases": []
+        },
+        "tracked_link_to_next_message": {
+          "applicable": 24,
+          "present": 24,
+          "missing_cases": []
+        },
+        "schedule_change_to_decision": {
+          "applicable": 4,
+          "present": 4,
+          "missing_cases": []
+        }
+      }
+    }
+  }
+}

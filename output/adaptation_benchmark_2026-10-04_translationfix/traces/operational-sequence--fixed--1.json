@@ -1,0 +1,4095 @@
+{
+  "case_id": "operational-sequence",
+  "category": "operational",
+  "arm": "fixed",
+  "initial": {
+    "sheets": {
+      "user": {
+        "headers": [
+          "user_id",
+          "name",
+          "phone",
+          "email",
+          "user_status",
+          "doctor_id"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "user_id": "synthetic-1",
+            "name": "Synthetic Benchmark",
+            "phone": "+61400000000",
+            "user_status": "active",
+            "doctor_id": "doc-test"
+          }
+        ]
+      },
+      "questionnaire": {
+        "headers": [
+          "questionnaire_id",
+          "user_id",
+          "preferred_nudge_time",
+          "opt_in_whatsapp"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "questionnaire_id": "q1",
+            "user_id": "synthetic-1",
+            "opt_in_whatsapp": true
+          }
+        ]
+      },
+      "prescriptions": {
+        "headers": [
+          "prescription_id",
+          "user_id",
+          "doctor_id",
+          "issued_date",
+          "pillar",
+          "category",
+          "target_behavior",
+          "frequency_per_week",
+          "duration_weeks",
+          "prescription_raw_text",
+          "status"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "prescription_id": "rx-1",
+            "user_id": "synthetic-1",
+            "doctor_id": "doc-test",
+            "action_text": "Be in bed by 10pm",
+            "pillar": "sleep",
+            "category": "establish",
+            "frequency_per_week": 2,
+            "status": "active"
+          }
+        ]
+      },
+      "nudges": {
+        "headers": [
+          "nudge_id",
+          "prescription_id",
+          "user_id",
+          "nudge_type",
+          "pillar",
+          "action_text",
+          "scheduled_date",
+          "scheduled_time",
+          "message_body",
+          "message_body_alt",
+          "tone_variant",
+          "template_name",
+          "status",
+          "sent_at",
+          "reviewed_at",
+          "week_number",
+          "schedule_slot_id",
+          "category",
+          "media_selection_mode",
+          "media_override_asset_id",
+          "media_asset_id",
+          "adaptation_decision_id"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "action_text": "Be in bed by 10pm",
+            "pillar": "sleep",
+            "category": "establish",
+            "user_id": "synthetic-1",
+            "prescription_id": "rx-1",
+            "nudge_type": "reminder",
+            "message_body": "Prepare for sleep.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "scheduled_time": "09:00",
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "nudge_id": "history",
+            "scheduled_date": "2026-09-28",
+            "status": "sent",
+            "sent_at": "2026-09-28T00:00:00.000Z",
+            "media_asset_id": "asset-paper"
+          },
+          {
+            "row_number": 3,
+            "action_text": "Be in bed by 10pm",
+            "pillar": "sleep",
+            "category": "establish",
+            "user_id": "synthetic-1",
+            "prescription_id": "rx-1",
+            "nudge_type": "reminder",
+            "message_body": "Prepare for sleep.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "scheduled_time": "09:00",
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "schedule_slot_id": "slot-0",
+            "source_nudge_id": "history",
+            "day": "monday",
+            "status": "approved",
+            "start_date": "2026-10-05",
+            "end_date": "2026-10-18",
+            "nudge_id": "schd_slot-0_20261005",
+            "scheduled_date": "2026-10-05",
+            "sent_at": ""
+          },
+          {
+            "row_number": 4,
+            "action_text": "Be in bed by 10pm",
+            "pillar": "sleep",
+            "category": "establish",
+            "user_id": "synthetic-1",
+            "prescription_id": "rx-1",
+            "nudge_type": "reminder",
+            "message_body": "Prepare for sleep.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "scheduled_time": "09:00",
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "schedule_slot_id": "slot-1",
+            "source_nudge_id": "history",
+            "day": "thursday",
+            "status": "approved",
+            "start_date": "2026-10-05",
+            "end_date": "2026-10-18",
+            "nudge_id": "schd_slot-1_20261008",
+            "scheduled_date": "2026-10-08",
+            "sent_at": ""
+          }
+        ]
+      },
+      "weekly_schedule": {
+        "headers": [
+          "schedule_slot_id",
+          "user_id",
+          "source_nudge_id",
+          "prescription_id",
+          "day",
+          "scheduled_time",
+          "nudge_type",
+          "pillar",
+          "action_text",
+          "tone_variant",
+          "message_body",
+          "message_body_alt",
+          "template_name",
+          "status",
+          "start_date",
+          "end_date",
+          "created_at",
+          "updated_at",
+          "category",
+          "media_selection_mode",
+          "media_override_asset_id",
+          "media_asset_id",
+          "adaptation_decision_id"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "action_text": "Be in bed by 10pm",
+            "pillar": "sleep",
+            "category": "establish",
+            "user_id": "synthetic-1",
+            "prescription_id": "rx-1",
+            "nudge_type": "reminder",
+            "message_body": "Prepare for sleep.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "scheduled_time": "09:00",
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "schedule_slot_id": "slot-0",
+            "source_nudge_id": "history",
+            "day": "monday",
+            "status": "active",
+            "start_date": "2026-10-05",
+            "end_date": "2026-10-18"
+          },
+          {
+            "row_number": 3,
+            "action_text": "Be in bed by 10pm",
+            "pillar": "sleep",
+            "category": "establish",
+            "user_id": "synthetic-1",
+            "prescription_id": "rx-1",
+            "nudge_type": "reminder",
+            "message_body": "Prepare for sleep.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "scheduled_time": "09:00",
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "schedule_slot_id": "slot-1",
+            "source_nudge_id": "history",
+            "day": "thursday",
+            "status": "active",
+            "start_date": "2026-10-05",
+            "end_date": "2026-10-18"
+          }
+        ]
+      },
+      "schedule_state": {
+        "headers": [
+          "schedule_id",
+          "nudge_id",
+          "user_id",
+          "parent_nudge_id",
+          "status",
+          "sent_at",
+          "delivered_at",
+          "wa_message_id",
+          "tone_sent",
+          "last_updated",
+          "read_at",
+          "interacted_at",
+          "last_inbound_message_sid",
+          "delivery_attempt_id",
+          "submission_started_at"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "schedule_id": "state-history",
+            "nudge_id": "history",
+            "user_id": "synthetic-1",
+            "status": "delivered",
+            "sent_at": "2026-09-28T00:00:00.000Z",
+            "delivered_at": "2026-09-28T00:01:00.000Z",
+            "read_at": "",
+            "wa_message_id": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "row_number": 3,
+            "schedule_id": "state-schd_slot-0_20261005",
+            "nudge_id": "schd_slot-0_20261005",
+            "user_id": "synthetic-1",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "read_at": "",
+            "wa_message_id": ""
+          },
+          {
+            "row_number": 4,
+            "schedule_id": "state-schd_slot-1_20261008",
+            "nudge_id": "schd_slot-1_20261008",
+            "user_id": "synthetic-1",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "read_at": "",
+            "wa_message_id": ""
+          }
+        ]
+      },
+      "delivery_events": {
+        "headers": [
+          "event_id",
+          "event_at",
+          "wa_message_id",
+          "nudge_id",
+          "user_id",
+          "status",
+          "error_code",
+          "error_message",
+          "channel_to",
+          "raw_payload"
+        ],
+        "rows": []
+      },
+      "media_assignments": {
+        "headers": [
+          "assignment_id",
+          "assigned_at",
+          "user_id",
+          "nudge_id",
+          "behaviour_key",
+          "media_asset_id",
+          "adaptation_decision_id",
+          "media_kind",
+          "selection_mode",
+          "source_url",
+          "tracked_url",
+          "planned_frequency",
+          "scheduled_at",
+          "sent_at",
+          "delivered_at",
+          "read_at",
+          "visited_at",
+          "replied_at",
+          "send_to_read_hours",
+          "send_to_visit_hours",
+          "send_to_reply_hours"
+        ],
+        "rows": []
+      },
+      "interaction_events": {
+        "headers": [
+          "interaction_id",
+          "event_at",
+          "inbound_message_sid",
+          "user_id",
+          "from_phone",
+          "reply_to_wa_message_id",
+          "nudge_id",
+          "body",
+          "media_count",
+          "correlation_method",
+          "ack_status"
+        ],
+        "rows": []
+      },
+      "adaptation_decisions": {
+        "headers": [
+          "decision_id",
+          "decided_at",
+          "user_id",
+          "behaviour_key",
+          "interaction_id",
+          "signal_type",
+          "rule_applied",
+          "outcome",
+          "reason",
+          "selected_asset_id",
+          "interpretation",
+          "previous_state",
+          "next_state",
+          "scope",
+          "decision_source",
+          "effective_at",
+          "state_version",
+          "changed_fields",
+          "frequency_before",
+          "frequency_after",
+          "media_mode_before",
+          "media_mode_after",
+          "media_kind_before",
+          "media_kind_after",
+          "nudge_id"
+        ],
+        "rows": []
+      },
+      "patient_adaptation_state": {
+        "headers": [
+          "user_id",
+          "scope",
+          "behaviour_key",
+          "state_version",
+          "preferred_format",
+          "preferred_frequency",
+          "planned_frequency",
+          "delivered_frequency",
+          "observed_frequency",
+          "last_change_at",
+          "updated_at"
+        ],
+        "rows": []
+      },
+      "patient_adaptation_timeline": {
+        "headers": [
+          "user_id",
+          "event_id",
+          "event_at",
+          "event_type",
+          "source",
+          "scope",
+          "behaviour_key",
+          "signal",
+          "rule_applied",
+          "outcome",
+          "reason",
+          "previous_state",
+          "new_state",
+          "changed_fields",
+          "selected_asset_id",
+          "selected_media_kind",
+          "nudge_id",
+          "interaction_id"
+        ],
+        "rows": []
+      }
+    },
+    "database": {
+      "adaptation_envelopes": [
+        {
+          "action_text": "Be in bed by 10pm",
+          "pillar": "sleep",
+          "category": "establish",
+          "user_id": "synthetic-1",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "status": "approved",
+          "automatic_schedule_apply": true,
+          "formats": [
+            "paper",
+            "video"
+          ],
+          "summary_lengths": [
+            "short",
+            "detailed"
+          ],
+          "tones": [
+            "encouraging",
+            "neutral_informational"
+          ],
+          "earliest_time": "08:00",
+          "latest_time": "20:00",
+          "frequency_min": 1,
+          "frequency_max": 3,
+          "action_alternatives": [
+            "Be in bed by 10pm"
+          ],
+          "approved_asset_ids": [
+            "asset-paper",
+            "asset-video"
+          ]
+        }
+      ],
+      "media_assets": [
+        {
+          "asset_id": "asset-paper",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "media_kind": "paper",
+          "status": "approved",
+          "source_url": "https://example.test/paper",
+          "title": "Synthetic paper resource",
+          "source_name": "Synthetic approved pool",
+          "short_summary": "SHORT synthetic explanation.",
+          "detailed_summary": "DETAILED synthetic explanation with additional context for this controlled software evaluation."
+        },
+        {
+          "asset_id": "asset-video",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "media_kind": "video",
+          "status": "approved",
+          "source_url": "https://example.test/video",
+          "title": "Synthetic video resource",
+          "source_name": "Synthetic approved pool",
+          "short_summary": "SHORT synthetic explanation.",
+          "detailed_summary": "DETAILED synthetic explanation with additional context for this controlled software evaluation."
+        }
+      ],
+      "media_candidates": [],
+      "media_search_jobs": [],
+      "tracked_links": [],
+      "patient_adaptation_state": [],
+      "user_adaptation_state": [
+        {
+          "user_id": "synthetic-1",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "preferred_time": "09:00",
+          "preferred_frequency": 2,
+          "preferred_format": "paper",
+          "preferred_summary_length": "detailed",
+          "format_scores": {},
+          "asset_history": []
+        }
+      ],
+      "adaptation_decisions": [],
+      "interaction_events": [
+        {
+          "interaction_id": "old-positive",
+          "user_id": "synthetic-1",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "nudge_id": "history",
+          "event_type": "inbound_reply",
+          "body": "Thanks",
+          "event_at": "2026-09-28T00:05:00.000Z",
+          "processed_at": "2026-09-28T00:06:00.000Z"
+        }
+      ]
+    }
+  },
+  "steps": [
+    {
+      "input": {
+        "body": "I prefer videos",
+        "expected": {
+          "time": "09:00",
+          "frequency": 2,
+          "format": "video",
+          "summary": "detailed"
+        },
+        "interpretation": {
+          "explicit": true,
+          "format": "video",
+          "summary_length": null,
+          "tone": null,
+          "time": null,
+          "frequency_delta": 0,
+          "action": null
+        }
+      },
+      "checks": {
+        "inbound_accepted": true,
+        "prepared": true,
+        "expected_time": true,
+        "expected_frequency": true,
+        "expected_format": false,
+        "expected_summary": true,
+        "approved_asset": true,
+        "time_inside_envelope": true,
+        "frequency_inside_envelope": true,
+        "override_preserved": true,
+        "audit_complete": true,
+        "unrelated_preferences_preserved": true,
+        "sent_nudge_unchanged": true,
+        "sent_delivery_fields_unchanged": true
+      },
+      "before_state": {
+        "user_id": "synthetic-1",
+        "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+        "preferred_time": "09:00",
+        "preferred_frequency": 2,
+        "preferred_format": "paper",
+        "preferred_summary_length": "detailed",
+        "format_scores": {},
+        "asset_history": []
+      },
+      "inbound": {
+        "status": 200,
+        "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Response><Message>Thank you — your reply has been received by the study team. Reply STOP at any time to opt out.</Message></Response>"
+      },
+      "decision": {
+        "user_id": "synthetic-1",
+        "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+        "interaction_id": "in_8e44eb0554bb848643b67668",
+        "nudge_id": "history",
+        "signal_type": "inbound_reply",
+        "scope": "behaviour",
+        "decision_source": "patient",
+        "effective_at": "2026-10-02T00:00:00.000Z",
+        "state_version": 1,
+        "interpretation": {
+          "explicit": false,
+          "format": null,
+          "summary_length": null,
+          "tone": null,
+          "time": null,
+          "frequency_delta": 0,
+          "action": null
+        },
+        "scores_before": {},
+        "scores_after": {},
+        "rule_applied": "fixed_schedule_baseline",
+        "previous_state": {
+          "user_id": "synthetic-1",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "preferred_time": "09:00",
+          "preferred_frequency": 2,
+          "preferred_format": "paper",
+          "preferred_summary_length": "detailed",
+          "format_scores": {},
+          "asset_history": []
+        },
+        "next_state": {
+          "user_id": "synthetic-1",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "preferred_time": "09:00",
+          "preferred_frequency": 2,
+          "preferred_format": "paper",
+          "preferred_summary_length": "detailed",
+          "format_scores": {},
+          "asset_history": []
+        },
+        "changed_fields": [],
+        "frequency_before": 2,
+        "frequency_after": 2,
+        "media_mode_before": null,
+        "media_mode_after": null,
+        "media_kind_before": "paper",
+        "media_kind_after": "paper",
+        "selected_asset_id": null,
+        "outcome": "no_change",
+        "reason": "Preference adaptation disabled in reference arm",
+        "fulfilled_at": null,
+        "decision_id": "bd_1",
+        "decided_at": "2026-10-02T00:00:00.000Z"
+      },
+      "interpretation_correct": false,
+      "prepared": {
+        "status": 200,
+        "body": {
+          "adapted": true,
+          "nudge_id": "schd_slot-0_20261005",
+          "message_body": "Prepare for sleep.\n\nDETAILED synthetic explanation with additional context for this controlled software evaluation.\n\nSynthetic paper resource — Synthetic approved pool\nhttps://benchmark.invalid/api/r/iY0buT4dfeXAovydRTH-WM9urrsi68B-",
+          "media_asset_id": "asset-paper",
+          "adaptation_decision_id": "bd_2",
+          "tracked_url": "https://benchmark.invalid/api/r/iY0buT4dfeXAovydRTH-WM9urrsi68B-",
+          "media_kind": "paper",
+          "delivery_attempt_id": "att_c7fad162-c265-4b29-8184-697f578b5989"
+        }
+      },
+      "observed": {
+        "time": "09:00",
+        "frequency": 2,
+        "format": "paper",
+        "summary": "detailed",
+        "blocked": false,
+        "user_status": "active"
+      },
+      "after_state": {
+        "user_id": "synthetic-1",
+        "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+        "preferred_time": "09:00",
+        "preferred_frequency": 2,
+        "preferred_format": "paper",
+        "preferred_summary_length": "detailed",
+        "format_scores": {},
+        "asset_history": [
+          "asset-paper"
+        ],
+        "state_version": 2,
+        "last_signal_at": "2026-10-02T00:00:00.000Z",
+        "updated_at": "2026-10-02T00:00:00.000Z",
+        "last_decision_id": "bd_1",
+        "last_asset_id": "asset-paper",
+        "media_selection_mode": "automatic"
+      },
+      "persisted_after": {
+        "sheets": {
+          "user": {
+            "headers": [
+              "user_id",
+              "name",
+              "phone",
+              "email",
+              "user_status",
+              "doctor_id"
+            ],
+            "rows": [
+              {
+                "row_number": 2,
+                "user_id": "synthetic-1",
+                "name": "Synthetic Benchmark",
+                "phone": "+61400000000",
+                "user_status": "active",
+                "doctor_id": "doc-test"
+              }
+            ]
+          },
+          "questionnaire": {
+            "headers": [
+              "questionnaire_id",
+              "user_id",
+              "preferred_nudge_time",
+              "opt_in_whatsapp"
+            ],
+            "rows": [
+              {
+                "row_number": 2,
+                "questionnaire_id": "q1",
+                "user_id": "synthetic-1",
+                "opt_in_whatsapp": true
+              }
+            ]
+          },
+          "prescriptions": {
+            "headers": [
+              "prescription_id",
+              "user_id",
+              "doctor_id",
+              "issued_date",
+              "pillar",
+              "category",
+              "target_behavior",
+              "frequency_per_week",
+              "duration_weeks",
+              "prescription_raw_text",
+              "status"
+            ],
+            "rows": [
+              {
+                "row_number": 2,
+                "prescription_id": "rx-1",
+                "user_id": "synthetic-1",
+                "doctor_id": "doc-test",
+                "action_text": "Be in bed by 10pm",
+                "pillar": "sleep",
+                "category": "establish",
+                "frequency_per_week": 2,
+                "status": "active"
+              }
+            ]
+          },
+          "nudges": {
+            "headers": [
+              "nudge_id",
+              "prescription_id",
+              "user_id",
+              "nudge_type",
+              "pillar",
+              "action_text",
+              "scheduled_date",
+              "scheduled_time",
+              "message_body",
+              "message_body_alt",
+              "tone_variant",
+              "template_name",
+              "status",
+              "sent_at",
+              "reviewed_at",
+              "week_number",
+              "schedule_slot_id",
+              "category",
+              "media_selection_mode",
+              "media_override_asset_id",
+              "media_asset_id",
+              "adaptation_decision_id"
+            ],
+            "rows": [
+              {
+                "row_number": 2,
+                "action_text": "Be in bed by 10pm",
+                "pillar": "sleep",
+                "category": "establish",
+                "user_id": "synthetic-1",
+                "prescription_id": "rx-1",
+                "nudge_type": "reminder",
+                "message_body": "Prepare for sleep.",
+                "tone_variant": "encouraging",
+                "template_name": "health_plan_reminder",
+                "scheduled_time": "09:00",
+                "media_selection_mode": "automatic",
+                "media_override_asset_id": "",
+                "nudge_id": "history",
+                "scheduled_date": "2026-09-28",
+                "status": "sent",
+                "sent_at": "2026-09-28T00:00:00.000Z",
+                "media_asset_id": "asset-paper"
+              },
+              {
+                "row_number": 3,
+                "action_text": "Be in bed by 10pm",
+                "pillar": "sleep",
+                "category": "establish",
+                "user_id": "synthetic-1",
+                "prescription_id": "rx-1",
+                "nudge_type": "reminder",
+                "message_body": "Prepare for sleep.\n\nDETAILED synthetic explanation with additional context for this controlled software evaluation.\n\nSynthetic paper resource — Synthetic approved pool\nhttps://benchmark.invalid/api/r/iY0buT4dfeXAovydRTH-WM9urrsi68B-",
+                "tone_variant": "encouraging",
+                "template_name": "health_plan_reminder",
+                "scheduled_time": "09:00",
+                "media_selection_mode": "automatic",
+                "media_override_asset_id": "",
+                "schedule_slot_id": "slot-0",
+                "source_nudge_id": "history",
+                "day": "monday",
+                "status": "approved",
+                "start_date": "2026-10-05",
+                "end_date": "2026-10-18",
+                "nudge_id": "schd_slot-0_20261005",
+                "scheduled_date": "2026-10-05",
+                "sent_at": "",
+                "media_asset_id": "asset-paper",
+                "adaptation_decision_id": "bd_2"
+              },
+              {
+                "row_number": 4,
+                "action_text": "Be in bed by 10pm",
+                "pillar": "sleep",
+                "category": "establish",
+                "user_id": "synthetic-1",
+                "prescription_id": "rx-1",
+                "nudge_type": "reminder",
+                "message_body": "Prepare for sleep.",
+                "tone_variant": "encouraging",
+                "template_name": "health_plan_reminder",
+                "scheduled_time": "09:00",
+                "media_selection_mode": "automatic",
+                "media_override_asset_id": "",
+                "schedule_slot_id": "slot-1",
+                "source_nudge_id": "history",
+                "day": "thursday",
+                "status": "approved",
+                "start_date": "2026-10-05",
+                "end_date": "2026-10-18",
+                "nudge_id": "schd_slot-1_20261008",
+                "scheduled_date": "2026-10-08",
+                "sent_at": ""
+              }
+            ]
+          },
+          "weekly_schedule": {
+            "headers": [
+              "schedule_slot_id",
+              "user_id",
+              "source_nudge_id",
+              "prescription_id",
+              "day",
+              "scheduled_time",
+              "nudge_type",
+              "pillar",
+              "action_text",
+              "tone_variant",
+              "message_body",
+              "message_body_alt",
+              "template_name",
+              "status",
+              "start_date",
+              "end_date",
+              "created_at",
+              "updated_at",
+              "category",
+              "media_selection_mode",
+              "media_override_asset_id",
+              "media_asset_id",
+              "adaptation_decision_id"
+            ],
+            "rows": [
+              {
+                "row_number": 2,
+                "action_text": "Be in bed by 10pm",
+                "pillar": "sleep",
+                "category": "establish",
+                "user_id": "synthetic-1",
+                "prescription_id": "rx-1",
+                "nudge_type": "reminder",
+                "message_body": "Prepare for sleep.",
+                "tone_variant": "encouraging",
+                "template_name": "health_plan_reminder",
+                "scheduled_time": "09:00",
+                "media_selection_mode": "automatic",
+                "media_override_asset_id": "",
+                "schedule_slot_id": "slot-0",
+                "source_nudge_id": "history",
+                "day": "monday",
+                "status": "active",
+                "start_date": "2026-10-05",
+                "end_date": "2026-10-18"
+              },
+              {
+                "row_number": 3,
+                "action_text": "Be in bed by 10pm",
+                "pillar": "sleep",
+                "category": "establish",
+                "user_id": "synthetic-1",
+                "prescription_id": "rx-1",
+                "nudge_type": "reminder",
+                "message_body": "Prepare for sleep.",
+                "tone_variant": "encouraging",
+                "template_name": "health_plan_reminder",
+                "scheduled_time": "09:00",
+                "media_selection_mode": "automatic",
+                "media_override_asset_id": "",
+                "schedule_slot_id": "slot-1",
+                "source_nudge_id": "history",
+                "day": "thursday",
+                "status": "active",
+                "start_date": "2026-10-05",
+                "end_date": "2026-10-18"
+              }
+            ]
+          },
+          "schedule_state": {
+            "headers": [
+              "schedule_id",
+              "nudge_id",
+              "user_id",
+              "parent_nudge_id",
+              "status",
+              "sent_at",
+              "delivered_at",
+              "wa_message_id",
+              "tone_sent",
+              "last_updated",
+              "read_at",
+              "interacted_at",
+              "last_inbound_message_sid",
+              "delivery_attempt_id",
+              "submission_started_at"
+            ],
+            "rows": [
+              {
+                "row_number": 2,
+                "schedule_id": "state-history",
+                "nudge_id": "history",
+                "user_id": "synthetic-1",
+                "status": "delivered",
+                "sent_at": "2026-09-28T00:00:00.000Z",
+                "delivered_at": "2026-09-28T00:01:00.000Z",
+                "read_at": "",
+                "wa_message_id": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "interacted_at": "2026-10-02T00:00:00.000Z",
+                "last_inbound_message_sid": "SM062a9bc6d696efa52f5eb63a0fcd2233",
+                "last_updated": "2026-10-02T00:00:00.000Z"
+              },
+              {
+                "row_number": 3,
+                "schedule_id": "state-schd_slot-0_20261005",
+                "nudge_id": "schd_slot-0_20261005",
+                "user_id": "synthetic-1",
+                "status": "sending",
+                "sent_at": "",
+                "delivered_at": "",
+                "read_at": "",
+                "wa_message_id": "",
+                "delivery_attempt_id": "att_c7fad162-c265-4b29-8184-697f578b5989",
+                "submission_started_at": "2026-10-02T00:00:00.000Z",
+                "last_updated": "2026-10-02T00:00:00.000Z"
+              },
+              {
+                "row_number": 4,
+                "schedule_id": "state-schd_slot-1_20261008",
+                "nudge_id": "schd_slot-1_20261008",
+                "user_id": "synthetic-1",
+                "status": "approved",
+                "sent_at": "",
+                "delivered_at": "",
+                "read_at": "",
+                "wa_message_id": ""
+              }
+            ]
+          },
+          "delivery_events": {
+            "headers": [
+              "event_id",
+              "event_at",
+              "wa_message_id",
+              "nudge_id",
+              "user_id",
+              "status",
+              "error_code",
+              "error_message",
+              "channel_to",
+              "raw_payload"
+            ],
+            "rows": []
+          },
+          "media_assignments": {
+            "headers": [
+              "assignment_id",
+              "assigned_at",
+              "user_id",
+              "nudge_id",
+              "behaviour_key",
+              "media_asset_id",
+              "adaptation_decision_id",
+              "media_kind",
+              "selection_mode",
+              "source_url",
+              "tracked_url",
+              "planned_frequency",
+              "scheduled_at",
+              "sent_at",
+              "delivered_at",
+              "read_at",
+              "visited_at",
+              "replied_at",
+              "send_to_read_hours",
+              "send_to_visit_hours",
+              "send_to_reply_hours"
+            ],
+            "rows": [
+              {
+                "row_number": 2,
+                "assignment_id": "ma_b29c1e31e6586fc4a458b485",
+                "assigned_at": "2026-10-02T00:00:00.000Z",
+                "user_id": "synthetic-1",
+                "nudge_id": "schd_slot-0_20261005",
+                "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+                "media_asset_id": "asset-paper",
+                "adaptation_decision_id": "bd_2",
+                "media_kind": "paper",
+                "selection_mode": "automatic",
+                "source_url": "https://example.test/paper",
+                "tracked_url": "https://benchmark.invalid/api/r/iY0buT4dfeXAovydRTH-WM9urrsi68B-",
+                "planned_frequency": 2,
+                "scheduled_at": "2026-10-05T09:00:00",
+                "sent_at": "",
+                "delivered_at": "",
+                "read_at": "",
+                "visited_at": "",
+                "replied_at": "",
+                "send_to_read_hours": "",
+                "send_to_visit_hours": "",
+                "send_to_reply_hours": ""
+              }
+            ]
+          },
+          "interaction_events": {
+            "headers": [
+              "interaction_id",
+              "event_at",
+              "inbound_message_sid",
+              "user_id",
+              "from_phone",
+              "reply_to_wa_message_id",
+              "nudge_id",
+              "body",
+              "media_count",
+              "correlation_method",
+              "ack_status"
+            ],
+            "rows": [
+              {
+                "row_number": 2,
+                "interaction_id": "in_8e44eb0554bb848643b67668",
+                "event_at": "2026-10-02T00:00:00.000Z",
+                "inbound_message_sid": "SM062a9bc6d696efa52f5eb63a0fcd2233",
+                "user_id": "synthetic-1",
+                "from_phone": "+61400000000",
+                "reply_to_wa_message_id": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "nudge_id": "history",
+                "body": "I prefer videos",
+                "media_count": 0,
+                "correlation_method": "original_replied_message_sid",
+                "ack_status": "sent"
+              }
+            ]
+          },
+          "adaptation_decisions": {
+            "headers": [
+              "decision_id",
+              "decided_at",
+              "user_id",
+              "behaviour_key",
+              "interaction_id",
+              "signal_type",
+              "rule_applied",
+              "outcome",
+              "reason",
+              "selected_asset_id",
+              "interpretation",
+              "previous_state",
+              "next_state",
+              "scope",
+              "decision_source",
+              "effective_at",
+              "state_version",
+              "changed_fields",
+              "frequency_before",
+              "frequency_after",
+              "media_mode_before",
+              "media_mode_after",
+              "media_kind_before",
+              "media_kind_after",
+              "nudge_id"
+            ],
+            "rows": [
+              {
+                "row_number": 2,
+                "decision_id": "bd_2",
+                "decided_at": "2026-10-02T00:00:00.000Z",
+                "user_id": "synthetic-1",
+                "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+                "interaction_id": "",
+                "signal_type": "scheduled_selection",
+                "rule_applied": "least_recently_used_rotation",
+                "outcome": "applied",
+                "reason": "no explicit preference; rotated approved media",
+                "selected_asset_id": "asset-paper",
+                "interpretation": "{\"explicit\":false,\"format\":null,\"summary_length\":null,\"tone\":null,\"time\":null,\"frequency_delta\":0,\"action\":null}",
+                "previous_state": "{\"format_scores\":{},\"asset_history\":[],\"user_id\":\"synthetic-1\",\"behaviour_key\":\"467b939135f0e034c27cafa259533f1e\",\"preferred_time\":\"09:00\",\"preferred_frequency\":2,\"preferred_format\":\"paper\",\"preferred_summary_length\":\"detailed\",\"state_version\":1,\"last_signal_at\":\"2026-10-02T00:00:00.000Z\",\"updated_at\":\"2026-10-02T00:00:00.000Z\",\"last_decision_id\":\"bd_1\",\"media_selection_mode\":\"automatic\"}",
+                "next_state": "{\"format_scores\":{},\"asset_history\":[\"asset-paper\"],\"user_id\":\"synthetic-1\",\"behaviour_key\":\"467b939135f0e034c27cafa259533f1e\",\"preferred_time\":\"09:00\",\"preferred_frequency\":2,\"preferred_format\":\"paper\",\"preferred_summary_length\":\"detailed\",\"state_version\":1,\"last_signal_at\":\"2026-10-02T00:00:00.000Z\",\"updated_at\":\"2026-10-02T00:00:00.000Z\",\"last_decision_id\":\"bd_1\",\"last_asset_id\":\"asset-paper\",\"media_selection_mode\":\"automatic\"}",
+                "scope": "behaviour",
+                "decision_source": "system",
+                "effective_at": "2026-10-02T00:00:00.000Z",
+                "state_version": 2,
+                "changed_fields": "[\"last_asset_id\"]",
+                "frequency_before": 2,
+                "frequency_after": 2,
+                "media_mode_before": "automatic",
+                "media_mode_after": "automatic",
+                "media_kind_before": "paper",
+                "media_kind_after": "paper",
+                "nudge_id": "schd_slot-0_20261005"
+              }
+            ]
+          },
+          "patient_adaptation_state": {
+            "headers": [
+              "user_id",
+              "scope",
+              "behaviour_key",
+              "state_version",
+              "preferred_format",
+              "preferred_frequency",
+              "planned_frequency",
+              "delivered_frequency",
+              "observed_frequency",
+              "last_change_at",
+              "updated_at"
+            ],
+            "rows": []
+          },
+          "patient_adaptation_timeline": {
+            "headers": [
+              "user_id",
+              "event_id",
+              "event_at",
+              "event_type",
+              "source",
+              "scope",
+              "behaviour_key",
+              "signal",
+              "rule_applied",
+              "outcome",
+              "reason",
+              "previous_state",
+              "new_state",
+              "changed_fields",
+              "selected_asset_id",
+              "selected_media_kind",
+              "nudge_id",
+              "interaction_id"
+            ],
+            "rows": []
+          }
+        },
+        "database": {
+          "adaptation_envelopes": [
+            {
+              "action_text": "Be in bed by 10pm",
+              "pillar": "sleep",
+              "category": "establish",
+              "user_id": "synthetic-1",
+              "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+              "status": "approved",
+              "automatic_schedule_apply": true,
+              "formats": [
+                "paper",
+                "video"
+              ],
+              "summary_lengths": [
+                "short",
+                "detailed"
+              ],
+              "tones": [
+                "encouraging",
+                "neutral_informational"
+              ],
+              "earliest_time": "08:00",
+              "latest_time": "20:00",
+              "frequency_min": 1,
+              "frequency_max": 3,
+              "action_alternatives": [
+                "Be in bed by 10pm"
+              ],
+              "approved_asset_ids": [
+                "asset-paper",
+                "asset-video"
+              ]
+            }
+          ],
+          "media_assets": [
+            {
+              "asset_id": "asset-paper",
+              "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+              "media_kind": "paper",
+              "status": "approved",
+              "source_url": "https://example.test/paper",
+              "title": "Synthetic paper resource",
+              "source_name": "Synthetic approved pool",
+              "short_summary": "SHORT synthetic explanation.",
+              "detailed_summary": "DETAILED synthetic explanation with additional context for this controlled software evaluation."
+            },
+            {
+              "asset_id": "asset-video",
+              "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+              "media_kind": "video",
+              "status": "approved",
+              "source_url": "https://example.test/video",
+              "title": "Synthetic video resource",
+              "source_name": "Synthetic approved pool",
+              "short_summary": "SHORT synthetic explanation.",
+              "detailed_summary": "DETAILED synthetic explanation with additional context for this controlled software evaluation."
+            }
+          ],
+          "media_candidates": [],
+          "media_search_jobs": [],
+          "tracked_links": [
+            {
+              "token": "iY0buT4dfeXAovydRTH-WM9urrsi68B-",
+              "expires_at": "2027-03-31T00:00:00.000Z",
+              "asset_id": "asset-paper",
+              "user_id": "synthetic-1",
+              "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+              "nudge_id": "schd_slot-0_20261005",
+              "target_url": "https://example.test/paper"
+            }
+          ],
+          "patient_adaptation_state": [],
+          "user_adaptation_state": [
+            {
+              "user_id": "synthetic-1",
+              "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+              "preferred_time": "09:00",
+              "preferred_frequency": 2,
+              "preferred_format": "paper",
+              "preferred_summary_length": "detailed",
+              "format_scores": {},
+              "asset_history": [
+                "asset-paper"
+              ],
+              "state_version": 2,
+              "last_signal_at": "2026-10-02T00:00:00.000Z",
+              "updated_at": "2026-10-02T00:00:00.000Z",
+              "last_decision_id": "bd_1",
+              "last_asset_id": "asset-paper",
+              "media_selection_mode": "automatic"
+            }
+          ],
+          "adaptation_decisions": [
+            {
+              "user_id": "synthetic-1",
+              "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+              "interaction_id": "in_8e44eb0554bb848643b67668",
+              "nudge_id": "history",
+              "signal_type": "inbound_reply",
+              "scope": "behaviour",
+              "decision_source": "patient",
+              "effective_at": "2026-10-02T00:00:00.000Z",
+              "state_version": 1,
+              "interpretation": {
+                "explicit": false,
+                "format": null,
+                "summary_length": null,
+                "tone": null,
+                "time": null,
+                "frequency_delta": 0,
+                "action": null
+              },
+              "scores_before": {},
+              "scores_after": {},
+              "rule_applied": "fixed_schedule_baseline",
+              "previous_state": {
+                "user_id": "synthetic-1",
+                "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+                "preferred_time": "09:00",
+                "preferred_frequency": 2,
+                "preferred_format": "paper",
+                "preferred_summary_length": "detailed",
+                "format_scores": {},
+                "asset_history": []
+              },
+              "next_state": {
+                "user_id": "synthetic-1",
+                "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+                "preferred_time": "09:00",
+                "preferred_frequency": 2,
+                "preferred_format": "paper",
+                "preferred_summary_length": "detailed",
+                "format_scores": {},
+                "asset_history": []
+              },
+              "changed_fields": [],
+              "frequency_before": 2,
+              "frequency_after": 2,
+              "media_mode_before": null,
+              "media_mode_after": null,
+              "media_kind_before": "paper",
+              "media_kind_after": "paper",
+              "selected_asset_id": null,
+              "outcome": "no_change",
+              "reason": "Preference adaptation disabled in reference arm",
+              "fulfilled_at": null,
+              "decision_id": "bd_1",
+              "decided_at": "2026-10-02T00:00:00.000Z"
+            },
+            {
+              "user_id": "synthetic-1",
+              "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+              "interaction_id": null,
+              "nudge_id": null,
+              "signal_type": "scheduled_selection",
+              "scope": "behaviour",
+              "decision_source": "system",
+              "effective_at": "2026-10-02T00:00:00.000Z",
+              "state_version": 2,
+              "interpretation": {
+                "explicit": false,
+                "format": null,
+                "summary_length": null,
+                "tone": null,
+                "time": null,
+                "frequency_delta": 0,
+                "action": null
+              },
+              "scores_before": {},
+              "scores_after": {},
+              "rule_applied": "least_recently_used_rotation",
+              "previous_state": {
+                "format_scores": {},
+                "asset_history": [],
+                "user_id": "synthetic-1",
+                "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+                "preferred_time": "09:00",
+                "preferred_frequency": 2,
+                "preferred_format": "paper",
+                "preferred_summary_length": "detailed",
+                "state_version": 1,
+                "last_signal_at": "2026-10-02T00:00:00.000Z",
+                "updated_at": "2026-10-02T00:00:00.000Z",
+                "last_decision_id": "bd_1",
+                "media_selection_mode": "automatic"
+              },
+              "next_state": {
+                "format_scores": {},
+                "asset_history": [
+                  "asset-paper"
+                ],
+                "user_id": "synthetic-1",
+                "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+                "preferred_time": "09:00",
+                "preferred_frequency": 2,
+                "preferred_format": "paper",
+                "preferred_summary_length": "detailed",
+                "state_version": 1,
+                "last_signal_at": "2026-10-02T00:00:00.000Z",
+                "updated_at": "2026-10-02T00:00:00.000Z",
+                "last_decision_id": "bd_1",
+                "last_asset_id": "asset-paper",
+                "media_selection_mode": "automatic"
+              },
+              "changed_fields": [
+                "last_asset_id"
+              ],
+              "frequency_before": 2,
+              "frequency_after": 2,
+              "media_mode_before": "automatic",
+              "media_mode_after": "automatic",
+              "media_kind_before": "paper",
+              "media_kind_after": "paper",
+              "selected_asset_id": "asset-paper",
+              "outcome": "applied",
+              "reason": "no explicit preference; rotated approved media",
+              "fulfilled_at": "2026-10-02T00:00:00.000Z",
+              "decision_id": "bd_2",
+              "decided_at": "2026-10-02T00:00:00.000Z"
+            }
+          ],
+          "interaction_events": [
+            {
+              "interaction_id": "old-positive",
+              "user_id": "synthetic-1",
+              "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+              "nudge_id": "history",
+              "event_type": "inbound_reply",
+              "body": "Thanks",
+              "event_at": "2026-09-28T00:05:00.000Z",
+              "processed_at": "2026-09-28T00:06:00.000Z"
+            },
+            {
+              "interaction_id": "in_8e44eb0554bb848643b67668",
+              "event_at": "2026-10-02T00:00:00.000Z",
+              "event_type": "inbound_reply",
+              "user_id": "synthetic-1",
+              "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+              "nudge_id": "history",
+              "wa_message_id": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "inbound_message_sid": "SM062a9bc6d696efa52f5eb63a0fcd2233",
+              "reply_to_wa_message_id": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "body": "I prefer videos",
+              "media_count": 0,
+              "correlation_method": "original_replied_message_sid",
+              "raw_payload": {
+                "from": "whatsapp:+61400000000",
+                "num_media": "0"
+              },
+              "processed_at": "2026-10-02T00:00:00.000Z"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "input": {
+        "body": "I prefer papers",
+        "expected": {
+          "time": "09:00",
+          "frequency": 2,
+          "format": "paper",
+          "summary": "detailed"
+        },
+        "interpretation": {
+          "explicit": true,
+          "format": "paper",
+          "summary_length": null,
+          "tone": null,
+          "time": null,
+          "frequency_delta": 0,
+          "action": null
+        }
+      },
+      "checks": {
+        "inbound_accepted": true,
+        "prepared": true,
+        "expected_time": true,
+        "expected_frequency": true,
+        "expected_format": true,
+        "expected_summary": true,
+        "approved_asset": true,
+        "time_inside_envelope": true,
+        "frequency_inside_envelope": true,
+        "override_preserved": true,
+        "audit_complete": true,
+        "unrelated_preferences_preserved": true,
+        "sent_nudge_unchanged": true,
+        "sent_delivery_fields_unchanged": true
+      },
+      "before_state": {
+        "user_id": "synthetic-1",
+        "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+        "preferred_time": "09:00",
+        "preferred_frequency": 2,
+        "preferred_format": "paper",
+        "preferred_summary_length": "detailed",
+        "format_scores": {},
+        "asset_history": [
+          "asset-paper"
+        ],
+        "state_version": 2,
+        "last_signal_at": "2026-10-02T00:00:00.000Z",
+        "updated_at": "2026-10-02T00:00:00.000Z",
+        "last_decision_id": "bd_1",
+        "last_asset_id": "asset-paper",
+        "media_selection_mode": "automatic"
+      },
+      "inbound": {
+        "status": 200,
+        "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Response><Message>Thank you — your reply has been received by the study team. Reply STOP at any time to opt out.</Message></Response>"
+      },
+      "decision": {
+        "user_id": "synthetic-1",
+        "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+        "interaction_id": "in_d1df7263cbb52af187cc4f39",
+        "nudge_id": "history",
+        "signal_type": "inbound_reply",
+        "scope": "behaviour",
+        "decision_source": "patient",
+        "effective_at": "2026-10-02T00:00:00.000Z",
+        "state_version": 3,
+        "interpretation": {
+          "explicit": false,
+          "format": null,
+          "summary_length": null,
+          "tone": null,
+          "time": null,
+          "frequency_delta": 0,
+          "action": null
+        },
+        "scores_before": {},
+        "scores_after": {},
+        "rule_applied": "fixed_schedule_baseline",
+        "previous_state": {
+          "user_id": "synthetic-1",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "preferred_time": "09:00",
+          "preferred_frequency": 2,
+          "preferred_format": "paper",
+          "preferred_summary_length": "detailed",
+          "format_scores": {},
+          "asset_history": [
+            "asset-paper"
+          ],
+          "state_version": 2,
+          "last_signal_at": "2026-10-02T00:00:00.000Z",
+          "updated_at": "2026-10-02T00:00:00.000Z",
+          "last_decision_id": "bd_1",
+          "last_asset_id": "asset-paper",
+          "media_selection_mode": "automatic"
+        },
+        "next_state": {
+          "user_id": "synthetic-1",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "preferred_time": "09:00",
+          "preferred_frequency": 2,
+          "preferred_format": "paper",
+          "preferred_summary_length": "detailed",
+          "format_scores": {},
+          "asset_history": [
+            "asset-paper"
+          ],
+          "state_version": 2,
+          "last_signal_at": "2026-10-02T00:00:00.000Z",
+          "updated_at": "2026-10-02T00:00:00.000Z",
+          "last_decision_id": "bd_1",
+          "last_asset_id": "asset-paper",
+          "media_selection_mode": "automatic"
+        },
+        "changed_fields": [],
+        "frequency_before": 2,
+        "frequency_after": 2,
+        "media_mode_before": "automatic",
+        "media_mode_after": "automatic",
+        "media_kind_before": "paper",
+        "media_kind_after": "paper",
+        "selected_asset_id": null,
+        "outcome": "no_change",
+        "reason": "Preference adaptation disabled in reference arm",
+        "fulfilled_at": null,
+        "decision_id": "bd_3",
+        "decided_at": "2026-10-02T00:00:00.000Z"
+      },
+      "interpretation_correct": false,
+      "prepared": {
+        "status": 200,
+        "body": {
+          "adapted": true,
+          "nudge_id": "schd_slot-1_20261008",
+          "message_body": "Prepare for sleep.\n\nDETAILED synthetic explanation with additional context for this controlled software evaluation.\n\nSynthetic paper resource — Synthetic approved pool\nhttps://benchmark.invalid/api/r/ytpfn5rzXjtNfOu_qs8GfFaKOSNGg1rk",
+          "media_asset_id": "asset-paper",
+          "adaptation_decision_id": "bd_4",
+          "tracked_url": "https://benchmark.invalid/api/r/ytpfn5rzXjtNfOu_qs8GfFaKOSNGg1rk",
+          "media_kind": "paper",
+          "delivery_attempt_id": "att_4b2cf066-7ca4-4083-9e31-b7dcfb17c2bf"
+        }
+      },
+      "observed": {
+        "time": "09:00",
+        "frequency": 2,
+        "format": "paper",
+        "summary": "detailed",
+        "blocked": false,
+        "user_status": "active"
+      },
+      "after_state": {
+        "user_id": "synthetic-1",
+        "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+        "preferred_time": "09:00",
+        "preferred_frequency": 2,
+        "preferred_format": "paper",
+        "preferred_summary_length": "detailed",
+        "format_scores": {},
+        "asset_history": [
+          "asset-paper",
+          "asset-paper"
+        ],
+        "state_version": 4,
+        "last_signal_at": "2026-10-02T00:00:00.000Z",
+        "updated_at": "2026-10-02T00:00:00.000Z",
+        "last_decision_id": "bd_3",
+        "last_asset_id": "asset-paper",
+        "media_selection_mode": "automatic"
+      },
+      "persisted_after": {
+        "sheets": {
+          "user": {
+            "headers": [
+              "user_id",
+              "name",
+              "phone",
+              "email",
+              "user_status",
+              "doctor_id"
+            ],
+            "rows": [
+              {
+                "row_number": 2,
+                "user_id": "synthetic-1",
+                "name": "Synthetic Benchmark",
+                "phone": "+61400000000",
+                "user_status": "active",
+                "doctor_id": "doc-test"
+              }
+            ]
+          },
+          "questionnaire": {
+            "headers": [
+              "questionnaire_id",
+              "user_id",
+              "preferred_nudge_time",
+              "opt_in_whatsapp"
+            ],
+            "rows": [
+              {
+                "row_number": 2,
+                "questionnaire_id": "q1",
+                "user_id": "synthetic-1",
+                "opt_in_whatsapp": true
+              }
+            ]
+          },
+          "prescriptions": {
+            "headers": [
+              "prescription_id",
+              "user_id",
+              "doctor_id",
+              "issued_date",
+              "pillar",
+              "category",
+              "target_behavior",
+              "frequency_per_week",
+              "duration_weeks",
+              "prescription_raw_text",
+              "status"
+            ],
+            "rows": [
+              {
+                "row_number": 2,
+                "prescription_id": "rx-1",
+                "user_id": "synthetic-1",
+                "doctor_id": "doc-test",
+                "action_text": "Be in bed by 10pm",
+                "pillar": "sleep",
+                "category": "establish",
+                "frequency_per_week": 2,
+                "status": "active"
+              }
+            ]
+          },
+          "nudges": {
+            "headers": [
+              "nudge_id",
+              "prescription_id",
+              "user_id",
+              "nudge_type",
+              "pillar",
+              "action_text",
+              "scheduled_date",
+              "scheduled_time",
+              "message_body",
+              "message_body_alt",
+              "tone_variant",
+              "template_name",
+              "status",
+              "sent_at",
+              "reviewed_at",
+              "week_number",
+              "schedule_slot_id",
+              "category",
+              "media_selection_mode",
+              "media_override_asset_id",
+              "media_asset_id",
+              "adaptation_decision_id"
+            ],
+            "rows": [
+              {
+                "row_number": 2,
+                "action_text": "Be in bed by 10pm",
+                "pillar": "sleep",
+                "category": "establish",
+                "user_id": "synthetic-1",
+                "prescription_id": "rx-1",
+                "nudge_type": "reminder",
+                "message_body": "Prepare for sleep.",
+                "tone_variant": "encouraging",
+                "template_name": "health_plan_reminder",
+                "scheduled_time": "09:00",
+                "media_selection_mode": "automatic",
+                "media_override_asset_id": "",
+                "nudge_id": "history",
+                "scheduled_date": "2026-09-28",
+                "status": "sent",
+                "sent_at": "2026-09-28T00:00:00.000Z",
+                "media_asset_id": "asset-paper"
+              },
+              {
+                "row_number": 3,
+                "action_text": "Be in bed by 10pm",
+                "pillar": "sleep",
+                "category": "establish",
+                "user_id": "synthetic-1",
+                "prescription_id": "rx-1",
+                "nudge_type": "reminder",
+                "message_body": "Prepare for sleep.\n\nDETAILED synthetic explanation with additional context for this controlled software evaluation.\n\nSynthetic paper resource — Synthetic approved pool\nhttps://benchmark.invalid/api/r/iY0buT4dfeXAovydRTH-WM9urrsi68B-",
+                "tone_variant": "encouraging",
+                "template_name": "health_plan_reminder",
+                "scheduled_time": "09:00",
+                "media_selection_mode": "automatic",
+                "media_override_asset_id": "",
+                "schedule_slot_id": "slot-0",
+                "source_nudge_id": "history",
+                "day": "monday",
+                "status": "approved",
+                "start_date": "2026-10-05",
+                "end_date": "2026-10-18",
+                "nudge_id": "schd_slot-0_20261005",
+                "scheduled_date": "2026-10-05",
+                "sent_at": "",
+                "media_asset_id": "asset-paper",
+                "adaptation_decision_id": "bd_2"
+              },
+              {
+                "row_number": 4,
+                "action_text": "Be in bed by 10pm",
+                "pillar": "sleep",
+                "category": "establish",
+                "user_id": "synthetic-1",
+                "prescription_id": "rx-1",
+                "nudge_type": "reminder",
+                "message_body": "Prepare for sleep.\n\nDETAILED synthetic explanation with additional context for this controlled software evaluation.\n\nSynthetic paper resource — Synthetic approved pool\nhttps://benchmark.invalid/api/r/ytpfn5rzXjtNfOu_qs8GfFaKOSNGg1rk",
+                "tone_variant": "encouraging",
+                "template_name": "health_plan_reminder",
+                "scheduled_time": "09:00",
+                "media_selection_mode": "automatic",
+                "media_override_asset_id": "",
+                "schedule_slot_id": "slot-1",
+                "source_nudge_id": "history",
+                "day": "thursday",
+                "status": "approved",
+                "start_date": "2026-10-05",
+                "end_date": "2026-10-18",
+                "nudge_id": "schd_slot-1_20261008",
+                "scheduled_date": "2026-10-08",
+                "sent_at": "",
+                "media_asset_id": "asset-paper",
+                "adaptation_decision_id": "bd_4"
+              }
+            ]
+          },
+          "weekly_schedule": {
+            "headers": [
+              "schedule_slot_id",
+              "user_id",
+              "source_nudge_id",
+              "prescription_id",
+              "day",
+              "scheduled_time",
+              "nudge_type",
+              "pillar",
+              "action_text",
+              "tone_variant",
+              "message_body",
+              "message_body_alt",
+              "template_name",
+              "status",
+              "start_date",
+              "end_date",
+              "created_at",
+              "updated_at",
+              "category",
+              "media_selection_mode",
+              "media_override_asset_id",
+              "media_asset_id",
+              "adaptation_decision_id"
+            ],
+            "rows": [
+              {
+                "row_number": 2,
+                "action_text": "Be in bed by 10pm",
+                "pillar": "sleep",
+                "category": "establish",
+                "user_id": "synthetic-1",
+                "prescription_id": "rx-1",
+                "nudge_type": "reminder",
+                "message_body": "Prepare for sleep.",
+                "tone_variant": "encouraging",
+                "template_name": "health_plan_reminder",
+                "scheduled_time": "09:00",
+                "media_selection_mode": "automatic",
+                "media_override_asset_id": "",
+                "schedule_slot_id": "slot-0",
+                "source_nudge_id": "history",
+                "day": "monday",
+                "status": "active",
+                "start_date": "2026-10-05",
+                "end_date": "2026-10-18"
+              },
+              {
+                "row_number": 3,
+                "action_text": "Be in bed by 10pm",
+                "pillar": "sleep",
+                "category": "establish",
+                "user_id": "synthetic-1",
+                "prescription_id": "rx-1",
+                "nudge_type": "reminder",
+                "message_body": "Prepare for sleep.",
+                "tone_variant": "encouraging",
+                "template_name": "health_plan_reminder",
+                "scheduled_time": "09:00",
+                "media_selection_mode": "automatic",
+                "media_override_asset_id": "",
+                "schedule_slot_id": "slot-1",
+                "source_nudge_id": "history",
+                "day": "thursday",
+                "status": "active",
+                "start_date": "2026-10-05",
+                "end_date": "2026-10-18"
+              }
+            ]
+          },
+          "schedule_state": {
+            "headers": [
+              "schedule_id",
+              "nudge_id",
+              "user_id",
+              "parent_nudge_id",
+              "status",
+              "sent_at",
+              "delivered_at",
+              "wa_message_id",
+              "tone_sent",
+              "last_updated",
+              "read_at",
+              "interacted_at",
+              "last_inbound_message_sid",
+              "delivery_attempt_id",
+              "submission_started_at"
+            ],
+            "rows": [
+              {
+                "row_number": 2,
+                "schedule_id": "state-history",
+                "nudge_id": "history",
+                "user_id": "synthetic-1",
+                "status": "delivered",
+                "sent_at": "2026-09-28T00:00:00.000Z",
+                "delivered_at": "2026-09-28T00:01:00.000Z",
+                "read_at": "",
+                "wa_message_id": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "interacted_at": "2026-10-02T00:00:00.000Z",
+                "last_inbound_message_sid": "SM9256db2e8d5edd8d1338ca2729431063",
+                "last_updated": "2026-10-02T00:00:00.000Z"
+              },
+              {
+                "row_number": 3,
+                "schedule_id": "state-schd_slot-0_20261005",
+                "nudge_id": "schd_slot-0_20261005",
+                "user_id": "synthetic-1",
+                "status": "sending",
+                "sent_at": "",
+                "delivered_at": "",
+                "read_at": "",
+                "wa_message_id": "",
+                "delivery_attempt_id": "att_c7fad162-c265-4b29-8184-697f578b5989",
+                "submission_started_at": "2026-10-02T00:00:00.000Z",
+                "last_updated": "2026-10-02T00:00:00.000Z"
+              },
+              {
+                "row_number": 4,
+                "schedule_id": "state-schd_slot-1_20261008",
+                "nudge_id": "schd_slot-1_20261008",
+                "user_id": "synthetic-1",
+                "status": "sending",
+                "sent_at": "",
+                "delivered_at": "",
+                "read_at": "",
+                "wa_message_id": "",
+                "delivery_attempt_id": "att_4b2cf066-7ca4-4083-9e31-b7dcfb17c2bf",
+                "submission_started_at": "2026-10-02T00:00:00.000Z",
+                "last_updated": "2026-10-02T00:00:00.000Z"
+              }
+            ]
+          },
+          "delivery_events": {
+            "headers": [
+              "event_id",
+              "event_at",
+              "wa_message_id",
+              "nudge_id",
+              "user_id",
+              "status",
+              "error_code",
+              "error_message",
+              "channel_to",
+              "raw_payload"
+            ],
+            "rows": []
+          },
+          "media_assignments": {
+            "headers": [
+              "assignment_id",
+              "assigned_at",
+              "user_id",
+              "nudge_id",
+              "behaviour_key",
+              "media_asset_id",
+              "adaptation_decision_id",
+              "media_kind",
+              "selection_mode",
+              "source_url",
+              "tracked_url",
+              "planned_frequency",
+              "scheduled_at",
+              "sent_at",
+              "delivered_at",
+              "read_at",
+              "visited_at",
+              "replied_at",
+              "send_to_read_hours",
+              "send_to_visit_hours",
+              "send_to_reply_hours"
+            ],
+            "rows": [
+              {
+                "row_number": 2,
+                "assignment_id": "ma_b29c1e31e6586fc4a458b485",
+                "assigned_at": "2026-10-02T00:00:00.000Z",
+                "user_id": "synthetic-1",
+                "nudge_id": "schd_slot-0_20261005",
+                "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+                "media_asset_id": "asset-paper",
+                "adaptation_decision_id": "bd_2",
+                "media_kind": "paper",
+                "selection_mode": "automatic",
+                "source_url": "https://example.test/paper",
+                "tracked_url": "https://benchmark.invalid/api/r/iY0buT4dfeXAovydRTH-WM9urrsi68B-",
+                "planned_frequency": 2,
+                "scheduled_at": "2026-10-05T09:00:00",
+                "sent_at": "",
+                "delivered_at": "",
+                "read_at": "",
+                "visited_at": "",
+                "replied_at": "",
+                "send_to_read_hours": "",
+                "send_to_visit_hours": "",
+                "send_to_reply_hours": ""
+              },
+              {
+                "row_number": 3,
+                "assignment_id": "ma_18867da034b284e9723a551a",
+                "assigned_at": "2026-10-02T00:00:00.000Z",
+                "user_id": "synthetic-1",
+                "nudge_id": "schd_slot-1_20261008",
+                "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+                "media_asset_id": "asset-paper",
+                "adaptation_decision_id": "bd_4",
+                "media_kind": "paper",
+                "selection_mode": "automatic",
+                "source_url": "https://example.test/paper",
+                "tracked_url": "https://benchmark.invalid/api/r/ytpfn5rzXjtNfOu_qs8GfFaKOSNGg1rk",
+                "planned_frequency": 2,
+                "scheduled_at": "2026-10-08T09:00:00",
+                "sent_at": "",
+                "delivered_at": "",
+                "read_at": "",
+                "visited_at": "",
+                "replied_at": "",
+                "send_to_read_hours": "",
+                "send_to_visit_hours": "",
+                "send_to_reply_hours": ""
+              }
+            ]
+          },
+          "interaction_events": {
+            "headers": [
+              "interaction_id",
+              "event_at",
+              "inbound_message_sid",
+              "user_id",
+              "from_phone",
+              "reply_to_wa_message_id",
+              "nudge_id",
+              "body",
+              "media_count",
+              "correlation_method",
+              "ack_status"
+            ],
+            "rows": [
+              {
+                "row_number": 2,
+                "interaction_id": "in_8e44eb0554bb848643b67668",
+                "event_at": "2026-10-02T00:00:00.000Z",
+                "inbound_message_sid": "SM062a9bc6d696efa52f5eb63a0fcd2233",
+                "user_id": "synthetic-1",
+                "from_phone": "+61400000000",
+                "reply_to_wa_message_id": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "nudge_id": "history",
+                "body": "I prefer videos",
+                "media_count": 0,
+                "correlation_method": "original_replied_message_sid",
+                "ack_status": "sent"
+              },
+              {
+                "row_number": 3,
+                "interaction_id": "in_d1df7263cbb52af187cc4f39",
+                "event_at": "2026-10-02T00:00:00.000Z",
+                "inbound_message_sid": "SM9256db2e8d5edd8d1338ca2729431063",
+                "user_id": "synthetic-1",
+                "from_phone": "+61400000000",
+                "reply_to_wa_message_id": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "nudge_id": "history",
+                "body": "I prefer papers",
+                "media_count": 0,
+                "correlation_method": "original_replied_message_sid",
+                "ack_status": "sent"
+              }
+            ]
+          },
+          "adaptation_decisions": {
+            "headers": [
+              "decision_id",
+              "decided_at",
+              "user_id",
+              "behaviour_key",
+              "interaction_id",
+              "signal_type",
+              "rule_applied",
+              "outcome",
+              "reason",
+              "selected_asset_id",
+              "interpretation",
+              "previous_state",
+              "next_state",
+              "scope",
+              "decision_source",
+              "effective_at",
+              "state_version",
+              "changed_fields",
+              "frequency_before",
+              "frequency_after",
+              "media_mode_before",
+              "media_mode_after",
+              "media_kind_before",
+              "media_kind_after",
+              "nudge_id"
+            ],
+            "rows": [
+              {
+                "row_number": 2,
+                "decision_id": "bd_2",
+                "decided_at": "2026-10-02T00:00:00.000Z",
+                "user_id": "synthetic-1",
+                "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+                "interaction_id": "",
+                "signal_type": "scheduled_selection",
+                "rule_applied": "least_recently_used_rotation",
+                "outcome": "applied",
+                "reason": "no explicit preference; rotated approved media",
+                "selected_asset_id": "asset-paper",
+                "interpretation": "{\"explicit\":false,\"format\":null,\"summary_length\":null,\"tone\":null,\"time\":null,\"frequency_delta\":0,\"action\":null}",
+                "previous_state": "{\"format_scores\":{},\"asset_history\":[],\"user_id\":\"synthetic-1\",\"behaviour_key\":\"467b939135f0e034c27cafa259533f1e\",\"preferred_time\":\"09:00\",\"preferred_frequency\":2,\"preferred_format\":\"paper\",\"preferred_summary_length\":\"detailed\",\"state_version\":1,\"last_signal_at\":\"2026-10-02T00:00:00.000Z\",\"updated_at\":\"2026-10-02T00:00:00.000Z\",\"last_decision_id\":\"bd_1\",\"media_selection_mode\":\"automatic\"}",
+                "next_state": "{\"format_scores\":{},\"asset_history\":[\"asset-paper\"],\"user_id\":\"synthetic-1\",\"behaviour_key\":\"467b939135f0e034c27cafa259533f1e\",\"preferred_time\":\"09:00\",\"preferred_frequency\":2,\"preferred_format\":\"paper\",\"preferred_summary_length\":\"detailed\",\"state_version\":1,\"last_signal_at\":\"2026-10-02T00:00:00.000Z\",\"updated_at\":\"2026-10-02T00:00:00.000Z\",\"last_decision_id\":\"bd_1\",\"last_asset_id\":\"asset-paper\",\"media_selection_mode\":\"automatic\"}",
+                "scope": "behaviour",
+                "decision_source": "system",
+                "effective_at": "2026-10-02T00:00:00.000Z",
+                "state_version": 2,
+                "changed_fields": "[\"last_asset_id\"]",
+                "frequency_before": 2,
+                "frequency_after": 2,
+                "media_mode_before": "automatic",
+                "media_mode_after": "automatic",
+                "media_kind_before": "paper",
+                "media_kind_after": "paper",
+                "nudge_id": "schd_slot-0_20261005"
+              },
+              {
+                "row_number": 3,
+                "decision_id": "bd_4",
+                "decided_at": "2026-10-02T00:00:00.000Z",
+                "user_id": "synthetic-1",
+                "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+                "interaction_id": "",
+                "signal_type": "scheduled_selection",
+                "rule_applied": "least_recently_used_rotation",
+                "outcome": "applied",
+                "reason": "no explicit preference; rotated approved media",
+                "selected_asset_id": "asset-paper",
+                "interpretation": "{\"explicit\":false,\"format\":null,\"summary_length\":null,\"tone\":null,\"time\":null,\"frequency_delta\":0,\"action\":null}",
+                "previous_state": "{\"format_scores\":{},\"asset_history\":[\"asset-paper\"],\"user_id\":\"synthetic-1\",\"behaviour_key\":\"467b939135f0e034c27cafa259533f1e\",\"preferred_time\":\"09:00\",\"preferred_frequency\":2,\"preferred_format\":\"paper\",\"preferred_summary_length\":\"detailed\",\"state_version\":3,\"last_signal_at\":\"2026-10-02T00:00:00.000Z\",\"updated_at\":\"2026-10-02T00:00:00.000Z\",\"last_decision_id\":\"bd_3\",\"last_asset_id\":\"asset-paper\",\"media_selection_mode\":\"automatic\"}",
+                "next_state": "{\"format_scores\":{},\"asset_history\":[\"asset-paper\",\"asset-paper\"],\"user_id\":\"synthetic-1\",\"behaviour_key\":\"467b939135f0e034c27cafa259533f1e\",\"preferred_time\":\"09:00\",\"preferred_frequency\":2,\"preferred_format\":\"paper\",\"preferred_summary_length\":\"detailed\",\"state_version\":3,\"last_signal_at\":\"2026-10-02T00:00:00.000Z\",\"updated_at\":\"2026-10-02T00:00:00.000Z\",\"last_decision_id\":\"bd_3\",\"last_asset_id\":\"asset-paper\",\"media_selection_mode\":\"automatic\"}",
+                "scope": "behaviour",
+                "decision_source": "system",
+                "effective_at": "2026-10-02T00:00:00.000Z",
+                "state_version": 4,
+                "changed_fields": "[]",
+                "frequency_before": 2,
+                "frequency_after": 2,
+                "media_mode_before": "automatic",
+                "media_mode_after": "automatic",
+                "media_kind_before": "paper",
+                "media_kind_after": "paper",
+                "nudge_id": "schd_slot-1_20261008"
+              }
+            ]
+          },
+          "patient_adaptation_state": {
+            "headers": [
+              "user_id",
+              "scope",
+              "behaviour_key",
+              "state_version",
+              "preferred_format",
+              "preferred_frequency",
+              "planned_frequency",
+              "delivered_frequency",
+              "observed_frequency",
+              "last_change_at",
+              "updated_at"
+            ],
+            "rows": []
+          },
+          "patient_adaptation_timeline": {
+            "headers": [
+              "user_id",
+              "event_id",
+              "event_at",
+              "event_type",
+              "source",
+              "scope",
+              "behaviour_key",
+              "signal",
+              "rule_applied",
+              "outcome",
+              "reason",
+              "previous_state",
+              "new_state",
+              "changed_fields",
+              "selected_asset_id",
+              "selected_media_kind",
+              "nudge_id",
+              "interaction_id"
+            ],
+            "rows": []
+          }
+        },
+        "database": {
+          "adaptation_envelopes": [
+            {
+              "action_text": "Be in bed by 10pm",
+              "pillar": "sleep",
+              "category": "establish",
+              "user_id": "synthetic-1",
+              "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+              "status": "approved",
+              "automatic_schedule_apply": true,
+              "formats": [
+                "paper",
+                "video"
+              ],
+              "summary_lengths": [
+                "short",
+                "detailed"
+              ],
+              "tones": [
+                "encouraging",
+                "neutral_informational"
+              ],
+              "earliest_time": "08:00",
+              "latest_time": "20:00",
+              "frequency_min": 1,
+              "frequency_max": 3,
+              "action_alternatives": [
+                "Be in bed by 10pm"
+              ],
+              "approved_asset_ids": [
+                "asset-paper",
+                "asset-video"
+              ]
+            }
+          ],
+          "media_assets": [
+            {
+              "asset_id": "asset-paper",
+              "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+              "media_kind": "paper",
+              "status": "approved",
+              "source_url": "https://example.test/paper",
+              "title": "Synthetic paper resource",
+              "source_name": "Synthetic approved pool",
+              "short_summary": "SHORT synthetic explanation.",
+              "detailed_summary": "DETAILED synthetic explanation with additional context for this controlled software evaluation."
+            },
+            {
+              "asset_id": "asset-video",
+              "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+              "media_kind": "video",
+              "status": "approved",
+              "source_url": "https://example.test/video",
+              "title": "Synthetic video resource",
+              "source_name": "Synthetic approved pool",
+              "short_summary": "SHORT synthetic explanation.",
+              "detailed_summary": "DETAILED synthetic explanation with additional context for this controlled software evaluation."
+            }
+          ],
+          "media_candidates": [],
+          "media_search_jobs": [],
+          "tracked_links": [
+            {
+              "token": "iY0buT4dfeXAovydRTH-WM9urrsi68B-",
+              "expires_at": "2027-03-31T00:00:00.000Z",
+              "asset_id": "asset-paper",
+              "user_id": "synthetic-1",
+              "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+              "nudge_id": "schd_slot-0_20261005",
+              "target_url": "https://example.test/paper"
+            },
+            {
+              "token": "ytpfn5rzXjtNfOu_qs8GfFaKOSNGg1rk",
+              "expires_at": "2027-03-31T00:00:00.000Z",
+              "asset_id": "asset-paper",
+              "user_id": "synthetic-1",
+              "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+              "nudge_id": "schd_slot-1_20261008",
+              "target_url": "https://example.test/paper"
+            }
+          ],
+          "patient_adaptation_state": [],
+          "user_adaptation_state": [
+            {
+              "user_id": "synthetic-1",
+              "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+              "preferred_time": "09:00",
+              "preferred_frequency": 2,
+              "preferred_format": "paper",
+              "preferred_summary_length": "detailed",
+              "format_scores": {},
+              "asset_history": [
+                "asset-paper",
+                "asset-paper"
+              ],
+              "state_version": 4,
+              "last_signal_at": "2026-10-02T00:00:00.000Z",
+              "updated_at": "2026-10-02T00:00:00.000Z",
+              "last_decision_id": "bd_3",
+              "last_asset_id": "asset-paper",
+              "media_selection_mode": "automatic"
+            }
+          ],
+          "adaptation_decisions": [
+            {
+              "user_id": "synthetic-1",
+              "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+              "interaction_id": "in_8e44eb0554bb848643b67668",
+              "nudge_id": "history",
+              "signal_type": "inbound_reply",
+              "scope": "behaviour",
+              "decision_source": "patient",
+              "effective_at": "2026-10-02T00:00:00.000Z",
+              "state_version": 1,
+              "interpretation": {
+                "explicit": false,
+                "format": null,
+                "summary_length": null,
+                "tone": null,
+                "time": null,
+                "frequency_delta": 0,
+                "action": null
+              },
+              "scores_before": {},
+              "scores_after": {},
+              "rule_applied": "fixed_schedule_baseline",
+              "previous_state": {
+                "user_id": "synthetic-1",
+                "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+                "preferred_time": "09:00",
+                "preferred_frequency": 2,
+                "preferred_format": "paper",
+                "preferred_summary_length": "detailed",
+                "format_scores": {},
+                "asset_history": []
+              },
+              "next_state": {
+                "user_id": "synthetic-1",
+                "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+                "preferred_time": "09:00",
+                "preferred_frequency": 2,
+                "preferred_format": "paper",
+                "preferred_summary_length": "detailed",
+                "format_scores": {},
+                "asset_history": []
+              },
+              "changed_fields": [],
+              "frequency_before": 2,
+              "frequency_after": 2,
+              "media_mode_before": null,
+              "media_mode_after": null,
+              "media_kind_before": "paper",
+              "media_kind_after": "paper",
+              "selected_asset_id": null,
+              "outcome": "no_change",
+              "reason": "Preference adaptation disabled in reference arm",
+              "fulfilled_at": null,
+              "decision_id": "bd_1",
+              "decided_at": "2026-10-02T00:00:00.000Z"
+            },
+            {
+              "user_id": "synthetic-1",
+              "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+              "interaction_id": null,
+              "nudge_id": null,
+              "signal_type": "scheduled_selection",
+              "scope": "behaviour",
+              "decision_source": "system",
+              "effective_at": "2026-10-02T00:00:00.000Z",
+              "state_version": 2,
+              "interpretation": {
+                "explicit": false,
+                "format": null,
+                "summary_length": null,
+                "tone": null,
+                "time": null,
+                "frequency_delta": 0,
+                "action": null
+              },
+              "scores_before": {},
+              "scores_after": {},
+              "rule_applied": "least_recently_used_rotation",
+              "previous_state": {
+                "format_scores": {},
+                "asset_history": [],
+                "user_id": "synthetic-1",
+                "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+                "preferred_time": "09:00",
+                "preferred_frequency": 2,
+                "preferred_format": "paper",
+                "preferred_summary_length": "detailed",
+                "state_version": 1,
+                "last_signal_at": "2026-10-02T00:00:00.000Z",
+                "updated_at": "2026-10-02T00:00:00.000Z",
+                "last_decision_id": "bd_1",
+                "media_selection_mode": "automatic"
+              },
+              "next_state": {
+                "format_scores": {},
+                "asset_history": [
+                  "asset-paper"
+                ],
+                "user_id": "synthetic-1",
+                "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+                "preferred_time": "09:00",
+                "preferred_frequency": 2,
+                "preferred_format": "paper",
+                "preferred_summary_length": "detailed",
+                "state_version": 1,
+                "last_signal_at": "2026-10-02T00:00:00.000Z",
+                "updated_at": "2026-10-02T00:00:00.000Z",
+                "last_decision_id": "bd_1",
+                "last_asset_id": "asset-paper",
+                "media_selection_mode": "automatic"
+              },
+              "changed_fields": [
+                "last_asset_id"
+              ],
+              "frequency_before": 2,
+              "frequency_after": 2,
+              "media_mode_before": "automatic",
+              "media_mode_after": "automatic",
+              "media_kind_before": "paper",
+              "media_kind_after": "paper",
+              "selected_asset_id": "asset-paper",
+              "outcome": "applied",
+              "reason": "no explicit preference; rotated approved media",
+              "fulfilled_at": "2026-10-02T00:00:00.000Z",
+              "decision_id": "bd_2",
+              "decided_at": "2026-10-02T00:00:00.000Z"
+            },
+            {
+              "user_id": "synthetic-1",
+              "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+              "interaction_id": "in_d1df7263cbb52af187cc4f39",
+              "nudge_id": "history",
+              "signal_type": "inbound_reply",
+              "scope": "behaviour",
+              "decision_source": "patient",
+              "effective_at": "2026-10-02T00:00:00.000Z",
+              "state_version": 3,
+              "interpretation": {
+                "explicit": false,
+                "format": null,
+                "summary_length": null,
+                "tone": null,
+                "time": null,
+                "frequency_delta": 0,
+                "action": null
+              },
+              "scores_before": {},
+              "scores_after": {},
+              "rule_applied": "fixed_schedule_baseline",
+              "previous_state": {
+                "user_id": "synthetic-1",
+                "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+                "preferred_time": "09:00",
+                "preferred_frequency": 2,
+                "preferred_format": "paper",
+                "preferred_summary_length": "detailed",
+                "format_scores": {},
+                "asset_history": [
+                  "asset-paper"
+                ],
+                "state_version": 2,
+                "last_signal_at": "2026-10-02T00:00:00.000Z",
+                "updated_at": "2026-10-02T00:00:00.000Z",
+                "last_decision_id": "bd_1",
+                "last_asset_id": "asset-paper",
+                "media_selection_mode": "automatic"
+              },
+              "next_state": {
+                "user_id": "synthetic-1",
+                "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+                "preferred_time": "09:00",
+                "preferred_frequency": 2,
+                "preferred_format": "paper",
+                "preferred_summary_length": "detailed",
+                "format_scores": {},
+                "asset_history": [
+                  "asset-paper"
+                ],
+                "state_version": 2,
+                "last_signal_at": "2026-10-02T00:00:00.000Z",
+                "updated_at": "2026-10-02T00:00:00.000Z",
+                "last_decision_id": "bd_1",
+                "last_asset_id": "asset-paper",
+                "media_selection_mode": "automatic"
+              },
+              "changed_fields": [],
+              "frequency_before": 2,
+              "frequency_after": 2,
+              "media_mode_before": "automatic",
+              "media_mode_after": "automatic",
+              "media_kind_before": "paper",
+              "media_kind_after": "paper",
+              "selected_asset_id": null,
+              "outcome": "no_change",
+              "reason": "Preference adaptation disabled in reference arm",
+              "fulfilled_at": null,
+              "decision_id": "bd_3",
+              "decided_at": "2026-10-02T00:00:00.000Z"
+            },
+            {
+              "user_id": "synthetic-1",
+              "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+              "interaction_id": null,
+              "nudge_id": null,
+              "signal_type": "scheduled_selection",
+              "scope": "behaviour",
+              "decision_source": "system",
+              "effective_at": "2026-10-02T00:00:00.000Z",
+              "state_version": 4,
+              "interpretation": {
+                "explicit": false,
+                "format": null,
+                "summary_length": null,
+                "tone": null,
+                "time": null,
+                "frequency_delta": 0,
+                "action": null
+              },
+              "scores_before": {},
+              "scores_after": {},
+              "rule_applied": "least_recently_used_rotation",
+              "previous_state": {
+                "format_scores": {},
+                "asset_history": [
+                  "asset-paper"
+                ],
+                "user_id": "synthetic-1",
+                "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+                "preferred_time": "09:00",
+                "preferred_frequency": 2,
+                "preferred_format": "paper",
+                "preferred_summary_length": "detailed",
+                "state_version": 3,
+                "last_signal_at": "2026-10-02T00:00:00.000Z",
+                "updated_at": "2026-10-02T00:00:00.000Z",
+                "last_decision_id": "bd_3",
+                "last_asset_id": "asset-paper",
+                "media_selection_mode": "automatic"
+              },
+              "next_state": {
+                "format_scores": {},
+                "asset_history": [
+                  "asset-paper",
+                  "asset-paper"
+                ],
+                "user_id": "synthetic-1",
+                "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+                "preferred_time": "09:00",
+                "preferred_frequency": 2,
+                "preferred_format": "paper",
+                "preferred_summary_length": "detailed",
+                "state_version": 3,
+                "last_signal_at": "2026-10-02T00:00:00.000Z",
+                "updated_at": "2026-10-02T00:00:00.000Z",
+                "last_decision_id": "bd_3",
+                "last_asset_id": "asset-paper",
+                "media_selection_mode": "automatic"
+              },
+              "changed_fields": [],
+              "frequency_before": 2,
+              "frequency_after": 2,
+              "media_mode_before": "automatic",
+              "media_mode_after": "automatic",
+              "media_kind_before": "paper",
+              "media_kind_after": "paper",
+              "selected_asset_id": "asset-paper",
+              "outcome": "applied",
+              "reason": "no explicit preference; rotated approved media",
+              "fulfilled_at": "2026-10-02T00:00:00.000Z",
+              "decision_id": "bd_4",
+              "decided_at": "2026-10-02T00:00:00.000Z"
+            }
+          ],
+          "interaction_events": [
+            {
+              "interaction_id": "old-positive",
+              "user_id": "synthetic-1",
+              "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+              "nudge_id": "history",
+              "event_type": "inbound_reply",
+              "body": "Thanks",
+              "event_at": "2026-09-28T00:05:00.000Z",
+              "processed_at": "2026-09-28T00:06:00.000Z"
+            },
+            {
+              "interaction_id": "in_8e44eb0554bb848643b67668",
+              "event_at": "2026-10-02T00:00:00.000Z",
+              "event_type": "inbound_reply",
+              "user_id": "synthetic-1",
+              "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+              "nudge_id": "history",
+              "wa_message_id": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "inbound_message_sid": "SM062a9bc6d696efa52f5eb63a0fcd2233",
+              "reply_to_wa_message_id": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "body": "I prefer videos",
+              "media_count": 0,
+              "correlation_method": "original_replied_message_sid",
+              "raw_payload": {
+                "from": "whatsapp:+61400000000",
+                "num_media": "0"
+              },
+              "processed_at": "2026-10-02T00:00:00.000Z"
+            },
+            {
+              "interaction_id": "in_d1df7263cbb52af187cc4f39",
+              "event_at": "2026-10-02T00:00:00.000Z",
+              "event_type": "inbound_reply",
+              "user_id": "synthetic-1",
+              "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+              "nudge_id": "history",
+              "wa_message_id": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "inbound_message_sid": "SM9256db2e8d5edd8d1338ca2729431063",
+              "reply_to_wa_message_id": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "body": "I prefer papers",
+              "media_count": 0,
+              "correlation_method": "original_replied_message_sid",
+              "raw_payload": {
+                "from": "whatsapp:+61400000000",
+                "num_media": "0"
+              },
+              "processed_at": "2026-10-02T00:00:00.000Z"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "final": {
+    "sheets": {
+      "user": {
+        "headers": [
+          "user_id",
+          "name",
+          "phone",
+          "email",
+          "user_status",
+          "doctor_id"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "user_id": "synthetic-1",
+            "name": "Synthetic Benchmark",
+            "phone": "+61400000000",
+            "user_status": "active",
+            "doctor_id": "doc-test"
+          }
+        ]
+      },
+      "questionnaire": {
+        "headers": [
+          "questionnaire_id",
+          "user_id",
+          "preferred_nudge_time",
+          "opt_in_whatsapp"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "questionnaire_id": "q1",
+            "user_id": "synthetic-1",
+            "opt_in_whatsapp": true
+          }
+        ]
+      },
+      "prescriptions": {
+        "headers": [
+          "prescription_id",
+          "user_id",
+          "doctor_id",
+          "issued_date",
+          "pillar",
+          "category",
+          "target_behavior",
+          "frequency_per_week",
+          "duration_weeks",
+          "prescription_raw_text",
+          "status"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "prescription_id": "rx-1",
+            "user_id": "synthetic-1",
+            "doctor_id": "doc-test",
+            "action_text": "Be in bed by 10pm",
+            "pillar": "sleep",
+            "category": "establish",
+            "frequency_per_week": 2,
+            "status": "active"
+          }
+        ]
+      },
+      "nudges": {
+        "headers": [
+          "nudge_id",
+          "prescription_id",
+          "user_id",
+          "nudge_type",
+          "pillar",
+          "action_text",
+          "scheduled_date",
+          "scheduled_time",
+          "message_body",
+          "message_body_alt",
+          "tone_variant",
+          "template_name",
+          "status",
+          "sent_at",
+          "reviewed_at",
+          "week_number",
+          "schedule_slot_id",
+          "category",
+          "media_selection_mode",
+          "media_override_asset_id",
+          "media_asset_id",
+          "adaptation_decision_id"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "action_text": "Be in bed by 10pm",
+            "pillar": "sleep",
+            "category": "establish",
+            "user_id": "synthetic-1",
+            "prescription_id": "rx-1",
+            "nudge_type": "reminder",
+            "message_body": "Prepare for sleep.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "scheduled_time": "09:00",
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "nudge_id": "history",
+            "scheduled_date": "2026-09-28",
+            "status": "sent",
+            "sent_at": "2026-09-28T00:00:00.000Z",
+            "media_asset_id": "asset-paper"
+          },
+          {
+            "row_number": 3,
+            "action_text": "Be in bed by 10pm",
+            "pillar": "sleep",
+            "category": "establish",
+            "user_id": "synthetic-1",
+            "prescription_id": "rx-1",
+            "nudge_type": "reminder",
+            "message_body": "Prepare for sleep.\n\nDETAILED synthetic explanation with additional context for this controlled software evaluation.\n\nSynthetic paper resource — Synthetic approved pool\nhttps://benchmark.invalid/api/r/iY0buT4dfeXAovydRTH-WM9urrsi68B-",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "scheduled_time": "09:00",
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "schedule_slot_id": "slot-0",
+            "source_nudge_id": "history",
+            "day": "monday",
+            "status": "approved",
+            "start_date": "2026-10-05",
+            "end_date": "2026-10-18",
+            "nudge_id": "schd_slot-0_20261005",
+            "scheduled_date": "2026-10-05",
+            "sent_at": "",
+            "media_asset_id": "asset-paper",
+            "adaptation_decision_id": "bd_2"
+          },
+          {
+            "row_number": 4,
+            "action_text": "Be in bed by 10pm",
+            "pillar": "sleep",
+            "category": "establish",
+            "user_id": "synthetic-1",
+            "prescription_id": "rx-1",
+            "nudge_type": "reminder",
+            "message_body": "Prepare for sleep.\n\nDETAILED synthetic explanation with additional context for this controlled software evaluation.\n\nSynthetic paper resource — Synthetic approved pool\nhttps://benchmark.invalid/api/r/ytpfn5rzXjtNfOu_qs8GfFaKOSNGg1rk",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "scheduled_time": "09:00",
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "schedule_slot_id": "slot-1",
+            "source_nudge_id": "history",
+            "day": "thursday",
+            "status": "approved",
+            "start_date": "2026-10-05",
+            "end_date": "2026-10-18",
+            "nudge_id": "schd_slot-1_20261008",
+            "scheduled_date": "2026-10-08",
+            "sent_at": "",
+            "media_asset_id": "asset-paper",
+            "adaptation_decision_id": "bd_4"
+          }
+        ]
+      },
+      "weekly_schedule": {
+        "headers": [
+          "schedule_slot_id",
+          "user_id",
+          "source_nudge_id",
+          "prescription_id",
+          "day",
+          "scheduled_time",
+          "nudge_type",
+          "pillar",
+          "action_text",
+          "tone_variant",
+          "message_body",
+          "message_body_alt",
+          "template_name",
+          "status",
+          "start_date",
+          "end_date",
+          "created_at",
+          "updated_at",
+          "category",
+          "media_selection_mode",
+          "media_override_asset_id",
+          "media_asset_id",
+          "adaptation_decision_id"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "action_text": "Be in bed by 10pm",
+            "pillar": "sleep",
+            "category": "establish",
+            "user_id": "synthetic-1",
+            "prescription_id": "rx-1",
+            "nudge_type": "reminder",
+            "message_body": "Prepare for sleep.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "scheduled_time": "09:00",
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "schedule_slot_id": "slot-0",
+            "source_nudge_id": "history",
+            "day": "monday",
+            "status": "active",
+            "start_date": "2026-10-05",
+            "end_date": "2026-10-18"
+          },
+          {
+            "row_number": 3,
+            "action_text": "Be in bed by 10pm",
+            "pillar": "sleep",
+            "category": "establish",
+            "user_id": "synthetic-1",
+            "prescription_id": "rx-1",
+            "nudge_type": "reminder",
+            "message_body": "Prepare for sleep.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "scheduled_time": "09:00",
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "schedule_slot_id": "slot-1",
+            "source_nudge_id": "history",
+            "day": "thursday",
+            "status": "active",
+            "start_date": "2026-10-05",
+            "end_date": "2026-10-18"
+          }
+        ]
+      },
+      "schedule_state": {
+        "headers": [
+          "schedule_id",
+          "nudge_id",
+          "user_id",
+          "parent_nudge_id",
+          "status",
+          "sent_at",
+          "delivered_at",
+          "wa_message_id",
+          "tone_sent",
+          "last_updated",
+          "read_at",
+          "interacted_at",
+          "last_inbound_message_sid",
+          "delivery_attempt_id",
+          "submission_started_at"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "schedule_id": "state-history",
+            "nudge_id": "history",
+            "user_id": "synthetic-1",
+            "status": "delivered",
+            "sent_at": "2026-09-28T00:00:00.000Z",
+            "delivered_at": "2026-09-28T00:01:00.000Z",
+            "read_at": "",
+            "wa_message_id": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "interacted_at": "2026-10-02T00:00:00.000Z",
+            "last_inbound_message_sid": "SM9256db2e8d5edd8d1338ca2729431063",
+            "last_updated": "2026-10-02T00:00:00.000Z"
+          },
+          {
+            "row_number": 3,
+            "schedule_id": "state-schd_slot-0_20261005",
+            "nudge_id": "schd_slot-0_20261005",
+            "user_id": "synthetic-1",
+            "status": "sending",
+            "sent_at": "",
+            "delivered_at": "",
+            "read_at": "",
+            "wa_message_id": "",
+            "delivery_attempt_id": "att_c7fad162-c265-4b29-8184-697f578b5989",
+            "submission_started_at": "2026-10-02T00:00:00.000Z",
+            "last_updated": "2026-10-02T00:00:00.000Z"
+          },
+          {
+            "row_number": 4,
+            "schedule_id": "state-schd_slot-1_20261008",
+            "nudge_id": "schd_slot-1_20261008",
+            "user_id": "synthetic-1",
+            "status": "sending",
+            "sent_at": "",
+            "delivered_at": "",
+            "read_at": "",
+            "wa_message_id": "",
+            "delivery_attempt_id": "att_4b2cf066-7ca4-4083-9e31-b7dcfb17c2bf",
+            "submission_started_at": "2026-10-02T00:00:00.000Z",
+            "last_updated": "2026-10-02T00:00:00.000Z"
+          }
+        ]
+      },
+      "delivery_events": {
+        "headers": [
+          "event_id",
+          "event_at",
+          "wa_message_id",
+          "nudge_id",
+          "user_id",
+          "status",
+          "error_code",
+          "error_message",
+          "channel_to",
+          "raw_payload"
+        ],
+        "rows": []
+      },
+      "media_assignments": {
+        "headers": [
+          "assignment_id",
+          "assigned_at",
+          "user_id",
+          "nudge_id",
+          "behaviour_key",
+          "media_asset_id",
+          "adaptation_decision_id",
+          "media_kind",
+          "selection_mode",
+          "source_url",
+          "tracked_url",
+          "planned_frequency",
+          "scheduled_at",
+          "sent_at",
+          "delivered_at",
+          "read_at",
+          "visited_at",
+          "replied_at",
+          "send_to_read_hours",
+          "send_to_visit_hours",
+          "send_to_reply_hours"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "assignment_id": "ma_b29c1e31e6586fc4a458b485",
+            "assigned_at": "2026-10-02T00:00:00.000Z",
+            "user_id": "synthetic-1",
+            "nudge_id": "schd_slot-0_20261005",
+            "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+            "media_asset_id": "asset-paper",
+            "adaptation_decision_id": "bd_2",
+            "media_kind": "paper",
+            "selection_mode": "automatic",
+            "source_url": "https://example.test/paper",
+            "tracked_url": "https://benchmark.invalid/api/r/iY0buT4dfeXAovydRTH-WM9urrsi68B-",
+            "planned_frequency": 2,
+            "scheduled_at": "2026-10-05T09:00:00",
+            "sent_at": "",
+            "delivered_at": "",
+            "read_at": "",
+            "visited_at": "",
+            "replied_at": "",
+            "send_to_read_hours": "",
+            "send_to_visit_hours": "",
+            "send_to_reply_hours": ""
+          },
+          {
+            "row_number": 3,
+            "assignment_id": "ma_18867da034b284e9723a551a",
+            "assigned_at": "2026-10-02T00:00:00.000Z",
+            "user_id": "synthetic-1",
+            "nudge_id": "schd_slot-1_20261008",
+            "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+            "media_asset_id": "asset-paper",
+            "adaptation_decision_id": "bd_4",
+            "media_kind": "paper",
+            "selection_mode": "automatic",
+            "source_url": "https://example.test/paper",
+            "tracked_url": "https://benchmark.invalid/api/r/ytpfn5rzXjtNfOu_qs8GfFaKOSNGg1rk",
+            "planned_frequency": 2,
+            "scheduled_at": "2026-10-08T09:00:00",
+            "sent_at": "",
+            "delivered_at": "",
+            "read_at": "",
+            "visited_at": "",
+            "replied_at": "",
+            "send_to_read_hours": "",
+            "send_to_visit_hours": "",
+            "send_to_reply_hours": ""
+          }
+        ]
+      },
+      "interaction_events": {
+        "headers": [
+          "interaction_id",
+          "event_at",
+          "inbound_message_sid",
+          "user_id",
+          "from_phone",
+          "reply_to_wa_message_id",
+          "nudge_id",
+          "body",
+          "media_count",
+          "correlation_method",
+          "ack_status"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "interaction_id": "in_8e44eb0554bb848643b67668",
+            "event_at": "2026-10-02T00:00:00.000Z",
+            "inbound_message_sid": "SM062a9bc6d696efa52f5eb63a0fcd2233",
+            "user_id": "synthetic-1",
+            "from_phone": "+61400000000",
+            "reply_to_wa_message_id": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "nudge_id": "history",
+            "body": "I prefer videos",
+            "media_count": 0,
+            "correlation_method": "original_replied_message_sid",
+            "ack_status": "sent"
+          },
+          {
+            "row_number": 3,
+            "interaction_id": "in_d1df7263cbb52af187cc4f39",
+            "event_at": "2026-10-02T00:00:00.000Z",
+            "inbound_message_sid": "SM9256db2e8d5edd8d1338ca2729431063",
+            "user_id": "synthetic-1",
+            "from_phone": "+61400000000",
+            "reply_to_wa_message_id": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "nudge_id": "history",
+            "body": "I prefer papers",
+            "media_count": 0,
+            "correlation_method": "original_replied_message_sid",
+            "ack_status": "sent"
+          }
+        ]
+      },
+      "adaptation_decisions": {
+        "headers": [
+          "decision_id",
+          "decided_at",
+          "user_id",
+          "behaviour_key",
+          "interaction_id",
+          "signal_type",
+          "rule_applied",
+          "outcome",
+          "reason",
+          "selected_asset_id",
+          "interpretation",
+          "previous_state",
+          "next_state",
+          "scope",
+          "decision_source",
+          "effective_at",
+          "state_version",
+          "changed_fields",
+          "frequency_before",
+          "frequency_after",
+          "media_mode_before",
+          "media_mode_after",
+          "media_kind_before",
+          "media_kind_after",
+          "nudge_id"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "decision_id": "bd_2",
+            "decided_at": "2026-10-02T00:00:00.000Z",
+            "user_id": "synthetic-1",
+            "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+            "interaction_id": "",
+            "signal_type": "scheduled_selection",
+            "rule_applied": "least_recently_used_rotation",
+            "outcome": "applied",
+            "reason": "no explicit preference; rotated approved media",
+            "selected_asset_id": "asset-paper",
+            "interpretation": "{\"explicit\":false,\"format\":null,\"summary_length\":null,\"tone\":null,\"time\":null,\"frequency_delta\":0,\"action\":null}",
+            "previous_state": "{\"format_scores\":{},\"asset_history\":[],\"user_id\":\"synthetic-1\",\"behaviour_key\":\"467b939135f0e034c27cafa259533f1e\",\"preferred_time\":\"09:00\",\"preferred_frequency\":2,\"preferred_format\":\"paper\",\"preferred_summary_length\":\"detailed\",\"state_version\":1,\"last_signal_at\":\"2026-10-02T00:00:00.000Z\",\"updated_at\":\"2026-10-02T00:00:00.000Z\",\"last_decision_id\":\"bd_1\",\"media_selection_mode\":\"automatic\"}",
+            "next_state": "{\"format_scores\":{},\"asset_history\":[\"asset-paper\"],\"user_id\":\"synthetic-1\",\"behaviour_key\":\"467b939135f0e034c27cafa259533f1e\",\"preferred_time\":\"09:00\",\"preferred_frequency\":2,\"preferred_format\":\"paper\",\"preferred_summary_length\":\"detailed\",\"state_version\":1,\"last_signal_at\":\"2026-10-02T00:00:00.000Z\",\"updated_at\":\"2026-10-02T00:00:00.000Z\",\"last_decision_id\":\"bd_1\",\"last_asset_id\":\"asset-paper\",\"media_selection_mode\":\"automatic\"}",
+            "scope": "behaviour",
+            "decision_source": "system",
+            "effective_at": "2026-10-02T00:00:00.000Z",
+            "state_version": 2,
+            "changed_fields": "[\"last_asset_id\"]",
+            "frequency_before": 2,
+            "frequency_after": 2,
+            "media_mode_before": "automatic",
+            "media_mode_after": "automatic",
+            "media_kind_before": "paper",
+            "media_kind_after": "paper",
+            "nudge_id": "schd_slot-0_20261005"
+          },
+          {
+            "row_number": 3,
+            "decision_id": "bd_4",
+            "decided_at": "2026-10-02T00:00:00.000Z",
+            "user_id": "synthetic-1",
+            "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+            "interaction_id": "",
+            "signal_type": "scheduled_selection",
+            "rule_applied": "least_recently_used_rotation",
+            "outcome": "applied",
+            "reason": "no explicit preference; rotated approved media",
+            "selected_asset_id": "asset-paper",
+            "interpretation": "{\"explicit\":false,\"format\":null,\"summary_length\":null,\"tone\":null,\"time\":null,\"frequency_delta\":0,\"action\":null}",
+            "previous_state": "{\"format_scores\":{},\"asset_history\":[\"asset-paper\"],\"user_id\":\"synthetic-1\",\"behaviour_key\":\"467b939135f0e034c27cafa259533f1e\",\"preferred_time\":\"09:00\",\"preferred_frequency\":2,\"preferred_format\":\"paper\",\"preferred_summary_length\":\"detailed\",\"state_version\":3,\"last_signal_at\":\"2026-10-02T00:00:00.000Z\",\"updated_at\":\"2026-10-02T00:00:00.000Z\",\"last_decision_id\":\"bd_3\",\"last_asset_id\":\"asset-paper\",\"media_selection_mode\":\"automatic\"}",
+            "next_state": "{\"format_scores\":{},\"asset_history\":[\"asset-paper\",\"asset-paper\"],\"user_id\":\"synthetic-1\",\"behaviour_key\":\"467b939135f0e034c27cafa259533f1e\",\"preferred_time\":\"09:00\",\"preferred_frequency\":2,\"preferred_format\":\"paper\",\"preferred_summary_length\":\"detailed\",\"state_version\":3,\"last_signal_at\":\"2026-10-02T00:00:00.000Z\",\"updated_at\":\"2026-10-02T00:00:00.000Z\",\"last_decision_id\":\"bd_3\",\"last_asset_id\":\"asset-paper\",\"media_selection_mode\":\"automatic\"}",
+            "scope": "behaviour",
+            "decision_source": "system",
+            "effective_at": "2026-10-02T00:00:00.000Z",
+            "state_version": 4,
+            "changed_fields": "[]",
+            "frequency_before": 2,
+            "frequency_after": 2,
+            "media_mode_before": "automatic",
+            "media_mode_after": "automatic",
+            "media_kind_before": "paper",
+            "media_kind_after": "paper",
+            "nudge_id": "schd_slot-1_20261008"
+          }
+        ]
+      },
+      "patient_adaptation_state": {
+        "headers": [
+          "user_id",
+          "scope",
+          "behaviour_key",
+          "state_version",
+          "preferred_format",
+          "preferred_frequency",
+          "planned_frequency",
+          "delivered_frequency",
+          "observed_frequency",
+          "last_change_at",
+          "updated_at"
+        ],
+        "rows": []
+      },
+      "patient_adaptation_timeline": {
+        "headers": [
+          "user_id",
+          "event_id",
+          "event_at",
+          "event_type",
+          "source",
+          "scope",
+          "behaviour_key",
+          "signal",
+          "rule_applied",
+          "outcome",
+          "reason",
+          "previous_state",
+          "new_state",
+          "changed_fields",
+          "selected_asset_id",
+          "selected_media_kind",
+          "nudge_id",
+          "interaction_id"
+        ],
+        "rows": []
+      }
+    },
+    "database": {
+      "adaptation_envelopes": [
+        {
+          "action_text": "Be in bed by 10pm",
+          "pillar": "sleep",
+          "category": "establish",
+          "user_id": "synthetic-1",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "status": "approved",
+          "automatic_schedule_apply": true,
+          "formats": [
+            "paper",
+            "video"
+          ],
+          "summary_lengths": [
+            "short",
+            "detailed"
+          ],
+          "tones": [
+            "encouraging",
+            "neutral_informational"
+          ],
+          "earliest_time": "08:00",
+          "latest_time": "20:00",
+          "frequency_min": 1,
+          "frequency_max": 3,
+          "action_alternatives": [
+            "Be in bed by 10pm"
+          ],
+          "approved_asset_ids": [
+            "asset-paper",
+            "asset-video"
+          ]
+        }
+      ],
+      "media_assets": [
+        {
+          "asset_id": "asset-paper",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "media_kind": "paper",
+          "status": "approved",
+          "source_url": "https://example.test/paper",
+          "title": "Synthetic paper resource",
+          "source_name": "Synthetic approved pool",
+          "short_summary": "SHORT synthetic explanation.",
+          "detailed_summary": "DETAILED synthetic explanation with additional context for this controlled software evaluation."
+        },
+        {
+          "asset_id": "asset-video",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "media_kind": "video",
+          "status": "approved",
+          "source_url": "https://example.test/video",
+          "title": "Synthetic video resource",
+          "source_name": "Synthetic approved pool",
+          "short_summary": "SHORT synthetic explanation.",
+          "detailed_summary": "DETAILED synthetic explanation with additional context for this controlled software evaluation."
+        }
+      ],
+      "media_candidates": [],
+      "media_search_jobs": [],
+      "tracked_links": [
+        {
+          "token": "iY0buT4dfeXAovydRTH-WM9urrsi68B-",
+          "expires_at": "2027-03-31T00:00:00.000Z",
+          "asset_id": "asset-paper",
+          "user_id": "synthetic-1",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "nudge_id": "schd_slot-0_20261005",
+          "target_url": "https://example.test/paper"
+        },
+        {
+          "token": "ytpfn5rzXjtNfOu_qs8GfFaKOSNGg1rk",
+          "expires_at": "2027-03-31T00:00:00.000Z",
+          "asset_id": "asset-paper",
+          "user_id": "synthetic-1",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "nudge_id": "schd_slot-1_20261008",
+          "target_url": "https://example.test/paper"
+        }
+      ],
+      "patient_adaptation_state": [],
+      "user_adaptation_state": [
+        {
+          "user_id": "synthetic-1",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "preferred_time": "09:00",
+          "preferred_frequency": 2,
+          "preferred_format": "paper",
+          "preferred_summary_length": "detailed",
+          "format_scores": {},
+          "asset_history": [
+            "asset-paper",
+            "asset-paper"
+          ],
+          "state_version": 4,
+          "last_signal_at": "2026-10-02T00:00:00.000Z",
+          "updated_at": "2026-10-02T00:00:00.000Z",
+          "last_decision_id": "bd_3",
+          "last_asset_id": "asset-paper",
+          "media_selection_mode": "automatic"
+        }
+      ],
+      "adaptation_decisions": [
+        {
+          "user_id": "synthetic-1",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "interaction_id": "in_8e44eb0554bb848643b67668",
+          "nudge_id": "history",
+          "signal_type": "inbound_reply",
+          "scope": "behaviour",
+          "decision_source": "patient",
+          "effective_at": "2026-10-02T00:00:00.000Z",
+          "state_version": 1,
+          "interpretation": {
+            "explicit": false,
+            "format": null,
+            "summary_length": null,
+            "tone": null,
+            "time": null,
+            "frequency_delta": 0,
+            "action": null
+          },
+          "scores_before": {},
+          "scores_after": {},
+          "rule_applied": "fixed_schedule_baseline",
+          "previous_state": {
+            "user_id": "synthetic-1",
+            "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+            "preferred_time": "09:00",
+            "preferred_frequency": 2,
+            "preferred_format": "paper",
+            "preferred_summary_length": "detailed",
+            "format_scores": {},
+            "asset_history": []
+          },
+          "next_state": {
+            "user_id": "synthetic-1",
+            "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+            "preferred_time": "09:00",
+            "preferred_frequency": 2,
+            "preferred_format": "paper",
+            "preferred_summary_length": "detailed",
+            "format_scores": {},
+            "asset_history": []
+          },
+          "changed_fields": [],
+          "frequency_before": 2,
+          "frequency_after": 2,
+          "media_mode_before": null,
+          "media_mode_after": null,
+          "media_kind_before": "paper",
+          "media_kind_after": "paper",
+          "selected_asset_id": null,
+          "outcome": "no_change",
+          "reason": "Preference adaptation disabled in reference arm",
+          "fulfilled_at": null,
+          "decision_id": "bd_1",
+          "decided_at": "2026-10-02T00:00:00.000Z"
+        },
+        {
+          "user_id": "synthetic-1",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "interaction_id": null,
+          "nudge_id": null,
+          "signal_type": "scheduled_selection",
+          "scope": "behaviour",
+          "decision_source": "system",
+          "effective_at": "2026-10-02T00:00:00.000Z",
+          "state_version": 2,
+          "interpretation": {
+            "explicit": false,
+            "format": null,
+            "summary_length": null,
+            "tone": null,
+            "time": null,
+            "frequency_delta": 0,
+            "action": null
+          },
+          "scores_before": {},
+          "scores_after": {},
+          "rule_applied": "least_recently_used_rotation",
+          "previous_state": {
+            "format_scores": {},
+            "asset_history": [],
+            "user_id": "synthetic-1",
+            "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+            "preferred_time": "09:00",
+            "preferred_frequency": 2,
+            "preferred_format": "paper",
+            "preferred_summary_length": "detailed",
+            "state_version": 1,
+            "last_signal_at": "2026-10-02T00:00:00.000Z",
+            "updated_at": "2026-10-02T00:00:00.000Z",
+            "last_decision_id": "bd_1",
+            "media_selection_mode": "automatic"
+          },
+          "next_state": {
+            "format_scores": {},
+            "asset_history": [
+              "asset-paper"
+            ],
+            "user_id": "synthetic-1",
+            "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+            "preferred_time": "09:00",
+            "preferred_frequency": 2,
+            "preferred_format": "paper",
+            "preferred_summary_length": "detailed",
+            "state_version": 1,
+            "last_signal_at": "2026-10-02T00:00:00.000Z",
+            "updated_at": "2026-10-02T00:00:00.000Z",
+            "last_decision_id": "bd_1",
+            "last_asset_id": "asset-paper",
+            "media_selection_mode": "automatic"
+          },
+          "changed_fields": [
+            "last_asset_id"
+          ],
+          "frequency_before": 2,
+          "frequency_after": 2,
+          "media_mode_before": "automatic",
+          "media_mode_after": "automatic",
+          "media_kind_before": "paper",
+          "media_kind_after": "paper",
+          "selected_asset_id": "asset-paper",
+          "outcome": "applied",
+          "reason": "no explicit preference; rotated approved media",
+          "fulfilled_at": "2026-10-02T00:00:00.000Z",
+          "decision_id": "bd_2",
+          "decided_at": "2026-10-02T00:00:00.000Z"
+        },
+        {
+          "user_id": "synthetic-1",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "interaction_id": "in_d1df7263cbb52af187cc4f39",
+          "nudge_id": "history",
+          "signal_type": "inbound_reply",
+          "scope": "behaviour",
+          "decision_source": "patient",
+          "effective_at": "2026-10-02T00:00:00.000Z",
+          "state_version": 3,
+          "interpretation": {
+            "explicit": false,
+            "format": null,
+            "summary_length": null,
+            "tone": null,
+            "time": null,
+            "frequency_delta": 0,
+            "action": null
+          },
+          "scores_before": {},
+          "scores_after": {},
+          "rule_applied": "fixed_schedule_baseline",
+          "previous_state": {
+            "user_id": "synthetic-1",
+            "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+            "preferred_time": "09:00",
+            "preferred_frequency": 2,
+            "preferred_format": "paper",
+            "preferred_summary_length": "detailed",
+            "format_scores": {},
+            "asset_history": [
+              "asset-paper"
+            ],
+            "state_version": 2,
+            "last_signal_at": "2026-10-02T00:00:00.000Z",
+            "updated_at": "2026-10-02T00:00:00.000Z",
+            "last_decision_id": "bd_1",
+            "last_asset_id": "asset-paper",
+            "media_selection_mode": "automatic"
+          },
+          "next_state": {
+            "user_id": "synthetic-1",
+            "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+            "preferred_time": "09:00",
+            "preferred_frequency": 2,
+            "preferred_format": "paper",
+            "preferred_summary_length": "detailed",
+            "format_scores": {},
+            "asset_history": [
+              "asset-paper"
+            ],
+            "state_version": 2,
+            "last_signal_at": "2026-10-02T00:00:00.000Z",
+            "updated_at": "2026-10-02T00:00:00.000Z",
+            "last_decision_id": "bd_1",
+            "last_asset_id": "asset-paper",
+            "media_selection_mode": "automatic"
+          },
+          "changed_fields": [],
+          "frequency_before": 2,
+          "frequency_after": 2,
+          "media_mode_before": "automatic",
+          "media_mode_after": "automatic",
+          "media_kind_before": "paper",
+          "media_kind_after": "paper",
+          "selected_asset_id": null,
+          "outcome": "no_change",
+          "reason": "Preference adaptation disabled in reference arm",
+          "fulfilled_at": null,
+          "decision_id": "bd_3",
+          "decided_at": "2026-10-02T00:00:00.000Z"
+        },
+        {
+          "user_id": "synthetic-1",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "interaction_id": null,
+          "nudge_id": null,
+          "signal_type": "scheduled_selection",
+          "scope": "behaviour",
+          "decision_source": "system",
+          "effective_at": "2026-10-02T00:00:00.000Z",
+          "state_version": 4,
+          "interpretation": {
+            "explicit": false,
+            "format": null,
+            "summary_length": null,
+            "tone": null,
+            "time": null,
+            "frequency_delta": 0,
+            "action": null
+          },
+          "scores_before": {},
+          "scores_after": {},
+          "rule_applied": "least_recently_used_rotation",
+          "previous_state": {
+            "format_scores": {},
+            "asset_history": [
+              "asset-paper"
+            ],
+            "user_id": "synthetic-1",
+            "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+            "preferred_time": "09:00",
+            "preferred_frequency": 2,
+            "preferred_format": "paper",
+            "preferred_summary_length": "detailed",
+            "state_version": 3,
+            "last_signal_at": "2026-10-02T00:00:00.000Z",
+            "updated_at": "2026-10-02T00:00:00.000Z",
+            "last_decision_id": "bd_3",
+            "last_asset_id": "asset-paper",
+            "media_selection_mode": "automatic"
+          },
+          "next_state": {
+            "format_scores": {},
+            "asset_history": [
+              "asset-paper",
+              "asset-paper"
+            ],
+            "user_id": "synthetic-1",
+            "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+            "preferred_time": "09:00",
+            "preferred_frequency": 2,
+            "preferred_format": "paper",
+            "preferred_summary_length": "detailed",
+            "state_version": 3,
+            "last_signal_at": "2026-10-02T00:00:00.000Z",
+            "updated_at": "2026-10-02T00:00:00.000Z",
+            "last_decision_id": "bd_3",
+            "last_asset_id": "asset-paper",
+            "media_selection_mode": "automatic"
+          },
+          "changed_fields": [],
+          "frequency_before": 2,
+          "frequency_after": 2,
+          "media_mode_before": "automatic",
+          "media_mode_after": "automatic",
+          "media_kind_before": "paper",
+          "media_kind_after": "paper",
+          "selected_asset_id": "asset-paper",
+          "outcome": "applied",
+          "reason": "no explicit preference; rotated approved media",
+          "fulfilled_at": "2026-10-02T00:00:00.000Z",
+          "decision_id": "bd_4",
+          "decided_at": "2026-10-02T00:00:00.000Z"
+        }
+      ],
+      "interaction_events": [
+        {
+          "interaction_id": "old-positive",
+          "user_id": "synthetic-1",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "nudge_id": "history",
+          "event_type": "inbound_reply",
+          "body": "Thanks",
+          "event_at": "2026-09-28T00:05:00.000Z",
+          "processed_at": "2026-09-28T00:06:00.000Z"
+        },
+        {
+          "interaction_id": "in_8e44eb0554bb848643b67668",
+          "event_at": "2026-10-02T00:00:00.000Z",
+          "event_type": "inbound_reply",
+          "user_id": "synthetic-1",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "nudge_id": "history",
+          "wa_message_id": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "inbound_message_sid": "SM062a9bc6d696efa52f5eb63a0fcd2233",
+          "reply_to_wa_message_id": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "body": "I prefer videos",
+          "media_count": 0,
+          "correlation_method": "original_replied_message_sid",
+          "raw_payload": {
+            "from": "whatsapp:+61400000000",
+            "num_media": "0"
+          },
+          "processed_at": "2026-10-02T00:00:00.000Z"
+        },
+        {
+          "interaction_id": "in_d1df7263cbb52af187cc4f39",
+          "event_at": "2026-10-02T00:00:00.000Z",
+          "event_type": "inbound_reply",
+          "user_id": "synthetic-1",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "nudge_id": "history",
+          "wa_message_id": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "inbound_message_sid": "SM9256db2e8d5edd8d1338ca2729431063",
+          "reply_to_wa_message_id": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "body": "I prefer papers",
+          "media_count": 0,
+          "correlation_method": "original_replied_message_sid",
+          "raw_payload": {
+            "from": "whatsapp:+61400000000",
+            "num_media": "0"
+          },
+          "processed_at": "2026-10-02T00:00:00.000Z"
+        }
+      ]
+    }
+  },
+  "database_requests": [
+    {
+      "table": "interaction_events",
+      "method": "POST",
+      "query": "?on_conflict=interaction_id",
+      "payload": {
+        "interaction_id": "in_8e44eb0554bb848643b67668",
+        "event_at": "2026-10-02T00:00:00.000Z",
+        "event_type": "inbound_reply",
+        "user_id": "synthetic-1",
+        "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+        "nudge_id": "history",
+        "wa_message_id": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "inbound_message_sid": "SM062a9bc6d696efa52f5eb63a0fcd2233",
+        "reply_to_wa_message_id": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "body": "I prefer videos",
+        "media_count": 0,
+        "correlation_method": "original_replied_message_sid",
+        "raw_payload": {
+          "from": "whatsapp:+61400000000",
+          "num_media": "0"
+        }
+      }
+    },
+    {
+      "table": "interaction_events",
+      "method": "GET",
+      "query": "?processed_at=is.null&event_type=in.(inbound_reply,link_visit)&select=*&order=event_at.asc&limit=1",
+      "payload": null
+    },
+    {
+      "table": "user_adaptation_state",
+      "method": "POST",
+      "query": "?on_conflict=user_id,behaviour_key",
+      "payload": {
+        "user_id": "synthetic-1",
+        "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+        "preferred_time": "09:00",
+        "preferred_frequency": 2,
+        "preferred_format": "paper",
+        "preferred_summary_length": "detailed",
+        "format_scores": {},
+        "asset_history": [],
+        "state_version": 1,
+        "last_signal_at": "2026-10-02T00:00:00.000Z",
+        "updated_at": "2026-10-02T00:00:00.000Z"
+      }
+    },
+    {
+      "table": "adaptation_decisions",
+      "method": "POST",
+      "query": "",
+      "payload": {
+        "user_id": "synthetic-1",
+        "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+        "interaction_id": "in_8e44eb0554bb848643b67668",
+        "nudge_id": "history",
+        "signal_type": "inbound_reply",
+        "scope": "behaviour",
+        "decision_source": "patient",
+        "effective_at": "2026-10-02T00:00:00.000Z",
+        "state_version": 1,
+        "interpretation": {
+          "explicit": false,
+          "format": null,
+          "summary_length": null,
+          "tone": null,
+          "time": null,
+          "frequency_delta": 0,
+          "action": null
+        },
+        "scores_before": {},
+        "scores_after": {},
+        "rule_applied": "fixed_schedule_baseline",
+        "previous_state": {
+          "user_id": "synthetic-1",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "preferred_time": "09:00",
+          "preferred_frequency": 2,
+          "preferred_format": "paper",
+          "preferred_summary_length": "detailed",
+          "format_scores": {},
+          "asset_history": []
+        },
+        "next_state": {
+          "user_id": "synthetic-1",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "preferred_time": "09:00",
+          "preferred_frequency": 2,
+          "preferred_format": "paper",
+          "preferred_summary_length": "detailed",
+          "format_scores": {},
+          "asset_history": []
+        },
+        "changed_fields": [],
+        "frequency_before": 2,
+        "frequency_after": 2,
+        "media_mode_before": null,
+        "media_mode_after": null,
+        "media_kind_before": "paper",
+        "media_kind_after": "paper",
+        "selected_asset_id": null,
+        "outcome": "no_change",
+        "reason": "Preference adaptation disabled in reference arm",
+        "fulfilled_at": null
+      }
+    },
+    {
+      "table": "user_adaptation_state",
+      "method": "PATCH",
+      "query": "?user_id=eq.synthetic-1&behaviour_key=eq.467b939135f0e034c27cafa259533f1e",
+      "payload": {
+        "last_decision_id": "bd_1"
+      }
+    },
+    {
+      "table": "interaction_events",
+      "method": "PATCH",
+      "query": "?interaction_id=eq.in_8e44eb0554bb848643b67668",
+      "payload": {
+        "processed_at": "2026-10-02T00:00:00.000Z"
+      }
+    },
+    {
+      "table": "adaptation_envelopes",
+      "method": "GET",
+      "query": "?user_id=eq.synthetic-1&behaviour_key=eq.467b939135f0e034c27cafa259533f1e&status=eq.approved&select=*",
+      "payload": null
+    },
+    {
+      "table": "media_assets",
+      "method": "GET",
+      "query": "?behaviour_key=eq.467b939135f0e034c27cafa259533f1e&status=eq.approved&select=*",
+      "payload": null
+    },
+    {
+      "table": "user_adaptation_state",
+      "method": "GET",
+      "query": "?user_id=eq.synthetic-1&behaviour_key=eq.467b939135f0e034c27cafa259533f1e&select=*",
+      "payload": null
+    },
+    {
+      "table": "user_adaptation_state",
+      "method": "POST",
+      "query": "?on_conflict=user_id,behaviour_key",
+      "payload": {
+        "format_scores": {},
+        "asset_history": [
+          "asset-paper"
+        ],
+        "user_id": "synthetic-1",
+        "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+        "preferred_time": "09:00",
+        "preferred_frequency": 2,
+        "preferred_format": "paper",
+        "preferred_summary_length": "detailed",
+        "state_version": 2,
+        "last_signal_at": "2026-10-02T00:00:00.000Z",
+        "updated_at": "2026-10-02T00:00:00.000Z",
+        "last_decision_id": "bd_1",
+        "last_asset_id": "asset-paper",
+        "media_selection_mode": "automatic"
+      }
+    },
+    {
+      "table": "adaptation_decisions",
+      "method": "POST",
+      "query": "",
+      "payload": {
+        "user_id": "synthetic-1",
+        "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+        "interaction_id": null,
+        "nudge_id": null,
+        "signal_type": "scheduled_selection",
+        "scope": "behaviour",
+        "decision_source": "system",
+        "effective_at": "2026-10-02T00:00:00.000Z",
+        "state_version": 2,
+        "interpretation": {
+          "explicit": false,
+          "format": null,
+          "summary_length": null,
+          "tone": null,
+          "time": null,
+          "frequency_delta": 0,
+          "action": null
+        },
+        "scores_before": {},
+        "scores_after": {},
+        "rule_applied": "least_recently_used_rotation",
+        "previous_state": {
+          "format_scores": {},
+          "asset_history": [],
+          "user_id": "synthetic-1",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "preferred_time": "09:00",
+          "preferred_frequency": 2,
+          "preferred_format": "paper",
+          "preferred_summary_length": "detailed",
+          "state_version": 1,
+          "last_signal_at": "2026-10-02T00:00:00.000Z",
+          "updated_at": "2026-10-02T00:00:00.000Z",
+          "last_decision_id": "bd_1",
+          "media_selection_mode": "automatic"
+        },
+        "next_state": {
+          "format_scores": {},
+          "asset_history": [
+            "asset-paper"
+          ],
+          "user_id": "synthetic-1",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "preferred_time": "09:00",
+          "preferred_frequency": 2,
+          "preferred_format": "paper",
+          "preferred_summary_length": "detailed",
+          "state_version": 1,
+          "last_signal_at": "2026-10-02T00:00:00.000Z",
+          "updated_at": "2026-10-02T00:00:00.000Z",
+          "last_decision_id": "bd_1",
+          "last_asset_id": "asset-paper",
+          "media_selection_mode": "automatic"
+        },
+        "changed_fields": [
+          "last_asset_id"
+        ],
+        "frequency_before": 2,
+        "frequency_after": 2,
+        "media_mode_before": "automatic",
+        "media_mode_after": "automatic",
+        "media_kind_before": "paper",
+        "media_kind_after": "paper",
+        "selected_asset_id": "asset-paper",
+        "outcome": "applied",
+        "reason": "no explicit preference; rotated approved media",
+        "fulfilled_at": "2026-10-02T00:00:00.000Z"
+      }
+    },
+    {
+      "table": "tracked_links",
+      "method": "POST",
+      "query": "",
+      "payload": {
+        "token": "iY0buT4dfeXAovydRTH-WM9urrsi68B-",
+        "expires_at": "2027-03-31T00:00:00.000Z",
+        "asset_id": "asset-paper",
+        "user_id": "synthetic-1",
+        "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+        "nudge_id": "schd_slot-0_20261005",
+        "target_url": "https://example.test/paper"
+      }
+    },
+    {
+      "table": "interaction_events",
+      "method": "POST",
+      "query": "?on_conflict=interaction_id",
+      "payload": {
+        "interaction_id": "in_d1df7263cbb52af187cc4f39",
+        "event_at": "2026-10-02T00:00:00.000Z",
+        "event_type": "inbound_reply",
+        "user_id": "synthetic-1",
+        "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+        "nudge_id": "history",
+        "wa_message_id": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "inbound_message_sid": "SM9256db2e8d5edd8d1338ca2729431063",
+        "reply_to_wa_message_id": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "body": "I prefer papers",
+        "media_count": 0,
+        "correlation_method": "original_replied_message_sid",
+        "raw_payload": {
+          "from": "whatsapp:+61400000000",
+          "num_media": "0"
+        }
+      }
+    },
+    {
+      "table": "interaction_events",
+      "method": "GET",
+      "query": "?processed_at=is.null&event_type=in.(inbound_reply,link_visit)&select=*&order=event_at.asc&limit=1",
+      "payload": null
+    },
+    {
+      "table": "user_adaptation_state",
+      "method": "POST",
+      "query": "?on_conflict=user_id,behaviour_key",
+      "payload": {
+        "user_id": "synthetic-1",
+        "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+        "preferred_time": "09:00",
+        "preferred_frequency": 2,
+        "preferred_format": "paper",
+        "preferred_summary_length": "detailed",
+        "format_scores": {},
+        "asset_history": [
+          "asset-paper"
+        ],
+        "state_version": 3,
+        "last_signal_at": "2026-10-02T00:00:00.000Z",
+        "updated_at": "2026-10-02T00:00:00.000Z",
+        "last_decision_id": "bd_1",
+        "last_asset_id": "asset-paper",
+        "media_selection_mode": "automatic"
+      }
+    },
+    {
+      "table": "adaptation_decisions",
+      "method": "POST",
+      "query": "",
+      "payload": {
+        "user_id": "synthetic-1",
+        "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+        "interaction_id": "in_d1df7263cbb52af187cc4f39",
+        "nudge_id": "history",
+        "signal_type": "inbound_reply",
+        "scope": "behaviour",
+        "decision_source": "patient",
+        "effective_at": "2026-10-02T00:00:00.000Z",
+        "state_version": 3,
+        "interpretation": {
+          "explicit": false,
+          "format": null,
+          "summary_length": null,
+          "tone": null,
+          "time": null,
+          "frequency_delta": 0,
+          "action": null
+        },
+        "scores_before": {},
+        "scores_after": {},
+        "rule_applied": "fixed_schedule_baseline",
+        "previous_state": {
+          "user_id": "synthetic-1",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "preferred_time": "09:00",
+          "preferred_frequency": 2,
+          "preferred_format": "paper",
+          "preferred_summary_length": "detailed",
+          "format_scores": {},
+          "asset_history": [
+            "asset-paper"
+          ],
+          "state_version": 2,
+          "last_signal_at": "2026-10-02T00:00:00.000Z",
+          "updated_at": "2026-10-02T00:00:00.000Z",
+          "last_decision_id": "bd_1",
+          "last_asset_id": "asset-paper",
+          "media_selection_mode": "automatic"
+        },
+        "next_state": {
+          "user_id": "synthetic-1",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "preferred_time": "09:00",
+          "preferred_frequency": 2,
+          "preferred_format": "paper",
+          "preferred_summary_length": "detailed",
+          "format_scores": {},
+          "asset_history": [
+            "asset-paper"
+          ],
+          "state_version": 2,
+          "last_signal_at": "2026-10-02T00:00:00.000Z",
+          "updated_at": "2026-10-02T00:00:00.000Z",
+          "last_decision_id": "bd_1",
+          "last_asset_id": "asset-paper",
+          "media_selection_mode": "automatic"
+        },
+        "changed_fields": [],
+        "frequency_before": 2,
+        "frequency_after": 2,
+        "media_mode_before": "automatic",
+        "media_mode_after": "automatic",
+        "media_kind_before": "paper",
+        "media_kind_after": "paper",
+        "selected_asset_id": null,
+        "outcome": "no_change",
+        "reason": "Preference adaptation disabled in reference arm",
+        "fulfilled_at": null
+      }
+    },
+    {
+      "table": "user_adaptation_state",
+      "method": "PATCH",
+      "query": "?user_id=eq.synthetic-1&behaviour_key=eq.467b939135f0e034c27cafa259533f1e",
+      "payload": {
+        "last_decision_id": "bd_3"
+      }
+    },
+    {
+      "table": "interaction_events",
+      "method": "PATCH",
+      "query": "?interaction_id=eq.in_d1df7263cbb52af187cc4f39",
+      "payload": {
+        "processed_at": "2026-10-02T00:00:00.000Z"
+      }
+    },
+    {
+      "table": "adaptation_envelopes",
+      "method": "GET",
+      "query": "?user_id=eq.synthetic-1&behaviour_key=eq.467b939135f0e034c27cafa259533f1e&status=eq.approved&select=*",
+      "payload": null
+    },
+    {
+      "table": "media_assets",
+      "method": "GET",
+      "query": "?behaviour_key=eq.467b939135f0e034c27cafa259533f1e&status=eq.approved&select=*",
+      "payload": null
+    },
+    {
+      "table": "user_adaptation_state",
+      "method": "GET",
+      "query": "?user_id=eq.synthetic-1&behaviour_key=eq.467b939135f0e034c27cafa259533f1e&select=*",
+      "payload": null
+    },
+    {
+      "table": "user_adaptation_state",
+      "method": "POST",
+      "query": "?on_conflict=user_id,behaviour_key",
+      "payload": {
+        "format_scores": {},
+        "asset_history": [
+          "asset-paper",
+          "asset-paper"
+        ],
+        "user_id": "synthetic-1",
+        "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+        "preferred_time": "09:00",
+        "preferred_frequency": 2,
+        "preferred_format": "paper",
+        "preferred_summary_length": "detailed",
+        "state_version": 4,
+        "last_signal_at": "2026-10-02T00:00:00.000Z",
+        "updated_at": "2026-10-02T00:00:00.000Z",
+        "last_decision_id": "bd_3",
+        "last_asset_id": "asset-paper",
+        "media_selection_mode": "automatic"
+      }
+    },
+    {
+      "table": "adaptation_decisions",
+      "method": "POST",
+      "query": "",
+      "payload": {
+        "user_id": "synthetic-1",
+        "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+        "interaction_id": null,
+        "nudge_id": null,
+        "signal_type": "scheduled_selection",
+        "scope": "behaviour",
+        "decision_source": "system",
+        "effective_at": "2026-10-02T00:00:00.000Z",
+        "state_version": 4,
+        "interpretation": {
+          "explicit": false,
+          "format": null,
+          "summary_length": null,
+          "tone": null,
+          "time": null,
+          "frequency_delta": 0,
+          "action": null
+        },
+        "scores_before": {},
+        "scores_after": {},
+        "rule_applied": "least_recently_used_rotation",
+        "previous_state": {
+          "format_scores": {},
+          "asset_history": [
+            "asset-paper"
+          ],
+          "user_id": "synthetic-1",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "preferred_time": "09:00",
+          "preferred_frequency": 2,
+          "preferred_format": "paper",
+          "preferred_summary_length": "detailed",
+          "state_version": 3,
+          "last_signal_at": "2026-10-02T00:00:00.000Z",
+          "updated_at": "2026-10-02T00:00:00.000Z",
+          "last_decision_id": "bd_3",
+          "last_asset_id": "asset-paper",
+          "media_selection_mode": "automatic"
+        },
+        "next_state": {
+          "format_scores": {},
+          "asset_history": [
+            "asset-paper",
+            "asset-paper"
+          ],
+          "user_id": "synthetic-1",
+          "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+          "preferred_time": "09:00",
+          "preferred_frequency": 2,
+          "preferred_format": "paper",
+          "preferred_summary_length": "detailed",
+          "state_version": 3,
+          "last_signal_at": "2026-10-02T00:00:00.000Z",
+          "updated_at": "2026-10-02T00:00:00.000Z",
+          "last_decision_id": "bd_3",
+          "last_asset_id": "asset-paper",
+          "media_selection_mode": "automatic"
+        },
+        "changed_fields": [],
+        "frequency_before": 2,
+        "frequency_after": 2,
+        "media_mode_before": "automatic",
+        "media_mode_after": "automatic",
+        "media_kind_before": "paper",
+        "media_kind_after": "paper",
+        "selected_asset_id": "asset-paper",
+        "outcome": "applied",
+        "reason": "no explicit preference; rotated approved media",
+        "fulfilled_at": "2026-10-02T00:00:00.000Z"
+      }
+    },
+    {
+      "table": "tracked_links",
+      "method": "POST",
+      "query": "",
+      "payload": {
+        "token": "ytpfn5rzXjtNfOu_qs8GfFaKOSNGg1rk",
+        "expires_at": "2027-03-31T00:00:00.000Z",
+        "asset_id": "asset-paper",
+        "user_id": "synthetic-1",
+        "behaviour_key": "467b939135f0e034c27cafa259533f1e",
+        "nudge_id": "schd_slot-1_20261008",
+        "target_url": "https://example.test/paper"
+      }
+    }
+  ],
+  "elapsed_ms": 1.2827500000000214,
+  "api_ms": 0,
+  "local_ms": 1.2827500000000214,
+  "api_calls": 0,
+  "failed_checks": [
+    "0:expected_format"
+  ],
+  "success": false,
+  "constraint_violations": [],
+  "repeat": 1
+}

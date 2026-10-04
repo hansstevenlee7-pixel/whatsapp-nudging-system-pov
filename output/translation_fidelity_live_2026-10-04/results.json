@@ -1,0 +1,3583 @@
+{
+  "protocol": "translation-fidelity-v1",
+  "dry_run": false,
+  "attempts": 36,
+  "summary": {
+    "calls": 36,
+    "http_ok": 22,
+    "accepted": 22,
+    "refused": 0,
+    "rows_written_on_refusal": 0,
+    "count_matches": 22,
+    "scored_calls": 22,
+    "gold_prescriptions": 24,
+    "pillar": 23,
+    "category_exact": 19,
+    "category_accepted": 23,
+    "frequency_exact": 23,
+    "frequency_accepted": 23,
+    "duration_exact": 23,
+    "rules": {
+      "prescriptions": 24,
+      "count_matches_frequency": 22,
+      "within_week1": 24,
+      "distinct_dates": 24,
+      "action_within_120": 24,
+      "bodies_within_180": 24
+    },
+    "consistent_texts": 7,
+    "consistency": [
+      {
+        "case": "F01",
+        "calls": 3,
+        "consistent": true
+      },
+      {
+        "case": "F02",
+        "calls": 3,
+        "consistent": true
+      },
+      {
+        "case": "F03",
+        "calls": 2,
+        "consistent": true
+      },
+      {
+        "case": "F04",
+        "calls": 2,
+        "consistent": true
+      },
+      {
+        "case": "F05",
+        "calls": 3,
+        "consistent": true
+      },
+      {
+        "case": "F06",
+        "calls": 2,
+        "consistent": true
+      },
+      {
+        "case": "F07",
+        "calls": 3,
+        "consistent": true
+      },
+      {
+        "case": "F08",
+        "calls": 1,
+        "consistent": false
+      },
+      {
+        "case": "F09",
+        "calls": 1,
+        "consistent": false
+      },
+      {
+        "case": "F10",
+        "calls": 1,
+        "consistent": false
+      },
+      {
+        "case": "F11",
+        "calls": 1,
+        "consistent": false
+      },
+      {
+        "case": "F12",
+        "calls": 0,
+        "consistent": false
+      }
+    ],
+    "chains_run": 11,
+    "chains_closed": 11
+  },
+  "calls": [
+    {
+      "id": "F01-r1",
+      "case": "F01",
+      "rep": 1,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "b07b72451c1292b8bca87c2e511990fc7a42505d75e8135a0e8c15c8573e9047",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:04:49.125Z",
+      "status": 200,
+      "response": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"physical_activity\",\"category\":\"establish\",\"frequency_per_week\":2,\"duration_weeks\":6,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"physical_activity\",\"nudge_type\":\"challenge\",\"action_text\":\"Walk 30 minutes after dinner.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"19:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Time to get moving! Remember your goal to walk 30 minutes after dinner. You've got this!\",\"message_body_alt\":\"Reminder: Walk 30 minutes after dinner today as planned.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"physical_activity\",\"nudge_type\":\"challenge\",\"action_text\":\"Walk 30 minutes after dinner.\",\"scheduled_date\":\"2026-10-08\",\"scheduled_time\":\"19:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Another opportunity to walk 30 minutes after dinner. Each step counts towards your health goals!\",\"message_body_alt\":\"Reminder: Walk 30 minutes after dinner today as planned.\",\"template_name\":\"health_plan_reminder\"}]}"
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 683,
+          "candidatesTokenCount": 405,
+          "totalTokenCount": 1088,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 683
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-2.5-flash",
+        "responseId": "sRbCaq-UIaPW1e8PicWakAY"
+      },
+      "latency_ms": 2820,
+      "intake_status": 200,
+      "accepted": true,
+      "gate": {
+        "validation_passed": true,
+        "stage": null,
+        "errors": []
+      },
+      "rows_written": 7,
+      "prompt_sha256": "4daf732174fb87c60db77c0f942c0f5f92f666e4d6b3075442c4aae097df49e5",
+      "stored_provenance": {
+        "translation_model": "gemini-2.5-flash",
+        "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+        "translation_response_id": "sRbCaq-UIaPW1e8PicWakAY"
+      },
+      "output_text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"physical_activity\",\"category\":\"establish\",\"frequency_per_week\":2,\"duration_weeks\":6,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"physical_activity\",\"nudge_type\":\"challenge\",\"action_text\":\"Walk 30 minutes after dinner.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"19:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Time to get moving! Remember your goal to walk 30 minutes after dinner. You've got this!\",\"message_body_alt\":\"Reminder: Walk 30 minutes after dinner today as planned.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"physical_activity\",\"nudge_type\":\"challenge\",\"action_text\":\"Walk 30 minutes after dinner.\",\"scheduled_date\":\"2026-10-08\",\"scheduled_time\":\"19:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Another opportunity to walk 30 minutes after dinner. Each step counts towards your health goals!\",\"message_body_alt\":\"Reminder: Walk 30 minutes after dinner today as planned.\",\"template_name\":\"health_plan_reminder\"}]}",
+      "parsed_ok": true,
+      "score": {
+        "count_matches": true,
+        "extras": 0,
+        "matches": [
+          {
+            "gold": "physical_activity/increase/2/6",
+            "output": "physical_activity/establish/2/6",
+            "pillar": true,
+            "category_exact": false,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ],
+        "signature": "physical_activity|establish|2|6",
+        "actions": [
+          "Walk 30 minutes after dinner.",
+          "Walk 30 minutes after dinner."
+        ]
+      }
+    },
+    {
+      "id": "F01-r2",
+      "case": "F01",
+      "rep": 2,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "b07b72451c1292b8bca87c2e511990fc7a42505d75e8135a0e8c15c8573e9047",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:04:56.127Z",
+      "status": 200,
+      "response": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"physical_activity\",\"category\":\"establish\",\"frequency_per_week\":2,\"duration_weeks\":6,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"physical_activity\",\"nudge_type\":\"challenge\",\"action_text\":\"Walk 30 minutes after dinner.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"19:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Time to get moving! Remember your goal to walk 30 minutes after dinner. You've got this!\",\"message_body_alt\":\"Reminder: Walk 30 minutes after dinner today.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"physical_activity\",\"nudge_type\":\"challenge\",\"action_text\":\"Walk 30 minutes after dinner.\",\"scheduled_date\":\"2026-10-08\",\"scheduled_time\":\"19:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Another opportunity to walk 30 minutes after dinner. Every step counts towards your health!\",\"message_body_alt\":\"Reminder: Walk 30 minutes after dinner today.\",\"template_name\":\"health_plan_reminder\"}]}"
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 683,
+          "candidatesTokenCount": 400,
+          "totalTokenCount": 1083,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 683
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-2.5-flash",
+        "responseId": "uBbCarXDI8KB1e8P-MaCsA4"
+      },
+      "latency_ms": 2977,
+      "intake_status": 200,
+      "accepted": true,
+      "gate": {
+        "validation_passed": true,
+        "stage": null,
+        "errors": []
+      },
+      "rows_written": 7,
+      "prompt_sha256": "4daf732174fb87c60db77c0f942c0f5f92f666e4d6b3075442c4aae097df49e5",
+      "stored_provenance": {
+        "translation_model": "gemini-2.5-flash",
+        "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+        "translation_response_id": "uBbCarXDI8KB1e8P-MaCsA4"
+      },
+      "output_text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"physical_activity\",\"category\":\"establish\",\"frequency_per_week\":2,\"duration_weeks\":6,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"physical_activity\",\"nudge_type\":\"challenge\",\"action_text\":\"Walk 30 minutes after dinner.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"19:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Time to get moving! Remember your goal to walk 30 minutes after dinner. You've got this!\",\"message_body_alt\":\"Reminder: Walk 30 minutes after dinner today.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"physical_activity\",\"nudge_type\":\"challenge\",\"action_text\":\"Walk 30 minutes after dinner.\",\"scheduled_date\":\"2026-10-08\",\"scheduled_time\":\"19:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Another opportunity to walk 30 minutes after dinner. Every step counts towards your health!\",\"message_body_alt\":\"Reminder: Walk 30 minutes after dinner today.\",\"template_name\":\"health_plan_reminder\"}]}",
+      "parsed_ok": true,
+      "score": {
+        "count_matches": true,
+        "extras": 0,
+        "matches": [
+          {
+            "gold": "physical_activity/increase/2/6",
+            "output": "physical_activity/establish/2/6",
+            "pillar": true,
+            "category_exact": false,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ],
+        "signature": "physical_activity|establish|2|6",
+        "actions": [
+          "Walk 30 minutes after dinner.",
+          "Walk 30 minutes after dinner."
+        ]
+      }
+    },
+    {
+      "id": "F01-r3",
+      "case": "F01",
+      "rep": 3,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "b07b72451c1292b8bca87c2e511990fc7a42505d75e8135a0e8c15c8573e9047",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:05:03.129Z",
+      "status": 200,
+      "response": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"physical_activity\",\"category\":\"establish\",\"frequency_per_week\":2,\"duration_weeks\":6,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"physical_activity\",\"nudge_type\":\"challenge\",\"action_text\":\"Walk 30 minutes after dinner.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"19:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Time to get moving! Remember your goal to walk 30 minutes after dinner. You've got this!\",\"message_body_alt\":\"This is a reminder to walk 30 minutes after dinner as prescribed.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"physical_activity\",\"nudge_type\":\"challenge\",\"action_text\":\"Walk 30 minutes after dinner.\",\"scheduled_date\":\"2026-10-08\",\"scheduled_time\":\"19:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Another opportunity to walk 30 minutes after dinner. Every step counts towards your health!\",\"message_body_alt\":\"This is a reminder to walk 30 minutes after dinner as prescribed.\",\"template_name\":\"health_plan_reminder\"}]}"
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 683,
+          "candidatesTokenCount": 408,
+          "totalTokenCount": 1091,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 683
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-2.5-flash",
+        "responseId": "vxbCavXgIsyy9tMPk9uU0Ao"
+      },
+      "latency_ms": 2836,
+      "intake_status": 200,
+      "accepted": true,
+      "gate": {
+        "validation_passed": true,
+        "stage": null,
+        "errors": []
+      },
+      "rows_written": 7,
+      "prompt_sha256": "4daf732174fb87c60db77c0f942c0f5f92f666e4d6b3075442c4aae097df49e5",
+      "stored_provenance": {
+        "translation_model": "gemini-2.5-flash",
+        "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+        "translation_response_id": "vxbCavXgIsyy9tMPk9uU0Ao"
+      },
+      "output_text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"physical_activity\",\"category\":\"establish\",\"frequency_per_week\":2,\"duration_weeks\":6,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"physical_activity\",\"nudge_type\":\"challenge\",\"action_text\":\"Walk 30 minutes after dinner.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"19:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Time to get moving! Remember your goal to walk 30 minutes after dinner. You've got this!\",\"message_body_alt\":\"This is a reminder to walk 30 minutes after dinner as prescribed.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"physical_activity\",\"nudge_type\":\"challenge\",\"action_text\":\"Walk 30 minutes after dinner.\",\"scheduled_date\":\"2026-10-08\",\"scheduled_time\":\"19:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Another opportunity to walk 30 minutes after dinner. Every step counts towards your health!\",\"message_body_alt\":\"This is a reminder to walk 30 minutes after dinner as prescribed.\",\"template_name\":\"health_plan_reminder\"}]}",
+      "parsed_ok": true,
+      "score": {
+        "count_matches": true,
+        "extras": 0,
+        "matches": [
+          {
+            "gold": "physical_activity/increase/2/6",
+            "output": "physical_activity/establish/2/6",
+            "pillar": true,
+            "category_exact": false,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ],
+        "signature": "physical_activity|establish|2|6",
+        "actions": [
+          "Walk 30 minutes after dinner.",
+          "Walk 30 minutes after dinner."
+        ]
+      }
+    },
+    {
+      "id": "F02-r1",
+      "case": "F02",
+      "rep": 1,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "2a40abcab6d8828cda427f4b6bd5b75fa9cf1caaac1f1a6c1869432da03b159e",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:05:10.130Z",
+      "status": 200,
+      "response": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"sleep\",\"category\":\"establish\",\"frequency_per_week\":3,\"duration_weeks\":8,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Be in bed by 10:30 pm.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"21:30\",\"tone_variant\":\"encouraging\",\"message_body\":\"Just a friendly reminder to start winding down and be in bed by 10:30 pm tonight. You've got this!\",\"message_body_alt\":\"Reminder: Be in bed by 10:30 pm tonight.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Be in bed by 10:30 pm.\",\"scheduled_date\":\"2026-10-07\",\"scheduled_time\":\"21:30\",\"tone_variant\":\"encouraging\",\"message_body\":\"Time to prioritize your sleep! Aim to be in bed by 10:30 pm. A good night's rest makes a big difference.\",\"message_body_alt\":\"Reminder: Be in bed by 10:30 pm tonight.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Be in bed by 10:30 pm.\",\"scheduled_date\":\"2026-10-09\",\"scheduled_time\":\"21:30\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember your goal for a healthy sleep routine. Try to be in bed by 10:30 pm tonight. You're building great habits!\",\"message_body_alt\":\"Reminder: Be in bed by 10:30 pm tonight.\",\"template_name\":\"health_plan_reminder\"}]}"
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 690,
+          "candidatesTokenCount": 606,
+          "totalTokenCount": 1296,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 690
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-2.5-flash",
+        "responseId": "xhbCaqGHILim1e8PkqCLkAY"
+      },
+      "latency_ms": 3506,
+      "intake_status": 200,
+      "accepted": true,
+      "gate": {
+        "validation_passed": true,
+        "stage": null,
+        "errors": []
+      },
+      "rows_written": 9,
+      "prompt_sha256": "e90d49a21dd0e81904f9388c4a49472530546a3b54660d81cad3794dc91d5656",
+      "stored_provenance": {
+        "translation_model": "gemini-2.5-flash",
+        "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+        "translation_response_id": "xhbCaqGHILim1e8PkqCLkAY"
+      },
+      "output_text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"sleep\",\"category\":\"establish\",\"frequency_per_week\":3,\"duration_weeks\":8,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Be in bed by 10:30 pm.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"21:30\",\"tone_variant\":\"encouraging\",\"message_body\":\"Just a friendly reminder to start winding down and be in bed by 10:30 pm tonight. You've got this!\",\"message_body_alt\":\"Reminder: Be in bed by 10:30 pm tonight.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Be in bed by 10:30 pm.\",\"scheduled_date\":\"2026-10-07\",\"scheduled_time\":\"21:30\",\"tone_variant\":\"encouraging\",\"message_body\":\"Time to prioritize your sleep! Aim to be in bed by 10:30 pm. A good night's rest makes a big difference.\",\"message_body_alt\":\"Reminder: Be in bed by 10:30 pm tonight.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Be in bed by 10:30 pm.\",\"scheduled_date\":\"2026-10-09\",\"scheduled_time\":\"21:30\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember your goal for a healthy sleep routine. Try to be in bed by 10:30 pm tonight. You're building great habits!\",\"message_body_alt\":\"Reminder: Be in bed by 10:30 pm tonight.\",\"template_name\":\"health_plan_reminder\"}]}",
+      "parsed_ok": true,
+      "score": {
+        "count_matches": true,
+        "extras": 0,
+        "matches": [
+          {
+            "gold": "sleep/establish/3/8",
+            "output": "sleep/establish/3/8",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ],
+        "signature": "sleep|establish|3|8",
+        "actions": [
+          "Be in bed by 10:30 pm.",
+          "Be in bed by 10:30 pm.",
+          "Be in bed by 10:30 pm."
+        ]
+      }
+    },
+    {
+      "id": "F02-r2",
+      "case": "F02",
+      "rep": 2,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "2a40abcab6d8828cda427f4b6bd5b75fa9cf1caaac1f1a6c1869432da03b159e",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:05:17.131Z",
+      "status": 200,
+      "response": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"sleep\",\"category\":\"establish\",\"frequency_per_week\":3,\"duration_weeks\":8,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Be in bed by 10:30 pm on weeknights.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"19:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember to be in bed by 10:30 PM tonight to support your sleep goals. You're doing great!\",\"message_body_alt\":\"Reminder: Be in bed by 10:30 PM tonight.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Be in bed by 10:30 pm on weeknights.\",\"scheduled_date\":\"2026-10-07\",\"scheduled_time\":\"19:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Keep up the great work! Aim to be in bed by 10:30 PM tonight for a restful night.\",\"message_body_alt\":\"Reminder: Be in bed by 10:30 PM tonight.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Be in bed by 10:30 pm on weeknights.\",\"scheduled_date\":\"2026-10-09\",\"scheduled_time\":\"19:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"You're building a healthy habit! Don't forget to be in bed by 10:30 PM tonight.\",\"message_body_alt\":\"Reminder: Be in bed by 10:30 PM tonight.\",\"template_name\":\"health_plan_reminder\"}]}"
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 690,
+          "candidatesTokenCount": 602,
+          "totalTokenCount": 1292,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 690
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-2.5-flash",
+        "responseId": "zRbCaqKuG6DY9tMPxvKyoA4"
+      },
+      "latency_ms": 4008,
+      "intake_status": 200,
+      "accepted": true,
+      "gate": {
+        "validation_passed": true,
+        "stage": null,
+        "errors": []
+      },
+      "rows_written": 9,
+      "prompt_sha256": "e90d49a21dd0e81904f9388c4a49472530546a3b54660d81cad3794dc91d5656",
+      "stored_provenance": {
+        "translation_model": "gemini-2.5-flash",
+        "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+        "translation_response_id": "zRbCaqKuG6DY9tMPxvKyoA4"
+      },
+      "output_text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"sleep\",\"category\":\"establish\",\"frequency_per_week\":3,\"duration_weeks\":8,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Be in bed by 10:30 pm on weeknights.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"19:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember to be in bed by 10:30 PM tonight to support your sleep goals. You're doing great!\",\"message_body_alt\":\"Reminder: Be in bed by 10:30 PM tonight.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Be in bed by 10:30 pm on weeknights.\",\"scheduled_date\":\"2026-10-07\",\"scheduled_time\":\"19:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Keep up the great work! Aim to be in bed by 10:30 PM tonight for a restful night.\",\"message_body_alt\":\"Reminder: Be in bed by 10:30 PM tonight.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Be in bed by 10:30 pm on weeknights.\",\"scheduled_date\":\"2026-10-09\",\"scheduled_time\":\"19:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"You're building a healthy habit! Don't forget to be in bed by 10:30 PM tonight.\",\"message_body_alt\":\"Reminder: Be in bed by 10:30 PM tonight.\",\"template_name\":\"health_plan_reminder\"}]}",
+      "parsed_ok": true,
+      "score": {
+        "count_matches": true,
+        "extras": 0,
+        "matches": [
+          {
+            "gold": "sleep/establish/3/8",
+            "output": "sleep/establish/3/8",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ],
+        "signature": "sleep|establish|3|8",
+        "actions": [
+          "Be in bed by 10:30 pm on weeknights.",
+          "Be in bed by 10:30 pm on weeknights.",
+          "Be in bed by 10:30 pm on weeknights."
+        ]
+      }
+    },
+    {
+      "id": "F02-r3",
+      "case": "F02",
+      "rep": 3,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "2a40abcab6d8828cda427f4b6bd5b75fa9cf1caaac1f1a6c1869432da03b159e",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:05:24.132Z",
+      "status": 200,
+      "response": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"sleep\",\"category\":\"establish\",\"frequency_per_week\":3,\"duration_weeks\":8,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Be in bed by 10:30 pm.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"21:30\",\"tone_variant\":\"encouraging\",\"message_body\":\"Just a friendly reminder to start winding down and aim to be in bed by 10:30 PM tonight. Prioritizing your sleep is a great step towards better health!\",\"message_body_alt\":\"Reminder: Be in bed by 10:30 PM tonight. This is part of your sleep plan.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Be in bed by 10:30 pm.\",\"scheduled_date\":\"2026-10-07\",\"scheduled_time\":\"21:30\",\"tone_variant\":\"encouraging\",\"message_body\":\"You're doing great! Remember to aim for bed by 10:30 PM tonight. Consistent sleep helps you feel your best.\",\"message_body_alt\":\"Reminder: Be in bed by 10:30 PM tonight. This is part of your sleep plan.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Be in bed by 10:30 pm.\",\"scheduled_date\":\"2026-10-09\",\"scheduled_time\":\"21:30\",\"tone_variant\":\"encouraging\",\"message_body\":\"Keep up the excellent work! Tonight, let's aim to be in bed by 10:30 PM to support your sleep goals.\",\"message_body_alt\":\"Reminder: Be in bed by 10:30 PM tonight. This is part of your sleep plan.\",\"template_name\":\"health_plan_reminder\"}]}"
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 690,
+          "candidatesTokenCount": 636,
+          "totalTokenCount": 1326,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 690
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-2.5-flash",
+        "responseId": "1BbCarDnFcOm1e8P9qDVkQY"
+      },
+      "latency_ms": 3996,
+      "intake_status": 200,
+      "accepted": true,
+      "gate": {
+        "validation_passed": true,
+        "stage": null,
+        "errors": []
+      },
+      "rows_written": 9,
+      "prompt_sha256": "e90d49a21dd0e81904f9388c4a49472530546a3b54660d81cad3794dc91d5656",
+      "stored_provenance": {
+        "translation_model": "gemini-2.5-flash",
+        "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+        "translation_response_id": "1BbCarDnFcOm1e8P9qDVkQY"
+      },
+      "output_text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"sleep\",\"category\":\"establish\",\"frequency_per_week\":3,\"duration_weeks\":8,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Be in bed by 10:30 pm.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"21:30\",\"tone_variant\":\"encouraging\",\"message_body\":\"Just a friendly reminder to start winding down and aim to be in bed by 10:30 PM tonight. Prioritizing your sleep is a great step towards better health!\",\"message_body_alt\":\"Reminder: Be in bed by 10:30 PM tonight. This is part of your sleep plan.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Be in bed by 10:30 pm.\",\"scheduled_date\":\"2026-10-07\",\"scheduled_time\":\"21:30\",\"tone_variant\":\"encouraging\",\"message_body\":\"You're doing great! Remember to aim for bed by 10:30 PM tonight. Consistent sleep helps you feel your best.\",\"message_body_alt\":\"Reminder: Be in bed by 10:30 PM tonight. This is part of your sleep plan.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Be in bed by 10:30 pm.\",\"scheduled_date\":\"2026-10-09\",\"scheduled_time\":\"21:30\",\"tone_variant\":\"encouraging\",\"message_body\":\"Keep up the excellent work! Tonight, let's aim to be in bed by 10:30 PM to support your sleep goals.\",\"message_body_alt\":\"Reminder: Be in bed by 10:30 PM tonight. This is part of your sleep plan.\",\"template_name\":\"health_plan_reminder\"}]}",
+      "parsed_ok": true,
+      "score": {
+        "count_matches": true,
+        "extras": 0,
+        "matches": [
+          {
+            "gold": "sleep/establish/3/8",
+            "output": "sleep/establish/3/8",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ],
+        "signature": "sleep|establish|3|8",
+        "actions": [
+          "Be in bed by 10:30 pm.",
+          "Be in bed by 10:30 pm.",
+          "Be in bed by 10:30 pm."
+        ]
+      }
+    },
+    {
+      "id": "F03-r1",
+      "case": "F03",
+      "rep": 1,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "520cd412b702eac5798738798194eb9ad421caa42581829ab7da577b3a8d5f8b",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:05:31.134Z",
+      "status": 200,
+      "response": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"substance_use\",\"category\":\"reduce\",\"frequency_per_week\":1,\"duration_weeks\":12,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"substance_use\",\"nudge_type\":\"reminder\",\"action_text\":\"Limit alcohol to no more than two drinks on any day.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember your goal to cut down on alcohol. Limiting to two drinks per day is a great step towards better health. You've got this!\",\"message_body_alt\":\"This is a reminder to limit alcohol consumption to no more than two drinks on any given day, as per your health plan.\",\"template_name\":\"health_plan_reminder\"}]}"
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 688,
+          "candidatesTokenCount": 269,
+          "totalTokenCount": 957,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 688
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-2.5-flash",
+        "responseId": "2xbCasv_Fobcvr0PrJCOwQs"
+      },
+      "latency_ms": 1983,
+      "intake_status": 200,
+      "accepted": true,
+      "gate": {
+        "validation_passed": true,
+        "stage": null,
+        "errors": []
+      },
+      "rows_written": 5,
+      "prompt_sha256": "83cdb837b89f6af8a1c63fc62ec3b7d1b09ed6326e774dd8e18cd014ca2ebdf3",
+      "stored_provenance": {
+        "translation_model": "gemini-2.5-flash",
+        "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+        "translation_response_id": "2xbCasv_Fobcvr0PrJCOwQs"
+      },
+      "output_text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"substance_use\",\"category\":\"reduce\",\"frequency_per_week\":1,\"duration_weeks\":12,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"substance_use\",\"nudge_type\":\"reminder\",\"action_text\":\"Limit alcohol to no more than two drinks on any day.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember your goal to cut down on alcohol. Limiting to two drinks per day is a great step towards better health. You've got this!\",\"message_body_alt\":\"This is a reminder to limit alcohol consumption to no more than two drinks on any given day, as per your health plan.\",\"template_name\":\"health_plan_reminder\"}]}",
+      "parsed_ok": true,
+      "score": {
+        "count_matches": true,
+        "extras": 0,
+        "matches": [
+          {
+            "gold": "substance_use/reduce/1/12",
+            "output": "substance_use/reduce/1/12",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ],
+        "signature": "substance_use|reduce|1|12",
+        "actions": [
+          "Limit alcohol to no more than two drinks on any day."
+        ]
+      }
+    },
+    {
+      "id": "F03-r2",
+      "case": "F03",
+      "rep": 2,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "520cd412b702eac5798738798194eb9ad421caa42581829ab7da577b3a8d5f8b",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:05:38.136Z",
+      "status": 200,
+      "response": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"substance_use\",\"category\":\"reduce\",\"frequency_per_week\":1,\"duration_weeks\":12,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"substance_use\",\"nudge_type\":\"reminder\",\"action_text\":\"Limit alcohol intake to no more than two drinks on any day.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember your goal to cut down on alcohol. Aim for no more than two drinks on any day this week. You've got this!\",\"message_body_alt\":\"This is a reminder to limit your alcohol intake to a maximum of two drinks on any given day.\",\"template_name\":\"health_plan_reminder\"}]}"
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 688,
+          "candidatesTokenCount": 263,
+          "totalTokenCount": 951,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 688
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-2.5-flash",
+        "responseId": "4hbCaoPWJrXa9tMPm-b7uAU"
+      },
+      "latency_ms": 2344,
+      "intake_status": 200,
+      "accepted": true,
+      "gate": {
+        "validation_passed": true,
+        "stage": null,
+        "errors": []
+      },
+      "rows_written": 5,
+      "prompt_sha256": "83cdb837b89f6af8a1c63fc62ec3b7d1b09ed6326e774dd8e18cd014ca2ebdf3",
+      "stored_provenance": {
+        "translation_model": "gemini-2.5-flash",
+        "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+        "translation_response_id": "4hbCaoPWJrXa9tMPm-b7uAU"
+      },
+      "output_text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"substance_use\",\"category\":\"reduce\",\"frequency_per_week\":1,\"duration_weeks\":12,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"substance_use\",\"nudge_type\":\"reminder\",\"action_text\":\"Limit alcohol intake to no more than two drinks on any day.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember your goal to cut down on alcohol. Aim for no more than two drinks on any day this week. You've got this!\",\"message_body_alt\":\"This is a reminder to limit your alcohol intake to a maximum of two drinks on any given day.\",\"template_name\":\"health_plan_reminder\"}]}",
+      "parsed_ok": true,
+      "score": {
+        "count_matches": true,
+        "extras": 0,
+        "matches": [
+          {
+            "gold": "substance_use/reduce/1/12",
+            "output": "substance_use/reduce/1/12",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ],
+        "signature": "substance_use|reduce|1|12",
+        "actions": [
+          "Limit alcohol intake to no more than two drinks on any day."
+        ]
+      }
+    },
+    {
+      "id": "F03-r3",
+      "case": "F03",
+      "rep": 3,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "520cd412b702eac5798738798194eb9ad421caa42581829ab7da577b3a8d5f8b",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:05:45.135Z",
+      "status": 429,
+      "response": {
+        "error": {
+          "code": 429,
+          "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 5, model: gemini-2.5-flash\nPlease retry in 14.484709574s.",
+          "status": "RESOURCE_EXHAUSTED",
+          "details": [
+            {
+              "@type": "type.googleapis.com/google.rpc.Help",
+              "links": [
+                {
+                  "description": "Learn more about Gemini API quotas",
+                  "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+              "violations": [
+                {
+                  "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                  "quotaId": "GenerateRequestsPerMinutePerProjectPerModel-FreeTier",
+                  "quotaDimensions": {
+                    "location": "global",
+                    "model": "gemini-2.5-flash"
+                  },
+                  "quotaValue": "5"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.RetryInfo",
+              "retryDelay": "14s"
+            }
+          ]
+        }
+      },
+      "latency_ms": 453,
+      "intake_status": 500,
+      "accepted": false,
+      "gate": null,
+      "rows_written": 0,
+      "prompt_sha256": "83cdb837b89f6af8a1c63fc62ec3b7d1b09ed6326e774dd8e18cd014ca2ebdf3",
+      "stored_provenance": null,
+      "output_text": null,
+      "parsed_ok": false,
+      "score": null
+    },
+    {
+      "id": "F04-r1",
+      "case": "F04",
+      "rep": 1,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "04e3745fdf3dee0ec25d08c940062eafbd2bdcda829d01434ace324e425e6920",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:05:52.136Z",
+      "status": 200,
+      "response": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"substance_use\",\"category\":\"avoid\",\"frequency_per_week\":3,\"duration_weeks\":10,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"substance_use\",\"nudge_type\":\"reminder\",\"action_text\":\"Stop smoking completely.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember your goal to stop smoking completely. You're taking a great step towards better health!\",\"message_body_alt\":\"This is a reminder to stop smoking completely.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"substance_use\",\"nudge_type\":\"reminder\",\"action_text\":\"Stop smoking completely.\",\"scheduled_date\":\"2026-10-08\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Keep up the fantastic work on stopping smoking. Every smoke-free moment counts!\",\"message_body_alt\":\"This is a reminder to stop smoking completely.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"substance_use\",\"nudge_type\":\"reminder\",\"action_text\":\"Stop smoking completely.\",\"scheduled_date\":\"2026-10-11\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"You're doing great with your goal to stop smoking. Stay strong and focused on your health!\",\"message_body_alt\":\"This is a reminder to stop smoking completely.\",\"template_name\":\"health_plan_reminder\"}]}"
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 683,
+          "candidatesTokenCount": 542,
+          "totalTokenCount": 1225,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 683
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-2.5-flash",
+        "responseId": "8BbCarDgI9iM1e8PqInK2Ak"
+      },
+      "latency_ms": 3596,
+      "intake_status": 200,
+      "accepted": true,
+      "gate": {
+        "validation_passed": true,
+        "stage": null,
+        "errors": []
+      },
+      "rows_written": 9,
+      "prompt_sha256": "50cdb1c96977ad23e912d5b6b82e50c6185c52ea3e7326626a3804209f583291",
+      "stored_provenance": {
+        "translation_model": "gemini-2.5-flash",
+        "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+        "translation_response_id": "8BbCarDgI9iM1e8PqInK2Ak"
+      },
+      "output_text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"substance_use\",\"category\":\"avoid\",\"frequency_per_week\":3,\"duration_weeks\":10,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"substance_use\",\"nudge_type\":\"reminder\",\"action_text\":\"Stop smoking completely.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember your goal to stop smoking completely. You're taking a great step towards better health!\",\"message_body_alt\":\"This is a reminder to stop smoking completely.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"substance_use\",\"nudge_type\":\"reminder\",\"action_text\":\"Stop smoking completely.\",\"scheduled_date\":\"2026-10-08\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Keep up the fantastic work on stopping smoking. Every smoke-free moment counts!\",\"message_body_alt\":\"This is a reminder to stop smoking completely.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"substance_use\",\"nudge_type\":\"reminder\",\"action_text\":\"Stop smoking completely.\",\"scheduled_date\":\"2026-10-11\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"You're doing great with your goal to stop smoking. Stay strong and focused on your health!\",\"message_body_alt\":\"This is a reminder to stop smoking completely.\",\"template_name\":\"health_plan_reminder\"}]}",
+      "parsed_ok": true,
+      "score": {
+        "count_matches": true,
+        "extras": 0,
+        "matches": [
+          {
+            "gold": "substance_use/avoid/3/10",
+            "output": "substance_use/avoid/3/10",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ],
+        "signature": "substance_use|avoid|3|10",
+        "actions": [
+          "Stop smoking completely.",
+          "Stop smoking completely.",
+          "Stop smoking completely."
+        ]
+      }
+    },
+    {
+      "id": "F04-r2",
+      "case": "F04",
+      "rep": 2,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "04e3745fdf3dee0ec25d08c940062eafbd2bdcda829d01434ace324e425e6920",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:05:59.137Z",
+      "status": 200,
+      "response": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"substance_use\",\"category\":\"avoid\",\"frequency_per_week\":3,\"duration_weeks\":10,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"substance_use\",\"nudge_type\":\"reminder\",\"action_text\":\"Stop smoking completely.\",\"scheduled_date\":\"2026-10-07\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Keep up the excellent work on stopping smoking. Every smoke-free moment counts!\",\"message_body_alt\":\"Reminder: continue to stop smoking completely.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"substance_use\",\"nudge_type\":\"reminder\",\"action_text\":\"Stop smoking completely.\",\"scheduled_date\":\"2026-10-09\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"You're doing great with your goal to stop smoking. Stay strong and focused on your health!\",\"message_body_alt\":\"This is a reminder to stop smoking completely.\",\"template_name\":\"health_plan_reminder\"}]}"
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 683,
+          "candidatesTokenCount": 543,
+          "totalTokenCount": 1226,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 683
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-2.5-flash",
+        "responseId": "9xbCaruGFpLAvr0PxrTXiQI"
+      },
+      "latency_ms": 3457,
+      "intake_status": 200,
+      "accepted": true,
+      "gate": {
+        "validation_passed": true,
+        "stage": null,
+        "errors": []
+      },
+      "rows_written": 7,
+      "prompt_sha256": "50cdb1c96977ad23e912d5b6b82e50c6185c52ea3e7326626a3804209f583291",
+      "stored_provenance": {
+        "translation_model": "gemini-2.5-flash",
+        "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+        "translation_response_id": "9xbCaruGFpLAvr0PxrTXiQI"
+      },
+      "output_text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"substance_use\",\"category\":\"avoid\",\"frequency_per_week\":3,\"duration_weeks\":10,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"substance_use\",\"nudge_type\":\"reminder\",\"action_text\":\"Stop smoking completely.\",\"scheduled_date\":\"2026-10-07\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Keep up the excellent work on stopping smoking. Every smoke-free moment counts!\",\"message_body_alt\":\"Reminder: continue to stop smoking completely.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"substance_use\",\"nudge_type\":\"reminder\",\"action_text\":\"Stop smoking completely.\",\"scheduled_date\":\"2026-10-09\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"You're doing great with your goal to stop smoking. Stay strong and focused on your health!\",\"message_body_alt\":\"This is a reminder to stop smoking completely.\",\"template_name\":\"health_plan_reminder\"}]}",
+      "parsed_ok": true,
+      "score": {
+        "count_matches": true,
+        "extras": 0,
+        "matches": [
+          {
+            "gold": "substance_use/avoid/3/10",
+            "output": "substance_use/avoid/3/10",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": false,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ],
+        "signature": "substance_use|avoid|3|10",
+        "actions": [
+          "Stop smoking completely.",
+          "Stop smoking completely."
+        ]
+      }
+    },
+    {
+      "id": "F04-r3",
+      "case": "F04",
+      "rep": 3,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "04e3745fdf3dee0ec25d08c940062eafbd2bdcda829d01434ace324e425e6920",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:06:06.139Z",
+      "status": 503,
+      "response": {
+        "error": {
+          "code": 503,
+          "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+          "status": "UNAVAILABLE"
+        }
+      },
+      "latency_ms": 3111,
+      "intake_status": 500,
+      "accepted": false,
+      "gate": null,
+      "rows_written": 0,
+      "prompt_sha256": "50cdb1c96977ad23e912d5b6b82e50c6185c52ea3e7326626a3804209f583291",
+      "stored_provenance": null,
+      "output_text": null,
+      "parsed_ok": false,
+      "score": null
+    },
+    {
+      "id": "F05-r1",
+      "case": "F05",
+      "rep": 1,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "61a7ca96dadd96a4abc146a23b25fe58526cddd26f5b2765cb7f5e9b87288a07",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:06:13.140Z",
+      "status": 200,
+      "response": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"nutrition\",\"category\":\"increase\",\"frequency_per_week\":2,\"duration_weeks\":6,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"nutrition\",\"nudge_type\":\"reminder\",\"action_text\":\"Eat two serves of vegetables at lunch.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember to include two serves of vegetables with your lunch today. You've got this!\",\"message_body_alt\":\"A reminder to eat two serves of vegetables at lunch today.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"nutrition\",\"nudge_type\":\"reminder\",\"action_text\":\"Eat two serves of vegetables at lunch.\",\"scheduled_date\":\"2026-10-08\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Don't forget your two serves of vegetables at lunch today. Every step counts!\",\"message_body_alt\":\"A reminder to eat two serves of vegetables at lunch today.\",\"template_name\":\"health_plan_reminder\"}]}"
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 683,
+          "candidatesTokenCount": 390,
+          "totalTokenCount": 1073,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 683
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-2.5-flash",
+        "responseId": "BRfCarbpG4eN1e8P9p7gkAE"
+      },
+      "latency_ms": 2797,
+      "intake_status": 200,
+      "accepted": true,
+      "gate": {
+        "validation_passed": true,
+        "stage": null,
+        "errors": []
+      },
+      "rows_written": 7,
+      "prompt_sha256": "8a231f68ae29d84f54075813f971a9b34fe808799dbee4c94f74b4552db6cb66",
+      "stored_provenance": {
+        "translation_model": "gemini-2.5-flash",
+        "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+        "translation_response_id": "BRfCarbpG4eN1e8P9p7gkAE"
+      },
+      "output_text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"nutrition\",\"category\":\"increase\",\"frequency_per_week\":2,\"duration_weeks\":6,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"nutrition\",\"nudge_type\":\"reminder\",\"action_text\":\"Eat two serves of vegetables at lunch.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember to include two serves of vegetables with your lunch today. You've got this!\",\"message_body_alt\":\"A reminder to eat two serves of vegetables at lunch today.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"nutrition\",\"nudge_type\":\"reminder\",\"action_text\":\"Eat two serves of vegetables at lunch.\",\"scheduled_date\":\"2026-10-08\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Don't forget your two serves of vegetables at lunch today. Every step counts!\",\"message_body_alt\":\"A reminder to eat two serves of vegetables at lunch today.\",\"template_name\":\"health_plan_reminder\"}]}",
+      "parsed_ok": true,
+      "score": {
+        "count_matches": true,
+        "extras": 0,
+        "matches": [
+          {
+            "gold": "nutrition/increase/2/6",
+            "output": "nutrition/increase/2/6",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ],
+        "signature": "nutrition|increase|2|6",
+        "actions": [
+          "Eat two serves of vegetables at lunch.",
+          "Eat two serves of vegetables at lunch."
+        ]
+      }
+    },
+    {
+      "id": "F05-r2",
+      "case": "F05",
+      "rep": 2,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "61a7ca96dadd96a4abc146a23b25fe58526cddd26f5b2765cb7f5e9b87288a07",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:06:20.142Z",
+      "status": 200,
+      "response": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"nutrition\",\"category\":\"increase\",\"frequency_per_week\":2,\"duration_weeks\":6,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"nutrition\",\"nudge_type\":\"reminder\",\"action_text\":\"Eat two serves of vegetables at lunch.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"13:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember to include two serves of vegetables with your lunch today! You're doing great with your health goals.\",\"message_body_alt\":\"A reminder to eat two serves of vegetables at lunch today.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"nutrition\",\"nudge_type\":\"reminder\",\"action_text\":\"Eat two serves of vegetables at lunch.\",\"scheduled_date\":\"2026-10-08\",\"scheduled_time\":\"13:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Don't forget your two serves of vegetables at lunch today! Every step counts towards a healthier you.\",\"message_body_alt\":\"This is a reminder to eat two serves of vegetables at lunch today.\",\"template_name\":\"health_plan_reminder\"}]}"
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 683,
+          "candidatesTokenCount": 400,
+          "totalTokenCount": 1083,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 683
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-2.5-flash",
+        "responseId": "DBfCav20I9Ws9tMPpoeYyAo"
+      },
+      "latency_ms": 2944,
+      "intake_status": 200,
+      "accepted": true,
+      "gate": {
+        "validation_passed": true,
+        "stage": null,
+        "errors": []
+      },
+      "rows_written": 7,
+      "prompt_sha256": "8a231f68ae29d84f54075813f971a9b34fe808799dbee4c94f74b4552db6cb66",
+      "stored_provenance": {
+        "translation_model": "gemini-2.5-flash",
+        "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+        "translation_response_id": "DBfCav20I9Ws9tMPpoeYyAo"
+      },
+      "output_text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"nutrition\",\"category\":\"increase\",\"frequency_per_week\":2,\"duration_weeks\":6,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"nutrition\",\"nudge_type\":\"reminder\",\"action_text\":\"Eat two serves of vegetables at lunch.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"13:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember to include two serves of vegetables with your lunch today! You're doing great with your health goals.\",\"message_body_alt\":\"A reminder to eat two serves of vegetables at lunch today.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"nutrition\",\"nudge_type\":\"reminder\",\"action_text\":\"Eat two serves of vegetables at lunch.\",\"scheduled_date\":\"2026-10-08\",\"scheduled_time\":\"13:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Don't forget your two serves of vegetables at lunch today! Every step counts towards a healthier you.\",\"message_body_alt\":\"This is a reminder to eat two serves of vegetables at lunch today.\",\"template_name\":\"health_plan_reminder\"}]}",
+      "parsed_ok": true,
+      "score": {
+        "count_matches": true,
+        "extras": 0,
+        "matches": [
+          {
+            "gold": "nutrition/increase/2/6",
+            "output": "nutrition/increase/2/6",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ],
+        "signature": "nutrition|increase|2|6",
+        "actions": [
+          "Eat two serves of vegetables at lunch.",
+          "Eat two serves of vegetables at lunch."
+        ]
+      }
+    },
+    {
+      "id": "F05-r3",
+      "case": "F05",
+      "rep": 3,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "61a7ca96dadd96a4abc146a23b25fe58526cddd26f5b2765cb7f5e9b87288a07",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:06:27.144Z",
+      "status": 200,
+      "response": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"nutrition\",\"category\":\"increase\",\"frequency_per_week\":2,\"duration_weeks\":6,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"nutrition\",\"nudge_type\":\"reminder\",\"action_text\":\"Eat two serves of vegetables at lunch.\",\"scheduled_date\":\"2026-10-08\",\"scheduled_time\":\"13:00\",\"tone_variant\":\"neutral_informational\",\"message_body\":\"A reminder to eat two serves of vegetables at lunch today as part of your health plan.\",\"message_body_alt\":\"Remember to include two serves of vegetables with your lunch today! You're doing great with your health plan.\",\"template_name\":\"health_plan_reminder\"}]}"
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 683,
+          "candidatesTokenCount": 410,
+          "totalTokenCount": 1093,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 683
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-2.5-flash",
+        "responseId": "ExfCapWAIc_Y9tMP9tuU2Ao"
+      },
+      "latency_ms": 2773,
+      "intake_status": 200,
+      "accepted": true,
+      "gate": {
+        "validation_passed": true,
+        "stage": null,
+        "errors": []
+      },
+      "rows_written": 5,
+      "prompt_sha256": "8a231f68ae29d84f54075813f971a9b34fe808799dbee4c94f74b4552db6cb66",
+      "stored_provenance": {
+        "translation_model": "gemini-2.5-flash",
+        "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+        "translation_response_id": "ExfCapWAIc_Y9tMP9tuU2Ao"
+      },
+      "output_text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"nutrition\",\"category\":\"increase\",\"frequency_per_week\":2,\"duration_weeks\":6,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"nutrition\",\"nudge_type\":\"reminder\",\"action_text\":\"Eat two serves of vegetables at lunch.\",\"scheduled_date\":\"2026-10-08\",\"scheduled_time\":\"13:00\",\"tone_variant\":\"neutral_informational\",\"message_body\":\"A reminder to eat two serves of vegetables at lunch today as part of your health plan.\",\"message_body_alt\":\"Remember to include two serves of vegetables with your lunch today! You're doing great with your health plan.\",\"template_name\":\"health_plan_reminder\"}]}",
+      "parsed_ok": true,
+      "score": {
+        "count_matches": true,
+        "extras": 0,
+        "matches": [
+          {
+            "gold": "nutrition/increase/2/6",
+            "output": "nutrition/increase/2/6",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": false,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ],
+        "signature": "nutrition|increase|2|6",
+        "actions": [
+          "Eat two serves of vegetables at lunch."
+        ]
+      }
+    },
+    {
+      "id": "F06-r1",
+      "case": "F06",
+      "rep": 1,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "c817ae2b31010915549ac4976a491559a27cdf7487d98f514e68baf0a59639ca",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:06:34.146Z",
+      "status": 200,
+      "response": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"physical_activity\",\"category\":\"maintain\",\"frequency_per_week\":1,\"duration_weeks\":8,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"physical_activity\",\"nudge_type\":\"reminder\",\"action_text\":\"Attend your three gym sessions this week.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember to keep up with your three gym sessions this week. You've got this!\",\"message_body_alt\":\"This is a reminder to attend your three gym sessions this week.\",\"template_name\":\"health_plan_reminder\"}]}"
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 684,
+          "candidatesTokenCount": 238,
+          "totalTokenCount": 922,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 684
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-2.5-flash",
+        "responseId": "GhfCaqb4H4-x1e8P9r_6-AU"
+      },
+      "latency_ms": 2037,
+      "intake_status": 200,
+      "accepted": true,
+      "gate": {
+        "validation_passed": true,
+        "stage": null,
+        "errors": []
+      },
+      "rows_written": 5,
+      "prompt_sha256": "60b9c5b45b7c532ae4f9286f05d247980317c91fd99e896a43ae3b41e8c522e4",
+      "stored_provenance": {
+        "translation_model": "gemini-2.5-flash",
+        "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+        "translation_response_id": "GhfCaqb4H4-x1e8P9r_6-AU"
+      },
+      "output_text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"physical_activity\",\"category\":\"maintain\",\"frequency_per_week\":1,\"duration_weeks\":8,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"physical_activity\",\"nudge_type\":\"reminder\",\"action_text\":\"Attend your three gym sessions this week.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember to keep up with your three gym sessions this week. You've got this!\",\"message_body_alt\":\"This is a reminder to attend your three gym sessions this week.\",\"template_name\":\"health_plan_reminder\"}]}",
+      "parsed_ok": true,
+      "score": {
+        "count_matches": true,
+        "extras": 0,
+        "matches": [
+          {
+            "gold": "physical_activity/maintain/1/8",
+            "output": "physical_activity/maintain/1/8",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ],
+        "signature": "physical_activity|maintain|1|8",
+        "actions": [
+          "Attend your three gym sessions this week."
+        ]
+      }
+    },
+    {
+      "id": "F06-r2",
+      "case": "F06",
+      "rep": 2,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "c817ae2b31010915549ac4976a491559a27cdf7487d98f514e68baf0a59639ca",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:06:41.147Z",
+      "status": 200,
+      "response": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"physical_activity\",\"category\":\"maintain\",\"frequency_per_week\":1,\"duration_weeks\":8,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"physical_activity\",\"nudge_type\":\"reminder\",\"action_text\":\"Attend your three gym sessions this week.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember your goal to keep up with three gym sessions this week! You're doing great, keep that momentum going!\",\"message_body_alt\":\"This is a reminder to attend your three gym sessions this week.\",\"template_name\":\"health_plan_reminder\"}]}"
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 684,
+          "candidatesTokenCount": 244,
+          "totalTokenCount": 928,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 684
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-2.5-flash",
+        "responseId": "JBfCasGlG_mj9tMPr_jr-A4"
+      },
+      "latency_ms": 5080,
+      "intake_status": 200,
+      "accepted": true,
+      "gate": {
+        "validation_passed": true,
+        "stage": null,
+        "errors": []
+      },
+      "rows_written": 5,
+      "prompt_sha256": "60b9c5b45b7c532ae4f9286f05d247980317c91fd99e896a43ae3b41e8c522e4",
+      "stored_provenance": {
+        "translation_model": "gemini-2.5-flash",
+        "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+        "translation_response_id": "JBfCasGlG_mj9tMPr_jr-A4"
+      },
+      "output_text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"physical_activity\",\"category\":\"maintain\",\"frequency_per_week\":1,\"duration_weeks\":8,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"physical_activity\",\"nudge_type\":\"reminder\",\"action_text\":\"Attend your three gym sessions this week.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember your goal to keep up with three gym sessions this week! You're doing great, keep that momentum going!\",\"message_body_alt\":\"This is a reminder to attend your three gym sessions this week.\",\"template_name\":\"health_plan_reminder\"}]}",
+      "parsed_ok": true,
+      "score": {
+        "count_matches": true,
+        "extras": 0,
+        "matches": [
+          {
+            "gold": "physical_activity/maintain/1/8",
+            "output": "physical_activity/maintain/1/8",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ],
+        "signature": "physical_activity|maintain|1|8",
+        "actions": [
+          "Attend your three gym sessions this week."
+        ]
+      }
+    },
+    {
+      "id": "F06-r3",
+      "case": "F06",
+      "rep": 3,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "c817ae2b31010915549ac4976a491559a27cdf7487d98f514e68baf0a59639ca",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:06:48.149Z",
+      "status": 429,
+      "response": {
+        "error": {
+          "code": 429,
+          "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 5, model: gemini-2.5-flash\nPlease retry in 11.609541665s.",
+          "status": "RESOURCE_EXHAUSTED",
+          "details": [
+            {
+              "@type": "type.googleapis.com/google.rpc.Help",
+              "links": [
+                {
+                  "description": "Learn more about Gemini API quotas",
+                  "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+              "violations": [
+                {
+                  "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                  "quotaId": "GenerateRequestsPerMinutePerProjectPerModel-FreeTier",
+                  "quotaDimensions": {
+                    "location": "global",
+                    "model": "gemini-2.5-flash"
+                  },
+                  "quotaValue": "5"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.RetryInfo",
+              "retryDelay": "11s"
+            }
+          ]
+        }
+      },
+      "latency_ms": 312,
+      "intake_status": 500,
+      "accepted": false,
+      "gate": null,
+      "rows_written": 0,
+      "prompt_sha256": "60b9c5b45b7c532ae4f9286f05d247980317c91fd99e896a43ae3b41e8c522e4",
+      "stored_provenance": null,
+      "output_text": null,
+      "parsed_ok": false,
+      "score": null
+    },
+    {
+      "id": "F07-r1",
+      "case": "F07",
+      "rep": 1,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "05a734364782bb5d81f305a7a20b0fc149e54673bf46561ee9307cc1712d8e7d",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:06:55.151Z",
+      "status": 200,
+      "response": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"stress_management\",\"category\":\"establish\",\"frequency_per_week\":2,\"duration_weeks\":4,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"stress_management\",\"nudge_type\":\"reminder\",\"action_text\":\"Practice 10 minutes of slow breathing.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"19:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember to take 10 minutes this evening for slow breathing. This practice can significantly help manage your stress levels. You've got this!\",\"message_body_alt\":\"It's time for your 10 minutes of slow breathing this evening. This activity is part of your stress management plan.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"stress_management\",\"nudge_type\":\"reminder\",\"action_text\":\"Practice 10 minutes of slow breathing.\",\"scheduled_date\":\"2026-10-08\",\"scheduled_time\":\"19:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Don't forget your 10 minutes of slow breathing tonight. It's a powerful tool for stress management and self-care. Keep up the great work!\",\"message_body_alt\":\"A reminder to complete your 10 minutes of slow breathing this evening. This is a key part of your stress management routine.\",\"template_name\":\"health_plan_reminder\"}]}"
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 687,
+          "candidatesTokenCount": 454,
+          "totalTokenCount": 1141,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 687
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-2.5-flash",
+        "responseId": "LxfCaryCJfDa1e8PvbieiAw"
+      },
+      "latency_ms": 3076,
+      "intake_status": 200,
+      "accepted": true,
+      "gate": {
+        "validation_passed": true,
+        "stage": null,
+        "errors": []
+      },
+      "rows_written": 7,
+      "prompt_sha256": "b26ab97c54ca4991ff0d43c34069f5d1123e74e622eabac2ae0a4490c68c590f",
+      "stored_provenance": {
+        "translation_model": "gemini-2.5-flash",
+        "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+        "translation_response_id": "LxfCaryCJfDa1e8PvbieiAw"
+      },
+      "output_text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"stress_management\",\"category\":\"establish\",\"frequency_per_week\":2,\"duration_weeks\":4,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"stress_management\",\"nudge_type\":\"reminder\",\"action_text\":\"Practice 10 minutes of slow breathing.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"19:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember to take 10 minutes this evening for slow breathing. This practice can significantly help manage your stress levels. You've got this!\",\"message_body_alt\":\"It's time for your 10 minutes of slow breathing this evening. This activity is part of your stress management plan.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"stress_management\",\"nudge_type\":\"reminder\",\"action_text\":\"Practice 10 minutes of slow breathing.\",\"scheduled_date\":\"2026-10-08\",\"scheduled_time\":\"19:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Don't forget your 10 minutes of slow breathing tonight. It's a powerful tool for stress management and self-care. Keep up the great work!\",\"message_body_alt\":\"A reminder to complete your 10 minutes of slow breathing this evening. This is a key part of your stress management routine.\",\"template_name\":\"health_plan_reminder\"}]}",
+      "parsed_ok": true,
+      "score": {
+        "count_matches": true,
+        "extras": 0,
+        "matches": [
+          {
+            "gold": "stress_management/establish/2/4",
+            "output": "stress_management/establish/2/4",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ],
+        "signature": "stress_management|establish|2|4",
+        "actions": [
+          "Practice 10 minutes of slow breathing.",
+          "Practice 10 minutes of slow breathing."
+        ]
+      }
+    },
+    {
+      "id": "F07-r2",
+      "case": "F07",
+      "rep": 2,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "05a734364782bb5d81f305a7a20b0fc149e54673bf46561ee9307cc1712d8e7d",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:07:02.152Z",
+      "status": 200,
+      "response": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"stress_management\",\"category\":\"establish\",\"frequency_per_week\":2,\"duration_weeks\":4,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"stress_management\",\"nudge_type\":\"reminder\",\"action_text\":\"Practice 10 minutes of slow breathing every evening.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"19:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember to take 10 minutes this evening for slow breathing. This practice can significantly help manage your stress levels. You're doing great!\",\"message_body_alt\":\"It is time for your 10 minutes of slow breathing this evening. This practice is prescribed to help manage stress.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"stress_management\",\"nudge_type\":\"reminder\",\"action_text\":\"Practice 10 minutes of slow breathing every evening.\",\"scheduled_date\":\"2026-10-08\",\"scheduled_time\":\"19:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Don't forget your 10 minutes of slow breathing tonight. It's a wonderful way to unwind and reduce stress. Keep up the fantastic effort!\",\"message_body_alt\":\"Your scheduled 10 minutes of slow breathing is for this evening. This practice is part of your stress management plan.\",\"template_name\":\"health_plan_reminder\"}]}"
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 687,
+          "candidatesTokenCount": 452,
+          "totalTokenCount": 1139,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 687
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-2.5-flash",
+        "responseId": "NhfCaqvBGJ_j1e8P5KXoyQ4"
+      },
+      "latency_ms": 2905,
+      "intake_status": 200,
+      "accepted": true,
+      "gate": {
+        "validation_passed": true,
+        "stage": null,
+        "errors": []
+      },
+      "rows_written": 7,
+      "prompt_sha256": "b26ab97c54ca4991ff0d43c34069f5d1123e74e622eabac2ae0a4490c68c590f",
+      "stored_provenance": {
+        "translation_model": "gemini-2.5-flash",
+        "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+        "translation_response_id": "NhfCaqvBGJ_j1e8P5KXoyQ4"
+      },
+      "output_text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"stress_management\",\"category\":\"establish\",\"frequency_per_week\":2,\"duration_weeks\":4,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"stress_management\",\"nudge_type\":\"reminder\",\"action_text\":\"Practice 10 minutes of slow breathing every evening.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"19:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember to take 10 minutes this evening for slow breathing. This practice can significantly help manage your stress levels. You're doing great!\",\"message_body_alt\":\"It is time for your 10 minutes of slow breathing this evening. This practice is prescribed to help manage stress.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"stress_management\",\"nudge_type\":\"reminder\",\"action_text\":\"Practice 10 minutes of slow breathing every evening.\",\"scheduled_date\":\"2026-10-08\",\"scheduled_time\":\"19:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Don't forget your 10 minutes of slow breathing tonight. It's a wonderful way to unwind and reduce stress. Keep up the fantastic effort!\",\"message_body_alt\":\"Your scheduled 10 minutes of slow breathing is for this evening. This practice is part of your stress management plan.\",\"template_name\":\"health_plan_reminder\"}]}",
+      "parsed_ok": true,
+      "score": {
+        "count_matches": true,
+        "extras": 0,
+        "matches": [
+          {
+            "gold": "stress_management/establish/2/4",
+            "output": "stress_management/establish/2/4",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ],
+        "signature": "stress_management|establish|2|4",
+        "actions": [
+          "Practice 10 minutes of slow breathing every evening.",
+          "Practice 10 minutes of slow breathing every evening."
+        ]
+      }
+    },
+    {
+      "id": "F07-r3",
+      "case": "F07",
+      "rep": 3,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "05a734364782bb5d81f305a7a20b0fc149e54673bf46561ee9307cc1712d8e7d",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:07:09.154Z",
+      "status": 200,
+      "response": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"stress_management\",\"category\":\"establish\",\"frequency_per_week\":2,\"duration_weeks\":4,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"stress_management\",\"nudge_type\":\"reminder\",\"action_text\":\"Practice 10 minutes of slow breathing.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"19:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember to take 10 minutes this evening for slow breathing. It's a great way to manage stress and support your well-being. You've got this!\",\"message_body_alt\":\"This evening, complete 10 minutes of slow breathing as prescribed to manage stress.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"stress_management\",\"nudge_type\":\"reminder\",\"action_text\":\"Practice 10 minutes of slow breathing.\",\"scheduled_date\":\"2026-10-08\",\"scheduled_time\":\"19:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"It's time for your 10 minutes of slow breathing tonight. This practice is key to managing stress and fostering calm. Keep up the fantastic work!\",\"message_body_alt\":\"Tonight, perform 10 minutes of slow breathing as part of your stress management plan.\",\"template_name\":\"health_plan_reminder\"}]}"
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 687,
+          "candidatesTokenCount": 441,
+          "totalTokenCount": 1128,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 687
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-2.5-flash",
+        "responseId": "PRfCaoz2Hp_j1e8P5KXoyQ4"
+      },
+      "latency_ms": 2906,
+      "intake_status": 200,
+      "accepted": true,
+      "gate": {
+        "validation_passed": true,
+        "stage": null,
+        "errors": []
+      },
+      "rows_written": 7,
+      "prompt_sha256": "b26ab97c54ca4991ff0d43c34069f5d1123e74e622eabac2ae0a4490c68c590f",
+      "stored_provenance": {
+        "translation_model": "gemini-2.5-flash",
+        "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+        "translation_response_id": "PRfCaoz2Hp_j1e8P5KXoyQ4"
+      },
+      "output_text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"stress_management\",\"category\":\"establish\",\"frequency_per_week\":2,\"duration_weeks\":4,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"stress_management\",\"nudge_type\":\"reminder\",\"action_text\":\"Practice 10 minutes of slow breathing.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"19:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember to take 10 minutes this evening for slow breathing. It's a great way to manage stress and support your well-being. You've got this!\",\"message_body_alt\":\"This evening, complete 10 minutes of slow breathing as prescribed to manage stress.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"stress_management\",\"nudge_type\":\"reminder\",\"action_text\":\"Practice 10 minutes of slow breathing.\",\"scheduled_date\":\"2026-10-08\",\"scheduled_time\":\"19:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"It's time for your 10 minutes of slow breathing tonight. This practice is key to managing stress and fostering calm. Keep up the fantastic work!\",\"message_body_alt\":\"Tonight, perform 10 minutes of slow breathing as part of your stress management plan.\",\"template_name\":\"health_plan_reminder\"}]}",
+      "parsed_ok": true,
+      "score": {
+        "count_matches": true,
+        "extras": 0,
+        "matches": [
+          {
+            "gold": "stress_management/establish/2/4",
+            "output": "stress_management/establish/2/4",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ],
+        "signature": "stress_management|establish|2|4",
+        "actions": [
+          "Practice 10 minutes of slow breathing.",
+          "Practice 10 minutes of slow breathing."
+        ]
+      }
+    },
+    {
+      "id": "F08-r1",
+      "case": "F08",
+      "rep": 1,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "6f404cac2ce628d2472648ef09f6eb3540d21a776b774b6180f92d2100b93d28",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:07:16.155Z",
+      "status": 200,
+      "response": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"social_connection\",\"category\":\"establish\",\"frequency_per_week\":1,\"duration_weeks\":8,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"social_connection\",\"nudge_type\":\"reminder\",\"action_text\":\"Call or meet a friend to feel less isolated.\",\"scheduled_date\":\"2026-10-09\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember to connect with a friend this week! Taking time for social connection can make a big difference in how you feel.\",\"message_body_alt\":\"This is a reminder to call or meet a friend this week as part of your health plan to address feelings of isolation.\",\"template_name\":\"health_plan_reminder\"}]}"
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 688,
+          "candidatesTokenCount": 257,
+          "totalTokenCount": 945,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 688
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-2.5-flash",
+        "responseId": "RBfCarDPJqmRvr0Pr6y7iAY"
+      },
+      "latency_ms": 2199,
+      "intake_status": 200,
+      "accepted": true,
+      "gate": {
+        "validation_passed": true,
+        "stage": null,
+        "errors": []
+      },
+      "rows_written": 5,
+      "prompt_sha256": "8b8db5a9f58e08d56e661818d945b4ee6392de0fc2dd3f8cc6ed25c02d14e0e8",
+      "stored_provenance": {
+        "translation_model": "gemini-2.5-flash",
+        "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+        "translation_response_id": "RBfCarDPJqmRvr0Pr6y7iAY"
+      },
+      "output_text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"social_connection\",\"category\":\"establish\",\"frequency_per_week\":1,\"duration_weeks\":8,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"social_connection\",\"nudge_type\":\"reminder\",\"action_text\":\"Call or meet a friend to feel less isolated.\",\"scheduled_date\":\"2026-10-09\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember to connect with a friend this week! Taking time for social connection can make a big difference in how you feel.\",\"message_body_alt\":\"This is a reminder to call or meet a friend this week as part of your health plan to address feelings of isolation.\",\"template_name\":\"health_plan_reminder\"}]}",
+      "parsed_ok": true,
+      "score": {
+        "count_matches": true,
+        "extras": 0,
+        "matches": [
+          {
+            "gold": "social_connection/increase/1/8",
+            "output": "social_connection/establish/1/8",
+            "pillar": true,
+            "category_exact": false,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ],
+        "signature": "social_connection|establish|1|8",
+        "actions": [
+          "Call or meet a friend to feel less isolated."
+        ]
+      }
+    },
+    {
+      "id": "F08-r2",
+      "case": "F08",
+      "rep": 2,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "6f404cac2ce628d2472648ef09f6eb3540d21a776b774b6180f92d2100b93d28",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:07:23.156Z",
+      "status": 429,
+      "response": {
+        "error": {
+          "code": 429,
+          "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 14h52m36.484468698s.",
+          "status": "RESOURCE_EXHAUSTED",
+          "details": [
+            {
+              "@type": "type.googleapis.com/google.rpc.Help",
+              "links": [
+                {
+                  "description": "Learn more about Gemini API quotas",
+                  "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+              "violations": [
+                {
+                  "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                  "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+                  "quotaDimensions": {
+                    "model": "gemini-2.5-flash",
+                    "location": "global"
+                  },
+                  "quotaValue": "20"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.RetryInfo",
+              "retryDelay": "53556s"
+            }
+          ]
+        }
+      },
+      "latency_ms": 433,
+      "intake_status": 500,
+      "accepted": false,
+      "gate": null,
+      "rows_written": 0,
+      "prompt_sha256": "8b8db5a9f58e08d56e661818d945b4ee6392de0fc2dd3f8cc6ed25c02d14e0e8",
+      "stored_provenance": null,
+      "output_text": null,
+      "parsed_ok": false,
+      "score": null
+    },
+    {
+      "id": "F08-r3",
+      "case": "F08",
+      "rep": 3,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "6f404cac2ce628d2472648ef09f6eb3540d21a776b774b6180f92d2100b93d28",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:07:30.156Z",
+      "status": 429,
+      "response": {
+        "error": {
+          "code": 429,
+          "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 14h52m29.422133255s.",
+          "status": "RESOURCE_EXHAUSTED",
+          "details": [
+            {
+              "@type": "type.googleapis.com/google.rpc.Help",
+              "links": [
+                {
+                  "description": "Learn more about Gemini API quotas",
+                  "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+              "violations": [
+                {
+                  "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                  "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+                  "quotaDimensions": {
+                    "location": "global",
+                    "model": "gemini-2.5-flash"
+                  },
+                  "quotaValue": "20"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.RetryInfo",
+              "retryDelay": "53549s"
+            }
+          ]
+        }
+      },
+      "latency_ms": 493,
+      "intake_status": 500,
+      "accepted": false,
+      "gate": null,
+      "rows_written": 0,
+      "prompt_sha256": "8b8db5a9f58e08d56e661818d945b4ee6392de0fc2dd3f8cc6ed25c02d14e0e8",
+      "stored_provenance": null,
+      "output_text": null,
+      "parsed_ok": false,
+      "score": null
+    },
+    {
+      "id": "F09-r1",
+      "case": "F09",
+      "rep": 1,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "815579d513f6bda09da4442d4ad6c70f24625dd14469ee95df5308661bf6e217",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:07:37.157Z",
+      "status": 200,
+      "response": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"substance_use\",\"category\":\"avoid\",\"frequency_per_week\":2,\"duration_weeks\":6,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"substance_use\",\"nudge_type\":\"reminder\",\"action_text\":\"Avoid sugary soft drinks entirely today.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember your goal to avoid sugary soft drinks today. You're making a great choice for your health!\",\"message_body_alt\":\"This is a reminder to avoid sugary soft drinks today as part of your health plan.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"substance_use\",\"nudge_type\":\"reminder\",\"action_text\":\"Continue to avoid sugary soft drinks.\",\"scheduled_date\":\"2026-10-08\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Keep up the fantastic work avoiding sugary soft drinks. Every day is a step towards better health!\",\"message_body_alt\":\"Reminder: Continue to avoid sugary soft drinks today as per your health plan.\",\"template_name\":\"health_plan_reminder\"}]}"
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 681,
+          "candidatesTokenCount": 410,
+          "totalTokenCount": 1091,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 681
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-2.5-flash",
+        "responseId": "WRfCasKNKNSB1e8PoLzk8Qk"
+      },
+      "latency_ms": 2922,
+      "intake_status": 200,
+      "accepted": true,
+      "gate": {
+        "validation_passed": true,
+        "stage": null,
+        "errors": []
+      },
+      "rows_written": 7,
+      "prompt_sha256": "7fb40df8f34f5ee96f9ba953f5fac1344ceee8163192f957af4c23ba078a3000",
+      "stored_provenance": {
+        "translation_model": "gemini-2.5-flash",
+        "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+        "translation_response_id": "WRfCasKNKNSB1e8PoLzk8Qk"
+      },
+      "output_text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"substance_use\",\"category\":\"avoid\",\"frequency_per_week\":2,\"duration_weeks\":6,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"substance_use\",\"nudge_type\":\"reminder\",\"action_text\":\"Avoid sugary soft drinks entirely today.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember your goal to avoid sugary soft drinks today. You're making a great choice for your health!\",\"message_body_alt\":\"This is a reminder to avoid sugary soft drinks today as part of your health plan.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"substance_use\",\"nudge_type\":\"reminder\",\"action_text\":\"Continue to avoid sugary soft drinks.\",\"scheduled_date\":\"2026-10-08\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Keep up the fantastic work avoiding sugary soft drinks. Every day is a step towards better health!\",\"message_body_alt\":\"Reminder: Continue to avoid sugary soft drinks today as per your health plan.\",\"template_name\":\"health_plan_reminder\"}]}",
+      "parsed_ok": true,
+      "score": {
+        "count_matches": true,
+        "extras": 1,
+        "matches": [
+          {
+            "gold": "nutrition/avoid/2/6",
+            "output": null,
+            "pillar": false,
+            "category_exact": false,
+            "category_accepted": false,
+            "frequency_exact": false,
+            "frequency_accepted": false,
+            "duration_exact": false
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ],
+        "signature": "substance_use|avoid|2|6",
+        "actions": [
+          "Avoid sugary soft drinks entirely today.",
+          "Continue to avoid sugary soft drinks."
+        ]
+      }
+    },
+    {
+      "id": "F09-r2",
+      "case": "F09",
+      "rep": 2,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "815579d513f6bda09da4442d4ad6c70f24625dd14469ee95df5308661bf6e217",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:07:44.157Z",
+      "status": 429,
+      "response": {
+        "error": {
+          "code": 429,
+          "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 5, model: gemini-2.5-flash\nPlease retry in 15.481321104s.",
+          "status": "RESOURCE_EXHAUSTED",
+          "details": [
+            {
+              "@type": "type.googleapis.com/google.rpc.Help",
+              "links": [
+                {
+                  "description": "Learn more about Gemini API quotas",
+                  "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+              "violations": [
+                {
+                  "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                  "quotaId": "GenerateRequestsPerMinutePerProjectPerModel-FreeTier",
+                  "quotaDimensions": {
+                    "location": "global",
+                    "model": "gemini-2.5-flash"
+                  },
+                  "quotaValue": "5"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.RetryInfo",
+              "retryDelay": "15s"
+            }
+          ]
+        }
+      },
+      "latency_ms": 433,
+      "intake_status": 500,
+      "accepted": false,
+      "gate": null,
+      "rows_written": 0,
+      "prompt_sha256": "7fb40df8f34f5ee96f9ba953f5fac1344ceee8163192f957af4c23ba078a3000",
+      "stored_provenance": null,
+      "output_text": null,
+      "parsed_ok": false,
+      "score": null
+    },
+    {
+      "id": "F09-r3",
+      "case": "F09",
+      "rep": 3,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "815579d513f6bda09da4442d4ad6c70f24625dd14469ee95df5308661bf6e217",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:07:51.158Z",
+      "status": 429,
+      "response": {
+        "error": {
+          "code": 429,
+          "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 14h52m8.416635924s.",
+          "status": "RESOURCE_EXHAUSTED",
+          "details": [
+            {
+              "@type": "type.googleapis.com/google.rpc.Help",
+              "links": [
+                {
+                  "description": "Learn more about Gemini API quotas",
+                  "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+              "violations": [
+                {
+                  "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                  "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+                  "quotaDimensions": {
+                    "location": "global",
+                    "model": "gemini-2.5-flash"
+                  },
+                  "quotaValue": "20"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.RetryInfo",
+              "retryDelay": "53528s"
+            }
+          ]
+        }
+      },
+      "latency_ms": 520,
+      "intake_status": 500,
+      "accepted": false,
+      "gate": null,
+      "rows_written": 0,
+      "prompt_sha256": "7fb40df8f34f5ee96f9ba953f5fac1344ceee8163192f957af4c23ba078a3000",
+      "stored_provenance": null,
+      "output_text": null,
+      "parsed_ok": false,
+      "score": null
+    },
+    {
+      "id": "F10-r1",
+      "case": "F10",
+      "rep": 1,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "86af440d6b3a9575fbc0045ff5d9579293ed84ecc5e651f60f88d274999555e7",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:07:58.160Z",
+      "status": 429,
+      "response": {
+        "error": {
+          "code": 429,
+          "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 14h52m1.370376568s.",
+          "status": "RESOURCE_EXHAUSTED",
+          "details": [
+            {
+              "@type": "type.googleapis.com/google.rpc.Help",
+              "links": [
+                {
+                  "description": "Learn more about Gemini API quotas",
+                  "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+              "violations": [
+                {
+                  "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                  "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+                  "quotaDimensions": {
+                    "model": "gemini-2.5-flash",
+                    "location": "global"
+                  },
+                  "quotaValue": "20"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.RetryInfo",
+              "retryDelay": "53521s"
+            }
+          ]
+        }
+      },
+      "latency_ms": 543,
+      "intake_status": 500,
+      "accepted": false,
+      "gate": null,
+      "rows_written": 0,
+      "prompt_sha256": "188e837a960fe969461c6ddd42dc90c35c4c498232de8a94cdfc0fdbb1a9e68a",
+      "stored_provenance": null,
+      "output_text": null,
+      "parsed_ok": false,
+      "score": null
+    },
+    {
+      "id": "F10-r2",
+      "case": "F10",
+      "rep": 2,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "86af440d6b3a9575fbc0045ff5d9579293ed84ecc5e651f60f88d274999555e7",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:08:05.161Z",
+      "status": 200,
+      "response": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"sleep\",\"category\":\"reduce\",\"frequency_per_week\":2,\"duration_weeks\":8,\"_normalised\":\"\"},{\"ref\":\"p2\",\"pillar\":\"sleep\",\"category\":\"establish\",\"frequency_per_week\":2,\"duration_weeks\":8,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Reduce screen time after 9 pm\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember to power down your screens after 9 PM. This small change can make a big difference for your sleep!\",\"message_body_alt\":\"Reminder: Reduce screen time after 9 PM. This supports a healthier sleep routine.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Reduce screen time after 9 pm\",\"scheduled_date\":\"2026-10-08\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"neutral_informational\",\"message_body\":\"Reminder: Reduce screen time after 9 PM. This supports a healthier sleep routine.\",\"message_body_alt\":\"Remember to power down your screens after 9 PM. This small change can make a big difference for your sleep!\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p2\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Wake up at 7 am\",\"scheduled_date\":\"2026-10-06\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Aim for a consistent wake-up time of 7 AM. A regular schedule helps regulate your body's natural sleep cycle!\",\"message_body_alt\":\"Reminder: Maintain a regular wake-up time of 7 AM. Consistency aids in establishing a healthy sleep pattern.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p2\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Wake up at 7 am\",\"scheduled_date\":\"2026-10-09\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"neutral_informational\",\"message_body\":\"Reminder: Maintain a regular wake-up time of 7 AM. Consistency aids in establishing a healthy sleep pattern.\",\"message_body_alt\":\"Aim for a consistent wake-up time of 7 AM. A regular schedule helps regulate your body's natural sleep cycle!\",\"template_name\":\"health_plan_reminder\"}]}"
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 697,
+          "candidatesTokenCount": 819,
+          "totalTokenCount": 1516,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 697
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-2.5-flash",
+        "responseId": "dRfCarrEI46gvr0P4tqjiQ4"
+      },
+      "latency_ms": 4161,
+      "intake_status": 200,
+      "accepted": true,
+      "gate": {
+        "validation_passed": true,
+        "stage": null,
+        "errors": []
+      },
+      "rows_written": 12,
+      "prompt_sha256": "188e837a960fe969461c6ddd42dc90c35c4c498232de8a94cdfc0fdbb1a9e68a",
+      "stored_provenance": {
+        "translation_model": "gemini-2.5-flash",
+        "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+        "translation_response_id": "dRfCarrEI46gvr0P4tqjiQ4"
+      },
+      "output_text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"sleep\",\"category\":\"reduce\",\"frequency_per_week\":2,\"duration_weeks\":8,\"_normalised\":\"\"},{\"ref\":\"p2\",\"pillar\":\"sleep\",\"category\":\"establish\",\"frequency_per_week\":2,\"duration_weeks\":8,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Reduce screen time after 9 pm\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember to power down your screens after 9 PM. This small change can make a big difference for your sleep!\",\"message_body_alt\":\"Reminder: Reduce screen time after 9 PM. This supports a healthier sleep routine.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Reduce screen time after 9 pm\",\"scheduled_date\":\"2026-10-08\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"neutral_informational\",\"message_body\":\"Reminder: Reduce screen time after 9 PM. This supports a healthier sleep routine.\",\"message_body_alt\":\"Remember to power down your screens after 9 PM. This small change can make a big difference for your sleep!\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p2\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Wake up at 7 am\",\"scheduled_date\":\"2026-10-06\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Aim for a consistent wake-up time of 7 AM. A regular schedule helps regulate your body's natural sleep cycle!\",\"message_body_alt\":\"Reminder: Maintain a regular wake-up time of 7 AM. Consistency aids in establishing a healthy sleep pattern.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p2\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Wake up at 7 am\",\"scheduled_date\":\"2026-10-09\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"neutral_informational\",\"message_body\":\"Reminder: Maintain a regular wake-up time of 7 AM. Consistency aids in establishing a healthy sleep pattern.\",\"message_body_alt\":\"Aim for a consistent wake-up time of 7 AM. A regular schedule helps regulate your body's natural sleep cycle!\",\"template_name\":\"health_plan_reminder\"}]}",
+      "parsed_ok": true,
+      "score": {
+        "count_matches": true,
+        "extras": 0,
+        "matches": [
+          {
+            "gold": "sleep/reduce/2/8",
+            "output": "sleep/reduce/2/8",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          },
+          {
+            "gold": "sleep/establish/2/8",
+            "output": "sleep/establish/2/8",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          },
+          {
+            "ref": "p2",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ],
+        "signature": "sleep|establish|2|8 ; sleep|reduce|2|8",
+        "actions": [
+          "Reduce screen time after 9 pm",
+          "Reduce screen time after 9 pm",
+          "Wake up at 7 am",
+          "Wake up at 7 am"
+        ]
+      }
+    },
+    {
+      "id": "F10-r3",
+      "case": "F10",
+      "rep": 3,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "86af440d6b3a9575fbc0045ff5d9579293ed84ecc5e651f60f88d274999555e7",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:08:12.161Z",
+      "status": 429,
+      "response": {
+        "error": {
+          "code": 429,
+          "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 14h51m47.631998212s.",
+          "status": "RESOURCE_EXHAUSTED",
+          "details": [
+            {
+              "@type": "type.googleapis.com/google.rpc.Help",
+              "links": [
+                {
+                  "description": "Learn more about Gemini API quotas",
+                  "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+              "violations": [
+                {
+                  "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                  "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+                  "quotaDimensions": {
+                    "location": "global",
+                    "model": "gemini-2.5-flash"
+                  },
+                  "quotaValue": "20"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.RetryInfo",
+              "retryDelay": "53507s"
+            }
+          ]
+        }
+      },
+      "latency_ms": 278,
+      "intake_status": 500,
+      "accepted": false,
+      "gate": null,
+      "rows_written": 0,
+      "prompt_sha256": "188e837a960fe969461c6ddd42dc90c35c4c498232de8a94cdfc0fdbb1a9e68a",
+      "stored_provenance": null,
+      "output_text": null,
+      "parsed_ok": false,
+      "score": null
+    },
+    {
+      "id": "F11-r1",
+      "case": "F11",
+      "rep": 1,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "a8e6060d9e6e9d7387b9f7c2356653ffc4aae8e34e580ffa814b1695326cf5d4",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:08:19.164Z",
+      "status": 200,
+      "response": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"physical_activity\",\"category\":\"increase\",\"frequency_per_week\":3,\"duration_weeks\":6,\"_normalised\":\"\"},{\"ref\":\"p2\",\"pillar\":\"nutrition\",\"category\":\"reduce\",\"frequency_per_week\":2,\"duration_weeks\":6,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"physical_activity\",\"nudge_type\":\"challenge\",\"action_text\":\"Walk for 20 minutes.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Let's get moving! Your 20-minute walk is a great step towards your health goals. You've got this!\",\"message_body_alt\":\"Time for your 20-minute walk. This activity supports your physical activity goal.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"physical_activity\",\"nudge_type\":\"challenge\",\"action_text\":\"Walk for 20 minutes.\",\"scheduled_date\":\"2026-10-07\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Another day, another walk! Keep up the fantastic work with your 20-minute walk today. Every step counts!\",\"message_body_alt\":\"Your scheduled 20-minute walk is today. Consistent activity is key to reaching your health objectives.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"physical_activity\",\"nudge_type\":\"challenge\",\"action_text\":\"Walk for 20 minutes.\",\"scheduled_date\":\"2026-10-09\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"You're doing great! Complete your third 20-minute walk this week. Feel the benefits!\",\"message_body_alt\":\"Today marks your third 20-minute walk for the week. This contributes to your overall physical activity.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p2\",\"pillar\":\"nutrition\",\"nudge_type\":\"reminder\",\"action_text\":\"Limit takeaway meals to once a week.\",\"scheduled_date\":\"2026-10-06\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember your goal to cut back on takeaway meals this week. You're making healthier choices!\",\"message_body_alt\":\"Reminder: Your goal is to limit takeaway meals to once per week. Plan your meals accordingly.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p2\",\"pillar\":\"nutrition\",\"nudge_type\":\"reminder\",\"action_text\":\"Limit takeaway meals to once a week.\",\"scheduled_date\":\"2026-10-10\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Stay strong with your nutrition goals! Keep your takeaway meals to once a week. You've got this!\",\"message_body_alt\":\"This is a reminder about your goal to reduce takeaway meals to once a week. Focus on your nutrition.\",\"template_name\":\"health_plan_reminder\"}]}"
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 700,
+          "candidatesTokenCount": 989,
+          "totalTokenCount": 1689,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 700
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-2.5-flash",
+        "responseId": "gxfCapbwMa6lvr0P_5K7yA4"
+      },
+      "latency_ms": 5982,
+      "intake_status": 200,
+      "accepted": true,
+      "gate": {
+        "validation_passed": true,
+        "stage": null,
+        "errors": []
+      },
+      "rows_written": 14,
+      "prompt_sha256": "d7d694d995c7eefcca0aa610d7fb8d6c7bedd91272fa993ee17a80051b4f4553",
+      "stored_provenance": {
+        "translation_model": "gemini-2.5-flash",
+        "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+        "translation_response_id": "gxfCapbwMa6lvr0P_5K7yA4"
+      },
+      "output_text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"physical_activity\",\"category\":\"increase\",\"frequency_per_week\":3,\"duration_weeks\":6,\"_normalised\":\"\"},{\"ref\":\"p2\",\"pillar\":\"nutrition\",\"category\":\"reduce\",\"frequency_per_week\":2,\"duration_weeks\":6,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"physical_activity\",\"nudge_type\":\"challenge\",\"action_text\":\"Walk for 20 minutes.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Let's get moving! Your 20-minute walk is a great step towards your health goals. You've got this!\",\"message_body_alt\":\"Time for your 20-minute walk. This activity supports your physical activity goal.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"physical_activity\",\"nudge_type\":\"challenge\",\"action_text\":\"Walk for 20 minutes.\",\"scheduled_date\":\"2026-10-07\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Another day, another walk! Keep up the fantastic work with your 20-minute walk today. Every step counts!\",\"message_body_alt\":\"Your scheduled 20-minute walk is today. Consistent activity is key to reaching your health objectives.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"physical_activity\",\"nudge_type\":\"challenge\",\"action_text\":\"Walk for 20 minutes.\",\"scheduled_date\":\"2026-10-09\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"You're doing great! Complete your third 20-minute walk this week. Feel the benefits!\",\"message_body_alt\":\"Today marks your third 20-minute walk for the week. This contributes to your overall physical activity.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p2\",\"pillar\":\"nutrition\",\"nudge_type\":\"reminder\",\"action_text\":\"Limit takeaway meals to once a week.\",\"scheduled_date\":\"2026-10-06\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember your goal to cut back on takeaway meals this week. You're making healthier choices!\",\"message_body_alt\":\"Reminder: Your goal is to limit takeaway meals to once per week. Plan your meals accordingly.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p2\",\"pillar\":\"nutrition\",\"nudge_type\":\"reminder\",\"action_text\":\"Limit takeaway meals to once a week.\",\"scheduled_date\":\"2026-10-10\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Stay strong with your nutrition goals! Keep your takeaway meals to once a week. You've got this!\",\"message_body_alt\":\"This is a reminder about your goal to reduce takeaway meals to once a week. Focus on your nutrition.\",\"template_name\":\"health_plan_reminder\"}]}",
+      "parsed_ok": true,
+      "score": {
+        "count_matches": true,
+        "extras": 0,
+        "matches": [
+          {
+            "gold": "physical_activity/increase/3/6",
+            "output": "physical_activity/increase/3/6",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          },
+          {
+            "gold": "nutrition/reduce/2/6",
+            "output": "nutrition/reduce/2/6",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          },
+          {
+            "ref": "p2",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ],
+        "signature": "nutrition|reduce|2|6 ; physical_activity|increase|3|6",
+        "actions": [
+          "Walk for 20 minutes.",
+          "Walk for 20 minutes.",
+          "Walk for 20 minutes.",
+          "Limit takeaway meals to once a week.",
+          "Limit takeaway meals to once a week."
+        ]
+      }
+    },
+    {
+      "id": "F11-r2",
+      "case": "F11",
+      "rep": 2,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "a8e6060d9e6e9d7387b9f7c2356653ffc4aae8e34e580ffa814b1695326cf5d4",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:08:26.166Z",
+      "status": 429,
+      "response": {
+        "error": {
+          "code": 429,
+          "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 14h51m33.641819143s.",
+          "status": "RESOURCE_EXHAUSTED",
+          "details": [
+            {
+              "@type": "type.googleapis.com/google.rpc.Help",
+              "links": [
+                {
+                  "description": "Learn more about Gemini API quotas",
+                  "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+              "violations": [
+                {
+                  "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                  "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+                  "quotaDimensions": {
+                    "location": "global",
+                    "model": "gemini-2.5-flash"
+                  },
+                  "quotaValue": "20"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.RetryInfo",
+              "retryDelay": "53493s"
+            }
+          ]
+        }
+      },
+      "latency_ms": 307,
+      "intake_status": 500,
+      "accepted": false,
+      "gate": null,
+      "rows_written": 0,
+      "prompt_sha256": "d7d694d995c7eefcca0aa610d7fb8d6c7bedd91272fa993ee17a80051b4f4553",
+      "stored_provenance": null,
+      "output_text": null,
+      "parsed_ok": false,
+      "score": null
+    },
+    {
+      "id": "F11-r3",
+      "case": "F11",
+      "rep": 3,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "a8e6060d9e6e9d7387b9f7c2356653ffc4aae8e34e580ffa814b1695326cf5d4",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:08:33.168Z",
+      "status": 429,
+      "response": {
+        "error": {
+          "code": 429,
+          "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 14h51m26.480682889s.",
+          "status": "RESOURCE_EXHAUSTED",
+          "details": [
+            {
+              "@type": "type.googleapis.com/google.rpc.Help",
+              "links": [
+                {
+                  "description": "Learn more about Gemini API quotas",
+                  "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+              "violations": [
+                {
+                  "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                  "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+                  "quotaDimensions": {
+                    "location": "global",
+                    "model": "gemini-2.5-flash"
+                  },
+                  "quotaValue": "20"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.RetryInfo",
+              "retryDelay": "53486s"
+            }
+          ]
+        }
+      },
+      "latency_ms": 421,
+      "intake_status": 500,
+      "accepted": false,
+      "gate": null,
+      "rows_written": 0,
+      "prompt_sha256": "d7d694d995c7eefcca0aa610d7fb8d6c7bedd91272fa993ee17a80051b4f4553",
+      "stored_provenance": null,
+      "output_text": null,
+      "parsed_ok": false,
+      "score": null
+    },
+    {
+      "id": "F12-r1",
+      "case": "F12",
+      "rep": 1,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "e5c0126719bc1186991b23dee8c7fae73f24c90b53b1a25d1ca62e26682344d5",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:08:40.169Z",
+      "status": 429,
+      "response": {
+        "error": {
+          "code": 429,
+          "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 14h51m19.479694825s.",
+          "status": "RESOURCE_EXHAUSTED",
+          "details": [
+            {
+              "@type": "type.googleapis.com/google.rpc.Help",
+              "links": [
+                {
+                  "description": "Learn more about Gemini API quotas",
+                  "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+              "violations": [
+                {
+                  "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                  "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+                  "quotaDimensions": {
+                    "model": "gemini-2.5-flash",
+                    "location": "global"
+                  },
+                  "quotaValue": "20"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.RetryInfo",
+              "retryDelay": "53479s"
+            }
+          ]
+        }
+      },
+      "latency_ms": 464,
+      "intake_status": 500,
+      "accepted": false,
+      "gate": null,
+      "rows_written": 0,
+      "prompt_sha256": "23c9ae3b6ecf6d726469292c086a3c43dfd8a41b5a8fba8023e32bd1fbd72d1b",
+      "stored_provenance": null,
+      "output_text": null,
+      "parsed_ok": false,
+      "score": null
+    },
+    {
+      "id": "F12-r2",
+      "case": "F12",
+      "rep": 2,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "e5c0126719bc1186991b23dee8c7fae73f24c90b53b1a25d1ca62e26682344d5",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:08:47.169Z",
+      "status": 429,
+      "response": {
+        "error": {
+          "code": 429,
+          "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 14h51m12.410302355s.",
+          "status": "RESOURCE_EXHAUSTED",
+          "details": [
+            {
+              "@type": "type.googleapis.com/google.rpc.Help",
+              "links": [
+                {
+                  "description": "Learn more about Gemini API quotas",
+                  "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+              "violations": [
+                {
+                  "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                  "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+                  "quotaDimensions": {
+                    "location": "global",
+                    "model": "gemini-2.5-flash"
+                  },
+                  "quotaValue": "20"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.RetryInfo",
+              "retryDelay": "53472s"
+            }
+          ]
+        }
+      },
+      "latency_ms": 492,
+      "intake_status": 500,
+      "accepted": false,
+      "gate": null,
+      "rows_written": 0,
+      "prompt_sha256": "23c9ae3b6ecf6d726469292c086a3c43dfd8a41b5a8fba8023e32bd1fbd72d1b",
+      "stored_provenance": null,
+      "output_text": null,
+      "parsed_ok": false,
+      "score": null
+    },
+    {
+      "id": "F12-r3",
+      "case": "F12",
+      "rep": 3,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "e5c0126719bc1186991b23dee8c7fae73f24c90b53b1a25d1ca62e26682344d5",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:08:54.170Z",
+      "status": 429,
+      "response": {
+        "error": {
+          "code": 429,
+          "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 14h51m5.338473836s.",
+          "status": "RESOURCE_EXHAUSTED",
+          "details": [
+            {
+              "@type": "type.googleapis.com/google.rpc.Help",
+              "links": [
+                {
+                  "description": "Learn more about Gemini API quotas",
+                  "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+              "violations": [
+                {
+                  "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                  "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+                  "quotaDimensions": {
+                    "model": "gemini-2.5-flash",
+                    "location": "global"
+                  },
+                  "quotaValue": "20"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.RetryInfo",
+              "retryDelay": "53465s"
+            }
+          ]
+        }
+      },
+      "latency_ms": 620,
+      "intake_status": 500,
+      "accepted": false,
+      "gate": null,
+      "rows_written": 0,
+      "prompt_sha256": "23c9ae3b6ecf6d726469292c086a3c43dfd8a41b5a8fba8023e32bd1fbd72d1b",
+      "stored_provenance": null,
+      "output_text": null,
+      "parsed_ok": false,
+      "score": null
+    }
+  ],
+  "chains": [
+    {
+      "case": "F01",
+      "ran": true,
+      "from_call": "F01-r1",
+      "closed": true,
+      "broken_at": null,
+      "decision": {
+        "outcome": "applied",
+        "rule": "explicit_request",
+        "reason": "explicit request fitted approved envelope",
+        "decision_id": "bd_3"
+      },
+      "policy": {
+        "current": 2,
+        "recommended": 1,
+        "applied": true
+      },
+      "links": {
+        "T1": "1/1",
+        "T2": "1/1",
+        "T3": "2/2",
+        "T4": "2/2",
+        "T5": "2/2",
+        "T6": "2/2",
+        "T7": "0/0",
+        "T8": "1/1",
+        "T9": "8/8",
+        "T10": "2/2",
+        "T11": "2/2",
+        "T12": "1/1",
+        "T13": "1/1",
+        "T14": "1/1",
+        "T15": "1/1",
+        "T16": "1/1",
+        "T17": "1/1",
+        "T18": "1/1",
+        "T19": "1/1"
+      }
+    },
+    {
+      "case": "F02",
+      "ran": true,
+      "from_call": "F02-r1",
+      "closed": true,
+      "broken_at": null,
+      "decision": {
+        "outcome": "applied",
+        "rule": "explicit_request",
+        "reason": "explicit request fitted approved envelope",
+        "decision_id": "bd_3"
+      },
+      "policy": {
+        "current": 3,
+        "recommended": 2,
+        "applied": true
+      },
+      "links": {
+        "T1": "1/1",
+        "T2": "1/1",
+        "T3": "3/3",
+        "T4": "3/3",
+        "T5": "3/3",
+        "T6": "3/3",
+        "T7": "0/0",
+        "T8": "1/1",
+        "T9": "12/12",
+        "T10": "2/2",
+        "T11": "2/2",
+        "T12": "1/1",
+        "T13": "1/1",
+        "T14": "1/1",
+        "T15": "1/1",
+        "T16": "1/1",
+        "T17": "1/1",
+        "T18": "1/1",
+        "T19": "1/1"
+      }
+    },
+    {
+      "case": "F03",
+      "ran": true,
+      "from_call": "F03-r1",
+      "closed": true,
+      "broken_at": null,
+      "decision": {
+        "outcome": "outside_envelope",
+        "rule": "explicit_request_guarded",
+        "reason": "frequency_outside_envelope",
+        "decision_id": "bd_3"
+      },
+      "policy": {
+        "current": 1,
+        "recommended": 1,
+        "applied": false
+      },
+      "links": {
+        "T1": "1/1",
+        "T2": "1/1",
+        "T3": "1/1",
+        "T4": "1/1",
+        "T5": "1/1",
+        "T6": "1/1",
+        "T7": "0/0",
+        "T8": "1/1",
+        "T9": "4/4",
+        "T10": "2/2",
+        "T11": "2/2",
+        "T12": "1/1",
+        "T13": "1/1",
+        "T14": "1/1",
+        "T15": "1/1",
+        "T17": "1/1",
+        "T18": "1/1",
+        "T19": "1/1"
+      }
+    },
+    {
+      "case": "F04",
+      "ran": true,
+      "from_call": "F04-r1",
+      "closed": true,
+      "broken_at": null,
+      "decision": {
+        "outcome": "applied",
+        "rule": "explicit_request",
+        "reason": "explicit request fitted approved envelope",
+        "decision_id": "bd_3"
+      },
+      "policy": {
+        "current": 3,
+        "recommended": 2,
+        "applied": true
+      },
+      "links": {
+        "T1": "1/1",
+        "T2": "1/1",
+        "T3": "3/3",
+        "T4": "3/3",
+        "T5": "3/3",
+        "T6": "3/3",
+        "T7": "0/0",
+        "T8": "1/1",
+        "T9": "12/12",
+        "T10": "2/2",
+        "T11": "2/2",
+        "T12": "1/1",
+        "T13": "1/1",
+        "T14": "1/1",
+        "T15": "1/1",
+        "T16": "1/1",
+        "T17": "1/1",
+        "T18": "1/1",
+        "T19": "1/1"
+      }
+    },
+    {
+      "case": "F05",
+      "ran": true,
+      "from_call": "F05-r1",
+      "closed": true,
+      "broken_at": null,
+      "decision": {
+        "outcome": "applied",
+        "rule": "explicit_request",
+        "reason": "explicit request fitted approved envelope",
+        "decision_id": "bd_3"
+      },
+      "policy": {
+        "current": 2,
+        "recommended": 1,
+        "applied": true
+      },
+      "links": {
+        "T1": "1/1",
+        "T2": "1/1",
+        "T3": "2/2",
+        "T4": "2/2",
+        "T5": "2/2",
+        "T6": "2/2",
+        "T7": "0/0",
+        "T8": "1/1",
+        "T9": "8/8",
+        "T10": "2/2",
+        "T11": "2/2",
+        "T12": "1/1",
+        "T13": "1/1",
+        "T14": "1/1",
+        "T15": "1/1",
+        "T16": "1/1",
+        "T17": "1/1",
+        "T18": "1/1",
+        "T19": "1/1"
+      }
+    },
+    {
+      "case": "F06",
+      "ran": true,
+      "from_call": "F06-r1",
+      "closed": true,
+      "broken_at": null,
+      "decision": {
+        "outcome": "outside_envelope",
+        "rule": "explicit_request_guarded",
+        "reason": "frequency_outside_envelope",
+        "decision_id": "bd_3"
+      },
+      "policy": {
+        "current": 1,
+        "recommended": 1,
+        "applied": false
+      },
+      "links": {
+        "T1": "1/1",
+        "T2": "1/1",
+        "T3": "1/1",
+        "T4": "1/1",
+        "T5": "1/1",
+        "T6": "1/1",
+        "T7": "0/0",
+        "T8": "1/1",
+        "T9": "4/4",
+        "T10": "2/2",
+        "T11": "2/2",
+        "T12": "1/1",
+        "T13": "1/1",
+        "T14": "1/1",
+        "T15": "1/1",
+        "T17": "1/1",
+        "T18": "1/1",
+        "T19": "1/1"
+      }
+    },
+    {
+      "case": "F07",
+      "ran": true,
+      "from_call": "F07-r1",
+      "closed": true,
+      "broken_at": null,
+      "decision": {
+        "outcome": "applied",
+        "rule": "explicit_request",
+        "reason": "explicit request fitted approved envelope",
+        "decision_id": "bd_3"
+      },
+      "policy": {
+        "current": 2,
+        "recommended": 1,
+        "applied": true
+      },
+      "links": {
+        "T1": "1/1",
+        "T2": "1/1",
+        "T3": "2/2",
+        "T4": "2/2",
+        "T5": "2/2",
+        "T6": "2/2",
+        "T7": "0/0",
+        "T8": "1/1",
+        "T9": "8/8",
+        "T10": "2/2",
+        "T11": "2/2",
+        "T12": "1/1",
+        "T13": "1/1",
+        "T14": "1/1",
+        "T15": "1/1",
+        "T16": "1/1",
+        "T17": "1/1",
+        "T18": "1/1",
+        "T19": "1/1"
+      }
+    },
+    {
+      "case": "F08",
+      "ran": true,
+      "from_call": "F08-r1",
+      "closed": true,
+      "broken_at": null,
+      "decision": {
+        "outcome": "outside_envelope",
+        "rule": "explicit_request_guarded",
+        "reason": "frequency_outside_envelope",
+        "decision_id": "bd_3"
+      },
+      "policy": {
+        "current": 1,
+        "recommended": 1,
+        "applied": false
+      },
+      "links": {
+        "T1": "1/1",
+        "T2": "1/1",
+        "T3": "1/1",
+        "T4": "1/1",
+        "T5": "1/1",
+        "T6": "1/1",
+        "T7": "0/0",
+        "T8": "1/1",
+        "T9": "4/4",
+        "T10": "2/2",
+        "T11": "2/2",
+        "T12": "1/1",
+        "T13": "1/1",
+        "T14": "1/1",
+        "T15": "1/1",
+        "T17": "1/1",
+        "T18": "1/1",
+        "T19": "1/1"
+      }
+    },
+    {
+      "case": "F09",
+      "ran": true,
+      "from_call": "F09-r1",
+      "closed": true,
+      "broken_at": null,
+      "decision": {
+        "outcome": "outside_envelope",
+        "rule": "explicit_request_guarded",
+        "reason": "frequency_outside_envelope",
+        "decision_id": "bd_4"
+      },
+      "policy": {
+        "current": 1,
+        "recommended": 1,
+        "applied": false
+      },
+      "links": {
+        "T1": "1/1",
+        "T2": "1/1",
+        "T3": "2/2",
+        "T4": "2/2",
+        "T5": "2/2",
+        "T6": "2/2",
+        "T7": "0/0",
+        "T8": "2/2",
+        "T9": "8/8",
+        "T10": "2/2",
+        "T11": "2/2",
+        "T12": "1/1",
+        "T13": "1/1",
+        "T14": "1/1",
+        "T15": "1/1",
+        "T17": "1/1",
+        "T18": "1/1",
+        "T19": "1/1"
+      }
+    },
+    {
+      "case": "F10",
+      "ran": true,
+      "from_call": "F10-r2",
+      "closed": true,
+      "broken_at": null,
+      "decision": {
+        "outcome": "applied",
+        "rule": "explicit_request",
+        "reason": "explicit request fitted approved envelope",
+        "decision_id": "bd_4"
+      },
+      "policy": {
+        "current": 2,
+        "recommended": 1,
+        "applied": true
+      },
+      "links": {
+        "T1": "2/2",
+        "T2": "2/2",
+        "T3": "4/4",
+        "T4": "4/4",
+        "T5": "4/4",
+        "T6": "4/4",
+        "T7": "0/0",
+        "T8": "2/2",
+        "T9": "16/16",
+        "T10": "3/3",
+        "T11": "3/3",
+        "T12": "1/1",
+        "T13": "1/1",
+        "T14": "1/1",
+        "T15": "1/1",
+        "T16": "0/1",
+        "T17": "1/1",
+        "T18": "1/1",
+        "T19": "1/1"
+      }
+    },
+    {
+      "case": "F11",
+      "ran": true,
+      "from_call": "F11-r1",
+      "closed": true,
+      "broken_at": null,
+      "decision": {
+        "outcome": "applied",
+        "rule": "explicit_request",
+        "reason": "explicit request fitted approved envelope",
+        "decision_id": "bd_4"
+      },
+      "policy": {
+        "current": 3,
+        "recommended": 2,
+        "applied": true
+      },
+      "links": {
+        "T1": "2/2",
+        "T2": "2/2",
+        "T3": "5/5",
+        "T4": "5/5",
+        "T5": "5/5",
+        "T6": "5/5",
+        "T7": "0/0",
+        "T8": "2/2",
+        "T9": "20/20",
+        "T10": "3/3",
+        "T11": "3/3",
+        "T12": "1/1",
+        "T13": "1/1",
+        "T14": "1/1",
+        "T15": "1/1",
+        "T16": "0/1",
+        "T17": "1/1",
+        "T18": "1/1",
+        "T19": "1/1"
+      }
+    },
+    {
+      "case": "F12",
+      "ran": false,
+      "reason": "no accepted output"
+    }
+  ],
+  "refused_outbound": []
+}

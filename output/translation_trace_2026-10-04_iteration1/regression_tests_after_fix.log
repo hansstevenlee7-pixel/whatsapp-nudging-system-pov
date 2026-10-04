@@ -1,0 +1,44 @@
+✔ intake rejects an invalid pillar or category but accepts any sensible action wording (1.723292ms)
+✔ intake rejects a blank or oversized action and stops writing target_behavior (0.180417ms)
+✔ intake rejects a draft that names no prescription when more than one exists, and a prescription with no draft (0.680417ms)
+✔ saving rejects a blank or oversized action and an out-of-enum taxonomy (16.694375ms)
+✔ a legacy plan with no action can still be rejected (0.55075ms)
+✔ two slots under one prescription keep different actions (1.264916ms)
+✔ one prescription persists behaviours in two different pillars (0.936083ms)
+✔ a slot that names no category inherits its prescription's (0.562792ms)
+✔ a dated delivery carries its slot's pillar and category, not its prescription's (0.979416ms)
+✔ save, materialization and reload preserve the action byte for byte (0.745792ms)
+✔ editing a future slot leaves an already-sent delivery and its action untouched (0.781291ms)
+✔ a custom nudge cannot borrow a source row from another prescription (0.545708ms)
+✔ the monitoring screen removes nudge and prescription creation (0.123083ms)
+✔ the monitor opens on the current Monday-to-Sunday week (0.041625ms)
+✔ a doctor's own wording survives save, reload and re-edit (0.609542ms)
+✔ the weekly editor exposes no add or remove entry point (0.068292ms)
+✔ clinicians can drag approved uploads onto an existing nudge (0.046667ms)
+✔ the monitor exposes a clinician-controlled media population action (0.044791ms)
+✔ the monitor can add a resource manually without waiting for Gemini (0.042ms)
+✔ the weekly editor supports automatic, text-only and clinician-selected media (0.056541ms)
+✔ the monitor hides clinical filing while preserving it in the save payload (0.158542ms)
+✔ the monitor exposes the patient adaptation summary and time-ordered drill-down (0.04525ms)
+✔ legacy rows read as readable action text without losing their schedule (0.066458ms)
+✔ the migration seed converts a retired action token and keeps the recurring slot (0.204ms)
+✔ taxonomy queries use only the behaviour triple and are stable (0.730584ms)
+✔ candidate ranking is deterministic and trusted open access sources win (0.458667ms)
+✔ paper summaries enforce source and word limits (0.219667ms)
+✔ explicit format requests apply within an approved envelope (0.937625ms)
+✔ time and frequency changes outside the envelope are not applied (0.213042ms)
+✔ negated frequency wording requests no frequency change (0.165041ms)
+✔ silence rotates least recently used media and never changes frequency (0.140458ms)
+✔ rotation remains least-recently-used after every approved resource has appeared (0.08925ms)
+✔ a link visit raises that format score while a read state does not (0.108166ms)
+✔ a first frequency request steps from the approved plan, not the envelope minimum (0.154291ms)
+✔ an ordinary reply is not acknowledged as a request (7.115917ms)
+✔ an applied explicit request is acknowledged once (2.028458ms)
+ℹ tests 36
+ℹ suites 0
+ℹ pass 36
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 105.419542

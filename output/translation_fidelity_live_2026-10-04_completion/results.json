@@ -1,0 +1,2487 @@
+{
+  "protocol": "translation-fidelity-v1",
+  "amendment": "FIDELITY_AMENDMENT_1.md",
+  "first_run": "output/translation_fidelity_live_2026-10-04",
+  "dry_run": false,
+  "attempts": 14,
+  "summary": {
+    "calls": 14,
+    "http_ok": 2,
+    "accepted": 2,
+    "refused": 0,
+    "rows_written_on_refusal": 0,
+    "count_matches": 2,
+    "scored_calls": 2,
+    "gold_prescriptions": 4,
+    "pillar": 4,
+    "category_exact": 4,
+    "category_accepted": 4,
+    "frequency_exact": 4,
+    "frequency_accepted": 4,
+    "duration_exact": 4,
+    "rules": {
+      "prescriptions": 4,
+      "count_matches_frequency": 4,
+      "within_week1": 4,
+      "distinct_dates": 4,
+      "action_within_120": 4,
+      "bodies_within_180": 4
+    },
+    "consistent_texts": 0,
+    "consistency": [
+      {
+        "case": "F01",
+        "calls": 0,
+        "consistent": false
+      },
+      {
+        "case": "F02",
+        "calls": 0,
+        "consistent": false
+      },
+      {
+        "case": "F03",
+        "calls": 0,
+        "consistent": false
+      },
+      {
+        "case": "F04",
+        "calls": 0,
+        "consistent": false
+      },
+      {
+        "case": "F05",
+        "calls": 0,
+        "consistent": false
+      },
+      {
+        "case": "F06",
+        "calls": 0,
+        "consistent": false
+      },
+      {
+        "case": "F07",
+        "calls": 0,
+        "consistent": false
+      },
+      {
+        "case": "F08",
+        "calls": 0,
+        "consistent": false
+      },
+      {
+        "case": "F09",
+        "calls": 0,
+        "consistent": false
+      },
+      {
+        "case": "F10",
+        "calls": 1,
+        "consistent": false
+      },
+      {
+        "case": "F11",
+        "calls": 1,
+        "consistent": false
+      },
+      {
+        "case": "F12",
+        "calls": 0,
+        "consistent": false
+      }
+    ],
+    "chains_run": 0,
+    "chains_closed": 0
+  },
+  "calls": [
+    {
+      "id": "F03-r3",
+      "case": "F03",
+      "rep": 3,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "520cd412b702eac5798738798194eb9ad421caa42581829ab7da577b3a8d5f8b",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:10:32.471Z",
+      "status": 429,
+      "response": {
+        "error": {
+          "code": 429,
+          "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 14h49m27.140862768s.",
+          "status": "RESOURCE_EXHAUSTED",
+          "details": [
+            {
+              "@type": "type.googleapis.com/google.rpc.Help",
+              "links": [
+                {
+                  "description": "Learn more about Gemini API quotas",
+                  "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+              "violations": [
+                {
+                  "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                  "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+                  "quotaDimensions": {
+                    "model": "gemini-2.5-flash",
+                    "location": "global"
+                  },
+                  "quotaValue": "20"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.RetryInfo",
+              "retryDelay": "53367s"
+            }
+          ]
+        }
+      },
+      "latency_ms": 468,
+      "intake_status": 500,
+      "accepted": false,
+      "gate": null,
+      "rows_written": 0,
+      "prompt_sha256": "83cdb837b89f6af8a1c63fc62ec3b7d1b09ed6326e774dd8e18cd014ca2ebdf3",
+      "stored_provenance": null,
+      "output_text": null,
+      "parsed_ok": false,
+      "score": null
+    },
+    {
+      "id": "F04-r3",
+      "case": "F04",
+      "rep": 3,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "04e3745fdf3dee0ec25d08c940062eafbd2bdcda829d01434ace324e425e6920",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:10:45.471Z",
+      "status": 429,
+      "response": {
+        "error": {
+          "code": 429,
+          "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 14h49m14.012933626s.",
+          "status": "RESOURCE_EXHAUSTED",
+          "details": [
+            {
+              "@type": "type.googleapis.com/google.rpc.Help",
+              "links": [
+                {
+                  "description": "Learn more about Gemini API quotas",
+                  "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+              "violations": [
+                {
+                  "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                  "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+                  "quotaDimensions": {
+                    "location": "global",
+                    "model": "gemini-2.5-flash"
+                  },
+                  "quotaValue": "20"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.RetryInfo",
+              "retryDelay": "53354s"
+            }
+          ]
+        }
+      },
+      "latency_ms": 636,
+      "intake_status": 500,
+      "accepted": false,
+      "gate": null,
+      "rows_written": 0,
+      "prompt_sha256": "50cdb1c96977ad23e912d5b6b82e50c6185c52ea3e7326626a3804209f583291",
+      "stored_provenance": null,
+      "output_text": null,
+      "parsed_ok": false,
+      "score": null
+    },
+    {
+      "id": "F06-r3",
+      "case": "F06",
+      "rep": 3,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "c817ae2b31010915549ac4976a491559a27cdf7487d98f514e68baf0a59639ca",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:10:58.472Z",
+      "status": 429,
+      "response": {
+        "error": {
+          "code": 429,
+          "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 14h49m1.073656974s.",
+          "status": "RESOURCE_EXHAUSTED",
+          "details": [
+            {
+              "@type": "type.googleapis.com/google.rpc.Help",
+              "links": [
+                {
+                  "description": "Learn more about Gemini API quotas",
+                  "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+              "violations": [
+                {
+                  "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                  "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+                  "quotaDimensions": {
+                    "location": "global",
+                    "model": "gemini-2.5-flash"
+                  },
+                  "quotaValue": "20"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.RetryInfo",
+              "retryDelay": "53341s"
+            }
+          ]
+        }
+      },
+      "latency_ms": 587,
+      "intake_status": 500,
+      "accepted": false,
+      "gate": null,
+      "rows_written": 0,
+      "prompt_sha256": "60b9c5b45b7c532ae4f9286f05d247980317c91fd99e896a43ae3b41e8c522e4",
+      "stored_provenance": null,
+      "output_text": null,
+      "parsed_ok": false,
+      "score": null
+    },
+    {
+      "id": "F08-r2",
+      "case": "F08",
+      "rep": 2,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "6f404cac2ce628d2472648ef09f6eb3540d21a776b774b6180f92d2100b93d28",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:11:11.473Z",
+      "status": 429,
+      "response": {
+        "error": {
+          "code": 429,
+          "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 14h48m47.987761339s.",
+          "status": "RESOURCE_EXHAUSTED",
+          "details": [
+            {
+              "@type": "type.googleapis.com/google.rpc.Help",
+              "links": [
+                {
+                  "description": "Learn more about Gemini API quotas",
+                  "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+              "violations": [
+                {
+                  "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                  "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+                  "quotaDimensions": {
+                    "location": "global",
+                    "model": "gemini-2.5-flash"
+                  },
+                  "quotaValue": "20"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.RetryInfo",
+              "retryDelay": "53327s"
+            }
+          ]
+        }
+      },
+      "latency_ms": 692,
+      "intake_status": 500,
+      "accepted": false,
+      "gate": null,
+      "rows_written": 0,
+      "prompt_sha256": "8b8db5a9f58e08d56e661818d945b4ee6392de0fc2dd3f8cc6ed25c02d14e0e8",
+      "stored_provenance": null,
+      "output_text": null,
+      "parsed_ok": false,
+      "score": null
+    },
+    {
+      "id": "F08-r3",
+      "case": "F08",
+      "rep": 3,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "6f404cac2ce628d2472648ef09f6eb3540d21a776b774b6180f92d2100b93d28",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:11:24.475Z",
+      "status": 429,
+      "response": {
+        "error": {
+          "code": 429,
+          "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 14h48m35.128281376s.",
+          "status": "RESOURCE_EXHAUSTED",
+          "details": [
+            {
+              "@type": "type.googleapis.com/google.rpc.Help",
+              "links": [
+                {
+                  "description": "Learn more about Gemini API quotas",
+                  "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+              "violations": [
+                {
+                  "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                  "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+                  "quotaDimensions": {
+                    "location": "global",
+                    "model": "gemini-2.5-flash"
+                  },
+                  "quotaValue": "20"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.RetryInfo",
+              "retryDelay": "53315s"
+            }
+          ]
+        }
+      },
+      "latency_ms": 472,
+      "intake_status": 500,
+      "accepted": false,
+      "gate": null,
+      "rows_written": 0,
+      "prompt_sha256": "8b8db5a9f58e08d56e661818d945b4ee6392de0fc2dd3f8cc6ed25c02d14e0e8",
+      "stored_provenance": null,
+      "output_text": null,
+      "parsed_ok": false,
+      "score": null
+    },
+    {
+      "id": "F09-r2",
+      "case": "F09",
+      "rep": 2,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "815579d513f6bda09da4442d4ad6c70f24625dd14469ee95df5308661bf6e217",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:11:37.476Z",
+      "status": 429,
+      "response": {
+        "error": {
+          "code": 429,
+          "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 14h48m22.160558657s.",
+          "status": "RESOURCE_EXHAUSTED",
+          "details": [
+            {
+              "@type": "type.googleapis.com/google.rpc.Help",
+              "links": [
+                {
+                  "description": "Learn more about Gemini API quotas",
+                  "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+              "violations": [
+                {
+                  "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                  "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+                  "quotaDimensions": {
+                    "location": "global",
+                    "model": "gemini-2.5-flash"
+                  },
+                  "quotaValue": "20"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.RetryInfo",
+              "retryDelay": "53302s"
+            }
+          ]
+        }
+      },
+      "latency_ms": 436,
+      "intake_status": 500,
+      "accepted": false,
+      "gate": null,
+      "rows_written": 0,
+      "prompt_sha256": "7fb40df8f34f5ee96f9ba953f5fac1344ceee8163192f957af4c23ba078a3000",
+      "stored_provenance": null,
+      "output_text": null,
+      "parsed_ok": false,
+      "score": null
+    },
+    {
+      "id": "F09-r3",
+      "case": "F09",
+      "rep": 3,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "815579d513f6bda09da4442d4ad6c70f24625dd14469ee95df5308661bf6e217",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:11:50.477Z",
+      "status": 429,
+      "response": {
+        "error": {
+          "code": 429,
+          "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 14h48m9.120319299s.",
+          "status": "RESOURCE_EXHAUSTED",
+          "details": [
+            {
+              "@type": "type.googleapis.com/google.rpc.Help",
+              "links": [
+                {
+                  "description": "Learn more about Gemini API quotas",
+                  "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+              "violations": [
+                {
+                  "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                  "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+                  "quotaDimensions": {
+                    "location": "global",
+                    "model": "gemini-2.5-flash"
+                  },
+                  "quotaValue": "20"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.RetryInfo",
+              "retryDelay": "53289s"
+            }
+          ]
+        }
+      },
+      "latency_ms": 475,
+      "intake_status": 500,
+      "accepted": false,
+      "gate": null,
+      "rows_written": 0,
+      "prompt_sha256": "7fb40df8f34f5ee96f9ba953f5fac1344ceee8163192f957af4c23ba078a3000",
+      "stored_provenance": null,
+      "output_text": null,
+      "parsed_ok": false,
+      "score": null
+    },
+    {
+      "id": "F10-r1",
+      "case": "F10",
+      "rep": 1,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "86af440d6b3a9575fbc0045ff5d9579293ed84ecc5e651f60f88d274999555e7",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:12:03.478Z",
+      "status": 429,
+      "response": {
+        "error": {
+          "code": 429,
+          "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 14h47m56.066671834s.",
+          "status": "RESOURCE_EXHAUSTED",
+          "details": [
+            {
+              "@type": "type.googleapis.com/google.rpc.Help",
+              "links": [
+                {
+                  "description": "Learn more about Gemini API quotas",
+                  "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+              "violations": [
+                {
+                  "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                  "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+                  "quotaDimensions": {
+                    "location": "global",
+                    "model": "gemini-2.5-flash"
+                  },
+                  "quotaValue": "20"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.RetryInfo",
+              "retryDelay": "53276s"
+            }
+          ]
+        }
+      },
+      "latency_ms": 591,
+      "intake_status": 500,
+      "accepted": false,
+      "gate": null,
+      "rows_written": 0,
+      "prompt_sha256": "188e837a960fe969461c6ddd42dc90c35c4c498232de8a94cdfc0fdbb1a9e68a",
+      "stored_provenance": null,
+      "output_text": null,
+      "parsed_ok": false,
+      "score": null
+    },
+    {
+      "id": "F10-r3",
+      "case": "F10",
+      "rep": 3,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "86af440d6b3a9575fbc0045ff5d9579293ed84ecc5e651f60f88d274999555e7",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:12:16.480Z",
+      "status": 200,
+      "response": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"sleep\",\"category\":\"reduce\",\"frequency_per_week\":2,\"duration_weeks\":8,\"_normalised\":\"\"},{\"ref\":\"p2\",\"pillar\":\"sleep\",\"category\":\"establish\",\"frequency_per_week\":2,\"duration_weeks\":8,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Reduce screen time after 9 pm\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"18:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember to power down screens after 9 PM tonight. Creating a calm evening routine supports better sleep. You've got this!\",\"message_body_alt\":\"Reminder: Reduce screen time after 9 PM. This practice can help improve sleep quality.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Reduce screen time after 9 pm\",\"scheduled_date\":\"2026-10-08\",\"scheduled_time\":\"18:00\",\"tone_variant\":\"neutral_informational\",\"message_body\":\"Reminder: Reduce screen time after 9 PM. This practice can help improve sleep quality.\",\"message_body_alt\":\"Remember to power down screens after 9 PM tonight. Creating a calm evening routine supports better sleep. You've got this!\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p2\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Wake up at 7 am\",\"scheduled_date\":\"2026-10-06\",\"scheduled_time\":\"07:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Good morning! Aim for your 7 AM wake-up time today. Consistency helps regulate your body clock for better energy throughout the day. Keep it up!\",\"message_body_alt\":\"Reminder: Maintain your wake-up time of 7 AM. Consistent wake times support a healthy sleep cycle.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p2\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Wake up at 7 am\",\"scheduled_date\":\"2026-10-09\",\"scheduled_time\":\"07:00\",\"tone_variant\":\"neutral_informational\",\"message_body\":\"Reminder: Maintain your wake-up time of 7 AM. Consistent wake times support a healthy sleep cycle.\",\"message_body_alt\":\"Good morning! Aim for your 7 AM wake-up time today. Consistency helps regulate your body clock for better energy throughout the day. Keep it up!\",\"template_name\":\"health_plan_reminder\"}]}"
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 697,
+          "candidatesTokenCount": 837,
+          "totalTokenCount": 1534,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 697
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-2.5-flash",
+        "responseId": "cRjCarWVHbim1e8PkqCLkAY"
+      },
+      "latency_ms": 5409,
+      "intake_status": 200,
+      "accepted": true,
+      "gate": {
+        "validation_passed": true,
+        "stage": null,
+        "errors": []
+      },
+      "rows_written": 12,
+      "prompt_sha256": "188e837a960fe969461c6ddd42dc90c35c4c498232de8a94cdfc0fdbb1a9e68a",
+      "stored_provenance": {
+        "translation_model": "gemini-2.5-flash",
+        "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+        "translation_response_id": "cRjCarWVHbim1e8PkqCLkAY"
+      },
+      "output_text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"sleep\",\"category\":\"reduce\",\"frequency_per_week\":2,\"duration_weeks\":8,\"_normalised\":\"\"},{\"ref\":\"p2\",\"pillar\":\"sleep\",\"category\":\"establish\",\"frequency_per_week\":2,\"duration_weeks\":8,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Reduce screen time after 9 pm\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"18:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Remember to power down screens after 9 PM tonight. Creating a calm evening routine supports better sleep. You've got this!\",\"message_body_alt\":\"Reminder: Reduce screen time after 9 PM. This practice can help improve sleep quality.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Reduce screen time after 9 pm\",\"scheduled_date\":\"2026-10-08\",\"scheduled_time\":\"18:00\",\"tone_variant\":\"neutral_informational\",\"message_body\":\"Reminder: Reduce screen time after 9 PM. This practice can help improve sleep quality.\",\"message_body_alt\":\"Remember to power down screens after 9 PM tonight. Creating a calm evening routine supports better sleep. You've got this!\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p2\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Wake up at 7 am\",\"scheduled_date\":\"2026-10-06\",\"scheduled_time\":\"07:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Good morning! Aim for your 7 AM wake-up time today. Consistency helps regulate your body clock for better energy throughout the day. Keep it up!\",\"message_body_alt\":\"Reminder: Maintain your wake-up time of 7 AM. Consistent wake times support a healthy sleep cycle.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p2\",\"pillar\":\"sleep\",\"nudge_type\":\"reminder\",\"action_text\":\"Wake up at 7 am\",\"scheduled_date\":\"2026-10-09\",\"scheduled_time\":\"07:00\",\"tone_variant\":\"neutral_informational\",\"message_body\":\"Reminder: Maintain your wake-up time of 7 AM. Consistent wake times support a healthy sleep cycle.\",\"message_body_alt\":\"Good morning! Aim for your 7 AM wake-up time today. Consistency helps regulate your body clock for better energy throughout the day. Keep it up!\",\"template_name\":\"health_plan_reminder\"}]}",
+      "parsed_ok": true,
+      "score": {
+        "count_matches": true,
+        "extras": 0,
+        "matches": [
+          {
+            "gold": "sleep/reduce/2/8",
+            "output": "sleep/reduce/2/8",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          },
+          {
+            "gold": "sleep/establish/2/8",
+            "output": "sleep/establish/2/8",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          },
+          {
+            "ref": "p2",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ],
+        "signature": "sleep|establish|2|8 ; sleep|reduce|2|8",
+        "actions": [
+          "Reduce screen time after 9 pm",
+          "Reduce screen time after 9 pm",
+          "Wake up at 7 am",
+          "Wake up at 7 am"
+        ]
+      }
+    },
+    {
+      "id": "F11-r2",
+      "case": "F11",
+      "rep": 2,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "a8e6060d9e6e9d7387b9f7c2356653ffc4aae8e34e580ffa814b1695326cf5d4",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:12:29.481Z",
+      "status": 429,
+      "response": {
+        "error": {
+          "code": 429,
+          "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 14h47m30.074594451s.",
+          "status": "RESOURCE_EXHAUSTED",
+          "details": [
+            {
+              "@type": "type.googleapis.com/google.rpc.Help",
+              "links": [
+                {
+                  "description": "Learn more about Gemini API quotas",
+                  "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+              "violations": [
+                {
+                  "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                  "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+                  "quotaDimensions": {
+                    "location": "global",
+                    "model": "gemini-2.5-flash"
+                  },
+                  "quotaValue": "20"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.RetryInfo",
+              "retryDelay": "53250s"
+            }
+          ]
+        }
+      },
+      "latency_ms": 515,
+      "intake_status": 500,
+      "accepted": false,
+      "gate": null,
+      "rows_written": 0,
+      "prompt_sha256": "d7d694d995c7eefcca0aa610d7fb8d6c7bedd91272fa993ee17a80051b4f4553",
+      "stored_provenance": null,
+      "output_text": null,
+      "parsed_ok": false,
+      "score": null
+    },
+    {
+      "id": "F11-r3",
+      "case": "F11",
+      "rep": 3,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "a8e6060d9e6e9d7387b9f7c2356653ffc4aae8e34e580ffa814b1695326cf5d4",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:12:42.482Z",
+      "status": 200,
+      "response": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"physical_activity\",\"category\":\"increase\",\"frequency_per_week\":3,\"duration_weeks\":6,\"_normalised\":\"\"},{\"ref\":\"p2\",\"pillar\":\"nutrition\",\"category\":\"reduce\",\"frequency_per_week\":2,\"duration_weeks\":6,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"physical_activity\",\"nudge_type\":\"challenge\",\"action_text\":\"Walk for 20 minutes.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Time to get moving! A 20-minute walk can boost your energy and mood. You've got this!\",\"message_body_alt\":\"It's time for your 20-minute walk. This activity is part of your health plan.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"physical_activity\",\"nudge_type\":\"challenge\",\"action_text\":\"Walk for 20 minutes.\",\"scheduled_date\":\"2026-10-07\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Another day, another chance to feel great! Enjoy your 20-minute walk today. Every step counts!\",\"message_body_alt\":\"Your 20-minute walk is scheduled for today. Consistency is key to achieving your health goals.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"physical_activity\",\"nudge_type\":\"challenge\",\"action_text\":\"Walk for 20 minutes.\",\"scheduled_date\":\"2026-10-09\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"You're doing amazing! Let's complete your 20-minute walk today and keep that momentum going.\",\"message_body_alt\":\"Today's reminder: complete your 20-minute walk. This supports your physical activity goal.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p2\",\"pillar\":\"nutrition\",\"nudge_type\":\"reminder\",\"action_text\":\"Limit takeaway meals to once a week.\",\"scheduled_date\":\"2026-10-06\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Thinking about your meals this week? Remember your goal to limit takeaway to once. You've got this!\",\"message_body_alt\":\"Reminder: your goal is to reduce takeaway meals to once a week. Plan your meals accordingly.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p2\",\"pillar\":\"nutrition\",\"nudge_type\":\"reminder\",\"action_text\":\"Limit takeaway meals to once a week.\",\"scheduled_date\":\"2026-10-10\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"How are you doing with your takeaway goal? Keep up the great work in making healthier choices!\",\"message_body_alt\":\"This is a reminder about your goal to limit takeaway meals to once per week. Stay mindful of your choices.\",\"template_name\":\"health_plan_reminder\"}]}"
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 700,
+          "candidatesTokenCount": 990,
+          "totalTokenCount": 1690,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 700
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-2.5-flash",
+        "responseId": "ihjCaoXZNYbcvr0PrJCOwQs"
+      },
+      "latency_ms": 4930,
+      "intake_status": 200,
+      "accepted": true,
+      "gate": {
+        "validation_passed": true,
+        "stage": null,
+        "errors": []
+      },
+      "rows_written": 14,
+      "prompt_sha256": "d7d694d995c7eefcca0aa610d7fb8d6c7bedd91272fa993ee17a80051b4f4553",
+      "stored_provenance": {
+        "translation_model": "gemini-2.5-flash",
+        "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+        "translation_response_id": "ihjCaoXZNYbcvr0PrJCOwQs"
+      },
+      "output_text": "{\"prescriptions\":[{\"ref\":\"p1\",\"pillar\":\"physical_activity\",\"category\":\"increase\",\"frequency_per_week\":3,\"duration_weeks\":6,\"_normalised\":\"\"},{\"ref\":\"p2\",\"pillar\":\"nutrition\",\"category\":\"reduce\",\"frequency_per_week\":2,\"duration_weeks\":6,\"_normalised\":\"\"}],\"nudges\":[{\"prescription_ref\":\"p1\",\"pillar\":\"physical_activity\",\"nudge_type\":\"challenge\",\"action_text\":\"Walk for 20 minutes.\",\"scheduled_date\":\"2026-10-05\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Time to get moving! A 20-minute walk can boost your energy and mood. You've got this!\",\"message_body_alt\":\"It's time for your 20-minute walk. This activity is part of your health plan.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"physical_activity\",\"nudge_type\":\"challenge\",\"action_text\":\"Walk for 20 minutes.\",\"scheduled_date\":\"2026-10-07\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Another day, another chance to feel great! Enjoy your 20-minute walk today. Every step counts!\",\"message_body_alt\":\"Your 20-minute walk is scheduled for today. Consistency is key to achieving your health goals.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p1\",\"pillar\":\"physical_activity\",\"nudge_type\":\"challenge\",\"action_text\":\"Walk for 20 minutes.\",\"scheduled_date\":\"2026-10-09\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"You're doing amazing! Let's complete your 20-minute walk today and keep that momentum going.\",\"message_body_alt\":\"Today's reminder: complete your 20-minute walk. This supports your physical activity goal.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p2\",\"pillar\":\"nutrition\",\"nudge_type\":\"reminder\",\"action_text\":\"Limit takeaway meals to once a week.\",\"scheduled_date\":\"2026-10-06\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"Thinking about your meals this week? Remember your goal to limit takeaway to once. You've got this!\",\"message_body_alt\":\"Reminder: your goal is to reduce takeaway meals to once a week. Plan your meals accordingly.\",\"template_name\":\"health_plan_reminder\"},{\"prescription_ref\":\"p2\",\"pillar\":\"nutrition\",\"nudge_type\":\"reminder\",\"action_text\":\"Limit takeaway meals to once a week.\",\"scheduled_date\":\"2026-10-10\",\"scheduled_time\":\"09:00\",\"tone_variant\":\"encouraging\",\"message_body\":\"How are you doing with your takeaway goal? Keep up the great work in making healthier choices!\",\"message_body_alt\":\"This is a reminder about your goal to limit takeaway meals to once per week. Stay mindful of your choices.\",\"template_name\":\"health_plan_reminder\"}]}",
+      "parsed_ok": true,
+      "score": {
+        "count_matches": true,
+        "extras": 0,
+        "matches": [
+          {
+            "gold": "physical_activity/increase/3/6",
+            "output": "physical_activity/increase/3/6",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          },
+          {
+            "gold": "nutrition/reduce/2/6",
+            "output": "nutrition/reduce/2/6",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          },
+          {
+            "ref": "p2",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ],
+        "signature": "nutrition|reduce|2|6 ; physical_activity|increase|3|6",
+        "actions": [
+          "Walk for 20 minutes.",
+          "Walk for 20 minutes.",
+          "Walk for 20 minutes.",
+          "Limit takeaway meals to once a week.",
+          "Limit takeaway meals to once a week."
+        ]
+      }
+    },
+    {
+      "id": "F12-r1",
+      "case": "F12",
+      "rep": 1,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "e5c0126719bc1186991b23dee8c7fae73f24c90b53b1a25d1ca62e26682344d5",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:12:55.483Z",
+      "status": 429,
+      "response": {
+        "error": {
+          "code": 429,
+          "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 14h47m4.092371699s.",
+          "status": "RESOURCE_EXHAUSTED",
+          "details": [
+            {
+              "@type": "type.googleapis.com/google.rpc.Help",
+              "links": [
+                {
+                  "description": "Learn more about Gemini API quotas",
+                  "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+              "violations": [
+                {
+                  "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                  "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+                  "quotaDimensions": {
+                    "location": "global",
+                    "model": "gemini-2.5-flash"
+                  },
+                  "quotaValue": "20"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.RetryInfo",
+              "retryDelay": "53224s"
+            }
+          ]
+        }
+      },
+      "latency_ms": 501,
+      "intake_status": 500,
+      "accepted": false,
+      "gate": null,
+      "rows_written": 0,
+      "prompt_sha256": "23c9ae3b6ecf6d726469292c086a3c43dfd8a41b5a8fba8023e32bd1fbd72d1b",
+      "stored_provenance": null,
+      "output_text": null,
+      "parsed_ok": false,
+      "score": null
+    },
+    {
+      "id": "F12-r2",
+      "case": "F12",
+      "rep": 2,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "e5c0126719bc1186991b23dee8c7fae73f24c90b53b1a25d1ca62e26682344d5",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:13:08.483Z",
+      "status": 429,
+      "response": {
+        "error": {
+          "code": 429,
+          "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 14h46m51.040601809s.",
+          "status": "RESOURCE_EXHAUSTED",
+          "details": [
+            {
+              "@type": "type.googleapis.com/google.rpc.Help",
+              "links": [
+                {
+                  "description": "Learn more about Gemini API quotas",
+                  "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+              "violations": [
+                {
+                  "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                  "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+                  "quotaDimensions": {
+                    "location": "global",
+                    "model": "gemini-2.5-flash"
+                  },
+                  "quotaValue": "20"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.RetryInfo",
+              "retryDelay": "53211s"
+            }
+          ]
+        }
+      },
+      "latency_ms": 589,
+      "intake_status": 500,
+      "accepted": false,
+      "gate": null,
+      "rows_written": 0,
+      "prompt_sha256": "23c9ae3b6ecf6d726469292c086a3c43dfd8a41b5a8fba8023e32bd1fbd72d1b",
+      "stored_provenance": null,
+      "output_text": null,
+      "parsed_ok": false,
+      "score": null
+    },
+    {
+      "id": "F12-r3",
+      "case": "F12",
+      "rep": 3,
+      "request": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[redacted]",
+        "body_sha256": "e5c0126719bc1186991b23dee8c7fae73f24c90b53b1a25d1ca62e26682344d5",
+        "generation_config": {
+          "responseMimeType": "application/json",
+          "temperature": 0.4,
+          "maxOutputTokens": 8192,
+          "thinkingConfig": {
+            "thinkingBudget": 0
+          }
+        }
+      },
+      "attempted_at": "2026-10-04T09:13:21.483Z",
+      "status": 429,
+      "response": {
+        "error": {
+          "code": 429,
+          "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 14h46m38.112671522s.",
+          "status": "RESOURCE_EXHAUSTED",
+          "details": [
+            {
+              "@type": "type.googleapis.com/google.rpc.Help",
+              "links": [
+                {
+                  "description": "Learn more about Gemini API quotas",
+                  "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+              "violations": [
+                {
+                  "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                  "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+                  "quotaDimensions": {
+                    "location": "global",
+                    "model": "gemini-2.5-flash"
+                  },
+                  "quotaValue": "20"
+                }
+              ]
+            },
+            {
+              "@type": "type.googleapis.com/google.rpc.RetryInfo",
+              "retryDelay": "53198s"
+            }
+          ]
+        }
+      },
+      "latency_ms": 475,
+      "intake_status": 500,
+      "accepted": false,
+      "gate": null,
+      "rows_written": 0,
+      "prompt_sha256": "23c9ae3b6ecf6d726469292c086a3c43dfd8a41b5a8fba8023e32bd1fbd72d1b",
+      "stored_provenance": null,
+      "output_text": null,
+      "parsed_ok": false,
+      "score": null
+    }
+  ],
+  "chains": [
+    {
+      "case": "F12",
+      "ran": false,
+      "reason": "no accepted output"
+    }
+  ],
+  "refused_outbound": [],
+  "combined": {
+    "note": "first-run response where one exists, otherwise the completion run's (FIDELITY_AMENDMENT_1.md)",
+    "summary": {
+      "calls": 36,
+      "http_ok": 24,
+      "accepted": 24,
+      "refused": 0,
+      "rows_written_on_refusal": 0,
+      "count_matches": 24,
+      "scored_calls": 24,
+      "gold_prescriptions": 28,
+      "pillar": 27,
+      "category_exact": 23,
+      "category_accepted": 27,
+      "frequency_exact": 27,
+      "frequency_accepted": 27,
+      "duration_exact": 27,
+      "rules": {
+        "prescriptions": 28,
+        "count_matches_frequency": 26,
+        "within_week1": 28,
+        "distinct_dates": 28,
+        "action_within_120": 28,
+        "bodies_within_180": 28
+      },
+      "consistent_texts": 9,
+      "consistency": [
+        {
+          "case": "F01",
+          "calls": 3,
+          "consistent": true
+        },
+        {
+          "case": "F02",
+          "calls": 3,
+          "consistent": true
+        },
+        {
+          "case": "F03",
+          "calls": 2,
+          "consistent": true
+        },
+        {
+          "case": "F04",
+          "calls": 2,
+          "consistent": true
+        },
+        {
+          "case": "F05",
+          "calls": 3,
+          "consistent": true
+        },
+        {
+          "case": "F06",
+          "calls": 2,
+          "consistent": true
+        },
+        {
+          "case": "F07",
+          "calls": 3,
+          "consistent": true
+        },
+        {
+          "case": "F08",
+          "calls": 1,
+          "consistent": false
+        },
+        {
+          "case": "F09",
+          "calls": 1,
+          "consistent": false
+        },
+        {
+          "case": "F10",
+          "calls": 2,
+          "consistent": true
+        },
+        {
+          "case": "F11",
+          "calls": 2,
+          "consistent": true
+        },
+        {
+          "case": "F12",
+          "calls": 0,
+          "consistent": false
+        }
+      ],
+      "chains_run": 11,
+      "chains_closed": 11
+    },
+    "calls": [
+      {
+        "id": "F01-r1",
+        "status": 200,
+        "from": "first_run",
+        "accepted": true,
+        "matches": [
+          {
+            "gold": "physical_activity/increase/2/6",
+            "output": "physical_activity/establish/2/6",
+            "pillar": true,
+            "category_exact": false,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ]
+      },
+      {
+        "id": "F01-r2",
+        "status": 200,
+        "from": "first_run",
+        "accepted": true,
+        "matches": [
+          {
+            "gold": "physical_activity/increase/2/6",
+            "output": "physical_activity/establish/2/6",
+            "pillar": true,
+            "category_exact": false,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ]
+      },
+      {
+        "id": "F01-r3",
+        "status": 200,
+        "from": "first_run",
+        "accepted": true,
+        "matches": [
+          {
+            "gold": "physical_activity/increase/2/6",
+            "output": "physical_activity/establish/2/6",
+            "pillar": true,
+            "category_exact": false,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ]
+      },
+      {
+        "id": "F02-r1",
+        "status": 200,
+        "from": "first_run",
+        "accepted": true,
+        "matches": [
+          {
+            "gold": "sleep/establish/3/8",
+            "output": "sleep/establish/3/8",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ]
+      },
+      {
+        "id": "F02-r2",
+        "status": 200,
+        "from": "first_run",
+        "accepted": true,
+        "matches": [
+          {
+            "gold": "sleep/establish/3/8",
+            "output": "sleep/establish/3/8",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ]
+      },
+      {
+        "id": "F02-r3",
+        "status": 200,
+        "from": "first_run",
+        "accepted": true,
+        "matches": [
+          {
+            "gold": "sleep/establish/3/8",
+            "output": "sleep/establish/3/8",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ]
+      },
+      {
+        "id": "F03-r1",
+        "status": 200,
+        "from": "first_run",
+        "accepted": true,
+        "matches": [
+          {
+            "gold": "substance_use/reduce/1/12",
+            "output": "substance_use/reduce/1/12",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ]
+      },
+      {
+        "id": "F03-r2",
+        "status": 200,
+        "from": "first_run",
+        "accepted": true,
+        "matches": [
+          {
+            "gold": "substance_use/reduce/1/12",
+            "output": "substance_use/reduce/1/12",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ]
+      },
+      {
+        "id": "F03-r3",
+        "status": 429,
+        "from": "completion",
+        "accepted": false,
+        "matches": null,
+        "rules": null
+      },
+      {
+        "id": "F04-r1",
+        "status": 200,
+        "from": "first_run",
+        "accepted": true,
+        "matches": [
+          {
+            "gold": "substance_use/avoid/3/10",
+            "output": "substance_use/avoid/3/10",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ]
+      },
+      {
+        "id": "F04-r2",
+        "status": 200,
+        "from": "first_run",
+        "accepted": true,
+        "matches": [
+          {
+            "gold": "substance_use/avoid/3/10",
+            "output": "substance_use/avoid/3/10",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": false,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ]
+      },
+      {
+        "id": "F04-r3",
+        "status": 429,
+        "from": "completion",
+        "accepted": false,
+        "matches": null,
+        "rules": null
+      },
+      {
+        "id": "F05-r1",
+        "status": 200,
+        "from": "first_run",
+        "accepted": true,
+        "matches": [
+          {
+            "gold": "nutrition/increase/2/6",
+            "output": "nutrition/increase/2/6",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ]
+      },
+      {
+        "id": "F05-r2",
+        "status": 200,
+        "from": "first_run",
+        "accepted": true,
+        "matches": [
+          {
+            "gold": "nutrition/increase/2/6",
+            "output": "nutrition/increase/2/6",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ]
+      },
+      {
+        "id": "F05-r3",
+        "status": 200,
+        "from": "first_run",
+        "accepted": true,
+        "matches": [
+          {
+            "gold": "nutrition/increase/2/6",
+            "output": "nutrition/increase/2/6",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": false,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ]
+      },
+      {
+        "id": "F06-r1",
+        "status": 200,
+        "from": "first_run",
+        "accepted": true,
+        "matches": [
+          {
+            "gold": "physical_activity/maintain/1/8",
+            "output": "physical_activity/maintain/1/8",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ]
+      },
+      {
+        "id": "F06-r2",
+        "status": 200,
+        "from": "first_run",
+        "accepted": true,
+        "matches": [
+          {
+            "gold": "physical_activity/maintain/1/8",
+            "output": "physical_activity/maintain/1/8",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ]
+      },
+      {
+        "id": "F06-r3",
+        "status": 429,
+        "from": "completion",
+        "accepted": false,
+        "matches": null,
+        "rules": null
+      },
+      {
+        "id": "F07-r1",
+        "status": 200,
+        "from": "first_run",
+        "accepted": true,
+        "matches": [
+          {
+            "gold": "stress_management/establish/2/4",
+            "output": "stress_management/establish/2/4",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ]
+      },
+      {
+        "id": "F07-r2",
+        "status": 200,
+        "from": "first_run",
+        "accepted": true,
+        "matches": [
+          {
+            "gold": "stress_management/establish/2/4",
+            "output": "stress_management/establish/2/4",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ]
+      },
+      {
+        "id": "F07-r3",
+        "status": 200,
+        "from": "first_run",
+        "accepted": true,
+        "matches": [
+          {
+            "gold": "stress_management/establish/2/4",
+            "output": "stress_management/establish/2/4",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ]
+      },
+      {
+        "id": "F08-r1",
+        "status": 200,
+        "from": "first_run",
+        "accepted": true,
+        "matches": [
+          {
+            "gold": "social_connection/increase/1/8",
+            "output": "social_connection/establish/1/8",
+            "pillar": true,
+            "category_exact": false,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ]
+      },
+      {
+        "id": "F08-r2",
+        "status": 429,
+        "from": "completion",
+        "accepted": false,
+        "matches": null,
+        "rules": null
+      },
+      {
+        "id": "F08-r3",
+        "status": 429,
+        "from": "completion",
+        "accepted": false,
+        "matches": null,
+        "rules": null
+      },
+      {
+        "id": "F09-r1",
+        "status": 200,
+        "from": "first_run",
+        "accepted": true,
+        "matches": [
+          {
+            "gold": "nutrition/avoid/2/6",
+            "output": null,
+            "pillar": false,
+            "category_exact": false,
+            "category_accepted": false,
+            "frequency_exact": false,
+            "frequency_accepted": false,
+            "duration_exact": false
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ]
+      },
+      {
+        "id": "F09-r2",
+        "status": 429,
+        "from": "completion",
+        "accepted": false,
+        "matches": null,
+        "rules": null
+      },
+      {
+        "id": "F09-r3",
+        "status": 429,
+        "from": "completion",
+        "accepted": false,
+        "matches": null,
+        "rules": null
+      },
+      {
+        "id": "F10-r1",
+        "status": 429,
+        "from": "completion",
+        "accepted": false,
+        "matches": null,
+        "rules": null
+      },
+      {
+        "id": "F10-r2",
+        "status": 200,
+        "from": "first_run",
+        "accepted": true,
+        "matches": [
+          {
+            "gold": "sleep/reduce/2/8",
+            "output": "sleep/reduce/2/8",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          },
+          {
+            "gold": "sleep/establish/2/8",
+            "output": "sleep/establish/2/8",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          },
+          {
+            "ref": "p2",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ]
+      },
+      {
+        "id": "F10-r3",
+        "status": 200,
+        "from": "completion",
+        "accepted": true,
+        "matches": [
+          {
+            "gold": "sleep/reduce/2/8",
+            "output": "sleep/reduce/2/8",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          },
+          {
+            "gold": "sleep/establish/2/8",
+            "output": "sleep/establish/2/8",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          },
+          {
+            "ref": "p2",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ]
+      },
+      {
+        "id": "F11-r1",
+        "status": 200,
+        "from": "first_run",
+        "accepted": true,
+        "matches": [
+          {
+            "gold": "physical_activity/increase/3/6",
+            "output": "physical_activity/increase/3/6",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          },
+          {
+            "gold": "nutrition/reduce/2/6",
+            "output": "nutrition/reduce/2/6",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          },
+          {
+            "ref": "p2",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ]
+      },
+      {
+        "id": "F11-r2",
+        "status": 429,
+        "from": "completion",
+        "accepted": false,
+        "matches": null,
+        "rules": null
+      },
+      {
+        "id": "F11-r3",
+        "status": 200,
+        "from": "completion",
+        "accepted": true,
+        "matches": [
+          {
+            "gold": "physical_activity/increase/3/6",
+            "output": "physical_activity/increase/3/6",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          },
+          {
+            "gold": "nutrition/reduce/2/6",
+            "output": "nutrition/reduce/2/6",
+            "pillar": true,
+            "category_exact": true,
+            "category_accepted": true,
+            "frequency_exact": true,
+            "frequency_accepted": true,
+            "duration_exact": true
+          }
+        ],
+        "rules": [
+          {
+            "ref": "p1",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          },
+          {
+            "ref": "p2",
+            "count_matches_frequency": true,
+            "within_week1": true,
+            "distinct_dates": true,
+            "action_within_120": true,
+            "bodies_within_180": true
+          }
+        ]
+      },
+      {
+        "id": "F12-r1",
+        "status": 429,
+        "from": "completion",
+        "accepted": false,
+        "matches": null,
+        "rules": null
+      },
+      {
+        "id": "F12-r2",
+        "status": 429,
+        "from": "completion",
+        "accepted": false,
+        "matches": null,
+        "rules": null
+      },
+      {
+        "id": "F12-r3",
+        "status": 429,
+        "from": "completion",
+        "accepted": false,
+        "matches": null,
+        "rules": null
+      }
+    ],
+    "chains": [
+      {
+        "case": "F01",
+        "ran": true,
+        "from_call": "F01-r1",
+        "closed": true,
+        "broken_at": null,
+        "decision": {
+          "outcome": "applied",
+          "rule": "explicit_request",
+          "reason": "explicit request fitted approved envelope",
+          "decision_id": "bd_3"
+        },
+        "policy": {
+          "current": 2,
+          "recommended": 1,
+          "applied": true
+        },
+        "links": {
+          "T1": "1/1",
+          "T2": "1/1",
+          "T3": "2/2",
+          "T4": "2/2",
+          "T5": "2/2",
+          "T6": "2/2",
+          "T7": "0/0",
+          "T8": "1/1",
+          "T9": "8/8",
+          "T10": "2/2",
+          "T11": "2/2",
+          "T12": "1/1",
+          "T13": "1/1",
+          "T14": "1/1",
+          "T15": "1/1",
+          "T16": "1/1",
+          "T17": "1/1",
+          "T18": "1/1",
+          "T19": "1/1"
+        }
+      },
+      {
+        "case": "F02",
+        "ran": true,
+        "from_call": "F02-r1",
+        "closed": true,
+        "broken_at": null,
+        "decision": {
+          "outcome": "applied",
+          "rule": "explicit_request",
+          "reason": "explicit request fitted approved envelope",
+          "decision_id": "bd_3"
+        },
+        "policy": {
+          "current": 3,
+          "recommended": 2,
+          "applied": true
+        },
+        "links": {
+          "T1": "1/1",
+          "T2": "1/1",
+          "T3": "3/3",
+          "T4": "3/3",
+          "T5": "3/3",
+          "T6": "3/3",
+          "T7": "0/0",
+          "T8": "1/1",
+          "T9": "12/12",
+          "T10": "2/2",
+          "T11": "2/2",
+          "T12": "1/1",
+          "T13": "1/1",
+          "T14": "1/1",
+          "T15": "1/1",
+          "T16": "1/1",
+          "T17": "1/1",
+          "T18": "1/1",
+          "T19": "1/1"
+        }
+      },
+      {
+        "case": "F03",
+        "ran": true,
+        "from_call": "F03-r1",
+        "closed": true,
+        "broken_at": null,
+        "decision": {
+          "outcome": "outside_envelope",
+          "rule": "explicit_request_guarded",
+          "reason": "frequency_outside_envelope",
+          "decision_id": "bd_3"
+        },
+        "policy": {
+          "current": 1,
+          "recommended": 1,
+          "applied": false
+        },
+        "links": {
+          "T1": "1/1",
+          "T2": "1/1",
+          "T3": "1/1",
+          "T4": "1/1",
+          "T5": "1/1",
+          "T6": "1/1",
+          "T7": "0/0",
+          "T8": "1/1",
+          "T9": "4/4",
+          "T10": "2/2",
+          "T11": "2/2",
+          "T12": "1/1",
+          "T13": "1/1",
+          "T14": "1/1",
+          "T15": "1/1",
+          "T17": "1/1",
+          "T18": "1/1",
+          "T19": "1/1"
+        }
+      },
+      {
+        "case": "F04",
+        "ran": true,
+        "from_call": "F04-r1",
+        "closed": true,
+        "broken_at": null,
+        "decision": {
+          "outcome": "applied",
+          "rule": "explicit_request",
+          "reason": "explicit request fitted approved envelope",
+          "decision_id": "bd_3"
+        },
+        "policy": {
+          "current": 3,
+          "recommended": 2,
+          "applied": true
+        },
+        "links": {
+          "T1": "1/1",
+          "T2": "1/1",
+          "T3": "3/3",
+          "T4": "3/3",
+          "T5": "3/3",
+          "T6": "3/3",
+          "T7": "0/0",
+          "T8": "1/1",
+          "T9": "12/12",
+          "T10": "2/2",
+          "T11": "2/2",
+          "T12": "1/1",
+          "T13": "1/1",
+          "T14": "1/1",
+          "T15": "1/1",
+          "T16": "1/1",
+          "T17": "1/1",
+          "T18": "1/1",
+          "T19": "1/1"
+        }
+      },
+      {
+        "case": "F05",
+        "ran": true,
+        "from_call": "F05-r1",
+        "closed": true,
+        "broken_at": null,
+        "decision": {
+          "outcome": "applied",
+          "rule": "explicit_request",
+          "reason": "explicit request fitted approved envelope",
+          "decision_id": "bd_3"
+        },
+        "policy": {
+          "current": 2,
+          "recommended": 1,
+          "applied": true
+        },
+        "links": {
+          "T1": "1/1",
+          "T2": "1/1",
+          "T3": "2/2",
+          "T4": "2/2",
+          "T5": "2/2",
+          "T6": "2/2",
+          "T7": "0/0",
+          "T8": "1/1",
+          "T9": "8/8",
+          "T10": "2/2",
+          "T11": "2/2",
+          "T12": "1/1",
+          "T13": "1/1",
+          "T14": "1/1",
+          "T15": "1/1",
+          "T16": "1/1",
+          "T17": "1/1",
+          "T18": "1/1",
+          "T19": "1/1"
+        }
+      },
+      {
+        "case": "F06",
+        "ran": true,
+        "from_call": "F06-r1",
+        "closed": true,
+        "broken_at": null,
+        "decision": {
+          "outcome": "outside_envelope",
+          "rule": "explicit_request_guarded",
+          "reason": "frequency_outside_envelope",
+          "decision_id": "bd_3"
+        },
+        "policy": {
+          "current": 1,
+          "recommended": 1,
+          "applied": false
+        },
+        "links": {
+          "T1": "1/1",
+          "T2": "1/1",
+          "T3": "1/1",
+          "T4": "1/1",
+          "T5": "1/1",
+          "T6": "1/1",
+          "T7": "0/0",
+          "T8": "1/1",
+          "T9": "4/4",
+          "T10": "2/2",
+          "T11": "2/2",
+          "T12": "1/1",
+          "T13": "1/1",
+          "T14": "1/1",
+          "T15": "1/1",
+          "T17": "1/1",
+          "T18": "1/1",
+          "T19": "1/1"
+        }
+      },
+      {
+        "case": "F07",
+        "ran": true,
+        "from_call": "F07-r1",
+        "closed": true,
+        "broken_at": null,
+        "decision": {
+          "outcome": "applied",
+          "rule": "explicit_request",
+          "reason": "explicit request fitted approved envelope",
+          "decision_id": "bd_3"
+        },
+        "policy": {
+          "current": 2,
+          "recommended": 1,
+          "applied": true
+        },
+        "links": {
+          "T1": "1/1",
+          "T2": "1/1",
+          "T3": "2/2",
+          "T4": "2/2",
+          "T5": "2/2",
+          "T6": "2/2",
+          "T7": "0/0",
+          "T8": "1/1",
+          "T9": "8/8",
+          "T10": "2/2",
+          "T11": "2/2",
+          "T12": "1/1",
+          "T13": "1/1",
+          "T14": "1/1",
+          "T15": "1/1",
+          "T16": "1/1",
+          "T17": "1/1",
+          "T18": "1/1",
+          "T19": "1/1"
+        }
+      },
+      {
+        "case": "F08",
+        "ran": true,
+        "from_call": "F08-r1",
+        "closed": true,
+        "broken_at": null,
+        "decision": {
+          "outcome": "outside_envelope",
+          "rule": "explicit_request_guarded",
+          "reason": "frequency_outside_envelope",
+          "decision_id": "bd_3"
+        },
+        "policy": {
+          "current": 1,
+          "recommended": 1,
+          "applied": false
+        },
+        "links": {
+          "T1": "1/1",
+          "T2": "1/1",
+          "T3": "1/1",
+          "T4": "1/1",
+          "T5": "1/1",
+          "T6": "1/1",
+          "T7": "0/0",
+          "T8": "1/1",
+          "T9": "4/4",
+          "T10": "2/2",
+          "T11": "2/2",
+          "T12": "1/1",
+          "T13": "1/1",
+          "T14": "1/1",
+          "T15": "1/1",
+          "T17": "1/1",
+          "T18": "1/1",
+          "T19": "1/1"
+        }
+      },
+      {
+        "case": "F09",
+        "ran": true,
+        "from_call": "F09-r1",
+        "closed": true,
+        "broken_at": null,
+        "decision": {
+          "outcome": "outside_envelope",
+          "rule": "explicit_request_guarded",
+          "reason": "frequency_outside_envelope",
+          "decision_id": "bd_4"
+        },
+        "policy": {
+          "current": 1,
+          "recommended": 1,
+          "applied": false
+        },
+        "links": {
+          "T1": "1/1",
+          "T2": "1/1",
+          "T3": "2/2",
+          "T4": "2/2",
+          "T5": "2/2",
+          "T6": "2/2",
+          "T7": "0/0",
+          "T8": "2/2",
+          "T9": "8/8",
+          "T10": "2/2",
+          "T11": "2/2",
+          "T12": "1/1",
+          "T13": "1/1",
+          "T14": "1/1",
+          "T15": "1/1",
+          "T17": "1/1",
+          "T18": "1/1",
+          "T19": "1/1"
+        }
+      },
+      {
+        "case": "F10",
+        "ran": true,
+        "from_call": "F10-r2",
+        "closed": true,
+        "broken_at": null,
+        "decision": {
+          "outcome": "applied",
+          "rule": "explicit_request",
+          "reason": "explicit request fitted approved envelope",
+          "decision_id": "bd_4"
+        },
+        "policy": {
+          "current": 2,
+          "recommended": 1,
+          "applied": true
+        },
+        "links": {
+          "T1": "2/2",
+          "T2": "2/2",
+          "T3": "4/4",
+          "T4": "4/4",
+          "T5": "4/4",
+          "T6": "4/4",
+          "T7": "0/0",
+          "T8": "2/2",
+          "T9": "16/16",
+          "T10": "3/3",
+          "T11": "3/3",
+          "T12": "1/1",
+          "T13": "1/1",
+          "T14": "1/1",
+          "T15": "1/1",
+          "T16": "0/1",
+          "T17": "1/1",
+          "T18": "1/1",
+          "T19": "1/1"
+        }
+      },
+      {
+        "case": "F11",
+        "ran": true,
+        "from_call": "F11-r1",
+        "closed": true,
+        "broken_at": null,
+        "decision": {
+          "outcome": "applied",
+          "rule": "explicit_request",
+          "reason": "explicit request fitted approved envelope",
+          "decision_id": "bd_4"
+        },
+        "policy": {
+          "current": 3,
+          "recommended": 2,
+          "applied": true
+        },
+        "links": {
+          "T1": "2/2",
+          "T2": "2/2",
+          "T3": "5/5",
+          "T4": "5/5",
+          "T5": "5/5",
+          "T6": "5/5",
+          "T7": "0/0",
+          "T8": "2/2",
+          "T9": "20/20",
+          "T10": "3/3",
+          "T11": "3/3",
+          "T12": "1/1",
+          "T13": "1/1",
+          "T14": "1/1",
+          "T15": "1/1",
+          "T16": "0/1",
+          "T17": "1/1",
+          "T18": "1/1",
+          "T19": "1/1"
+        }
+      },
+      {
+        "case": "F12",
+        "ran": false,
+        "reason": "no accepted output"
+      }
+    ]
+  }
+}

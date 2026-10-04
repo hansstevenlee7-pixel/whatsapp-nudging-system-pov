@@ -1,0 +1,3044 @@
+{
+  "case": {
+    "id": "F08-chain",
+    "text": "Call or meet a friend at least once a week to feel less isolated. Weekly reminder for 8 weeks.",
+    "llm": {
+      "prescriptions": [
+        {
+          "ref": "p1",
+          "pillar": "social_connection",
+          "category": "establish",
+          "frequency_per_week": 1,
+          "duration_weeks": 8,
+          "_normalised": ""
+        }
+      ],
+      "nudges": [
+        {
+          "prescription_ref": "p1",
+          "pillar": "social_connection",
+          "nudge_type": "reminder",
+          "action_text": "Call or meet a friend to feel less isolated.",
+          "scheduled_date": "2026-10-09",
+          "scheduled_time": "09:00",
+          "tone_variant": "encouraging",
+          "message_body": "Remember to connect with a friend this week! Taking time for social connection can make a big difference in how you feel.",
+          "message_body_alt": "This is a reminder to call or meet a friend this week as part of your health plan to address feelings of isolation.",
+          "template_name": "health_plan_reminder"
+        }
+      ]
+    },
+    "review": {},
+    "reply": "Send fewer messages"
+  },
+  "result": {
+    "id": "F08-chain",
+    "case_reply": "Send fewer messages",
+    "steps": [
+      {
+        "step": "intake via portal and Workflow A",
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "user_id": "usr-f08-chain",
+          "prescriptions": 1,
+          "nudges": 1
+        }
+      },
+      {
+        "step": "clinician approval",
+        "status": 200,
+        "body": {
+          "slots": 1
+        }
+      },
+      {
+        "step": "envelope approval 8534f900",
+        "status": 200
+      },
+      {
+        "step": "signed reply",
+        "status": 200
+      },
+      {
+        "step": "workflow C tick (after reply)",
+        "adaptation": "complete",
+        "decision": {
+          "outcome": "outside_envelope",
+          "rule": "explicit_request_guarded",
+          "reason": "frequency_outside_envelope"
+        },
+        "frequency": "idle",
+        "policy": null
+      },
+      {
+        "step": "workflow C tick (after the 24-hour window closes)",
+        "adaptation": "idle",
+        "decision": null,
+        "frequency": "complete",
+        "policy": {
+          "current": 1,
+          "recommended": 1,
+          "schedule": {
+            "applied": false,
+            "reason": "schedule_already_matches_policy"
+          }
+        }
+      }
+    ],
+    "decision": {
+      "outcome": "outside_envelope",
+      "rule": "explicit_request_guarded",
+      "reason": "frequency_outside_envelope",
+      "decision_id": "bd_3"
+    },
+    "acknowledgements": [],
+    "policy": {
+      "current": 1,
+      "recommended": 1,
+      "applied": false
+    },
+    "deliveries": [
+      {
+        "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261009",
+        "sid": "SM2fd494e49c30290f406871bf0bf2a36e",
+        "label": "first-delivery",
+        "callback": 200
+      },
+      {
+        "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261016",
+        "sid": "SM58151955c0906ca077f654294dde6f48",
+        "label": "delivery-1",
+        "callback": 200
+      }
+    ],
+    "clinician_changes": [],
+    "links": {
+      "T1": [
+        {
+          "id": "rx_f9eaaf44-4a50-4c96-a005-fab524693497",
+          "ok": true
+        }
+      ],
+      "T2": [
+        {
+          "id": "rx_f9eaaf44-4a50-4c96-a005-fab524693497",
+          "ok": true
+        }
+      ],
+      "T3": [
+        {
+          "id": "ndg_e4c7067a-e7d4-4be6-a0aa-0476e2ea4932",
+          "ok": true
+        }
+      ],
+      "T4": [
+        {
+          "id": "ndg_e4c7067a-e7d4-4be6-a0aa-0476e2ea4932",
+          "ok": true
+        }
+      ],
+      "T5": [
+        {
+          "id": "slot_4-4be6-a0aa-0476e2ea4932_friday_0",
+          "ok": true
+        }
+      ],
+      "T6": [
+        {
+          "id": "slot_4-4be6-a0aa-0476e2ea4932_friday_0",
+          "ok": true
+        }
+      ],
+      "T7": [],
+      "T8": [
+        {
+          "id": "8534f90097d561882003aa6be3dbcfe2",
+          "ok": true
+        }
+      ],
+      "T9": [
+        {
+          "id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261009",
+          "ok": true
+        },
+        {
+          "id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261016",
+          "ok": true
+        },
+        {
+          "id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261023",
+          "ok": true
+        },
+        {
+          "id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261030",
+          "ok": true
+        }
+      ],
+      "T10": [
+        {
+          "id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261009",
+          "ok": true
+        },
+        {
+          "id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261016",
+          "ok": true
+        }
+      ],
+      "T11": [
+        {
+          "id": "SM2fd494e49c30290f406871bf0bf2a36e",
+          "ok": true
+        },
+        {
+          "id": "SM58151955c0906ca077f654294dde6f48",
+          "ok": true
+        }
+      ],
+      "T12": [
+        {
+          "id": "reply_to_interaction",
+          "ok": true
+        }
+      ],
+      "T13": [
+        {
+          "id": "interaction_to_decision",
+          "ok": true
+        }
+      ],
+      "T14": [
+        {
+          "id": "decision_to_envelope",
+          "ok": true
+        }
+      ],
+      "T15": [
+        {
+          "id": "policy_to_audit",
+          "ok": true
+        }
+      ],
+      "T17": [
+        {
+          "id": "next_message_to_decision",
+          "ok": true
+        }
+      ],
+      "T18": [
+        {
+          "id": "next_message_to_prescription",
+          "ok": true
+        }
+      ],
+      "T19": [
+        {
+          "id": "tracked_link_to_next_message",
+          "ok": true
+        }
+      ]
+    },
+    "closure": {
+      "closed": true,
+      "path": [
+        "message SM58151955c0906ca077f654294dde6f48 -> occurrence schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261016",
+        "occurrence -> slot slot_4-4be6-a0aa-0476e2ea4932_friday_0",
+        "slot -> LLM draft ndg_e4c7067a-e7d4-4be6-a0aa-0476e2ea4932",
+        "draft -> prescription rx_f9eaaf44-4a50-4c96-a005-fab524693497",
+        "prescription -> submitted text"
+      ],
+      "broken_at": null
+    }
+  },
+  "prescriptions": [
+    "rx_f9eaaf44-4a50-4c96-a005-fab524693497"
+  ],
+  "drafts": [
+    "ndg_e4c7067a-e7d4-4be6-a0aa-0476e2ea4932"
+  ],
+  "gemini_requests": [
+    {
+      "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[harness]",
+      "prompt_sha256": "8b8db5a9f58e08d56e661818d945b4ee6392de0fc2dd3f8cc6ed25c02d14e0e8"
+    }
+  ],
+  "workflow_runs": [
+    {
+      "workflow": "A",
+      "visited": [
+        "Intake Webhook",
+        "Authorize Proxy",
+        "Proxy Authorized?",
+        "Extract Input",
+        "Build Gemini Prompt",
+        "Call Gemini Vision",
+        "Normalize Known Enum Drift",
+        "Validation Gate",
+        "Is Valid?",
+        "Prep User",
+        "Write User",
+        "Prep Questionnaire",
+        "Write Questionnaire",
+        "Prep Prescriptions",
+        "Write Prescriptions",
+        "Prep Nudges",
+        "Write Nudges",
+        "Prep Schedule State",
+        "Write Schedule State",
+        "Respond Success"
+      ],
+      "error": null,
+      "gate": [
+        {
+          "validation_passed": true,
+          "user": {
+            "user_id": "usr-f08-chain",
+            "name": "Synthetic patient",
+            "phone": "+61400000001",
+            "email": "patient@harness.invalid",
+            "created_at": "2026-10-04T21:00:00.000Z",
+            "user_status": "active",
+            "doctor_id": "doc-harness"
+          },
+          "questionnaire": {
+            "questionnaire_id": "qn_60307392-20d4-4ca0-adab-b892d9c397f0",
+            "user_id": "usr-f08-chain",
+            "completed_at": "2026-10-04T21:00:00.000Z",
+            "age": null,
+            "opt_in_whatsapp": true
+          },
+          "prescriptions": [
+            {
+              "prescription_id": "rx_f9eaaf44-4a50-4c96-a005-fab524693497",
+              "user_id": "usr-f08-chain",
+              "doctor_id": "doc-harness",
+              "issued_date": "2026-10-04",
+              "pillar": "social_connection",
+              "category": "establish",
+              "target_behavior": "",
+              "frequency_per_week": 1,
+              "duration_weeks": 8,
+              "prescription_raw_text": "Call or meet a friend at least once a week to feel less isolated. Weekly reminder for 8 weeks.",
+              "status": "active",
+              "translation_model": "gemini-2.5-flash",
+              "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+              "translation_response_id": "RBfCarDPJqmRvr0Pr6y7iAY",
+              "translated_at": "2026-10-04T21:00:00.000Z",
+              "translation_normalised": ""
+            }
+          ],
+          "nudges": [
+            {
+              "nudge_id": "ndg_e4c7067a-e7d4-4be6-a0aa-0476e2ea4932",
+              "prescription_id": "rx_f9eaaf44-4a50-4c96-a005-fab524693497",
+              "user_id": "usr-f08-chain",
+              "nudge_type": "reminder",
+              "pillar": "social_connection",
+              "action_text": "Call or meet a friend to feel less isolated.",
+              "scheduled_date": "2026-10-09",
+              "scheduled_time": "09:00",
+              "message_body": "Remember to connect with a friend this week! Taking time for social connection can make a big difference in how you feel.",
+              "message_body_alt": "This is a reminder to call or meet a friend this week as part of your health plan to address feelings of isolation.",
+              "tone_variant": "encouraging",
+              "template_name": "health_plan_reminder",
+              "status": "needs_review",
+              "sent_at": "",
+              "reviewed_at": "",
+              "week_number": 1,
+              "schedule_slot_id": "",
+              "translation_model": "gemini-2.5-flash",
+              "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+              "translation_response_id": "RBfCarDPJqmRvr0Pr6y7iAY",
+              "translated_at": "2026-10-04T21:00:00.000Z"
+            }
+          ],
+          "schedule_state": [
+            {
+              "schedule_id": "sch_ndg_e4c7067a-e7d4-4be6-a0aa-0476e2ea4932",
+              "nudge_id": "ndg_e4c7067a-e7d4-4be6-a0aa-0476e2ea4932",
+              "user_id": "usr-f08-chain",
+              "parent_nudge_id": "ndg_e4c7067a-e7d4-4be6-a0aa-0476e2ea4932",
+              "status": "needs_review",
+              "sent_at": "",
+              "delivered_at": "",
+              "wa_message_id": "",
+              "tone_sent": "",
+              "last_updated": "2026-10-04T21:00:00.000Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "workflow": "B",
+      "label": "first-delivery",
+      "visited": [
+        "Melbourne Schedule Trigger",
+        "Read Users",
+        "Aggregate Users",
+        "Read Nudges",
+        "Deduplicate Generated Schedule",
+        "Prepare Due Nudges",
+        "Prepare Adaptive Media",
+        "Merge Adaptive Media",
+        "Build Twilio Requests",
+        "Send via Twilio",
+        "Merge Twilio Response",
+        "Mark Nudge Sent",
+        "Update Schedule State"
+      ],
+      "error": null
+    },
+    {
+      "workflow": "B",
+      "label": "delivery-1",
+      "visited": [
+        "Melbourne Schedule Trigger",
+        "Read Users",
+        "Aggregate Users",
+        "Read Nudges",
+        "Deduplicate Generated Schedule",
+        "Prepare Due Nudges",
+        "Prepare Adaptive Media",
+        "Merge Adaptive Media",
+        "Build Twilio Requests",
+        "Send via Twilio",
+        "Merge Twilio Response",
+        "Mark Nudge Sent",
+        "Update Schedule State"
+      ],
+      "error": null
+    }
+  ],
+  "after_intake": {
+    "sheets": {
+      "user": {
+        "headers": [
+          "user_id",
+          "name",
+          "phone",
+          "email",
+          "user_status",
+          "doctor_id"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "user_id": "usr-f08-chain",
+            "name": "Synthetic patient",
+            "phone": "+61400000001",
+            "email": "patient@harness.invalid",
+            "user_status": "active",
+            "doctor_id": "doc-harness"
+          }
+        ]
+      },
+      "questionnaire": {
+        "headers": [
+          "questionnaire_id",
+          "user_id",
+          "preferred_nudge_time",
+          "opt_in_whatsapp"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "questionnaire_id": "qn_60307392-20d4-4ca0-adab-b892d9c397f0",
+            "user_id": "usr-f08-chain",
+            "preferred_nudge_time": "",
+            "opt_in_whatsapp": true
+          }
+        ]
+      },
+      "prescriptions": {
+        "headers": [
+          "prescription_id",
+          "user_id",
+          "doctor_id",
+          "issued_date",
+          "pillar",
+          "category",
+          "target_behavior",
+          "frequency_per_week",
+          "duration_weeks",
+          "prescription_raw_text",
+          "status",
+          "translation_model",
+          "translation_prompt_sha256",
+          "translation_response_id",
+          "translated_at",
+          "translation_normalised"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "prescription_id": "rx_f9eaaf44-4a50-4c96-a005-fab524693497",
+            "user_id": "usr-f08-chain",
+            "doctor_id": "doc-harness",
+            "issued_date": "2026-10-04",
+            "pillar": "social_connection",
+            "category": "establish",
+            "target_behavior": "",
+            "frequency_per_week": 1,
+            "duration_weeks": 8,
+            "prescription_raw_text": "Call or meet a friend at least once a week to feel less isolated. Weekly reminder for 8 weeks.",
+            "status": "active",
+            "translation_model": "gemini-2.5-flash",
+            "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+            "translation_response_id": "RBfCarDPJqmRvr0Pr6y7iAY",
+            "translated_at": "2026-10-04T21:00:00.000Z",
+            "translation_normalised": ""
+          }
+        ]
+      },
+      "nudges": {
+        "headers": [
+          "nudge_id",
+          "prescription_id",
+          "user_id",
+          "nudge_type",
+          "pillar",
+          "action_text",
+          "scheduled_date",
+          "scheduled_time",
+          "message_body",
+          "message_body_alt",
+          "tone_variant",
+          "template_name",
+          "status",
+          "sent_at",
+          "reviewed_at",
+          "week_number",
+          "schedule_slot_id",
+          "category",
+          "media_selection_mode",
+          "media_override_asset_id",
+          "media_asset_id",
+          "adaptation_decision_id",
+          "translation_model",
+          "translation_prompt_sha256",
+          "translation_response_id",
+          "translated_at"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "nudge_id": "ndg_e4c7067a-e7d4-4be6-a0aa-0476e2ea4932",
+            "prescription_id": "rx_f9eaaf44-4a50-4c96-a005-fab524693497",
+            "user_id": "usr-f08-chain",
+            "nudge_type": "reminder",
+            "pillar": "social_connection",
+            "action_text": "Call or meet a friend to feel less isolated.",
+            "scheduled_date": "2026-10-09",
+            "scheduled_time": "09:00",
+            "message_body": "Remember to connect with a friend this week! Taking time for social connection can make a big difference in how you feel.",
+            "message_body_alt": "This is a reminder to call or meet a friend this week as part of your health plan to address feelings of isolation.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "needs_review",
+            "sent_at": "",
+            "reviewed_at": "",
+            "week_number": 1,
+            "schedule_slot_id": "",
+            "translation_model": "gemini-2.5-flash",
+            "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+            "translation_response_id": "RBfCarDPJqmRvr0Pr6y7iAY",
+            "translated_at": "2026-10-04T21:00:00.000Z"
+          }
+        ]
+      },
+      "weekly_schedule": {
+        "headers": [
+          "schedule_slot_id",
+          "user_id",
+          "source_nudge_id",
+          "prescription_id",
+          "day",
+          "scheduled_time",
+          "nudge_type",
+          "pillar",
+          "action_text",
+          "tone_variant",
+          "message_body",
+          "message_body_alt",
+          "template_name",
+          "status",
+          "start_date",
+          "end_date",
+          "created_at",
+          "updated_at",
+          "category",
+          "media_selection_mode",
+          "media_override_asset_id",
+          "media_asset_id",
+          "adaptation_decision_id",
+          "approved_by",
+          "approved_at"
+        ],
+        "rows": []
+      },
+      "schedule_state": {
+        "headers": [
+          "schedule_id",
+          "nudge_id",
+          "user_id",
+          "parent_nudge_id",
+          "status",
+          "sent_at",
+          "delivered_at",
+          "wa_message_id",
+          "tone_sent",
+          "last_updated",
+          "read_at",
+          "interacted_at",
+          "last_inbound_message_sid",
+          "delivery_attempt_id",
+          "submission_started_at"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "schedule_id": "sch_ndg_e4c7067a-e7d4-4be6-a0aa-0476e2ea4932",
+            "nudge_id": "ndg_e4c7067a-e7d4-4be6-a0aa-0476e2ea4932",
+            "user_id": "usr-f08-chain",
+            "parent_nudge_id": "ndg_e4c7067a-e7d4-4be6-a0aa-0476e2ea4932",
+            "status": "needs_review",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:00:00.000Z"
+          }
+        ]
+      },
+      "delivery_events": {
+        "headers": [
+          "event_id",
+          "event_at",
+          "wa_message_id",
+          "nudge_id",
+          "user_id",
+          "status",
+          "error_code",
+          "error_message",
+          "channel_to",
+          "raw_payload"
+        ],
+        "rows": []
+      },
+      "media_assignments": {
+        "headers": [
+          "assignment_id",
+          "assigned_at",
+          "user_id",
+          "nudge_id",
+          "behaviour_key",
+          "media_asset_id",
+          "adaptation_decision_id",
+          "media_kind",
+          "selection_mode",
+          "source_url",
+          "tracked_url",
+          "planned_frequency",
+          "scheduled_at",
+          "sent_at",
+          "delivered_at",
+          "read_at",
+          "visited_at",
+          "replied_at",
+          "send_to_read_hours",
+          "send_to_visit_hours",
+          "send_to_reply_hours"
+        ],
+        "rows": []
+      },
+      "interaction_events": {
+        "headers": [
+          "interaction_id",
+          "event_at",
+          "inbound_message_sid",
+          "user_id",
+          "from_phone",
+          "reply_to_wa_message_id",
+          "nudge_id",
+          "body",
+          "media_count",
+          "correlation_method",
+          "ack_status"
+        ],
+        "rows": []
+      },
+      "adaptation_decisions": {
+        "headers": [
+          "decision_id",
+          "decided_at",
+          "user_id",
+          "behaviour_key",
+          "interaction_id",
+          "signal_type",
+          "rule_applied",
+          "outcome",
+          "reason",
+          "selected_asset_id",
+          "interpretation",
+          "previous_state",
+          "next_state",
+          "scope",
+          "decision_source",
+          "effective_at",
+          "state_version",
+          "changed_fields",
+          "frequency_before",
+          "frequency_after",
+          "media_mode_before",
+          "media_mode_after",
+          "media_kind_before",
+          "media_kind_after",
+          "nudge_id"
+        ],
+        "rows": []
+      },
+      "patient_adaptation_state": {
+        "headers": [
+          "user_id",
+          "scope",
+          "behaviour_key",
+          "state_version",
+          "preferred_format",
+          "preferred_frequency",
+          "planned_frequency",
+          "delivered_frequency",
+          "observed_frequency",
+          "last_change_at",
+          "updated_at"
+        ],
+        "rows": []
+      },
+      "prescription_revisions": {
+        "headers": [
+          "revision_id",
+          "prescription_id",
+          "user_id",
+          "changed_at",
+          "changed_by",
+          "field",
+          "previous_value",
+          "new_value",
+          "previous_source",
+          "reason"
+        ],
+        "rows": []
+      },
+      "patient_adaptation_timeline": {
+        "headers": [
+          "user_id",
+          "event_id",
+          "event_at",
+          "event_type",
+          "source",
+          "scope",
+          "behaviour_key",
+          "signal",
+          "rule_applied",
+          "outcome",
+          "reason",
+          "previous_state",
+          "new_state",
+          "changed_fields",
+          "selected_asset_id",
+          "selected_media_kind",
+          "nudge_id",
+          "interaction_id"
+        ],
+        "rows": []
+      }
+    },
+    "database": {
+      "profiles": [
+        {
+          "auth_user_id": "11111111-1111-4111-a111-111111111111",
+          "email": "clinician@harness.invalid",
+          "display_name": "Synthetic clinician",
+          "role": "doctor",
+          "doctor_id": "doc-harness",
+          "status": "active"
+        }
+      ],
+      "media_search_jobs": [],
+      "media_candidates": [],
+      "media_assets": [],
+      "adaptation_envelopes": [],
+      "user_adaptation_state": [],
+      "interaction_events": [],
+      "adaptation_decisions": [],
+      "tracked_links": [],
+      "patient_adaptation_state": [],
+      "patient_adaptation_timeline": []
+    }
+  },
+  "after_approval": {
+    "sheets": {
+      "user": {
+        "headers": [
+          "user_id",
+          "name",
+          "phone",
+          "email",
+          "user_status",
+          "doctor_id"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "user_id": "usr-f08-chain",
+            "name": "Synthetic patient",
+            "phone": "+61400000001",
+            "email": "patient@harness.invalid",
+            "user_status": "active",
+            "doctor_id": "doc-harness"
+          }
+        ]
+      },
+      "questionnaire": {
+        "headers": [
+          "questionnaire_id",
+          "user_id",
+          "preferred_nudge_time",
+          "opt_in_whatsapp"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "questionnaire_id": "qn_60307392-20d4-4ca0-adab-b892d9c397f0",
+            "user_id": "usr-f08-chain",
+            "preferred_nudge_time": "",
+            "opt_in_whatsapp": true
+          }
+        ]
+      },
+      "prescriptions": {
+        "headers": [
+          "prescription_id",
+          "user_id",
+          "doctor_id",
+          "issued_date",
+          "pillar",
+          "category",
+          "target_behavior",
+          "frequency_per_week",
+          "duration_weeks",
+          "prescription_raw_text",
+          "status",
+          "translation_model",
+          "translation_prompt_sha256",
+          "translation_response_id",
+          "translated_at",
+          "translation_normalised"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "prescription_id": "rx_f9eaaf44-4a50-4c96-a005-fab524693497",
+            "user_id": "usr-f08-chain",
+            "doctor_id": "doc-harness",
+            "issued_date": "2026-10-04",
+            "pillar": "social_connection",
+            "category": "establish",
+            "target_behavior": "",
+            "frequency_per_week": 1,
+            "duration_weeks": 8,
+            "prescription_raw_text": "Call or meet a friend at least once a week to feel less isolated. Weekly reminder for 8 weeks.",
+            "status": "active",
+            "translation_model": "gemini-2.5-flash",
+            "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+            "translation_response_id": "RBfCarDPJqmRvr0Pr6y7iAY",
+            "translated_at": "2026-10-04T21:00:00.000Z",
+            "translation_normalised": ""
+          }
+        ]
+      },
+      "nudges": {
+        "headers": [
+          "nudge_id",
+          "prescription_id",
+          "user_id",
+          "nudge_type",
+          "pillar",
+          "action_text",
+          "scheduled_date",
+          "scheduled_time",
+          "message_body",
+          "message_body_alt",
+          "tone_variant",
+          "template_name",
+          "status",
+          "sent_at",
+          "reviewed_at",
+          "week_number",
+          "schedule_slot_id",
+          "category",
+          "media_selection_mode",
+          "media_override_asset_id",
+          "media_asset_id",
+          "adaptation_decision_id",
+          "translation_model",
+          "translation_prompt_sha256",
+          "translation_response_id",
+          "translated_at"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "nudge_id": "ndg_e4c7067a-e7d4-4be6-a0aa-0476e2ea4932",
+            "prescription_id": "rx_f9eaaf44-4a50-4c96-a005-fab524693497",
+            "user_id": "usr-f08-chain",
+            "nudge_type": "reminder",
+            "pillar": "social_connection",
+            "action_text": "Call or meet a friend to feel less isolated.",
+            "scheduled_date": "2026-10-09",
+            "scheduled_time": "09:00",
+            "message_body": "Remember to connect with a friend this week! Taking time for social connection can make a big difference in how you feel.",
+            "message_body_alt": "This is a reminder to call or meet a friend this week as part of your health plan to address feelings of isolation.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 1,
+            "schedule_slot_id": "",
+            "translation_model": "gemini-2.5-flash",
+            "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+            "translation_response_id": "RBfCarDPJqmRvr0Pr6y7iAY",
+            "translated_at": "2026-10-04T21:00:00.000Z",
+            "category": "establish"
+          },
+          {
+            "row_number": 3,
+            "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261009",
+            "schedule_slot_id": "slot_4-4be6-a0aa-0476e2ea4932_friday_0",
+            "prescription_id": "rx_f9eaaf44-4a50-4c96-a005-fab524693497",
+            "user_id": "usr-f08-chain",
+            "nudge_type": "reminder",
+            "pillar": "social_connection",
+            "category": "establish",
+            "action_text": "Call or meet a friend to feel less isolated.",
+            "scheduled_date": "2026-10-09",
+            "scheduled_time": "09:00",
+            "message_body": "Remember to connect with a friend this week! Taking time for social connection can make a big difference in how you feel.",
+            "message_body_alt": "This is a reminder to call or meet a friend this week as part of your health plan to address feelings of isolation.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 1,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          },
+          {
+            "row_number": 4,
+            "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261016",
+            "schedule_slot_id": "slot_4-4be6-a0aa-0476e2ea4932_friday_0",
+            "prescription_id": "rx_f9eaaf44-4a50-4c96-a005-fab524693497",
+            "user_id": "usr-f08-chain",
+            "nudge_type": "reminder",
+            "pillar": "social_connection",
+            "category": "establish",
+            "action_text": "Call or meet a friend to feel less isolated.",
+            "scheduled_date": "2026-10-16",
+            "scheduled_time": "09:00",
+            "message_body": "Remember to connect with a friend this week! Taking time for social connection can make a big difference in how you feel.",
+            "message_body_alt": "This is a reminder to call or meet a friend this week as part of your health plan to address feelings of isolation.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 2,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          },
+          {
+            "row_number": 5,
+            "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261023",
+            "schedule_slot_id": "slot_4-4be6-a0aa-0476e2ea4932_friday_0",
+            "prescription_id": "rx_f9eaaf44-4a50-4c96-a005-fab524693497",
+            "user_id": "usr-f08-chain",
+            "nudge_type": "reminder",
+            "pillar": "social_connection",
+            "category": "establish",
+            "action_text": "Call or meet a friend to feel less isolated.",
+            "scheduled_date": "2026-10-23",
+            "scheduled_time": "09:00",
+            "message_body": "Remember to connect with a friend this week! Taking time for social connection can make a big difference in how you feel.",
+            "message_body_alt": "This is a reminder to call or meet a friend this week as part of your health plan to address feelings of isolation.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 3,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          },
+          {
+            "row_number": 6,
+            "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261030",
+            "schedule_slot_id": "slot_4-4be6-a0aa-0476e2ea4932_friday_0",
+            "prescription_id": "rx_f9eaaf44-4a50-4c96-a005-fab524693497",
+            "user_id": "usr-f08-chain",
+            "nudge_type": "reminder",
+            "pillar": "social_connection",
+            "category": "establish",
+            "action_text": "Call or meet a friend to feel less isolated.",
+            "scheduled_date": "2026-10-30",
+            "scheduled_time": "09:00",
+            "message_body": "Remember to connect with a friend this week! Taking time for social connection can make a big difference in how you feel.",
+            "message_body_alt": "This is a reminder to call or meet a friend this week as part of your health plan to address feelings of isolation.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 4,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          }
+        ]
+      },
+      "weekly_schedule": {
+        "headers": [
+          "schedule_slot_id",
+          "user_id",
+          "source_nudge_id",
+          "prescription_id",
+          "day",
+          "scheduled_time",
+          "nudge_type",
+          "pillar",
+          "action_text",
+          "tone_variant",
+          "message_body",
+          "message_body_alt",
+          "template_name",
+          "status",
+          "start_date",
+          "end_date",
+          "created_at",
+          "updated_at",
+          "category",
+          "media_selection_mode",
+          "media_override_asset_id",
+          "media_asset_id",
+          "adaptation_decision_id",
+          "approved_by",
+          "approved_at"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "schedule_slot_id": "slot_4-4be6-a0aa-0476e2ea4932_friday_0",
+            "user_id": "usr-f08-chain",
+            "source_nudge_id": "ndg_e4c7067a-e7d4-4be6-a0aa-0476e2ea4932",
+            "prescription_id": "rx_f9eaaf44-4a50-4c96-a005-fab524693497",
+            "day": "friday",
+            "scheduled_time": "09:00",
+            "nudge_type": "reminder",
+            "pillar": "social_connection",
+            "category": "establish",
+            "action_text": "Call or meet a friend to feel less isolated.",
+            "tone_variant": "encouraging",
+            "message_body": "Remember to connect with a friend this week! Taking time for social connection can make a big difference in how you feel.",
+            "message_body_alt": "This is a reminder to call or meet a friend this week as part of your health plan to address feelings of isolation.",
+            "template_name": "health_plan_reminder",
+            "status": "active",
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": "",
+            "start_date": "2026-10-05",
+            "end_date": "2026-11-01",
+            "created_at": "2026-10-04T21:30:00.000Z",
+            "updated_at": "2026-10-04T21:30:00.000Z",
+            "approved_by": "11111111-1111-4111-a111-111111111111",
+            "approved_at": "2026-10-04T21:30:00.000Z"
+          }
+        ]
+      },
+      "schedule_state": {
+        "headers": [
+          "schedule_id",
+          "nudge_id",
+          "user_id",
+          "parent_nudge_id",
+          "status",
+          "sent_at",
+          "delivered_at",
+          "wa_message_id",
+          "tone_sent",
+          "last_updated",
+          "read_at",
+          "interacted_at",
+          "last_inbound_message_sid",
+          "delivery_attempt_id",
+          "submission_started_at"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "schedule_id": "sch_ndg_e4c7067a-e7d4-4be6-a0aa-0476e2ea4932",
+            "nudge_id": "ndg_e4c7067a-e7d4-4be6-a0aa-0476e2ea4932",
+            "user_id": "usr-f08-chain",
+            "parent_nudge_id": "ndg_e4c7067a-e7d4-4be6-a0aa-0476e2ea4932",
+            "status": "needs_review",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:00:00.000Z"
+          },
+          {
+            "row_number": 3,
+            "schedule_id": "sch_schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261009",
+            "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261009",
+            "user_id": "usr-f08-chain",
+            "parent_nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261009",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          },
+          {
+            "row_number": 4,
+            "schedule_id": "sch_schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261016",
+            "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261016",
+            "user_id": "usr-f08-chain",
+            "parent_nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261016",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          },
+          {
+            "row_number": 5,
+            "schedule_id": "sch_schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261023",
+            "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261023",
+            "user_id": "usr-f08-chain",
+            "parent_nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261023",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          },
+          {
+            "row_number": 6,
+            "schedule_id": "sch_schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261030",
+            "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261030",
+            "user_id": "usr-f08-chain",
+            "parent_nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261030",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          }
+        ]
+      },
+      "delivery_events": {
+        "headers": [
+          "event_id",
+          "event_at",
+          "wa_message_id",
+          "nudge_id",
+          "user_id",
+          "status",
+          "error_code",
+          "error_message",
+          "channel_to",
+          "raw_payload"
+        ],
+        "rows": []
+      },
+      "media_assignments": {
+        "headers": [
+          "assignment_id",
+          "assigned_at",
+          "user_id",
+          "nudge_id",
+          "behaviour_key",
+          "media_asset_id",
+          "adaptation_decision_id",
+          "media_kind",
+          "selection_mode",
+          "source_url",
+          "tracked_url",
+          "planned_frequency",
+          "scheduled_at",
+          "sent_at",
+          "delivered_at",
+          "read_at",
+          "visited_at",
+          "replied_at",
+          "send_to_read_hours",
+          "send_to_visit_hours",
+          "send_to_reply_hours"
+        ],
+        "rows": []
+      },
+      "interaction_events": {
+        "headers": [
+          "interaction_id",
+          "event_at",
+          "inbound_message_sid",
+          "user_id",
+          "from_phone",
+          "reply_to_wa_message_id",
+          "nudge_id",
+          "body",
+          "media_count",
+          "correlation_method",
+          "ack_status"
+        ],
+        "rows": []
+      },
+      "adaptation_decisions": {
+        "headers": [
+          "decision_id",
+          "decided_at",
+          "user_id",
+          "behaviour_key",
+          "interaction_id",
+          "signal_type",
+          "rule_applied",
+          "outcome",
+          "reason",
+          "selected_asset_id",
+          "interpretation",
+          "previous_state",
+          "next_state",
+          "scope",
+          "decision_source",
+          "effective_at",
+          "state_version",
+          "changed_fields",
+          "frequency_before",
+          "frequency_after",
+          "media_mode_before",
+          "media_mode_after",
+          "media_kind_before",
+          "media_kind_after",
+          "nudge_id"
+        ],
+        "rows": []
+      },
+      "patient_adaptation_state": {
+        "headers": [
+          "user_id",
+          "scope",
+          "behaviour_key",
+          "state_version",
+          "preferred_format",
+          "preferred_frequency",
+          "planned_frequency",
+          "delivered_frequency",
+          "observed_frequency",
+          "last_change_at",
+          "updated_at"
+        ],
+        "rows": []
+      },
+      "prescription_revisions": {
+        "headers": [
+          "revision_id",
+          "prescription_id",
+          "user_id",
+          "changed_at",
+          "changed_by",
+          "field",
+          "previous_value",
+          "new_value",
+          "previous_source",
+          "reason"
+        ],
+        "rows": []
+      },
+      "patient_adaptation_timeline": {
+        "headers": [
+          "user_id",
+          "event_id",
+          "event_at",
+          "event_type",
+          "source",
+          "scope",
+          "behaviour_key",
+          "signal",
+          "rule_applied",
+          "outcome",
+          "reason",
+          "previous_state",
+          "new_state",
+          "changed_fields",
+          "selected_asset_id",
+          "selected_media_kind",
+          "nudge_id",
+          "interaction_id"
+        ],
+        "rows": []
+      }
+    },
+    "database": {
+      "profiles": [
+        {
+          "auth_user_id": "11111111-1111-4111-a111-111111111111",
+          "email": "clinician@harness.invalid",
+          "display_name": "Synthetic clinician",
+          "role": "doctor",
+          "doctor_id": "doc-harness",
+          "status": "active"
+        }
+      ],
+      "media_search_jobs": [
+        {
+          "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+          "user_id": "usr-f08-chain",
+          "prescription_id": "rx_f9eaaf44-4a50-4c96-a005-fab524693497",
+          "action_text": "Call or meet a friend to feel less isolated.",
+          "pillar": "social_connection",
+          "category": "establish",
+          "status": "pending",
+          "updated_at": "2026-10-04T21:30:00.000Z",
+          "job_id": "0a990b32-b492-46cd-af23-c6c3067ef650",
+          "created_at": "2026-10-04T21:30:00.000Z"
+        }
+      ],
+      "media_candidates": [
+        {
+          "candidate_id": "238d0c7d-b3c5-4928-ac10-cadaf699fd1b",
+          "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+          "media_kind": "video",
+          "title": "Synthetic video for Call or meet a friend to feel less isolated.",
+          "source_name": "Synthetic approved pool",
+          "source_url": "https://example.test/8534f90097d561882003aa6be3dbcfe2/video",
+          "open_access": false,
+          "short_summary": "SHORT synthetic explanation.",
+          "detailed_summary": "DETAILED synthetic explanation for this controlled evaluation.",
+          "ranking_score": 2,
+          "ranking_reasons": [],
+          "metadata": {}
+        },
+        {
+          "candidate_id": "8c2140e9-ae83-41dc-a29d-71af34ef1805",
+          "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+          "media_kind": "paper",
+          "title": "Synthetic paper for Call or meet a friend to feel less isolated.",
+          "source_name": "Synthetic approved pool",
+          "source_url": "https://example.test/8534f90097d561882003aa6be3dbcfe2/paper",
+          "open_access": true,
+          "short_summary": "SHORT synthetic explanation.",
+          "detailed_summary": "DETAILED synthetic explanation for this controlled evaluation.",
+          "ranking_score": 1,
+          "ranking_reasons": [],
+          "metadata": {}
+        }
+      ],
+      "media_assets": [
+        {
+          "candidate_id": "238d0c7d-b3c5-4928-ac10-cadaf699fd1b",
+          "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+          "media_kind": "video",
+          "title": "Synthetic video for Call or meet a friend to feel less isolated.",
+          "source_name": "Synthetic approved pool",
+          "source_url": "https://example.test/8534f90097d561882003aa6be3dbcfe2/video",
+          "short_summary": "SHORT synthetic explanation.",
+          "detailed_summary": "DETAILED synthetic explanation for this controlled evaluation.",
+          "limitations": "",
+          "status": "approved",
+          "approved_at": "2026-10-04T21:30:00.000Z",
+          "approved_by": "11111111-1111-4111-a111-111111111111",
+          "asset_id": "5c465893-3779-4dd3-a2bc-fb24eff82bb0",
+          "created_at": "2026-10-04T21:30:00.000Z"
+        },
+        {
+          "candidate_id": "8c2140e9-ae83-41dc-a29d-71af34ef1805",
+          "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+          "media_kind": "paper",
+          "title": "Synthetic paper for Call or meet a friend to feel less isolated.",
+          "source_name": "Synthetic approved pool",
+          "source_url": "https://example.test/8534f90097d561882003aa6be3dbcfe2/paper",
+          "short_summary": "SHORT synthetic explanation.",
+          "detailed_summary": "DETAILED synthetic explanation for this controlled evaluation.",
+          "limitations": "",
+          "status": "approved",
+          "approved_at": "2026-10-04T21:30:00.000Z",
+          "approved_by": "11111111-1111-4111-a111-111111111111",
+          "asset_id": "8f6d42a0-4fb0-4109-a470-1695b3033f3b",
+          "created_at": "2026-10-04T21:30:00.000Z"
+        }
+      ],
+      "adaptation_envelopes": [
+        {
+          "action_text": "Call or meet a friend to feel less isolated.",
+          "pillar": "social_connection",
+          "category": "establish",
+          "formats": [
+            "video",
+            "paper",
+            "reading"
+          ],
+          "summary_lengths": [
+            "short",
+            "detailed"
+          ],
+          "tones": [
+            "encouraging",
+            "neutral_informational"
+          ],
+          "earliest_time": "08:00",
+          "latest_time": "21:00",
+          "frequency_min": 1,
+          "frequency_max": 3,
+          "action_alternatives": [
+            "Call or meet a friend to feel less isolated."
+          ],
+          "user_id": "usr-f08-chain",
+          "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+          "status": "approved",
+          "updated_at": "2026-10-04T21:30:00.000Z",
+          "envelope_id": "964c81e9-9733-478d-a330-9b1ec222f3f2",
+          "created_at": "2026-10-04T21:30:00.000Z",
+          "automatic_schedule_apply": true,
+          "approved_asset_ids": [
+            "5c465893-3779-4dd3-a2bc-fb24eff82bb0",
+            "8f6d42a0-4fb0-4109-a470-1695b3033f3b"
+          ],
+          "approved_at": "2026-10-04T21:30:00.000Z",
+          "approved_by": "11111111-1111-4111-a111-111111111111"
+        }
+      ],
+      "user_adaptation_state": [],
+      "interaction_events": [],
+      "adaptation_decisions": [
+        {
+          "user_id": "usr-f08-chain",
+          "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+          "interaction_id": null,
+          "nudge_id": null,
+          "signal_type": "clinician_schedule_change",
+          "scope": "behaviour",
+          "decision_source": "clinician",
+          "effective_at": "2026-10-04T21:30:00.000Z",
+          "state_version": 1,
+          "interpretation": {},
+          "scores_before": {},
+          "scores_after": {},
+          "rule_applied": "clinician_saved_schedule",
+          "previous_state": {
+            "planned_frequency": 0,
+            "media_selection_mode": "automatic"
+          },
+          "next_state": {
+            "planned_frequency": 1,
+            "media_selection_mode": "automatic"
+          },
+          "changed_fields": [
+            "planned_frequency",
+            "media_selection_mode"
+          ],
+          "frequency_before": null,
+          "frequency_after": null,
+          "media_mode_before": "automatic",
+          "media_mode_after": "automatic",
+          "media_kind_before": null,
+          "media_kind_after": null,
+          "selected_asset_id": null,
+          "outcome": "applied",
+          "reason": "Clinician saved a weekly schedule or media change",
+          "fulfilled_at": "2026-10-04T21:30:00.000Z",
+          "decision_id": "bd_1",
+          "decided_at": "2026-10-04T21:30:00.000Z"
+        }
+      ],
+      "tracked_links": [],
+      "patient_adaptation_state": [],
+      "patient_adaptation_timeline": []
+    }
+  },
+  "final": {
+    "sheets": {
+      "user": {
+        "headers": [
+          "user_id",
+          "name",
+          "phone",
+          "email",
+          "user_status",
+          "doctor_id"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "user_id": "usr-f08-chain",
+            "name": "Synthetic patient",
+            "phone": "+61400000001",
+            "email": "patient@harness.invalid",
+            "user_status": "active",
+            "doctor_id": "doc-harness"
+          }
+        ]
+      },
+      "questionnaire": {
+        "headers": [
+          "questionnaire_id",
+          "user_id",
+          "preferred_nudge_time",
+          "opt_in_whatsapp"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "questionnaire_id": "qn_60307392-20d4-4ca0-adab-b892d9c397f0",
+            "user_id": "usr-f08-chain",
+            "preferred_nudge_time": "",
+            "opt_in_whatsapp": true
+          }
+        ]
+      },
+      "prescriptions": {
+        "headers": [
+          "prescription_id",
+          "user_id",
+          "doctor_id",
+          "issued_date",
+          "pillar",
+          "category",
+          "target_behavior",
+          "frequency_per_week",
+          "duration_weeks",
+          "prescription_raw_text",
+          "status",
+          "translation_model",
+          "translation_prompt_sha256",
+          "translation_response_id",
+          "translated_at",
+          "translation_normalised"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "prescription_id": "rx_f9eaaf44-4a50-4c96-a005-fab524693497",
+            "user_id": "usr-f08-chain",
+            "doctor_id": "doc-harness",
+            "issued_date": "2026-10-04",
+            "pillar": "social_connection",
+            "category": "establish",
+            "target_behavior": "",
+            "frequency_per_week": 1,
+            "duration_weeks": 8,
+            "prescription_raw_text": "Call or meet a friend at least once a week to feel less isolated. Weekly reminder for 8 weeks.",
+            "status": "active",
+            "translation_model": "gemini-2.5-flash",
+            "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+            "translation_response_id": "RBfCarDPJqmRvr0Pr6y7iAY",
+            "translated_at": "2026-10-04T21:00:00.000Z",
+            "translation_normalised": ""
+          }
+        ]
+      },
+      "nudges": {
+        "headers": [
+          "nudge_id",
+          "prescription_id",
+          "user_id",
+          "nudge_type",
+          "pillar",
+          "action_text",
+          "scheduled_date",
+          "scheduled_time",
+          "message_body",
+          "message_body_alt",
+          "tone_variant",
+          "template_name",
+          "status",
+          "sent_at",
+          "reviewed_at",
+          "week_number",
+          "schedule_slot_id",
+          "category",
+          "media_selection_mode",
+          "media_override_asset_id",
+          "media_asset_id",
+          "adaptation_decision_id",
+          "translation_model",
+          "translation_prompt_sha256",
+          "translation_response_id",
+          "translated_at"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "nudge_id": "ndg_e4c7067a-e7d4-4be6-a0aa-0476e2ea4932",
+            "prescription_id": "rx_f9eaaf44-4a50-4c96-a005-fab524693497",
+            "user_id": "usr-f08-chain",
+            "nudge_type": "reminder",
+            "pillar": "social_connection",
+            "action_text": "Call or meet a friend to feel less isolated.",
+            "scheduled_date": "2026-10-09",
+            "scheduled_time": "09:00",
+            "message_body": "Remember to connect with a friend this week! Taking time for social connection can make a big difference in how you feel.",
+            "message_body_alt": "This is a reminder to call or meet a friend this week as part of your health plan to address feelings of isolation.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 1,
+            "schedule_slot_id": "",
+            "translation_model": "gemini-2.5-flash",
+            "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+            "translation_response_id": "RBfCarDPJqmRvr0Pr6y7iAY",
+            "translated_at": "2026-10-04T21:00:00.000Z",
+            "category": "establish"
+          },
+          {
+            "row_number": 3,
+            "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261009",
+            "schedule_slot_id": "slot_4-4be6-a0aa-0476e2ea4932_friday_0",
+            "prescription_id": "rx_f9eaaf44-4a50-4c96-a005-fab524693497",
+            "user_id": "usr-f08-chain",
+            "nudge_type": "reminder",
+            "pillar": "social_connection",
+            "category": "establish",
+            "action_text": "Call or meet a friend to feel less isolated.",
+            "scheduled_date": "2026-10-09",
+            "scheduled_time": "09:00",
+            "message_body": "Remember to connect with a friend this week! Taking time for social connection can make a big difference in how you feel.\n\nSHORT synthetic explanation.\n\nSynthetic video for Call or meet a friend to feel less isolated. — Synthetic approved pool\nhttps://portal.invalid/api/r/aAX3aW1Bk9fkqQnokV_B7oA0exYMUiYd",
+            "message_body_alt": "This is a reminder to call or meet a friend this week as part of your health plan to address feelings of isolation.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "sent",
+            "sent_at": "2026-10-09T09:01:00.000+11:00",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 1,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "5c465893-3779-4dd3-a2bc-fb24eff82bb0",
+            "adaptation_decision_id": "bd_2"
+          },
+          {
+            "row_number": 4,
+            "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261016",
+            "schedule_slot_id": "slot_4-4be6-a0aa-0476e2ea4932_friday_0",
+            "prescription_id": "rx_f9eaaf44-4a50-4c96-a005-fab524693497",
+            "user_id": "usr-f08-chain",
+            "nudge_type": "reminder",
+            "pillar": "social_connection",
+            "category": "establish",
+            "action_text": "Call or meet a friend to feel less isolated.",
+            "scheduled_date": "2026-10-16",
+            "scheduled_time": "09:00",
+            "message_body": "Remember to connect with a friend this week! Taking time for social connection can make a big difference in how you feel.\n\nSHORT synthetic explanation.\n\nSynthetic paper for Call or meet a friend to feel less isolated. — Synthetic approved pool\nhttps://portal.invalid/api/r/kYAHO2gSmGtLwBhuUanEfFpRDifdgqGd",
+            "message_body_alt": "This is a reminder to call or meet a friend this week as part of your health plan to address feelings of isolation.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "sent",
+            "sent_at": "2026-10-16T09:01:00.000+11:00",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 2,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "8f6d42a0-4fb0-4109-a470-1695b3033f3b",
+            "adaptation_decision_id": "bd_5"
+          },
+          {
+            "row_number": 5,
+            "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261023",
+            "schedule_slot_id": "slot_4-4be6-a0aa-0476e2ea4932_friday_0",
+            "prescription_id": "rx_f9eaaf44-4a50-4c96-a005-fab524693497",
+            "user_id": "usr-f08-chain",
+            "nudge_type": "reminder",
+            "pillar": "social_connection",
+            "category": "establish",
+            "action_text": "Call or meet a friend to feel less isolated.",
+            "scheduled_date": "2026-10-23",
+            "scheduled_time": "09:00",
+            "message_body": "Remember to connect with a friend this week! Taking time for social connection can make a big difference in how you feel.",
+            "message_body_alt": "This is a reminder to call or meet a friend this week as part of your health plan to address feelings of isolation.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 3,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          },
+          {
+            "row_number": 6,
+            "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261030",
+            "schedule_slot_id": "slot_4-4be6-a0aa-0476e2ea4932_friday_0",
+            "prescription_id": "rx_f9eaaf44-4a50-4c96-a005-fab524693497",
+            "user_id": "usr-f08-chain",
+            "nudge_type": "reminder",
+            "pillar": "social_connection",
+            "category": "establish",
+            "action_text": "Call or meet a friend to feel less isolated.",
+            "scheduled_date": "2026-10-30",
+            "scheduled_time": "09:00",
+            "message_body": "Remember to connect with a friend this week! Taking time for social connection can make a big difference in how you feel.",
+            "message_body_alt": "This is a reminder to call or meet a friend this week as part of your health plan to address feelings of isolation.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 4,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          }
+        ]
+      },
+      "weekly_schedule": {
+        "headers": [
+          "schedule_slot_id",
+          "user_id",
+          "source_nudge_id",
+          "prescription_id",
+          "day",
+          "scheduled_time",
+          "nudge_type",
+          "pillar",
+          "action_text",
+          "tone_variant",
+          "message_body",
+          "message_body_alt",
+          "template_name",
+          "status",
+          "start_date",
+          "end_date",
+          "created_at",
+          "updated_at",
+          "category",
+          "media_selection_mode",
+          "media_override_asset_id",
+          "media_asset_id",
+          "adaptation_decision_id",
+          "approved_by",
+          "approved_at"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "schedule_slot_id": "slot_4-4be6-a0aa-0476e2ea4932_friday_0",
+            "user_id": "usr-f08-chain",
+            "source_nudge_id": "ndg_e4c7067a-e7d4-4be6-a0aa-0476e2ea4932",
+            "prescription_id": "rx_f9eaaf44-4a50-4c96-a005-fab524693497",
+            "day": "friday",
+            "scheduled_time": "09:00",
+            "nudge_type": "reminder",
+            "pillar": "social_connection",
+            "category": "establish",
+            "action_text": "Call or meet a friend to feel less isolated.",
+            "tone_variant": "encouraging",
+            "message_body": "Remember to connect with a friend this week! Taking time for social connection can make a big difference in how you feel.",
+            "message_body_alt": "This is a reminder to call or meet a friend this week as part of your health plan to address feelings of isolation.",
+            "template_name": "health_plan_reminder",
+            "status": "active",
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": "",
+            "start_date": "2026-10-05",
+            "end_date": "2026-11-01",
+            "created_at": "2026-10-04T21:30:00.000Z",
+            "updated_at": "2026-10-04T21:30:00.000Z",
+            "approved_by": "11111111-1111-4111-a111-111111111111",
+            "approved_at": "2026-10-04T21:30:00.000Z"
+          }
+        ]
+      },
+      "schedule_state": {
+        "headers": [
+          "schedule_id",
+          "nudge_id",
+          "user_id",
+          "parent_nudge_id",
+          "status",
+          "sent_at",
+          "delivered_at",
+          "wa_message_id",
+          "tone_sent",
+          "last_updated",
+          "read_at",
+          "interacted_at",
+          "last_inbound_message_sid",
+          "delivery_attempt_id",
+          "submission_started_at"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "schedule_id": "sch_ndg_e4c7067a-e7d4-4be6-a0aa-0476e2ea4932",
+            "nudge_id": "ndg_e4c7067a-e7d4-4be6-a0aa-0476e2ea4932",
+            "user_id": "usr-f08-chain",
+            "parent_nudge_id": "ndg_e4c7067a-e7d4-4be6-a0aa-0476e2ea4932",
+            "status": "needs_review",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:00:00.000Z"
+          },
+          {
+            "row_number": 3,
+            "schedule_id": "sch_schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261009",
+            "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261009",
+            "user_id": "usr-f08-chain",
+            "parent_nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261009",
+            "status": "delivered",
+            "sent_at": "2026-10-09T09:01:00.000+11:00",
+            "delivered_at": "2026-10-08T22:02:00.000Z",
+            "wa_message_id": "SM2fd494e49c30290f406871bf0bf2a36e",
+            "tone_sent": "encouraging",
+            "last_updated": "2026-10-08T22:30:00.000Z",
+            "delivery_attempt_id": "att_5301a8c0-ac60-4efd-afab-c3820f87f845",
+            "submission_started_at": "2026-10-08T22:01:00.000Z",
+            "interacted_at": "2026-10-08T22:30:00.000Z",
+            "last_inbound_message_sid": "SMf549d7225d27be493ee287dfb3e9f109"
+          },
+          {
+            "row_number": 4,
+            "schedule_id": "sch_schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261016",
+            "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261016",
+            "user_id": "usr-f08-chain",
+            "parent_nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261016",
+            "status": "delivered",
+            "sent_at": "2026-10-16T09:01:00.000+11:00",
+            "delivered_at": "2026-10-15T22:02:00.000Z",
+            "wa_message_id": "SM58151955c0906ca077f654294dde6f48",
+            "tone_sent": "encouraging",
+            "last_updated": "2026-10-15T22:02:00.000Z",
+            "delivery_attempt_id": "att_f9f0ccb5-de2e-40ad-a784-9b3578ef1ef2",
+            "submission_started_at": "2026-10-15T22:01:00.000Z"
+          },
+          {
+            "row_number": 5,
+            "schedule_id": "sch_schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261023",
+            "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261023",
+            "user_id": "usr-f08-chain",
+            "parent_nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261023",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          },
+          {
+            "row_number": 6,
+            "schedule_id": "sch_schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261030",
+            "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261030",
+            "user_id": "usr-f08-chain",
+            "parent_nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261030",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          }
+        ]
+      },
+      "delivery_events": {
+        "headers": [
+          "event_id",
+          "event_at",
+          "wa_message_id",
+          "nudge_id",
+          "user_id",
+          "status",
+          "error_code",
+          "error_message",
+          "channel_to",
+          "raw_payload"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "event_id": "evt_e5ed395a87bf43cfdb4f10da",
+            "event_at": "2026-10-08T22:02:00.000Z",
+            "wa_message_id": "SM2fd494e49c30290f406871bf0bf2a36e",
+            "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261009",
+            "user_id": "usr-f08-chain",
+            "status": "delivered",
+            "error_code": "",
+            "error_message": "",
+            "channel_to": "whatsapp:+61400000001",
+            "raw_payload": "{\"MessageSid\":\"SM2fd494e49c30290f406871bf0bf2a36e\",\"MessageStatus\":\"delivered\",\"AccountSid\":\"AC00000000000000000000000000000000\",\"From\":\"whatsapp:+14155238886\",\"To\":\"whatsapp:+61400000001\"}"
+          },
+          {
+            "row_number": 3,
+            "event_id": "evt_b2e542d79bf0b28149c0b452",
+            "event_at": "2026-10-15T22:02:00.000Z",
+            "wa_message_id": "SM58151955c0906ca077f654294dde6f48",
+            "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261016",
+            "user_id": "usr-f08-chain",
+            "status": "delivered",
+            "error_code": "",
+            "error_message": "",
+            "channel_to": "whatsapp:+61400000001",
+            "raw_payload": "{\"MessageSid\":\"SM58151955c0906ca077f654294dde6f48\",\"MessageStatus\":\"delivered\",\"AccountSid\":\"AC00000000000000000000000000000000\",\"From\":\"whatsapp:+14155238886\",\"To\":\"whatsapp:+61400000001\"}"
+          }
+        ]
+      },
+      "media_assignments": {
+        "headers": [
+          "assignment_id",
+          "assigned_at",
+          "user_id",
+          "nudge_id",
+          "behaviour_key",
+          "media_asset_id",
+          "adaptation_decision_id",
+          "media_kind",
+          "selection_mode",
+          "source_url",
+          "tracked_url",
+          "planned_frequency",
+          "scheduled_at",
+          "sent_at",
+          "delivered_at",
+          "read_at",
+          "visited_at",
+          "replied_at",
+          "send_to_read_hours",
+          "send_to_visit_hours",
+          "send_to_reply_hours"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "assignment_id": "ma_5c6ccea4814c3f7896ed6b1b",
+            "assigned_at": "2026-10-08T22:01:00.000Z",
+            "user_id": "usr-f08-chain",
+            "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261009",
+            "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+            "media_asset_id": "5c465893-3779-4dd3-a2bc-fb24eff82bb0",
+            "adaptation_decision_id": "bd_2",
+            "media_kind": "video",
+            "selection_mode": "automatic",
+            "source_url": "https://example.test/8534f90097d561882003aa6be3dbcfe2/video",
+            "tracked_url": "https://portal.invalid/api/r/aAX3aW1Bk9fkqQnokV_B7oA0exYMUiYd",
+            "planned_frequency": 1,
+            "scheduled_at": "2026-10-09T09:00:00",
+            "sent_at": "",
+            "delivered_at": "",
+            "read_at": "",
+            "visited_at": "",
+            "replied_at": "",
+            "send_to_read_hours": "",
+            "send_to_visit_hours": "",
+            "send_to_reply_hours": ""
+          },
+          {
+            "row_number": 3,
+            "assignment_id": "ma_dbadf4b3420d6484544897cb",
+            "assigned_at": "2026-10-15T22:01:00.000Z",
+            "user_id": "usr-f08-chain",
+            "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261016",
+            "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+            "media_asset_id": "8f6d42a0-4fb0-4109-a470-1695b3033f3b",
+            "adaptation_decision_id": "bd_5",
+            "media_kind": "paper",
+            "selection_mode": "automatic",
+            "source_url": "https://example.test/8534f90097d561882003aa6be3dbcfe2/paper",
+            "tracked_url": "https://portal.invalid/api/r/kYAHO2gSmGtLwBhuUanEfFpRDifdgqGd",
+            "planned_frequency": 1,
+            "scheduled_at": "2026-10-16T09:00:00",
+            "sent_at": "",
+            "delivered_at": "",
+            "read_at": "",
+            "visited_at": "",
+            "replied_at": "",
+            "send_to_read_hours": "",
+            "send_to_visit_hours": "",
+            "send_to_reply_hours": ""
+          }
+        ]
+      },
+      "interaction_events": {
+        "headers": [
+          "interaction_id",
+          "event_at",
+          "inbound_message_sid",
+          "user_id",
+          "from_phone",
+          "reply_to_wa_message_id",
+          "nudge_id",
+          "body",
+          "media_count",
+          "correlation_method",
+          "ack_status"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "interaction_id": "in_cac70314246d60af0593fbdf",
+            "event_at": "2026-10-08T22:30:00.000Z",
+            "inbound_message_sid": "SMf549d7225d27be493ee287dfb3e9f109",
+            "user_id": "usr-f08-chain",
+            "from_phone": "+61400000001",
+            "reply_to_wa_message_id": "SM2fd494e49c30290f406871bf0bf2a36e",
+            "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261009",
+            "body": "Send fewer messages",
+            "media_count": 0,
+            "correlation_method": "original_replied_message_sid",
+            "ack_status": "sent"
+          }
+        ]
+      },
+      "adaptation_decisions": {
+        "headers": [
+          "decision_id",
+          "decided_at",
+          "user_id",
+          "behaviour_key",
+          "interaction_id",
+          "signal_type",
+          "rule_applied",
+          "outcome",
+          "reason",
+          "selected_asset_id",
+          "interpretation",
+          "previous_state",
+          "next_state",
+          "scope",
+          "decision_source",
+          "effective_at",
+          "state_version",
+          "changed_fields",
+          "frequency_before",
+          "frequency_after",
+          "media_mode_before",
+          "media_mode_after",
+          "media_kind_before",
+          "media_kind_after",
+          "nudge_id"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "decision_id": "bd_2",
+            "decided_at": "2026-10-08T22:01:00.000Z",
+            "user_id": "usr-f08-chain",
+            "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+            "interaction_id": "",
+            "signal_type": "scheduled_selection",
+            "rule_applied": "least_recently_used_rotation",
+            "outcome": "applied",
+            "reason": "no explicit preference; rotated approved media",
+            "selected_asset_id": "5c465893-3779-4dd3-a2bc-fb24eff82bb0",
+            "interpretation": "{\"explicit\":false,\"format\":null,\"summary_length\":null,\"tone\":null,\"time\":null,\"frequency_delta\":0,\"action\":null}",
+            "previous_state": "{\"format_scores\":{},\"asset_history\":[],\"media_selection_mode\":\"automatic\"}",
+            "next_state": "{\"format_scores\":{},\"asset_history\":[\"5c465893-3779-4dd3-a2bc-fb24eff82bb0\"],\"last_asset_id\":\"5c465893-3779-4dd3-a2bc-fb24eff82bb0\",\"media_selection_mode\":\"automatic\"}",
+            "scope": "behaviour",
+            "decision_source": "system",
+            "effective_at": "2026-10-08T22:01:00.000Z",
+            "state_version": 1,
+            "changed_fields": "[\"last_asset_id\"]",
+            "frequency_before": "",
+            "frequency_after": "",
+            "media_mode_before": "automatic",
+            "media_mode_after": "automatic",
+            "media_kind_before": "",
+            "media_kind_after": "video",
+            "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261009"
+          },
+          {
+            "row_number": 3,
+            "decision_id": "bd_5",
+            "decided_at": "2026-10-15T22:01:00.000Z",
+            "user_id": "usr-f08-chain",
+            "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+            "interaction_id": "",
+            "signal_type": "scheduled_selection",
+            "rule_applied": "least_recently_used_rotation",
+            "outcome": "applied",
+            "reason": "no explicit preference; rotated approved media",
+            "selected_asset_id": "8f6d42a0-4fb0-4109-a470-1695b3033f3b",
+            "interpretation": "{\"explicit\":false,\"format\":null,\"summary_length\":null,\"tone\":null,\"time\":null,\"frequency_delta\":0,\"action\":null}",
+            "previous_state": "{\"format_scores\":{},\"asset_history\":[\"5c465893-3779-4dd3-a2bc-fb24eff82bb0\"],\"last_asset_id\":\"5c465893-3779-4dd3-a2bc-fb24eff82bb0\",\"media_selection_mode\":\"automatic\",\"user_id\":\"usr-f08-chain\",\"behaviour_key\":\"8534f90097d561882003aa6be3dbcfe2\",\"state_version\":2,\"updated_at\":\"2026-10-08T22:32:00.000Z\",\"last_signal_at\":\"2026-10-08T22:30:00.000Z\",\"last_decision_id\":\"bd_3\"}",
+            "next_state": "{\"format_scores\":{},\"asset_history\":[\"5c465893-3779-4dd3-a2bc-fb24eff82bb0\",\"8f6d42a0-4fb0-4109-a470-1695b3033f3b\"],\"last_asset_id\":\"8f6d42a0-4fb0-4109-a470-1695b3033f3b\",\"media_selection_mode\":\"automatic\",\"user_id\":\"usr-f08-chain\",\"behaviour_key\":\"8534f90097d561882003aa6be3dbcfe2\",\"state_version\":2,\"updated_at\":\"2026-10-08T22:32:00.000Z\",\"last_signal_at\":\"2026-10-08T22:30:00.000Z\",\"last_decision_id\":\"bd_3\"}",
+            "scope": "behaviour",
+            "decision_source": "system",
+            "effective_at": "2026-10-15T22:01:00.000Z",
+            "state_version": 3,
+            "changed_fields": "[\"last_asset_id\"]",
+            "frequency_before": "",
+            "frequency_after": "",
+            "media_mode_before": "automatic",
+            "media_mode_after": "automatic",
+            "media_kind_before": "",
+            "media_kind_after": "paper",
+            "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261016"
+          }
+        ]
+      },
+      "patient_adaptation_state": {
+        "headers": [
+          "user_id",
+          "scope",
+          "behaviour_key",
+          "state_version",
+          "preferred_format",
+          "preferred_frequency",
+          "planned_frequency",
+          "delivered_frequency",
+          "observed_frequency",
+          "last_change_at",
+          "updated_at"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "user_id": "usr-f08-chain",
+            "scope": "global",
+            "behaviour_key": "",
+            "state_version": "",
+            "preferred_format": "",
+            "preferred_frequency": "",
+            "updated_at": "2026-10-09T22:04:00.000Z"
+          },
+          {
+            "row_number": 3,
+            "user_id": "usr-f08-chain",
+            "scope": "behaviour",
+            "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+            "state_version": 2,
+            "preferred_format": "",
+            "preferred_frequency": "",
+            "planned_frequency": 1,
+            "delivered_frequency": 1,
+            "observed_frequency": 0,
+            "last_change_at": "2026-10-09T22:04:00.000Z",
+            "updated_at": "2026-10-08T22:32:00.000Z"
+          }
+        ]
+      },
+      "prescription_revisions": {
+        "headers": [
+          "revision_id",
+          "prescription_id",
+          "user_id",
+          "changed_at",
+          "changed_by",
+          "field",
+          "previous_value",
+          "new_value",
+          "previous_source",
+          "reason"
+        ],
+        "rows": []
+      },
+      "patient_adaptation_timeline": {
+        "headers": [
+          "user_id",
+          "event_id",
+          "event_at",
+          "event_type",
+          "source",
+          "scope",
+          "behaviour_key",
+          "signal",
+          "rule_applied",
+          "outcome",
+          "reason",
+          "previous_state",
+          "new_state",
+          "changed_fields",
+          "selected_asset_id",
+          "selected_media_kind",
+          "nudge_id",
+          "interaction_id"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "user_id": "usr-f08-chain",
+            "event_id": "bd_1",
+            "event_at": "2026-10-04T21:30:00.000Z",
+            "event_type": "adaptation_decision",
+            "source": "clinician",
+            "scope": "behaviour",
+            "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+            "signal": "clinician_schedule_change",
+            "rule_applied": "clinician_saved_schedule",
+            "outcome": "applied",
+            "reason": "Clinician saved a weekly schedule or media change",
+            "previous_state": "{\"planned_frequency\":0,\"media_selection_mode\":\"automatic\"}",
+            "new_state": "{\"planned_frequency\":1,\"media_selection_mode\":\"automatic\"}",
+            "changed_fields": "[\"planned_frequency\",\"media_selection_mode\"]",
+            "selected_asset_id": "",
+            "selected_media_kind": "",
+            "nudge_id": "",
+            "interaction_id": ""
+          },
+          {
+            "row_number": 3,
+            "user_id": "usr-f08-chain",
+            "event_id": "bd_2",
+            "event_at": "2026-10-08T22:01:00.000Z",
+            "event_type": "adaptation_decision",
+            "source": "system",
+            "scope": "behaviour",
+            "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+            "signal": "scheduled_selection",
+            "rule_applied": "least_recently_used_rotation",
+            "outcome": "applied",
+            "reason": "no explicit preference; rotated approved media",
+            "previous_state": "{\"format_scores\":{},\"asset_history\":[],\"media_selection_mode\":\"automatic\"}",
+            "new_state": "{\"format_scores\":{},\"asset_history\":[\"5c465893-3779-4dd3-a2bc-fb24eff82bb0\"],\"last_asset_id\":\"5c465893-3779-4dd3-a2bc-fb24eff82bb0\",\"media_selection_mode\":\"automatic\"}",
+            "changed_fields": "[\"last_asset_id\"]",
+            "selected_asset_id": "5c465893-3779-4dd3-a2bc-fb24eff82bb0",
+            "selected_media_kind": "video",
+            "nudge_id": "",
+            "interaction_id": ""
+          },
+          {
+            "row_number": 4,
+            "user_id": "usr-f08-chain",
+            "event_id": "evt_e5ed395a87bf43cfdb4f10da",
+            "event_at": "2026-10-08T22:02:00.000Z",
+            "event_type": "delivery_status",
+            "source": "provider",
+            "scope": "behaviour",
+            "behaviour_key": "",
+            "signal": "delivered",
+            "rule_applied": "exposure_only",
+            "outcome": "observed",
+            "reason": "Provider exposure evidence only",
+            "previous_state": "{}",
+            "new_state": "{}",
+            "changed_fields": "[]",
+            "selected_asset_id": "",
+            "selected_media_kind": "",
+            "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261009",
+            "interaction_id": "evt_e5ed395a87bf43cfdb4f10da"
+          },
+          {
+            "row_number": 5,
+            "user_id": "usr-f08-chain",
+            "event_id": "bd_3",
+            "event_at": "2026-10-08T22:30:00.000Z",
+            "event_type": "adaptation_decision",
+            "source": "patient",
+            "scope": "behaviour",
+            "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+            "signal": "inbound_reply",
+            "rule_applied": "explicit_request_guarded",
+            "outcome": "outside_envelope",
+            "reason": "frequency_outside_envelope",
+            "previous_state": "{\"format_scores\":{},\"asset_history\":[\"5c465893-3779-4dd3-a2bc-fb24eff82bb0\"],\"last_asset_id\":\"5c465893-3779-4dd3-a2bc-fb24eff82bb0\",\"media_selection_mode\":\"automatic\",\"user_id\":\"usr-f08-chain\",\"behaviour_key\":\"8534f90097d561882003aa6be3dbcfe2\",\"state_version\":1,\"updated_at\":\"2026-10-08T22:01:00.000Z\"}",
+            "new_state": "{\"format_scores\":{},\"asset_history\":[\"5c465893-3779-4dd3-a2bc-fb24eff82bb0\"],\"last_asset_id\":\"5c465893-3779-4dd3-a2bc-fb24eff82bb0\",\"media_selection_mode\":\"automatic\",\"user_id\":\"usr-f08-chain\",\"behaviour_key\":\"8534f90097d561882003aa6be3dbcfe2\",\"state_version\":1,\"updated_at\":\"2026-10-08T22:01:00.000Z\"}",
+            "changed_fields": "[]",
+            "selected_asset_id": "",
+            "selected_media_kind": "",
+            "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261009",
+            "interaction_id": "in_cac70314246d60af0593fbdf"
+          },
+          {
+            "row_number": 6,
+            "user_id": "usr-f08-chain",
+            "event_id": "bd_4",
+            "event_at": "2026-10-09T22:04:00.000Z",
+            "event_type": "adaptation_decision",
+            "source": "system",
+            "scope": "behaviour",
+            "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+            "signal": "frequency_model_recommendation",
+            "rule_applied": "regularized_logistic_regression",
+            "outcome": "no_change",
+            "reason": "Model recommendation: 2 per week",
+            "previous_state": "{\"format_scores\":{},\"asset_history\":[\"5c465893-3779-4dd3-a2bc-fb24eff82bb0\"],\"last_asset_id\":\"5c465893-3779-4dd3-a2bc-fb24eff82bb0\",\"media_selection_mode\":\"automatic\",\"user_id\":\"usr-f08-chain\",\"behaviour_key\":\"8534f90097d561882003aa6be3dbcfe2\",\"state_version\":2,\"updated_at\":\"2026-10-08T22:32:00.000Z\",\"last_signal_at\":\"2026-10-08T22:30:00.000Z\",\"last_decision_id\":\"bd_3\",\"planned_frequency\":1,\"preferred_time\":\"09:00\",\"preferred_format\":null}",
+            "new_state": "{\"format_scores\":{},\"asset_history\":[\"5c465893-3779-4dd3-a2bc-fb24eff82bb0\"],\"last_asset_id\":\"5c465893-3779-4dd3-a2bc-fb24eff82bb0\",\"media_selection_mode\":\"automatic\",\"user_id\":\"usr-f08-chain\",\"behaviour_key\":\"8534f90097d561882003aa6be3dbcfe2\",\"state_version\":2,\"updated_at\":\"2026-10-08T22:32:00.000Z\",\"last_signal_at\":\"2026-10-08T22:30:00.000Z\",\"last_decision_id\":\"bd_3\",\"planned_frequency\":2,\"preferred_time\":\"09:00\",\"preferred_format\":null}",
+            "changed_fields": "[\"planned_frequency\"]",
+            "selected_asset_id": "",
+            "selected_media_kind": "",
+            "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261009",
+            "interaction_id": ""
+          },
+          {
+            "row_number": 7,
+            "user_id": "usr-f08-chain",
+            "event_id": "d76a29c1-a7de-4975-abbb-69ce8a386abd",
+            "event_at": "2026-10-09T22:04:00.000Z",
+            "event_type": "adaptation_decision",
+            "source": "system",
+            "scope": "behaviour",
+            "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+            "signal": "adaptive_policy_no_change",
+            "rule_applied": "bounded_frequency_time_media_policy",
+            "outcome": "no_change",
+            "reason": "Policy evaluated; future schedule already matches or no bounded change was supported",
+            "previous_state": "{\"format_scores\":{},\"asset_history\":[\"5c465893-3779-4dd3-a2bc-fb24eff82bb0\"],\"last_asset_id\":\"5c465893-3779-4dd3-a2bc-fb24eff82bb0\",\"media_selection_mode\":\"automatic\",\"user_id\":\"usr-f08-chain\",\"behaviour_key\":\"8534f90097d561882003aa6be3dbcfe2\",\"state_version\":2,\"updated_at\":\"2026-10-08T22:32:00.000Z\",\"last_signal_at\":\"2026-10-08T22:30:00.000Z\",\"last_decision_id\":\"bd_3\",\"planned_frequency\":1,\"preferred_time\":\"09:00\",\"preferred_format\":null}",
+            "new_state": "{\"format_scores\":{},\"asset_history\":[\"5c465893-3779-4dd3-a2bc-fb24eff82bb0\"],\"last_asset_id\":\"5c465893-3779-4dd3-a2bc-fb24eff82bb0\",\"media_selection_mode\":\"automatic\",\"user_id\":\"usr-f08-chain\",\"behaviour_key\":\"8534f90097d561882003aa6be3dbcfe2\",\"state_version\":2,\"updated_at\":\"2026-10-08T22:32:00.000Z\",\"last_signal_at\":\"2026-10-08T22:30:00.000Z\",\"last_decision_id\":\"bd_3\",\"planned_frequency\":1,\"preferred_time\":\"09:00\",\"preferred_format\":null}",
+            "changed_fields": "[]",
+            "selected_asset_id": "",
+            "selected_media_kind": "",
+            "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261009",
+            "interaction_id": ""
+          }
+        ]
+      }
+    },
+    "database": {
+      "profiles": [
+        {
+          "auth_user_id": "11111111-1111-4111-a111-111111111111",
+          "email": "clinician@harness.invalid",
+          "display_name": "Synthetic clinician",
+          "role": "doctor",
+          "doctor_id": "doc-harness",
+          "status": "active"
+        }
+      ],
+      "media_search_jobs": [
+        {
+          "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+          "user_id": "usr-f08-chain",
+          "prescription_id": "rx_f9eaaf44-4a50-4c96-a005-fab524693497",
+          "action_text": "Call or meet a friend to feel less isolated.",
+          "pillar": "social_connection",
+          "category": "establish",
+          "status": "pending",
+          "updated_at": "2026-10-04T21:30:00.000Z",
+          "job_id": "0a990b32-b492-46cd-af23-c6c3067ef650",
+          "created_at": "2026-10-04T21:30:00.000Z"
+        }
+      ],
+      "media_candidates": [
+        {
+          "candidate_id": "238d0c7d-b3c5-4928-ac10-cadaf699fd1b",
+          "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+          "media_kind": "video",
+          "title": "Synthetic video for Call or meet a friend to feel less isolated.",
+          "source_name": "Synthetic approved pool",
+          "source_url": "https://example.test/8534f90097d561882003aa6be3dbcfe2/video",
+          "open_access": false,
+          "short_summary": "SHORT synthetic explanation.",
+          "detailed_summary": "DETAILED synthetic explanation for this controlled evaluation.",
+          "ranking_score": 2,
+          "ranking_reasons": [],
+          "metadata": {}
+        },
+        {
+          "candidate_id": "8c2140e9-ae83-41dc-a29d-71af34ef1805",
+          "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+          "media_kind": "paper",
+          "title": "Synthetic paper for Call or meet a friend to feel less isolated.",
+          "source_name": "Synthetic approved pool",
+          "source_url": "https://example.test/8534f90097d561882003aa6be3dbcfe2/paper",
+          "open_access": true,
+          "short_summary": "SHORT synthetic explanation.",
+          "detailed_summary": "DETAILED synthetic explanation for this controlled evaluation.",
+          "ranking_score": 1,
+          "ranking_reasons": [],
+          "metadata": {}
+        }
+      ],
+      "media_assets": [
+        {
+          "candidate_id": "238d0c7d-b3c5-4928-ac10-cadaf699fd1b",
+          "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+          "media_kind": "video",
+          "title": "Synthetic video for Call or meet a friend to feel less isolated.",
+          "source_name": "Synthetic approved pool",
+          "source_url": "https://example.test/8534f90097d561882003aa6be3dbcfe2/video",
+          "short_summary": "SHORT synthetic explanation.",
+          "detailed_summary": "DETAILED synthetic explanation for this controlled evaluation.",
+          "limitations": "",
+          "status": "approved",
+          "approved_at": "2026-10-04T21:30:00.000Z",
+          "approved_by": "11111111-1111-4111-a111-111111111111",
+          "asset_id": "5c465893-3779-4dd3-a2bc-fb24eff82bb0",
+          "created_at": "2026-10-04T21:30:00.000Z"
+        },
+        {
+          "candidate_id": "8c2140e9-ae83-41dc-a29d-71af34ef1805",
+          "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+          "media_kind": "paper",
+          "title": "Synthetic paper for Call or meet a friend to feel less isolated.",
+          "source_name": "Synthetic approved pool",
+          "source_url": "https://example.test/8534f90097d561882003aa6be3dbcfe2/paper",
+          "short_summary": "SHORT synthetic explanation.",
+          "detailed_summary": "DETAILED synthetic explanation for this controlled evaluation.",
+          "limitations": "",
+          "status": "approved",
+          "approved_at": "2026-10-04T21:30:00.000Z",
+          "approved_by": "11111111-1111-4111-a111-111111111111",
+          "asset_id": "8f6d42a0-4fb0-4109-a470-1695b3033f3b",
+          "created_at": "2026-10-04T21:30:00.000Z"
+        }
+      ],
+      "adaptation_envelopes": [
+        {
+          "action_text": "Call or meet a friend to feel less isolated.",
+          "pillar": "social_connection",
+          "category": "establish",
+          "formats": [
+            "video",
+            "paper",
+            "reading"
+          ],
+          "summary_lengths": [
+            "short",
+            "detailed"
+          ],
+          "tones": [
+            "encouraging",
+            "neutral_informational"
+          ],
+          "earliest_time": "08:00",
+          "latest_time": "21:00",
+          "frequency_min": 1,
+          "frequency_max": 3,
+          "action_alternatives": [
+            "Call or meet a friend to feel less isolated."
+          ],
+          "user_id": "usr-f08-chain",
+          "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+          "status": "approved",
+          "updated_at": "2026-10-04T21:30:00.000Z",
+          "envelope_id": "964c81e9-9733-478d-a330-9b1ec222f3f2",
+          "created_at": "2026-10-04T21:30:00.000Z",
+          "automatic_schedule_apply": true,
+          "approved_asset_ids": [
+            "5c465893-3779-4dd3-a2bc-fb24eff82bb0",
+            "8f6d42a0-4fb0-4109-a470-1695b3033f3b"
+          ],
+          "approved_at": "2026-10-04T21:30:00.000Z",
+          "approved_by": "11111111-1111-4111-a111-111111111111"
+        }
+      ],
+      "user_adaptation_state": [
+        {
+          "format_scores": {},
+          "asset_history": [
+            "5c465893-3779-4dd3-a2bc-fb24eff82bb0",
+            "8f6d42a0-4fb0-4109-a470-1695b3033f3b"
+          ],
+          "last_asset_id": "8f6d42a0-4fb0-4109-a470-1695b3033f3b",
+          "media_selection_mode": "automatic",
+          "user_id": "usr-f08-chain",
+          "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+          "state_version": 3,
+          "updated_at": "2026-10-15T22:01:00.000Z",
+          "last_signal_at": "2026-10-08T22:30:00.000Z",
+          "last_decision_id": "bd_3"
+        }
+      ],
+      "interaction_events": [
+        {
+          "interaction_id": "evt_e5ed395a87bf43cfdb4f10da",
+          "event_at": "2026-10-08T22:02:00.000Z",
+          "event_type": "delivery_status",
+          "user_id": "usr-f08-chain",
+          "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261009",
+          "wa_message_id": "SM2fd494e49c30290f406871bf0bf2a36e",
+          "status": "delivered",
+          "correlation_method": "twilio_message_sid",
+          "raw_payload": {
+            "MessageSid": "SM2fd494e49c30290f406871bf0bf2a36e",
+            "MessageStatus": "delivered",
+            "AccountSid": "AC00000000000000000000000000000000",
+            "From": "whatsapp:+14155238886",
+            "To": "whatsapp:+61400000001"
+          }
+        },
+        {
+          "interaction_id": "in_cac70314246d60af0593fbdf",
+          "event_at": "2026-10-08T22:30:00.000Z",
+          "event_type": "inbound_reply",
+          "user_id": "usr-f08-chain",
+          "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+          "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261009",
+          "wa_message_id": "SM2fd494e49c30290f406871bf0bf2a36e",
+          "inbound_message_sid": "SMf549d7225d27be493ee287dfb3e9f109",
+          "reply_to_wa_message_id": "SM2fd494e49c30290f406871bf0bf2a36e",
+          "body": "Send fewer messages",
+          "media_count": 0,
+          "correlation_method": "original_replied_message_sid",
+          "raw_payload": {
+            "from": "whatsapp:+61400000001",
+            "num_media": "0"
+          },
+          "processed_at": "2026-10-08T22:32:00.000Z"
+        },
+        {
+          "interaction_id": "evt_b2e542d79bf0b28149c0b452",
+          "event_at": "2026-10-15T22:02:00.000Z",
+          "event_type": "delivery_status",
+          "user_id": "usr-f08-chain",
+          "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261016",
+          "wa_message_id": "SM58151955c0906ca077f654294dde6f48",
+          "status": "delivered",
+          "correlation_method": "twilio_message_sid",
+          "raw_payload": {
+            "MessageSid": "SM58151955c0906ca077f654294dde6f48",
+            "MessageStatus": "delivered",
+            "AccountSid": "AC00000000000000000000000000000000",
+            "From": "whatsapp:+14155238886",
+            "To": "whatsapp:+61400000001"
+          }
+        }
+      ],
+      "adaptation_decisions": [
+        {
+          "user_id": "usr-f08-chain",
+          "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+          "interaction_id": null,
+          "nudge_id": null,
+          "signal_type": "clinician_schedule_change",
+          "scope": "behaviour",
+          "decision_source": "clinician",
+          "effective_at": "2026-10-04T21:30:00.000Z",
+          "state_version": 1,
+          "interpretation": {},
+          "scores_before": {},
+          "scores_after": {},
+          "rule_applied": "clinician_saved_schedule",
+          "previous_state": {
+            "planned_frequency": 0,
+            "media_selection_mode": "automatic"
+          },
+          "next_state": {
+            "planned_frequency": 1,
+            "media_selection_mode": "automatic"
+          },
+          "changed_fields": [
+            "planned_frequency",
+            "media_selection_mode"
+          ],
+          "frequency_before": null,
+          "frequency_after": null,
+          "media_mode_before": "automatic",
+          "media_mode_after": "automatic",
+          "media_kind_before": null,
+          "media_kind_after": null,
+          "selected_asset_id": null,
+          "outcome": "applied",
+          "reason": "Clinician saved a weekly schedule or media change",
+          "fulfilled_at": "2026-10-04T21:30:00.000Z",
+          "decision_id": "bd_1",
+          "decided_at": "2026-10-04T21:30:00.000Z"
+        },
+        {
+          "user_id": "usr-f08-chain",
+          "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+          "interaction_id": null,
+          "nudge_id": null,
+          "signal_type": "scheduled_selection",
+          "scope": "behaviour",
+          "decision_source": "system",
+          "effective_at": "2026-10-08T22:01:00.000Z",
+          "state_version": 1,
+          "interpretation": {
+            "explicit": false,
+            "format": null,
+            "summary_length": null,
+            "tone": null,
+            "time": null,
+            "frequency_delta": 0,
+            "action": null
+          },
+          "scores_before": {},
+          "scores_after": {},
+          "rule_applied": "least_recently_used_rotation",
+          "previous_state": {
+            "format_scores": {},
+            "asset_history": [],
+            "media_selection_mode": "automatic"
+          },
+          "next_state": {
+            "format_scores": {},
+            "asset_history": [
+              "5c465893-3779-4dd3-a2bc-fb24eff82bb0"
+            ],
+            "last_asset_id": "5c465893-3779-4dd3-a2bc-fb24eff82bb0",
+            "media_selection_mode": "automatic"
+          },
+          "changed_fields": [
+            "last_asset_id"
+          ],
+          "frequency_before": null,
+          "frequency_after": null,
+          "media_mode_before": "automatic",
+          "media_mode_after": "automatic",
+          "media_kind_before": null,
+          "media_kind_after": "video",
+          "selected_asset_id": "5c465893-3779-4dd3-a2bc-fb24eff82bb0",
+          "outcome": "applied",
+          "reason": "no explicit preference; rotated approved media",
+          "fulfilled_at": "2026-10-08T22:01:00.000Z",
+          "decision_id": "bd_2",
+          "decided_at": "2026-10-08T22:01:00.000Z"
+        },
+        {
+          "user_id": "usr-f08-chain",
+          "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+          "interaction_id": "in_cac70314246d60af0593fbdf",
+          "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261009",
+          "signal_type": "inbound_reply",
+          "scope": "behaviour",
+          "decision_source": "patient",
+          "effective_at": "2026-10-08T22:30:00.000Z",
+          "state_version": 2,
+          "interpretation": {
+            "explicit": true,
+            "format": null,
+            "summary_length": null,
+            "tone": null,
+            "time": null,
+            "frequency_delta": -1,
+            "action": null
+          },
+          "scores_before": {},
+          "scores_after": {},
+          "rule_applied": "explicit_request_guarded",
+          "previous_state": {
+            "format_scores": {},
+            "asset_history": [
+              "5c465893-3779-4dd3-a2bc-fb24eff82bb0"
+            ],
+            "last_asset_id": "5c465893-3779-4dd3-a2bc-fb24eff82bb0",
+            "media_selection_mode": "automatic",
+            "user_id": "usr-f08-chain",
+            "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+            "state_version": 1,
+            "updated_at": "2026-10-08T22:01:00.000Z"
+          },
+          "next_state": {
+            "format_scores": {},
+            "asset_history": [
+              "5c465893-3779-4dd3-a2bc-fb24eff82bb0"
+            ],
+            "last_asset_id": "5c465893-3779-4dd3-a2bc-fb24eff82bb0",
+            "media_selection_mode": "automatic",
+            "user_id": "usr-f08-chain",
+            "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+            "state_version": 1,
+            "updated_at": "2026-10-08T22:01:00.000Z"
+          },
+          "changed_fields": [],
+          "frequency_before": null,
+          "frequency_after": null,
+          "media_mode_before": "automatic",
+          "media_mode_after": "automatic",
+          "media_kind_before": null,
+          "media_kind_after": null,
+          "selected_asset_id": null,
+          "outcome": "outside_envelope",
+          "reason": "frequency_outside_envelope",
+          "fulfilled_at": null,
+          "decision_id": "bd_3",
+          "decided_at": "2026-10-08T22:32:00.000Z"
+        },
+        {
+          "decided_at": "2026-10-09T22:04:00.000Z",
+          "effective_at": "2026-10-09T22:04:00.000Z",
+          "user_id": "usr-f08-chain",
+          "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+          "interaction_id": null,
+          "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261009",
+          "scope": "behaviour",
+          "decision_source": "system",
+          "media_mode_before": null,
+          "media_mode_after": null,
+          "media_kind_before": null,
+          "media_kind_after": null,
+          "selected_asset_id": null,
+          "signal_type": "frequency_model_recommendation",
+          "interpretation": {
+            "evaluation_key": "frequency-logistic-v1:8534f90097d561882003aa6be3dbcfe2:schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261009:2026-10-08T22:02:00.000Z",
+            "model_id": "frequency-logistic-v1",
+            "mode": "apply",
+            "closed_delivery_count": 1,
+            "recent_outcomes": [
+              {
+                "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261009",
+                "delivered_at": "2026-10-08T22:02:00.000Z",
+                "read_at": null,
+                "scheduled_time": "09:00",
+                "media_kind": "video",
+                "first_visit_at": null,
+                "first_reply_at": "2026-10-08T22:30:00.000Z",
+                "first_interaction_at": "2026-10-08T22:30:00.000Z",
+                "read_latency_minutes": null,
+                "visit_latency_minutes": null,
+                "reply_latency_minutes": 28,
+                "interaction_window": "morning",
+                "link_visit_count": 0,
+                "ordinary_reply_count": 1,
+                "closed_24h": true,
+                "interacted_within_24h": 1,
+                "outcome": "ordinary_interaction"
+              }
+            ],
+            "features": {
+              "recent_interaction_rate": 1,
+              "noninteraction_streak": 0,
+              "has_previous_interaction": true,
+              "has_recent_interaction": true
+            },
+            "candidate_scores": {
+              "1": 0.5757221490881697,
+              "2": 0.6057270804803476,
+              "3": 0.6349555136435776
+            },
+            "model_recommended_frequency": 2,
+            "recommended_frequency": 1,
+            "direction": "hold",
+            "policy_reason": "increase_blocked_without_two_recent_interactions",
+            "time_recommendation": {
+              "recommended_time": "09:00",
+              "direction": "hold",
+              "source": "policy",
+              "reason": "fewer_than_two_positive_timing_observations",
+              "evidence_count": 1
+            },
+            "media_recommendation": {
+              "recommended_format": null,
+              "direction": "rotate",
+              "source": "novelty_policy",
+              "reason": "no_format_signal_rotate_least_recently_used",
+              "evidence_count": 0
+            },
+            "passive_evidence": {
+              "delivered_count": 1,
+              "read_count": 0,
+              "read_unknown_count": 1,
+              "visit_count": 0,
+              "reply_count": 1,
+              "no_observable_interaction_count": 0,
+              "open_24h_count": 0,
+              "median_read_latency_minutes": null,
+              "interaction_windows": {
+                "morning": 1
+              },
+              "media_visits": {}
+            },
+            "schedule_applied": false
+          },
+          "scores_before": {},
+          "scores_after": {
+            "1": 0.5757221490881697,
+            "2": 0.6057270804803476,
+            "3": 0.6349555136435776
+          },
+          "rule_applied": "regularized_logistic_regression",
+          "previous_state": {
+            "format_scores": {},
+            "asset_history": [
+              "5c465893-3779-4dd3-a2bc-fb24eff82bb0"
+            ],
+            "last_asset_id": "5c465893-3779-4dd3-a2bc-fb24eff82bb0",
+            "media_selection_mode": "automatic",
+            "user_id": "usr-f08-chain",
+            "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+            "state_version": 2,
+            "updated_at": "2026-10-08T22:32:00.000Z",
+            "last_signal_at": "2026-10-08T22:30:00.000Z",
+            "last_decision_id": "bd_3",
+            "planned_frequency": 1,
+            "preferred_time": "09:00",
+            "preferred_format": null
+          },
+          "next_state": {
+            "format_scores": {},
+            "asset_history": [
+              "5c465893-3779-4dd3-a2bc-fb24eff82bb0"
+            ],
+            "last_asset_id": "5c465893-3779-4dd3-a2bc-fb24eff82bb0",
+            "media_selection_mode": "automatic",
+            "user_id": "usr-f08-chain",
+            "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+            "state_version": 2,
+            "updated_at": "2026-10-08T22:32:00.000Z",
+            "last_signal_at": "2026-10-08T22:30:00.000Z",
+            "last_decision_id": "bd_3",
+            "planned_frequency": 2,
+            "preferred_time": "09:00",
+            "preferred_format": null
+          },
+          "changed_fields": [
+            "planned_frequency"
+          ],
+          "frequency_before": 1,
+          "frequency_after": 2,
+          "outcome": "no_change",
+          "reason": "Model recommendation: 2 per week",
+          "fulfilled_at": null,
+          "decision_id": "bd_4"
+        },
+        {
+          "decided_at": "2026-10-09T22:04:00.000Z",
+          "effective_at": "2026-10-09T22:04:00.000Z",
+          "user_id": "usr-f08-chain",
+          "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+          "interaction_id": null,
+          "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261009",
+          "scope": "behaviour",
+          "decision_source": "system",
+          "media_mode_before": null,
+          "media_mode_after": null,
+          "media_kind_before": null,
+          "media_kind_after": null,
+          "selected_asset_id": null,
+          "decision_id": "d76a29c1-a7de-4975-abbb-69ce8a386abd",
+          "signal_type": "adaptive_policy_no_change",
+          "interpretation": {
+            "evaluation_key": "frequency-logistic-v1:8534f90097d561882003aa6be3dbcfe2:schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261009:2026-10-08T22:02:00.000Z",
+            "model_id": "frequency-logistic-v1",
+            "mode": "apply",
+            "closed_delivery_count": 1,
+            "recent_outcomes": [
+              {
+                "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261009",
+                "delivered_at": "2026-10-08T22:02:00.000Z",
+                "read_at": null,
+                "scheduled_time": "09:00",
+                "media_kind": "video",
+                "first_visit_at": null,
+                "first_reply_at": "2026-10-08T22:30:00.000Z",
+                "first_interaction_at": "2026-10-08T22:30:00.000Z",
+                "read_latency_minutes": null,
+                "visit_latency_minutes": null,
+                "reply_latency_minutes": 28,
+                "interaction_window": "morning",
+                "link_visit_count": 0,
+                "ordinary_reply_count": 1,
+                "closed_24h": true,
+                "interacted_within_24h": 1,
+                "outcome": "ordinary_interaction"
+              }
+            ],
+            "features": {
+              "recent_interaction_rate": 1,
+              "noninteraction_streak": 0,
+              "has_previous_interaction": true,
+              "has_recent_interaction": true
+            },
+            "candidate_scores": {
+              "1": 0.5757221490881697,
+              "2": 0.6057270804803476,
+              "3": 0.6349555136435776
+            },
+            "model_recommended_frequency": 2,
+            "recommended_frequency": 1,
+            "direction": "hold",
+            "policy_reason": "increase_blocked_without_two_recent_interactions",
+            "time_recommendation": {
+              "recommended_time": "09:00",
+              "direction": "hold",
+              "source": "policy",
+              "reason": "fewer_than_two_positive_timing_observations",
+              "evidence_count": 1
+            },
+            "media_recommendation": {
+              "recommended_format": null,
+              "direction": "rotate",
+              "source": "novelty_policy",
+              "reason": "no_format_signal_rotate_least_recently_used",
+              "evidence_count": 0
+            },
+            "passive_evidence": {
+              "delivered_count": 1,
+              "read_count": 0,
+              "read_unknown_count": 1,
+              "visit_count": 0,
+              "reply_count": 1,
+              "no_observable_interaction_count": 0,
+              "open_24h_count": 0,
+              "median_read_latency_minutes": null,
+              "interaction_windows": {
+                "morning": 1
+              },
+              "media_visits": {}
+            },
+            "schedule_applied": false
+          },
+          "scores_before": {
+            "1": 0.5757221490881697,
+            "2": 0.6057270804803476,
+            "3": 0.6349555136435776
+          },
+          "scores_after": {
+            "1": 0.5757221490881697,
+            "2": 0.6057270804803476,
+            "3": 0.6349555136435776
+          },
+          "rule_applied": "bounded_frequency_time_media_policy",
+          "previous_state": {
+            "format_scores": {},
+            "asset_history": [
+              "5c465893-3779-4dd3-a2bc-fb24eff82bb0"
+            ],
+            "last_asset_id": "5c465893-3779-4dd3-a2bc-fb24eff82bb0",
+            "media_selection_mode": "automatic",
+            "user_id": "usr-f08-chain",
+            "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+            "state_version": 2,
+            "updated_at": "2026-10-08T22:32:00.000Z",
+            "last_signal_at": "2026-10-08T22:30:00.000Z",
+            "last_decision_id": "bd_3",
+            "planned_frequency": 1,
+            "preferred_time": "09:00",
+            "preferred_format": null
+          },
+          "next_state": {
+            "format_scores": {},
+            "asset_history": [
+              "5c465893-3779-4dd3-a2bc-fb24eff82bb0"
+            ],
+            "last_asset_id": "5c465893-3779-4dd3-a2bc-fb24eff82bb0",
+            "media_selection_mode": "automatic",
+            "user_id": "usr-f08-chain",
+            "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+            "state_version": 2,
+            "updated_at": "2026-10-08T22:32:00.000Z",
+            "last_signal_at": "2026-10-08T22:30:00.000Z",
+            "last_decision_id": "bd_3",
+            "planned_frequency": 1,
+            "preferred_time": "09:00",
+            "preferred_format": null
+          },
+          "changed_fields": [],
+          "frequency_before": 1,
+          "frequency_after": 1,
+          "outcome": "no_change",
+          "reason": "Policy evaluated; future schedule already matches or no bounded change was supported",
+          "fulfilled_at": null
+        },
+        {
+          "user_id": "usr-f08-chain",
+          "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+          "interaction_id": null,
+          "nudge_id": null,
+          "signal_type": "scheduled_selection",
+          "scope": "behaviour",
+          "decision_source": "system",
+          "effective_at": "2026-10-15T22:01:00.000Z",
+          "state_version": 3,
+          "interpretation": {
+            "explicit": false,
+            "format": null,
+            "summary_length": null,
+            "tone": null,
+            "time": null,
+            "frequency_delta": 0,
+            "action": null
+          },
+          "scores_before": {},
+          "scores_after": {},
+          "rule_applied": "least_recently_used_rotation",
+          "previous_state": {
+            "format_scores": {},
+            "asset_history": [
+              "5c465893-3779-4dd3-a2bc-fb24eff82bb0"
+            ],
+            "last_asset_id": "5c465893-3779-4dd3-a2bc-fb24eff82bb0",
+            "media_selection_mode": "automatic",
+            "user_id": "usr-f08-chain",
+            "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+            "state_version": 2,
+            "updated_at": "2026-10-08T22:32:00.000Z",
+            "last_signal_at": "2026-10-08T22:30:00.000Z",
+            "last_decision_id": "bd_3"
+          },
+          "next_state": {
+            "format_scores": {},
+            "asset_history": [
+              "5c465893-3779-4dd3-a2bc-fb24eff82bb0",
+              "8f6d42a0-4fb0-4109-a470-1695b3033f3b"
+            ],
+            "last_asset_id": "8f6d42a0-4fb0-4109-a470-1695b3033f3b",
+            "media_selection_mode": "automatic",
+            "user_id": "usr-f08-chain",
+            "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+            "state_version": 2,
+            "updated_at": "2026-10-08T22:32:00.000Z",
+            "last_signal_at": "2026-10-08T22:30:00.000Z",
+            "last_decision_id": "bd_3"
+          },
+          "changed_fields": [
+            "last_asset_id"
+          ],
+          "frequency_before": null,
+          "frequency_after": null,
+          "media_mode_before": "automatic",
+          "media_mode_after": "automatic",
+          "media_kind_before": null,
+          "media_kind_after": "paper",
+          "selected_asset_id": "8f6d42a0-4fb0-4109-a470-1695b3033f3b",
+          "outcome": "applied",
+          "reason": "no explicit preference; rotated approved media",
+          "fulfilled_at": "2026-10-15T22:01:00.000Z",
+          "decision_id": "bd_5",
+          "decided_at": "2026-10-15T22:01:00.000Z"
+        }
+      ],
+      "tracked_links": [
+        {
+          "token": "aAX3aW1Bk9fkqQnokV_B7oA0exYMUiYd",
+          "expires_at": "2027-04-06T22:01:00.000Z",
+          "asset_id": "5c465893-3779-4dd3-a2bc-fb24eff82bb0",
+          "user_id": "usr-f08-chain",
+          "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+          "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261009",
+          "target_url": "https://example.test/8534f90097d561882003aa6be3dbcfe2/video"
+        },
+        {
+          "token": "kYAHO2gSmGtLwBhuUanEfFpRDifdgqGd",
+          "expires_at": "2027-04-13T22:01:00.000Z",
+          "asset_id": "8f6d42a0-4fb0-4109-a470-1695b3033f3b",
+          "user_id": "usr-f08-chain",
+          "behaviour_key": "8534f90097d561882003aa6be3dbcfe2",
+          "nudge_id": "schd_slot_4-4be6-a0aa-0476e2ea4932_friday_0_20261016",
+          "target_url": "https://example.test/8534f90097d561882003aa6be3dbcfe2/paper"
+        }
+      ],
+      "patient_adaptation_state": [],
+      "patient_adaptation_timeline": []
+    }
+  }
+}

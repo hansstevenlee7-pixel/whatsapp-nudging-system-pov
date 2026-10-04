@@ -1,0 +1,3079 @@
+{
+  "protocol": "translation-trace-v1",
+  "protocol_sha256": "39fca63eb80db833c6f81874fa297b174d6a21d68e0e8ed0a0060fcf48eb5e94",
+  "part_a": {
+    "cases": [
+      {
+        "id": "A01",
+        "class": "control",
+        "expected": "ACCEPT",
+        "verdict": "ACCEPTED",
+        "agrees": true,
+        "rows_written": 7,
+        "rows_written_on_refusal": null,
+        "silent_acceptance": false,
+        "gate": {
+          "validation_passed": true,
+          "stage": null,
+          "errors": []
+        },
+        "response": {
+          "status": 200,
+          "body": {
+            "status": "ok",
+            "user_id": "usr-a01",
+            "prescriptions": 1,
+            "nudges": 2
+          }
+        },
+        "visited": [
+          "Intake Webhook",
+          "Authorize Proxy",
+          "Proxy Authorized?",
+          "Extract Input",
+          "Build Gemini Prompt",
+          "Call Gemini Vision",
+          "Normalize Known Enum Drift",
+          "Validation Gate",
+          "Is Valid?",
+          "Prep User",
+          "Write User",
+          "Prep Questionnaire",
+          "Write Questionnaire",
+          "Prep Prescriptions",
+          "Write Prescriptions",
+          "Prep Nudges",
+          "Write Nudges",
+          "Prep Schedule State",
+          "Write Schedule State",
+          "Respond Success"
+        ],
+        "draft_links": [
+          {
+            "id": "ndg_a9dcfd6d-2e2d-4d93-af2b-2f1458c004ae",
+            "ok": true
+          },
+          {
+            "id": "ndg_8b84e3b7-4314-4301-a655-2911b8fb146b",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "id": "A02",
+        "class": "control",
+        "expected": "ACCEPT",
+        "verdict": "ACCEPTED",
+        "agrees": true,
+        "rows_written": 10,
+        "rows_written_on_refusal": null,
+        "silent_acceptance": false,
+        "gate": {
+          "validation_passed": true,
+          "stage": null,
+          "errors": []
+        },
+        "response": {
+          "status": 200,
+          "body": {
+            "status": "ok",
+            "user_id": "usr-a02",
+            "prescriptions": 2,
+            "nudges": 3
+          }
+        },
+        "visited": [
+          "Intake Webhook",
+          "Authorize Proxy",
+          "Proxy Authorized?",
+          "Extract Input",
+          "Build Gemini Prompt",
+          "Call Gemini Vision",
+          "Normalize Known Enum Drift",
+          "Validation Gate",
+          "Is Valid?",
+          "Prep User",
+          "Write User",
+          "Prep Questionnaire",
+          "Write Questionnaire",
+          "Prep Prescriptions",
+          "Write Prescriptions",
+          "Prep Nudges",
+          "Write Nudges",
+          "Prep Schedule State",
+          "Write Schedule State",
+          "Respond Success"
+        ],
+        "draft_links": [
+          {
+            "id": "ndg_06c736c0-632b-4842-a233-f80cc18fa408",
+            "ok": true
+          },
+          {
+            "id": "ndg_eb2d5bca-f6b9-4349-aa91-c352d97e3993",
+            "ok": true
+          },
+          {
+            "id": "ndg_2f80acd7-16da-4867-a61d-901c0d3211c7",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "id": "A03",
+        "class": "parse",
+        "expected": "REJECT",
+        "verdict": "REJECTED",
+        "agrees": true,
+        "rows_written": 0,
+        "rows_written_on_refusal": 0,
+        "silent_acceptance": false,
+        "gate": {
+          "validation_passed": false,
+          "stage": "parse",
+          "errors": [
+            "SyntaxError: Unexpected token 'I', \"I could no\"... is not valid JSON"
+          ]
+        },
+        "response": {
+          "status": 422,
+          "body": {
+            "error": "n8n HTTP 422"
+          }
+        },
+        "visited": [
+          "Intake Webhook",
+          "Authorize Proxy",
+          "Proxy Authorized?",
+          "Extract Input",
+          "Build Gemini Prompt",
+          "Call Gemini Vision",
+          "Normalize Known Enum Drift",
+          "Validation Gate",
+          "Is Valid?",
+          "Respond Rejected"
+        ],
+        "draft_links": []
+      },
+      {
+        "id": "A04",
+        "class": "parse",
+        "expected": "REJECT",
+        "verdict": "REJECTED",
+        "agrees": true,
+        "rows_written": 0,
+        "rows_written_on_refusal": 0,
+        "silent_acceptance": false,
+        "gate": {
+          "validation_passed": false,
+          "stage": "parse",
+          "errors": [
+            "SyntaxError: Unexpected token '`', \"```json\n{\"\"... is not valid JSON"
+          ]
+        },
+        "response": {
+          "status": 422,
+          "body": {
+            "error": "n8n HTTP 422"
+          }
+        },
+        "visited": [
+          "Intake Webhook",
+          "Authorize Proxy",
+          "Proxy Authorized?",
+          "Extract Input",
+          "Build Gemini Prompt",
+          "Call Gemini Vision",
+          "Normalize Known Enum Drift",
+          "Validation Gate",
+          "Is Valid?",
+          "Respond Rejected"
+        ],
+        "draft_links": []
+      },
+      {
+        "id": "A05",
+        "class": "parse",
+        "expected": "REJECT",
+        "verdict": "REJECTED",
+        "agrees": true,
+        "rows_written": 0,
+        "rows_written_on_refusal": 0,
+        "silent_acceptance": false,
+        "gate": {
+          "validation_passed": false,
+          "stage": "parse",
+          "errors": [
+            "SyntaxError: Unterminated string in JSON at position 180 (line 1 column 181)"
+          ]
+        },
+        "response": {
+          "status": 422,
+          "body": {
+            "error": "n8n HTTP 422"
+          }
+        },
+        "visited": [
+          "Intake Webhook",
+          "Authorize Proxy",
+          "Proxy Authorized?",
+          "Extract Input",
+          "Build Gemini Prompt",
+          "Call Gemini Vision",
+          "Normalize Known Enum Drift",
+          "Validation Gate",
+          "Is Valid?",
+          "Respond Rejected"
+        ],
+        "draft_links": []
+      },
+      {
+        "id": "A06",
+        "class": "shape",
+        "expected": "REJECT",
+        "verdict": "REJECTED",
+        "agrees": true,
+        "rows_written": 0,
+        "rows_written_on_refusal": 0,
+        "silent_acceptance": false,
+        "gate": {
+          "validation_passed": false,
+          "stage": "shape",
+          "errors": [
+            "prescriptions and nudges must be non-empty arrays"
+          ]
+        },
+        "response": {
+          "status": 422,
+          "body": {
+            "error": "n8n HTTP 422"
+          }
+        },
+        "visited": [
+          "Intake Webhook",
+          "Authorize Proxy",
+          "Proxy Authorized?",
+          "Extract Input",
+          "Build Gemini Prompt",
+          "Call Gemini Vision",
+          "Normalize Known Enum Drift",
+          "Validation Gate",
+          "Is Valid?",
+          "Respond Rejected"
+        ],
+        "draft_links": []
+      },
+      {
+        "id": "A07",
+        "class": "taxonomy",
+        "expected": "REJECT",
+        "verdict": "REJECTED",
+        "agrees": true,
+        "rows_written": 0,
+        "rows_written_on_refusal": 0,
+        "silent_acceptance": false,
+        "gate": {
+          "validation_passed": false,
+          "stage": "enum",
+          "errors": [
+            "rx[0] pillar: exercise",
+            "ndg[0] pillar: exercise",
+            "ndg[1] pillar: exercise"
+          ]
+        },
+        "response": {
+          "status": 422,
+          "body": {
+            "error": "n8n HTTP 422"
+          }
+        },
+        "visited": [
+          "Intake Webhook",
+          "Authorize Proxy",
+          "Proxy Authorized?",
+          "Extract Input",
+          "Build Gemini Prompt",
+          "Call Gemini Vision",
+          "Normalize Known Enum Drift",
+          "Validation Gate",
+          "Is Valid?",
+          "Respond Rejected"
+        ],
+        "draft_links": []
+      },
+      {
+        "id": "A08",
+        "class": "taxonomy",
+        "expected": "REJECT",
+        "verdict": "REJECTED",
+        "agrees": true,
+        "rows_written": 0,
+        "rows_written_on_refusal": 0,
+        "silent_acceptance": false,
+        "gate": {
+          "validation_passed": false,
+          "stage": "enum",
+          "errors": [
+            "rx[0] category: improve"
+          ]
+        },
+        "response": {
+          "status": 422,
+          "body": {
+            "error": "n8n HTTP 422"
+          }
+        },
+        "visited": [
+          "Intake Webhook",
+          "Authorize Proxy",
+          "Proxy Authorized?",
+          "Extract Input",
+          "Build Gemini Prompt",
+          "Call Gemini Vision",
+          "Normalize Known Enum Drift",
+          "Validation Gate",
+          "Is Valid?",
+          "Respond Rejected"
+        ],
+        "draft_links": []
+      },
+      {
+        "id": "A09",
+        "class": "taxonomy",
+        "expected": "REJECT",
+        "verdict": "REJECTED",
+        "agrees": true,
+        "rows_written": 0,
+        "rows_written_on_refusal": 0,
+        "silent_acceptance": false,
+        "gate": {
+          "validation_passed": false,
+          "stage": "enum",
+          "errors": [
+            "ndg[1] pillar does not match its prescription: sleep"
+          ]
+        },
+        "response": {
+          "status": 422,
+          "body": {
+            "error": "n8n HTTP 422"
+          }
+        },
+        "visited": [
+          "Intake Webhook",
+          "Authorize Proxy",
+          "Proxy Authorized?",
+          "Extract Input",
+          "Build Gemini Prompt",
+          "Call Gemini Vision",
+          "Normalize Known Enum Drift",
+          "Validation Gate",
+          "Is Valid?",
+          "Respond Rejected"
+        ],
+        "draft_links": []
+      },
+      {
+        "id": "A10",
+        "class": "drift",
+        "expected": "NORMALISE",
+        "verdict": "ACCEPTED",
+        "agrees": true,
+        "rows_written": 7,
+        "rows_written_on_refusal": null,
+        "silent_acceptance": false,
+        "gate": {
+          "validation_passed": true,
+          "stage": null,
+          "errors": []
+        },
+        "response": {
+          "status": 200,
+          "body": {
+            "status": "ok",
+            "user_id": "usr-a10",
+            "prescriptions": 1,
+            "nudges": 2
+          }
+        },
+        "visited": [
+          "Intake Webhook",
+          "Authorize Proxy",
+          "Proxy Authorized?",
+          "Extract Input",
+          "Build Gemini Prompt",
+          "Call Gemini Vision",
+          "Normalize Known Enum Drift",
+          "Validation Gate",
+          "Is Valid?",
+          "Prep User",
+          "Write User",
+          "Prep Questionnaire",
+          "Write Questionnaire",
+          "Prep Prescriptions",
+          "Write Prescriptions",
+          "Prep Nudges",
+          "Write Nudges",
+          "Prep Schedule State",
+          "Write Schedule State",
+          "Respond Success"
+        ],
+        "draft_links": [
+          {
+            "id": "ndg_a0ea0ea0-a313-4539-a8c3-dbda64d4ffc5",
+            "ok": true
+          },
+          {
+            "id": "ndg_4b80cb9a-c298-44df-a3f2-37c544622432",
+            "ok": true
+          }
+        ],
+        "note": "stored category \"increase\""
+      },
+      {
+        "id": "A11",
+        "class": "drift",
+        "expected": "NORMALISE",
+        "verdict": "ACCEPTED",
+        "agrees": true,
+        "rows_written": 7,
+        "rows_written_on_refusal": null,
+        "silent_acceptance": false,
+        "gate": {
+          "validation_passed": true,
+          "stage": null,
+          "errors": []
+        },
+        "response": {
+          "status": 200,
+          "body": {
+            "status": "ok",
+            "user_id": "usr-a11",
+            "prescriptions": 1,
+            "nudges": 2
+          }
+        },
+        "visited": [
+          "Intake Webhook",
+          "Authorize Proxy",
+          "Proxy Authorized?",
+          "Extract Input",
+          "Build Gemini Prompt",
+          "Call Gemini Vision",
+          "Normalize Known Enum Drift",
+          "Validation Gate",
+          "Is Valid?",
+          "Prep User",
+          "Write User",
+          "Prep Questionnaire",
+          "Write Questionnaire",
+          "Prep Prescriptions",
+          "Write Prescriptions",
+          "Prep Nudges",
+          "Write Nudges",
+          "Prep Schedule State",
+          "Write Schedule State",
+          "Respond Success"
+        ],
+        "draft_links": [
+          {
+            "id": "ndg_f0ae45d5-d0d6-406f-a18b-fbb4c79b6aac",
+            "ok": true
+          },
+          {
+            "id": "ndg_feae2777-c627-4806-a9f9-37b3afb9b6e7",
+            "ok": true
+          }
+        ],
+        "note": "stored category \"increase\""
+      },
+      {
+        "id": "A12",
+        "class": "bounds",
+        "expected": "REJECT",
+        "verdict": "REJECTED",
+        "agrees": true,
+        "rows_written": 0,
+        "rows_written_on_refusal": 0,
+        "silent_acceptance": false,
+        "gate": {
+          "validation_passed": false,
+          "stage": "enum",
+          "errors": [
+            "ndg[0] action_text is required"
+          ]
+        },
+        "response": {
+          "status": 422,
+          "body": {
+            "error": "n8n HTTP 422"
+          }
+        },
+        "visited": [
+          "Intake Webhook",
+          "Authorize Proxy",
+          "Proxy Authorized?",
+          "Extract Input",
+          "Build Gemini Prompt",
+          "Call Gemini Vision",
+          "Normalize Known Enum Drift",
+          "Validation Gate",
+          "Is Valid?",
+          "Respond Rejected"
+        ],
+        "draft_links": []
+      },
+      {
+        "id": "A13",
+        "class": "bounds",
+        "expected": "REJECT",
+        "verdict": "REJECTED",
+        "agrees": true,
+        "rows_written": 0,
+        "rows_written_on_refusal": 0,
+        "silent_acceptance": false,
+        "gate": {
+          "validation_passed": false,
+          "stage": "enum",
+          "errors": [
+            "ndg[0] action_text is longer than 1024 characters"
+          ]
+        },
+        "response": {
+          "status": 422,
+          "body": {
+            "error": "n8n HTTP 422"
+          }
+        },
+        "visited": [
+          "Intake Webhook",
+          "Authorize Proxy",
+          "Proxy Authorized?",
+          "Extract Input",
+          "Build Gemini Prompt",
+          "Call Gemini Vision",
+          "Normalize Known Enum Drift",
+          "Validation Gate",
+          "Is Valid?",
+          "Respond Rejected"
+        ],
+        "draft_links": []
+      },
+      {
+        "id": "A14",
+        "class": "bounds",
+        "expected": "REJECT",
+        "verdict": "REJECTED",
+        "agrees": true,
+        "rows_written": 0,
+        "rows_written_on_refusal": 0,
+        "silent_acceptance": false,
+        "gate": {
+          "validation_passed": false,
+          "stage": "enum",
+          "errors": [
+            "ndg[0] nudge_type: nag"
+          ]
+        },
+        "response": {
+          "status": 422,
+          "body": {
+            "error": "n8n HTTP 422"
+          }
+        },
+        "visited": [
+          "Intake Webhook",
+          "Authorize Proxy",
+          "Proxy Authorized?",
+          "Extract Input",
+          "Build Gemini Prompt",
+          "Call Gemini Vision",
+          "Normalize Known Enum Drift",
+          "Validation Gate",
+          "Is Valid?",
+          "Respond Rejected"
+        ],
+        "draft_links": []
+      },
+      {
+        "id": "A15",
+        "class": "bounds",
+        "expected": "REJECT",
+        "verdict": "REJECTED",
+        "agrees": true,
+        "rows_written": 0,
+        "rows_written_on_refusal": 0,
+        "silent_acceptance": false,
+        "gate": {
+          "validation_passed": false,
+          "stage": "enum",
+          "errors": [
+            "ndg[0] scheduled_time: 25:00"
+          ]
+        },
+        "response": {
+          "status": 422,
+          "body": {
+            "error": "n8n HTTP 422"
+          }
+        },
+        "visited": [
+          "Intake Webhook",
+          "Authorize Proxy",
+          "Proxy Authorized?",
+          "Extract Input",
+          "Build Gemini Prompt",
+          "Call Gemini Vision",
+          "Normalize Known Enum Drift",
+          "Validation Gate",
+          "Is Valid?",
+          "Respond Rejected"
+        ],
+        "draft_links": []
+      },
+      {
+        "id": "A16",
+        "class": "bounds",
+        "expected": "REJECT",
+        "verdict": "REJECTED",
+        "agrees": true,
+        "rows_written": 0,
+        "rows_written_on_refusal": 0,
+        "silent_acceptance": false,
+        "gate": {
+          "validation_passed": false,
+          "stage": "enum",
+          "errors": [
+            "ndg[0] scheduled_date: 05/10/2026"
+          ]
+        },
+        "response": {
+          "status": 422,
+          "body": {
+            "error": "n8n HTTP 422"
+          }
+        },
+        "visited": [
+          "Intake Webhook",
+          "Authorize Proxy",
+          "Proxy Authorized?",
+          "Extract Input",
+          "Build Gemini Prompt",
+          "Call Gemini Vision",
+          "Normalize Known Enum Drift",
+          "Validation Gate",
+          "Is Valid?",
+          "Respond Rejected"
+        ],
+        "draft_links": []
+      },
+      {
+        "id": "A17",
+        "class": "bounds",
+        "expected": "REJECT",
+        "verdict": "REJECTED",
+        "agrees": true,
+        "rows_written": 0,
+        "rows_written_on_refusal": 0,
+        "silent_acceptance": false,
+        "gate": {
+          "validation_passed": false,
+          "stage": "enum",
+          "errors": [
+            "rx[0] frequency_per_week: 0"
+          ]
+        },
+        "response": {
+          "status": 422,
+          "body": {
+            "error": "n8n HTTP 422"
+          }
+        },
+        "visited": [
+          "Intake Webhook",
+          "Authorize Proxy",
+          "Proxy Authorized?",
+          "Extract Input",
+          "Build Gemini Prompt",
+          "Call Gemini Vision",
+          "Normalize Known Enum Drift",
+          "Validation Gate",
+          "Is Valid?",
+          "Respond Rejected"
+        ],
+        "draft_links": []
+      },
+      {
+        "id": "A18",
+        "class": "bounds",
+        "expected": "REJECT",
+        "verdict": "REJECTED",
+        "agrees": true,
+        "rows_written": 0,
+        "rows_written_on_refusal": 0,
+        "silent_acceptance": false,
+        "gate": {
+          "validation_passed": false,
+          "stage": "enum",
+          "errors": [
+            "rx[0] duration_weeks: 60"
+          ]
+        },
+        "response": {
+          "status": 422,
+          "body": {
+            "error": "n8n HTTP 422"
+          }
+        },
+        "visited": [
+          "Intake Webhook",
+          "Authorize Proxy",
+          "Proxy Authorized?",
+          "Extract Input",
+          "Build Gemini Prompt",
+          "Call Gemini Vision",
+          "Normalize Known Enum Drift",
+          "Validation Gate",
+          "Is Valid?",
+          "Respond Rejected"
+        ],
+        "draft_links": []
+      },
+      {
+        "id": "A19",
+        "class": "bounds",
+        "expected": "REJECT",
+        "verdict": "REJECTED",
+        "agrees": true,
+        "rows_written": 0,
+        "rows_written_on_refusal": 0,
+        "silent_acceptance": false,
+        "gate": {
+          "validation_passed": false,
+          "stage": "enum",
+          "errors": [
+            "ndg[0] message_body missing or too long"
+          ]
+        },
+        "response": {
+          "status": 422,
+          "body": {
+            "error": "n8n HTTP 422"
+          }
+        },
+        "visited": [
+          "Intake Webhook",
+          "Authorize Proxy",
+          "Proxy Authorized?",
+          "Extract Input",
+          "Build Gemini Prompt",
+          "Call Gemini Vision",
+          "Normalize Known Enum Drift",
+          "Validation Gate",
+          "Is Valid?",
+          "Respond Rejected"
+        ],
+        "draft_links": []
+      },
+      {
+        "id": "A20",
+        "class": "referential",
+        "expected": "REJECT",
+        "verdict": "ACCEPTED",
+        "agrees": false,
+        "rows_written": 8,
+        "rows_written_on_refusal": null,
+        "silent_acceptance": true,
+        "gate": {
+          "validation_passed": true,
+          "stage": null,
+          "errors": []
+        },
+        "response": {
+          "status": 200,
+          "body": {
+            "status": "ok",
+            "user_id": "usr-a20",
+            "prescriptions": 2,
+            "nudges": 2
+          }
+        },
+        "visited": [
+          "Intake Webhook",
+          "Authorize Proxy",
+          "Proxy Authorized?",
+          "Extract Input",
+          "Build Gemini Prompt",
+          "Call Gemini Vision",
+          "Normalize Known Enum Drift",
+          "Validation Gate",
+          "Is Valid?",
+          "Prep User",
+          "Write User",
+          "Prep Questionnaire",
+          "Write Questionnaire",
+          "Prep Prescriptions",
+          "Write Prescriptions",
+          "Prep Nudges",
+          "Write Nudges",
+          "Prep Schedule State",
+          "Write Schedule State",
+          "Respond Success"
+        ],
+        "draft_links": [
+          {
+            "id": "ndg_bbfb0508-10bd-45ed-a2f9-22d01307c303",
+            "ok": true
+          },
+          {
+            "id": "ndg_bcb22584-b8a4-432b-adc7-ffaf42f7d2c0",
+            "ok": false,
+            "note": "prescription_ref \"p9\" names no prescription; written as rx_f33d595c-9d35-474c-ab11-7e6ca2c280c3"
+          }
+        ]
+      },
+      {
+        "id": "A21",
+        "class": "referential",
+        "expected": "REJECT",
+        "verdict": "ACCEPTED",
+        "agrees": false,
+        "rows_written": 8,
+        "rows_written_on_refusal": null,
+        "silent_acceptance": true,
+        "gate": {
+          "validation_passed": true,
+          "stage": null,
+          "errors": []
+        },
+        "response": {
+          "status": 200,
+          "body": {
+            "status": "ok",
+            "user_id": "usr-a21",
+            "prescriptions": 2,
+            "nudges": 2
+          }
+        },
+        "visited": [
+          "Intake Webhook",
+          "Authorize Proxy",
+          "Proxy Authorized?",
+          "Extract Input",
+          "Build Gemini Prompt",
+          "Call Gemini Vision",
+          "Normalize Known Enum Drift",
+          "Validation Gate",
+          "Is Valid?",
+          "Prep User",
+          "Write User",
+          "Prep Questionnaire",
+          "Write Questionnaire",
+          "Prep Prescriptions",
+          "Write Prescriptions",
+          "Prep Nudges",
+          "Write Nudges",
+          "Prep Schedule State",
+          "Write Schedule State",
+          "Respond Success"
+        ],
+        "draft_links": [
+          {
+            "id": "ndg_590d807f-df6c-45f5-af96-9718647b48a6",
+            "ok": true
+          },
+          {
+            "id": "ndg_9fe7caa5-ab0b-4e56-a237-08e39c8cb10f",
+            "ok": false,
+            "note": "prescription_ref undefined names no prescription; written as rx_e6b16a8a-27a8-4c3e-a481-da163970ff69"
+          }
+        ]
+      },
+      {
+        "id": "A22",
+        "class": "referential",
+        "expected": "REJECT",
+        "verdict": "ACCEPTED",
+        "agrees": false,
+        "rows_written": 8,
+        "rows_written_on_refusal": null,
+        "silent_acceptance": true,
+        "gate": {
+          "validation_passed": true,
+          "stage": null,
+          "errors": []
+        },
+        "response": {
+          "status": 200,
+          "body": {
+            "status": "ok",
+            "user_id": "usr-a22",
+            "prescriptions": 2,
+            "nudges": 2
+          }
+        },
+        "visited": [
+          "Intake Webhook",
+          "Authorize Proxy",
+          "Proxy Authorized?",
+          "Extract Input",
+          "Build Gemini Prompt",
+          "Call Gemini Vision",
+          "Normalize Known Enum Drift",
+          "Validation Gate",
+          "Is Valid?",
+          "Prep User",
+          "Write User",
+          "Prep Questionnaire",
+          "Write Questionnaire",
+          "Prep Prescriptions",
+          "Write Prescriptions",
+          "Prep Nudges",
+          "Write Nudges",
+          "Prep Schedule State",
+          "Write Schedule State",
+          "Respond Success"
+        ],
+        "draft_links": [
+          {
+            "id": "ndg_ca38bfde-7598-49b7-aaca-b1104f29e0e5",
+            "ok": true
+          },
+          {
+            "id": "ndg_39db673a-61f4-4fa8-a0de-7d16c8b9b79b",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "id": "A23",
+        "class": "schedule",
+        "expected": "REJECT",
+        "verdict": "ACCEPTED",
+        "agrees": false,
+        "rows_written": 7,
+        "rows_written_on_refusal": null,
+        "silent_acceptance": true,
+        "gate": {
+          "validation_passed": true,
+          "stage": null,
+          "errors": []
+        },
+        "response": {
+          "status": 200,
+          "body": {
+            "status": "ok",
+            "user_id": "usr-a23",
+            "prescriptions": 1,
+            "nudges": 2
+          }
+        },
+        "visited": [
+          "Intake Webhook",
+          "Authorize Proxy",
+          "Proxy Authorized?",
+          "Extract Input",
+          "Build Gemini Prompt",
+          "Call Gemini Vision",
+          "Normalize Known Enum Drift",
+          "Validation Gate",
+          "Is Valid?",
+          "Prep User",
+          "Write User",
+          "Prep Questionnaire",
+          "Write Questionnaire",
+          "Prep Prescriptions",
+          "Write Prescriptions",
+          "Prep Nudges",
+          "Write Nudges",
+          "Prep Schedule State",
+          "Write Schedule State",
+          "Respond Success"
+        ],
+        "draft_links": [
+          {
+            "id": "ndg_84d44f0e-e62c-4d9a-a6b5-2d0d514a97c1",
+            "ok": true
+          },
+          {
+            "id": "ndg_e17f21ce-b910-4d8c-ac05-8381d665e491",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "id": "A24",
+        "class": "schedule",
+        "expected": "REJECT",
+        "verdict": "ACCEPTED",
+        "agrees": false,
+        "rows_written": 7,
+        "rows_written_on_refusal": null,
+        "silent_acceptance": true,
+        "gate": {
+          "validation_passed": true,
+          "stage": null,
+          "errors": []
+        },
+        "response": {
+          "status": 200,
+          "body": {
+            "status": "ok",
+            "user_id": "usr-a24",
+            "prescriptions": 1,
+            "nudges": 2
+          }
+        },
+        "visited": [
+          "Intake Webhook",
+          "Authorize Proxy",
+          "Proxy Authorized?",
+          "Extract Input",
+          "Build Gemini Prompt",
+          "Call Gemini Vision",
+          "Normalize Known Enum Drift",
+          "Validation Gate",
+          "Is Valid?",
+          "Prep User",
+          "Write User",
+          "Prep Questionnaire",
+          "Write Questionnaire",
+          "Prep Prescriptions",
+          "Write Prescriptions",
+          "Prep Nudges",
+          "Write Nudges",
+          "Prep Schedule State",
+          "Write Schedule State",
+          "Respond Success"
+        ],
+        "draft_links": [
+          {
+            "id": "ndg_9b701d3e-51a9-4fd3-a2df-1835d7c33b92",
+            "ok": true
+          },
+          {
+            "id": "ndg_ffc9d8b9-d4e0-4315-ae7f-8d426ed66eac",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "id": "A25",
+        "class": "schedule",
+        "expected": "REJECT",
+        "verdict": "ACCEPTED",
+        "agrees": false,
+        "rows_written": 7,
+        "rows_written_on_refusal": null,
+        "silent_acceptance": true,
+        "gate": {
+          "validation_passed": true,
+          "stage": null,
+          "errors": []
+        },
+        "response": {
+          "status": 200,
+          "body": {
+            "status": "ok",
+            "user_id": "usr-a25",
+            "prescriptions": 1,
+            "nudges": 2
+          }
+        },
+        "visited": [
+          "Intake Webhook",
+          "Authorize Proxy",
+          "Proxy Authorized?",
+          "Extract Input",
+          "Build Gemini Prompt",
+          "Call Gemini Vision",
+          "Normalize Known Enum Drift",
+          "Validation Gate",
+          "Is Valid?",
+          "Prep User",
+          "Write User",
+          "Prep Questionnaire",
+          "Write Questionnaire",
+          "Prep Prescriptions",
+          "Write Prescriptions",
+          "Prep Nudges",
+          "Write Nudges",
+          "Prep Schedule State",
+          "Write Schedule State",
+          "Respond Success"
+        ],
+        "draft_links": [
+          {
+            "id": "ndg_0549c070-6735-4de4-a45d-249279e09451",
+            "ok": true
+          },
+          {
+            "id": "ndg_c2e4f75d-961d-4bd2-a150-6885f7e91552",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "id": "A26",
+        "class": "semantic",
+        "expected": "ACCEPT",
+        "verdict": "ACCEPTED",
+        "agrees": true,
+        "rows_written": 7,
+        "rows_written_on_refusal": null,
+        "silent_acceptance": false,
+        "gate": {
+          "validation_passed": true,
+          "stage": null,
+          "errors": []
+        },
+        "response": {
+          "status": 200,
+          "body": {
+            "status": "ok",
+            "user_id": "usr-a26",
+            "prescriptions": 1,
+            "nudges": 2
+          }
+        },
+        "visited": [
+          "Intake Webhook",
+          "Authorize Proxy",
+          "Proxy Authorized?",
+          "Extract Input",
+          "Build Gemini Prompt",
+          "Call Gemini Vision",
+          "Normalize Known Enum Drift",
+          "Validation Gate",
+          "Is Valid?",
+          "Prep User",
+          "Write User",
+          "Prep Questionnaire",
+          "Write Questionnaire",
+          "Prep Prescriptions",
+          "Write Prescriptions",
+          "Prep Nudges",
+          "Write Nudges",
+          "Prep Schedule State",
+          "Write Schedule State",
+          "Respond Success"
+        ],
+        "draft_links": [
+          {
+            "id": "ndg_3d038de7-c53d-4310-ac62-d4a048199d0d",
+            "ok": true
+          },
+          {
+            "id": "ndg_4ff8f983-6e7e-42f1-a0f7-54559e650dcb",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "id": "A27",
+        "class": "semantic",
+        "expected": "ACCEPT",
+        "verdict": "ACCEPTED",
+        "agrees": true,
+        "rows_written": 7,
+        "rows_written_on_refusal": null,
+        "silent_acceptance": false,
+        "gate": {
+          "validation_passed": true,
+          "stage": null,
+          "errors": []
+        },
+        "response": {
+          "status": 200,
+          "body": {
+            "status": "ok",
+            "user_id": "usr-a27",
+            "prescriptions": 1,
+            "nudges": 2
+          }
+        },
+        "visited": [
+          "Intake Webhook",
+          "Authorize Proxy",
+          "Proxy Authorized?",
+          "Extract Input",
+          "Build Gemini Prompt",
+          "Call Gemini Vision",
+          "Normalize Known Enum Drift",
+          "Validation Gate",
+          "Is Valid?",
+          "Prep User",
+          "Write User",
+          "Prep Questionnaire",
+          "Write Questionnaire",
+          "Prep Prescriptions",
+          "Write Prescriptions",
+          "Prep Nudges",
+          "Write Nudges",
+          "Prep Schedule State",
+          "Write Schedule State",
+          "Respond Success"
+        ],
+        "draft_links": [
+          {
+            "id": "ndg_45911288-7751-44e1-a896-8ca505af0464",
+            "ok": true
+          },
+          {
+            "id": "ndg_280bfaa6-810a-4f71-a3f2-8a8eb31e52e1",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "id": "A28",
+        "class": "semantic",
+        "expected": "ACCEPT",
+        "verdict": "ACCEPTED",
+        "agrees": true,
+        "rows_written": 10,
+        "rows_written_on_refusal": null,
+        "silent_acceptance": false,
+        "gate": {
+          "validation_passed": true,
+          "stage": null,
+          "errors": []
+        },
+        "response": {
+          "status": 200,
+          "body": {
+            "status": "ok",
+            "user_id": "usr-a28",
+            "prescriptions": 2,
+            "nudges": 3
+          }
+        },
+        "visited": [
+          "Intake Webhook",
+          "Authorize Proxy",
+          "Proxy Authorized?",
+          "Extract Input",
+          "Build Gemini Prompt",
+          "Call Gemini Vision",
+          "Normalize Known Enum Drift",
+          "Validation Gate",
+          "Is Valid?",
+          "Prep User",
+          "Write User",
+          "Prep Questionnaire",
+          "Write Questionnaire",
+          "Prep Prescriptions",
+          "Write Prescriptions",
+          "Prep Nudges",
+          "Write Nudges",
+          "Prep Schedule State",
+          "Write Schedule State",
+          "Respond Success"
+        ],
+        "draft_links": [
+          {
+            "id": "ndg_8ddbd256-2f02-412f-a02c-7cca3da1bb3a",
+            "ok": true
+          },
+          {
+            "id": "ndg_0a12b29b-5506-478c-ad17-dc2207c4dd84",
+            "ok": true
+          },
+          {
+            "id": "ndg_90b8657b-f750-4cc1-a173-efba77c929c8",
+            "ok": true
+          }
+        ]
+      }
+    ],
+    "agree": 22,
+    "total": 28,
+    "rows_written_on_refusal": 0,
+    "silent_acceptances": [
+      "A20 (referential)",
+      "A21 (referential)",
+      "A22 (referential)",
+      "A23 (schedule)",
+      "A24 (schedule)",
+      "A25 (schedule)"
+    ]
+  },
+  "part_b": {
+    "cases": [
+      {
+        "id": "B1",
+        "case_reply": "Send fewer messages",
+        "steps": [
+          {
+            "step": "intake via portal and Workflow A",
+            "status": 200,
+            "body": {
+              "status": "ok",
+              "user_id": "usr-b1",
+              "prescriptions": 1,
+              "nudges": 3
+            }
+          },
+          {
+            "step": "clinician approval",
+            "status": 200,
+            "body": {
+              "slots": 3
+            }
+          },
+          {
+            "step": "envelope approval e32cfd97",
+            "status": 200
+          },
+          {
+            "step": "signed reply",
+            "status": 200
+          },
+          {
+            "step": "workflow C tick (after reply)",
+            "adaptation": "complete",
+            "decision": {
+              "outcome": "outside_envelope",
+              "rule": "explicit_request_guarded",
+              "reason": "frequency_outside_envelope"
+            },
+            "frequency": "idle",
+            "policy": null
+          },
+          {
+            "step": "workflow C tick (after the 24-hour window closes)",
+            "adaptation": "idle",
+            "decision": null,
+            "frequency": "complete",
+            "policy": {
+              "current": 3,
+              "recommended": 3,
+              "schedule": {
+                "applied": false,
+                "reason": "schedule_already_matches_policy"
+              }
+            }
+          }
+        ],
+        "decision": {
+          "outcome": "outside_envelope",
+          "rule": "explicit_request_guarded",
+          "reason": "frequency_outside_envelope",
+          "decision_id": "bd_3"
+        },
+        "acknowledgements": [],
+        "policy": {
+          "current": 3,
+          "recommended": 3,
+          "applied": false
+        },
+        "deliveries": [
+          {
+            "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261005",
+            "sid": "SM8099c868fc65a4d1494baa692aec384b",
+            "label": "first-delivery",
+            "callback": 200
+          },
+          {
+            "nudge_id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261007",
+            "sid": "SM7bb964267deed66f70388a1030c0a3e0",
+            "label": "delivery-1",
+            "callback": 200
+          }
+        ],
+        "clinician_changes": [],
+        "links": {
+          "T1": [
+            {
+              "id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+              "ok": true
+            }
+          ],
+          "T2": [
+            {
+              "id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+              "ok": false
+            }
+          ],
+          "T3": [
+            {
+              "id": "ndg_3700fc9e-ce79-4015-a5b0-84921f5a9715",
+              "ok": true
+            },
+            {
+              "id": "ndg_50825ba6-10bc-4be5-a257-6854b4c09950",
+              "ok": true
+            },
+            {
+              "id": "ndg_d6061eee-ec0c-49f7-a6f2-9458244b068f",
+              "ok": true
+            }
+          ],
+          "T4": [
+            {
+              "id": "ndg_3700fc9e-ce79-4015-a5b0-84921f5a9715",
+              "ok": true
+            },
+            {
+              "id": "ndg_50825ba6-10bc-4be5-a257-6854b4c09950",
+              "ok": true
+            },
+            {
+              "id": "ndg_d6061eee-ec0c-49f7-a6f2-9458244b068f",
+              "ok": true
+            }
+          ],
+          "T5": [
+            {
+              "id": "slot_9-4015-a5b0-84921f5a9715_monday_0",
+              "ok": true
+            },
+            {
+              "id": "slot_c-4be5-a257-6854b4c09950_wednesday_1",
+              "ok": true
+            },
+            {
+              "id": "slot_c-49f7-a6f2-9458244b068f_friday_2",
+              "ok": true
+            }
+          ],
+          "T6": [
+            {
+              "id": "slot_9-4015-a5b0-84921f5a9715_monday_0",
+              "ok": false
+            },
+            {
+              "id": "slot_c-4be5-a257-6854b4c09950_wednesday_1",
+              "ok": false
+            },
+            {
+              "id": "slot_c-49f7-a6f2-9458244b068f_friday_2",
+              "ok": false
+            }
+          ],
+          "T7": [],
+          "T8": [
+            {
+              "id": "e32cfd9765ae1a349b51c12545f33d27",
+              "ok": true
+            }
+          ],
+          "T9": [
+            {
+              "id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261005",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261007",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261009",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261012",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261014",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261016",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261019",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261021",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261023",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261026",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261028",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261030",
+              "ok": true
+            }
+          ],
+          "T10": [
+            {
+              "id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261005",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261007",
+              "ok": true
+            }
+          ],
+          "T11": [
+            {
+              "id": "SM8099c868fc65a4d1494baa692aec384b",
+              "ok": true
+            },
+            {
+              "id": "SM7bb964267deed66f70388a1030c0a3e0",
+              "ok": true
+            }
+          ],
+          "T12": [
+            {
+              "id": "reply_to_interaction",
+              "ok": true
+            }
+          ],
+          "T13": [
+            {
+              "id": "interaction_to_decision",
+              "ok": true
+            }
+          ],
+          "T14": [
+            {
+              "id": "decision_to_envelope",
+              "ok": true
+            }
+          ],
+          "T15": [
+            {
+              "id": "policy_to_audit",
+              "ok": true
+            }
+          ],
+          "T17": [
+            {
+              "id": "next_message_to_decision",
+              "ok": true
+            }
+          ],
+          "T18": [
+            {
+              "id": "next_message_to_prescription",
+              "ok": true
+            }
+          ],
+          "T19": [
+            {
+              "id": "tracked_link_to_next_message",
+              "ok": true
+            }
+          ]
+        },
+        "closure": {
+          "closed": true,
+          "path": [
+            "message SM7bb964267deed66f70388a1030c0a3e0 -> occurrence schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261007",
+            "occurrence -> slot slot_c-4be5-a257-6854b4c09950_wednesday_1",
+            "slot -> LLM draft ndg_50825ba6-10bc-4be5-a257-6854b4c09950",
+            "draft -> prescription rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "prescription -> submitted text"
+          ],
+          "broken_at": null
+        }
+      },
+      {
+        "id": "B2",
+        "case_reply": "Thanks, done!",
+        "steps": [
+          {
+            "step": "intake via portal and Workflow A",
+            "status": 200,
+            "body": {
+              "status": "ok",
+              "user_id": "usr-b2",
+              "prescriptions": 1,
+              "nudges": 2
+            }
+          },
+          {
+            "step": "clinician approval",
+            "status": 200,
+            "body": {
+              "slots": 2
+            }
+          },
+          {
+            "step": "envelope approval 35ecf906",
+            "status": 200
+          },
+          {
+            "step": "signed reply",
+            "status": 200
+          },
+          {
+            "step": "workflow C tick (after reply)",
+            "adaptation": "complete",
+            "decision": {
+              "outcome": "applied",
+              "rule": "least_recently_used_rotation",
+              "reason": "no explicit preference; rotated approved media"
+            },
+            "frequency": "idle",
+            "policy": null
+          },
+          {
+            "step": "workflow C tick (after the 24-hour window closes)",
+            "adaptation": "idle",
+            "decision": null,
+            "frequency": "complete",
+            "policy": {
+              "current": 2,
+              "recommended": 2,
+              "schedule": {
+                "applied": false,
+                "reason": "schedule_already_matches_policy"
+              }
+            }
+          }
+        ],
+        "decision": {
+          "outcome": "applied",
+          "rule": "least_recently_used_rotation",
+          "reason": "no explicit preference; rotated approved media",
+          "decision_id": "bd_3"
+        },
+        "acknowledgements": [
+          {
+            "sid": "SM2caac4a6878aca3981e92c034174893a",
+            "to": "whatsapp:+61400000001",
+            "body": "Got it — your request will be used for future messages within your approved plan."
+          }
+        ],
+        "policy": {
+          "current": 2,
+          "recommended": 2,
+          "applied": false
+        },
+        "deliveries": [
+          {
+            "nudge_id": "schd_slot_3-4d98-a89a-9064208551a2_monday_0_20261005",
+            "sid": "SM58191aa4dc77764ef2a43c7153cde35b",
+            "label": "first-delivery",
+            "callback": 200
+          },
+          {
+            "nudge_id": "schd_slot_5-418a-abe4-9df7eeb40d8e_thursday_1_20261008",
+            "sid": "SMed705844cbf0ff2fa01429446fa4343d",
+            "label": "delivery-1",
+            "callback": 200
+          }
+        ],
+        "clinician_changes": [
+          {
+            "scope": "draft",
+            "field": "action_text",
+            "llm_value": "Walk for 30 minutes after dinner",
+            "approved_value": "Walk for 30 minutes after dinner, outdoors if it is dry"
+          },
+          {
+            "scope": "draft",
+            "field": "scheduled_time",
+            "llm_value": "09:00",
+            "approved_value": "19:00"
+          },
+          {
+            "scope": "draft",
+            "field": "action_text",
+            "llm_value": "Walk for 30 minutes after dinner",
+            "approved_value": "Walk for 30 minutes after dinner, outdoors if it is dry"
+          }
+        ],
+        "links": {
+          "T1": [
+            {
+              "id": "rx_0ad55ae2-edaf-4e31-a302-94b64d1d45fc",
+              "ok": true
+            }
+          ],
+          "T2": [
+            {
+              "id": "rx_0ad55ae2-edaf-4e31-a302-94b64d1d45fc",
+              "ok": false
+            }
+          ],
+          "T3": [
+            {
+              "id": "ndg_44fb0b4d-f013-4d98-a89a-9064208551a2",
+              "ok": true
+            },
+            {
+              "id": "ndg_100d3277-4b05-418a-abe4-9df7eeb40d8e",
+              "ok": true
+            }
+          ],
+          "T4": [
+            {
+              "id": "ndg_44fb0b4d-f013-4d98-a89a-9064208551a2",
+              "ok": true
+            },
+            {
+              "id": "ndg_100d3277-4b05-418a-abe4-9df7eeb40d8e",
+              "ok": true
+            }
+          ],
+          "T5": [
+            {
+              "id": "slot_3-4d98-a89a-9064208551a2_monday_0",
+              "ok": true
+            },
+            {
+              "id": "slot_5-418a-abe4-9df7eeb40d8e_thursday_1",
+              "ok": true
+            }
+          ],
+          "T6": [
+            {
+              "id": "slot_3-4d98-a89a-9064208551a2_monday_0",
+              "ok": false
+            },
+            {
+              "id": "slot_5-418a-abe4-9df7eeb40d8e_thursday_1",
+              "ok": false
+            }
+          ],
+          "T7": [
+            {
+              "id": "draft:action_text:ndg_44fb0b4d-f013-4d98-a89a-9064208551a2",
+              "ok": true
+            },
+            {
+              "id": "draft:scheduled_time:ndg_100d3277-4b05-418a-abe4-9df7eeb40d8e",
+              "ok": true
+            },
+            {
+              "id": "draft:action_text:ndg_100d3277-4b05-418a-abe4-9df7eeb40d8e",
+              "ok": true
+            }
+          ],
+          "T8": [
+            {
+              "id": "35ecf90690f61e7489ff08f6e271983f",
+              "ok": true
+            }
+          ],
+          "T9": [
+            {
+              "id": "schd_slot_3-4d98-a89a-9064208551a2_monday_0_20261005",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_5-418a-abe4-9df7eeb40d8e_thursday_1_20261008",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_3-4d98-a89a-9064208551a2_monday_0_20261012",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_5-418a-abe4-9df7eeb40d8e_thursday_1_20261015",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_3-4d98-a89a-9064208551a2_monday_0_20261019",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_5-418a-abe4-9df7eeb40d8e_thursday_1_20261022",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_3-4d98-a89a-9064208551a2_monday_0_20261026",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_5-418a-abe4-9df7eeb40d8e_thursday_1_20261029",
+              "ok": true
+            }
+          ],
+          "T10": [
+            {
+              "id": "schd_slot_3-4d98-a89a-9064208551a2_monday_0_20261005",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_5-418a-abe4-9df7eeb40d8e_thursday_1_20261008",
+              "ok": true
+            }
+          ],
+          "T11": [
+            {
+              "id": "SM58191aa4dc77764ef2a43c7153cde35b",
+              "ok": true
+            },
+            {
+              "id": "SMed705844cbf0ff2fa01429446fa4343d",
+              "ok": true
+            }
+          ],
+          "T12": [
+            {
+              "id": "reply_to_interaction",
+              "ok": true
+            }
+          ],
+          "T13": [
+            {
+              "id": "interaction_to_decision",
+              "ok": true
+            }
+          ],
+          "T14": [
+            {
+              "id": "decision_to_envelope",
+              "ok": true
+            }
+          ],
+          "T15": [
+            {
+              "id": "policy_to_audit",
+              "ok": true
+            }
+          ],
+          "T17": [
+            {
+              "id": "next_message_to_decision",
+              "ok": true
+            }
+          ],
+          "T18": [
+            {
+              "id": "next_message_to_prescription",
+              "ok": true
+            }
+          ],
+          "T19": [
+            {
+              "id": "tracked_link_to_next_message",
+              "ok": true
+            }
+          ]
+        },
+        "closure": {
+          "closed": true,
+          "path": [
+            "message SMed705844cbf0ff2fa01429446fa4343d -> occurrence schd_slot_5-418a-abe4-9df7eeb40d8e_thursday_1_20261008",
+            "occurrence -> slot slot_5-418a-abe4-9df7eeb40d8e_thursday_1",
+            "slot -> LLM draft ndg_100d3277-4b05-418a-abe4-9df7eeb40d8e",
+            "draft -> prescription rx_0ad55ae2-edaf-4e31-a302-94b64d1d45fc",
+            "prescription -> submitted text"
+          ],
+          "broken_at": null
+        }
+      },
+      {
+        "id": "B3",
+        "case_reply": "Send fewer messages",
+        "steps": [
+          {
+            "step": "intake via portal and Workflow A",
+            "status": 200,
+            "body": {
+              "status": "ok",
+              "user_id": "usr-b3",
+              "prescriptions": 2,
+              "nudges": 3
+            }
+          },
+          {
+            "step": "clinician approval",
+            "status": 200,
+            "body": {
+              "slots": 3
+            }
+          },
+          {
+            "step": "envelope approval 11c90dc3",
+            "status": 200
+          },
+          {
+            "step": "envelope approval 509f1bae",
+            "status": 200
+          },
+          {
+            "step": "signed reply",
+            "status": 200
+          },
+          {
+            "step": "workflow C tick (after reply)",
+            "adaptation": "complete",
+            "decision": {
+              "outcome": "outside_envelope",
+              "rule": "explicit_request_guarded",
+              "reason": "frequency_outside_envelope"
+            },
+            "frequency": "idle",
+            "policy": null
+          },
+          {
+            "step": "workflow C tick (after the 24-hour window closes)",
+            "adaptation": "idle",
+            "decision": null,
+            "frequency": "complete",
+            "policy": {
+              "current": 2,
+              "recommended": 2,
+              "schedule": {
+                "applied": false,
+                "reason": "schedule_already_matches_policy"
+              }
+            }
+          }
+        ],
+        "decision": {
+          "outcome": "outside_envelope",
+          "rule": "explicit_request_guarded",
+          "reason": "frequency_outside_envelope",
+          "decision_id": "bd_4"
+        },
+        "acknowledgements": [],
+        "policy": {
+          "current": 2,
+          "recommended": 2,
+          "applied": false
+        },
+        "deliveries": [
+          {
+            "nudge_id": "schd_slot_2-400e-a157-52811bc1b51e_monday_0_20261005",
+            "sid": "SM07a999350ca8ef5a51865900fc626424",
+            "label": "first-delivery",
+            "callback": 200
+          },
+          {
+            "nudge_id": "schd_slot_b-4ad4-a2c7-99e0db393b65_wednesday_2_20261007",
+            "sid": "SMcb00eebf6f7f7ca5a1a36aaa73813fe1",
+            "label": "delivery-1",
+            "callback": 200
+          }
+        ],
+        "clinician_changes": [],
+        "links": {
+          "T1": [
+            {
+              "id": "rx_f009ccc1-5de6-4091-a1e7-acc160c6c62e",
+              "ok": true
+            },
+            {
+              "id": "rx_3f327ec0-357c-4f72-a62a-2fa7e6cb16e5",
+              "ok": true
+            }
+          ],
+          "T2": [
+            {
+              "id": "rx_f009ccc1-5de6-4091-a1e7-acc160c6c62e",
+              "ok": false
+            },
+            {
+              "id": "rx_3f327ec0-357c-4f72-a62a-2fa7e6cb16e5",
+              "ok": false
+            }
+          ],
+          "T3": [
+            {
+              "id": "ndg_1779b47c-3ad2-400e-a157-52811bc1b51e",
+              "ok": true
+            },
+            {
+              "id": "ndg_640d3f9d-b6e2-47dc-aeef-5fb29ab427d4",
+              "ok": true
+            },
+            {
+              "id": "ndg_4d471fab-a30b-4ad4-a2c7-99e0db393b65",
+              "ok": true
+            }
+          ],
+          "T4": [
+            {
+              "id": "ndg_1779b47c-3ad2-400e-a157-52811bc1b51e",
+              "ok": true
+            },
+            {
+              "id": "ndg_640d3f9d-b6e2-47dc-aeef-5fb29ab427d4",
+              "ok": true
+            },
+            {
+              "id": "ndg_4d471fab-a30b-4ad4-a2c7-99e0db393b65",
+              "ok": true
+            }
+          ],
+          "T5": [
+            {
+              "id": "slot_2-400e-a157-52811bc1b51e_monday_0",
+              "ok": true
+            },
+            {
+              "id": "slot_2-47dc-aeef-5fb29ab427d4_thursday_1",
+              "ok": true
+            },
+            {
+              "id": "slot_b-4ad4-a2c7-99e0db393b65_wednesday_2",
+              "ok": true
+            }
+          ],
+          "T6": [
+            {
+              "id": "slot_2-400e-a157-52811bc1b51e_monday_0",
+              "ok": false
+            },
+            {
+              "id": "slot_2-47dc-aeef-5fb29ab427d4_thursday_1",
+              "ok": false
+            },
+            {
+              "id": "slot_b-4ad4-a2c7-99e0db393b65_wednesday_2",
+              "ok": false
+            }
+          ],
+          "T7": [],
+          "T8": [
+            {
+              "id": "11c90dc33923855052f7d93df3a1efc0",
+              "ok": true
+            },
+            {
+              "id": "509f1baea02ce9ba4259c14b7fe30b82",
+              "ok": true
+            }
+          ],
+          "T9": [
+            {
+              "id": "schd_slot_2-400e-a157-52811bc1b51e_monday_0_20261005",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_b-4ad4-a2c7-99e0db393b65_wednesday_2_20261007",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_2-47dc-aeef-5fb29ab427d4_thursday_1_20261008",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_2-400e-a157-52811bc1b51e_monday_0_20261012",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_b-4ad4-a2c7-99e0db393b65_wednesday_2_20261014",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_2-47dc-aeef-5fb29ab427d4_thursday_1_20261015",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_2-400e-a157-52811bc1b51e_monday_0_20261019",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_b-4ad4-a2c7-99e0db393b65_wednesday_2_20261021",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_2-47dc-aeef-5fb29ab427d4_thursday_1_20261022",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_2-400e-a157-52811bc1b51e_monday_0_20261026",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_b-4ad4-a2c7-99e0db393b65_wednesday_2_20261028",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_2-47dc-aeef-5fb29ab427d4_thursday_1_20261029",
+              "ok": true
+            }
+          ],
+          "T10": [
+            {
+              "id": "schd_slot_2-400e-a157-52811bc1b51e_monday_0_20261005",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_b-4ad4-a2c7-99e0db393b65_wednesday_2_20261007",
+              "ok": true
+            }
+          ],
+          "T11": [
+            {
+              "id": "SM07a999350ca8ef5a51865900fc626424",
+              "ok": true
+            },
+            {
+              "id": "SMcb00eebf6f7f7ca5a1a36aaa73813fe1",
+              "ok": true
+            }
+          ],
+          "T12": [
+            {
+              "id": "reply_to_interaction",
+              "ok": true
+            }
+          ],
+          "T13": [
+            {
+              "id": "interaction_to_decision",
+              "ok": true
+            }
+          ],
+          "T14": [
+            {
+              "id": "decision_to_envelope",
+              "ok": true
+            }
+          ],
+          "T15": [
+            {
+              "id": "policy_to_audit",
+              "ok": true
+            }
+          ],
+          "T17": [
+            {
+              "id": "next_message_to_decision",
+              "ok": true
+            }
+          ],
+          "T18": [
+            {
+              "id": "next_message_to_prescription",
+              "ok": true
+            }
+          ],
+          "T19": [
+            {
+              "id": "tracked_link_to_next_message",
+              "ok": true
+            }
+          ]
+        },
+        "closure": {
+          "closed": true,
+          "path": [
+            "message SMcb00eebf6f7f7ca5a1a36aaa73813fe1 -> occurrence schd_slot_b-4ad4-a2c7-99e0db393b65_wednesday_2_20261007",
+            "occurrence -> slot slot_b-4ad4-a2c7-99e0db393b65_wednesday_2",
+            "slot -> LLM draft ndg_4d471fab-a30b-4ad4-a2c7-99e0db393b65",
+            "draft -> prescription rx_3f327ec0-357c-4f72-a62a-2fa7e6cb16e5",
+            "prescription -> submitted text"
+          ],
+          "broken_at": null
+        }
+      },
+      {
+        "id": "B4",
+        "case_reply": "Send fewer messages",
+        "steps": [
+          {
+            "step": "intake via portal and Workflow A",
+            "status": 200,
+            "body": {
+              "status": "ok",
+              "user_id": "usr-b4",
+              "prescriptions": 1,
+              "nudges": 2
+            }
+          },
+          {
+            "step": "prescription correction p1",
+            "status": 200
+          },
+          {
+            "step": "clinician approval",
+            "status": 200,
+            "body": {
+              "slots": 2
+            }
+          },
+          {
+            "step": "envelope approval 7cf269d0",
+            "status": 200
+          },
+          {
+            "step": "signed reply",
+            "status": 200
+          },
+          {
+            "step": "workflow C tick (after reply)",
+            "adaptation": "complete",
+            "decision": {
+              "outcome": "outside_envelope",
+              "rule": "explicit_request_guarded",
+              "reason": "frequency_outside_envelope"
+            },
+            "frequency": "idle",
+            "policy": null
+          },
+          {
+            "step": "workflow C tick (after the 24-hour window closes)",
+            "adaptation": "idle",
+            "decision": null,
+            "frequency": "complete",
+            "policy": {
+              "current": 2,
+              "recommended": 2,
+              "schedule": {
+                "applied": false,
+                "reason": "schedule_already_matches_policy"
+              }
+            }
+          }
+        ],
+        "decision": {
+          "outcome": "outside_envelope",
+          "rule": "explicit_request_guarded",
+          "reason": "frequency_outside_envelope",
+          "decision_id": "bd_3"
+        },
+        "acknowledgements": [],
+        "policy": {
+          "current": 2,
+          "recommended": 2,
+          "applied": false
+        },
+        "deliveries": [
+          {
+            "nudge_id": "schd_slot_5-4492-acab-c81eec74172f_monday_0_20261005",
+            "sid": "SMa4cf5f3162c4b5c5fa3a8b23c296720c",
+            "label": "first-delivery",
+            "callback": 200
+          },
+          {
+            "nudge_id": "schd_slot_2-4ca8-a31c-fd53516b60d6_thursday_1_20261008",
+            "sid": "SM7596e3152c17efc776656ded30732782",
+            "label": "delivery-1",
+            "callback": 200
+          }
+        ],
+        "clinician_changes": [
+          {
+            "scope": "prescription",
+            "field": "category",
+            "llm_value": "reduce",
+            "approved_value": "increase"
+          }
+        ],
+        "links": {
+          "T1": [
+            {
+              "id": "rx_2aea225e-9831-46ba-a2b2-f91fdb046280",
+              "ok": true
+            }
+          ],
+          "T2": [
+            {
+              "id": "rx_2aea225e-9831-46ba-a2b2-f91fdb046280",
+              "ok": false
+            }
+          ],
+          "T3": [
+            {
+              "id": "ndg_f235d124-a695-4492-acab-c81eec74172f",
+              "ok": true
+            },
+            {
+              "id": "ndg_d35eb53c-48c2-4ca8-a31c-fd53516b60d6",
+              "ok": true
+            }
+          ],
+          "T4": [
+            {
+              "id": "ndg_f235d124-a695-4492-acab-c81eec74172f",
+              "ok": true
+            },
+            {
+              "id": "ndg_d35eb53c-48c2-4ca8-a31c-fd53516b60d6",
+              "ok": true
+            }
+          ],
+          "T5": [
+            {
+              "id": "slot_5-4492-acab-c81eec74172f_monday_0",
+              "ok": true
+            },
+            {
+              "id": "slot_2-4ca8-a31c-fd53516b60d6_thursday_1",
+              "ok": true
+            }
+          ],
+          "T6": [
+            {
+              "id": "slot_5-4492-acab-c81eec74172f_monday_0",
+              "ok": false
+            },
+            {
+              "id": "slot_2-4ca8-a31c-fd53516b60d6_thursday_1",
+              "ok": false
+            }
+          ],
+          "T7": [
+            {
+              "id": "prescription:category:rx_2aea225e-9831-46ba-a2b2-f91fdb046280",
+              "ok": false,
+              "note": "the LLM value \"reduce\" is no longer stored"
+            }
+          ],
+          "T8": [
+            {
+              "id": "7cf269d0a8a5e27c5941d63562b159a1",
+              "ok": true
+            }
+          ],
+          "T9": [
+            {
+              "id": "schd_slot_5-4492-acab-c81eec74172f_monday_0_20261005",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_2-4ca8-a31c-fd53516b60d6_thursday_1_20261008",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_5-4492-acab-c81eec74172f_monday_0_20261012",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_2-4ca8-a31c-fd53516b60d6_thursday_1_20261015",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_5-4492-acab-c81eec74172f_monday_0_20261019",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_2-4ca8-a31c-fd53516b60d6_thursday_1_20261022",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_5-4492-acab-c81eec74172f_monday_0_20261026",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_2-4ca8-a31c-fd53516b60d6_thursday_1_20261029",
+              "ok": true
+            }
+          ],
+          "T10": [
+            {
+              "id": "schd_slot_5-4492-acab-c81eec74172f_monday_0_20261005",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_2-4ca8-a31c-fd53516b60d6_thursday_1_20261008",
+              "ok": true
+            }
+          ],
+          "T11": [
+            {
+              "id": "SMa4cf5f3162c4b5c5fa3a8b23c296720c",
+              "ok": true
+            },
+            {
+              "id": "SM7596e3152c17efc776656ded30732782",
+              "ok": true
+            }
+          ],
+          "T12": [
+            {
+              "id": "reply_to_interaction",
+              "ok": true
+            }
+          ],
+          "T13": [
+            {
+              "id": "interaction_to_decision",
+              "ok": true
+            }
+          ],
+          "T14": [
+            {
+              "id": "decision_to_envelope",
+              "ok": true
+            }
+          ],
+          "T15": [
+            {
+              "id": "policy_to_audit",
+              "ok": true
+            }
+          ],
+          "T17": [
+            {
+              "id": "next_message_to_decision",
+              "ok": true
+            }
+          ],
+          "T18": [
+            {
+              "id": "next_message_to_prescription",
+              "ok": true
+            }
+          ],
+          "T19": [
+            {
+              "id": "tracked_link_to_next_message",
+              "ok": true
+            }
+          ]
+        },
+        "closure": {
+          "closed": true,
+          "path": [
+            "message SM7596e3152c17efc776656ded30732782 -> occurrence schd_slot_2-4ca8-a31c-fd53516b60d6_thursday_1_20261008",
+            "occurrence -> slot slot_2-4ca8-a31c-fd53516b60d6_thursday_1",
+            "slot -> LLM draft ndg_d35eb53c-48c2-4ca8-a31c-fd53516b60d6",
+            "draft -> prescription rx_2aea225e-9831-46ba-a2b2-f91fdb046280",
+            "prescription -> submitted text"
+          ],
+          "broken_at": null
+        }
+      },
+      {
+        "id": "B5",
+        "case_reply": "Send fewer messages",
+        "steps": [
+          {
+            "step": "intake via portal and Workflow A",
+            "status": 200,
+            "body": {
+              "status": "ok",
+              "user_id": "usr-b5",
+              "prescriptions": 1,
+              "nudges": 2
+            }
+          },
+          {
+            "step": "clinician approval",
+            "status": 200,
+            "body": {
+              "slots": 2
+            }
+          },
+          {
+            "step": "envelope approval 0c28307c",
+            "status": 200
+          },
+          {
+            "step": "envelope approval e32cfd97",
+            "status": 200
+          },
+          {
+            "step": "signed reply",
+            "status": 200
+          },
+          {
+            "step": "workflow C tick (after reply)",
+            "adaptation": "complete",
+            "decision": {
+              "outcome": "outside_envelope",
+              "rule": "explicit_request_guarded",
+              "reason": "frequency_outside_envelope"
+            },
+            "frequency": "idle",
+            "policy": null
+          },
+          {
+            "step": "workflow C tick (after the 24-hour window closes)",
+            "adaptation": "idle",
+            "decision": null,
+            "frequency": "complete",
+            "policy": {
+              "current": 1,
+              "recommended": 1,
+              "schedule": {
+                "applied": false,
+                "reason": "schedule_already_matches_policy"
+              }
+            }
+          }
+        ],
+        "decision": {
+          "outcome": "outside_envelope",
+          "rule": "explicit_request_guarded",
+          "reason": "frequency_outside_envelope",
+          "decision_id": "bd_4"
+        },
+        "acknowledgements": [],
+        "policy": {
+          "current": 1,
+          "recommended": 1,
+          "applied": false
+        },
+        "deliveries": [
+          {
+            "nudge_id": "schd_slot_5-4ece-a44c-cda3b90347e8_monday_0_20261005",
+            "sid": "SM75dce756704594e0bcefe686863133ef",
+            "label": "first-delivery",
+            "callback": 200
+          },
+          {
+            "nudge_id": "schd_slot_1-4e8b-af2f-df7b5231fe44_thursday_1_20261008",
+            "sid": "SM492282db07c8d0340798b76eeabee742",
+            "label": "delivery-1",
+            "callback": 200
+          }
+        ],
+        "clinician_changes": [],
+        "links": {
+          "T1": [
+            {
+              "id": "rx_5f893fc8-1e14-4604-a001-5c4c2499b7c9",
+              "ok": true
+            }
+          ],
+          "T2": [
+            {
+              "id": "rx_5f893fc8-1e14-4604-a001-5c4c2499b7c9",
+              "ok": false
+            }
+          ],
+          "T3": [
+            {
+              "id": "ndg_ea59d580-07b5-4ece-a44c-cda3b90347e8",
+              "ok": true
+            },
+            {
+              "id": "ndg_f87f684b-9da1-4e8b-af2f-df7b5231fe44",
+              "ok": true
+            }
+          ],
+          "T4": [
+            {
+              "id": "ndg_ea59d580-07b5-4ece-a44c-cda3b90347e8",
+              "ok": true
+            },
+            {
+              "id": "ndg_f87f684b-9da1-4e8b-af2f-df7b5231fe44",
+              "ok": true
+            }
+          ],
+          "T5": [
+            {
+              "id": "slot_5-4ece-a44c-cda3b90347e8_monday_0",
+              "ok": true
+            },
+            {
+              "id": "slot_1-4e8b-af2f-df7b5231fe44_thursday_1",
+              "ok": true
+            }
+          ],
+          "T6": [
+            {
+              "id": "slot_5-4ece-a44c-cda3b90347e8_monday_0",
+              "ok": false
+            },
+            {
+              "id": "slot_1-4e8b-af2f-df7b5231fe44_thursday_1",
+              "ok": false
+            }
+          ],
+          "T7": [],
+          "T8": [
+            {
+              "id": "0c28307cc205d72b14ef527579409805",
+              "ok": true
+            },
+            {
+              "id": "e32cfd9765ae1a349b51c12545f33d27",
+              "ok": true
+            }
+          ],
+          "T9": [
+            {
+              "id": "schd_slot_5-4ece-a44c-cda3b90347e8_monday_0_20261005",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_1-4e8b-af2f-df7b5231fe44_thursday_1_20261008",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_5-4ece-a44c-cda3b90347e8_monday_0_20261012",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_1-4e8b-af2f-df7b5231fe44_thursday_1_20261015",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_5-4ece-a44c-cda3b90347e8_monday_0_20261019",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_1-4e8b-af2f-df7b5231fe44_thursday_1_20261022",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_5-4ece-a44c-cda3b90347e8_monday_0_20261026",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_1-4e8b-af2f-df7b5231fe44_thursday_1_20261029",
+              "ok": true
+            }
+          ],
+          "T10": [
+            {
+              "id": "schd_slot_5-4ece-a44c-cda3b90347e8_monday_0_20261005",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_1-4e8b-af2f-df7b5231fe44_thursday_1_20261008",
+              "ok": true
+            }
+          ],
+          "T11": [
+            {
+              "id": "SM75dce756704594e0bcefe686863133ef",
+              "ok": true
+            },
+            {
+              "id": "SM492282db07c8d0340798b76eeabee742",
+              "ok": true
+            }
+          ],
+          "T12": [
+            {
+              "id": "reply_to_interaction",
+              "ok": true
+            }
+          ],
+          "T13": [
+            {
+              "id": "interaction_to_decision",
+              "ok": true
+            }
+          ],
+          "T14": [
+            {
+              "id": "decision_to_envelope",
+              "ok": true
+            }
+          ],
+          "T15": [
+            {
+              "id": "policy_to_audit",
+              "ok": true
+            }
+          ],
+          "T17": [
+            {
+              "id": "next_message_to_decision",
+              "ok": true
+            }
+          ],
+          "T18": [
+            {
+              "id": "next_message_to_prescription",
+              "ok": true
+            }
+          ],
+          "T19": [
+            {
+              "id": "tracked_link_to_next_message",
+              "ok": true
+            }
+          ]
+        },
+        "closure": {
+          "closed": true,
+          "path": [
+            "message SM492282db07c8d0340798b76eeabee742 -> occurrence schd_slot_1-4e8b-af2f-df7b5231fe44_thursday_1_20261008",
+            "occurrence -> slot slot_1-4e8b-af2f-df7b5231fe44_thursday_1",
+            "slot -> LLM draft ndg_f87f684b-9da1-4e8b-af2f-df7b5231fe44",
+            "draft -> prescription rx_5f893fc8-1e14-4604-a001-5c4c2499b7c9",
+            "prescription -> submitted text"
+          ],
+          "broken_at": null
+        }
+      },
+      {
+        "id": "B6",
+        "case_reply": "Send more messages",
+        "steps": [
+          {
+            "step": "intake via portal and Workflow A",
+            "status": 200,
+            "body": {
+              "status": "ok",
+              "user_id": "usr-b6",
+              "prescriptions": 1,
+              "nudges": 3
+            }
+          },
+          {
+            "step": "clinician approval",
+            "status": 200,
+            "body": {
+              "slots": 2
+            }
+          },
+          {
+            "step": "envelope approval 08591126",
+            "status": 200
+          },
+          {
+            "step": "signed reply",
+            "status": 200
+          },
+          {
+            "step": "workflow C tick (after reply)",
+            "adaptation": "complete",
+            "decision": {
+              "outcome": "applied",
+              "rule": "explicit_request",
+              "reason": "explicit request fitted approved envelope"
+            },
+            "frequency": "idle",
+            "policy": null
+          },
+          {
+            "step": "workflow C tick (after the 24-hour window closes)",
+            "adaptation": "idle",
+            "decision": null,
+            "frequency": "complete",
+            "policy": {
+              "current": 2,
+              "recommended": 2,
+              "schedule": {
+                "applied": false,
+                "reason": "schedule_already_matches_policy"
+              }
+            }
+          }
+        ],
+        "decision": {
+          "outcome": "applied",
+          "rule": "explicit_request",
+          "reason": "explicit request fitted approved envelope",
+          "decision_id": "bd_3"
+        },
+        "acknowledgements": [
+          {
+            "sid": "SM7f7897ce95680e34f1ca51746fb204ad",
+            "to": "whatsapp:+61400000001",
+            "body": "Got it — your request will be used for future messages within your approved plan."
+          }
+        ],
+        "policy": {
+          "current": 2,
+          "recommended": 2,
+          "applied": false
+        },
+        "deliveries": [
+          {
+            "nudge_id": "schd_slot_1-4db9-a77b-dedeb7932137_monday_0_20261005",
+            "sid": "SMf54c7798426d098d47e6b931296d33cc",
+            "label": "first-delivery",
+            "callback": 200
+          },
+          {
+            "nudge_id": "schd_slot_4-4321-a2b2-38469fbcb32f_wednesday_1_20261007",
+            "sid": "SMdb9ef5f261c6dbbccf3b597f631a9c40",
+            "label": "delivery-1",
+            "callback": 200
+          }
+        ],
+        "clinician_changes": [],
+        "links": {
+          "T1": [
+            {
+              "id": "rx_59b1c0b4-2a4b-464f-a568-4b941d35c151",
+              "ok": true
+            }
+          ],
+          "T2": [
+            {
+              "id": "rx_59b1c0b4-2a4b-464f-a568-4b941d35c151",
+              "ok": false
+            }
+          ],
+          "T3": [
+            {
+              "id": "ndg_77f66299-39c1-4db9-a77b-dedeb7932137",
+              "ok": true
+            },
+            {
+              "id": "ndg_6be093ea-cf84-4321-a2b2-38469fbcb32f",
+              "ok": true
+            },
+            {
+              "id": "ndg_2aa65006-d992-451a-a2d1-80b802042fb0",
+              "ok": true
+            }
+          ],
+          "T4": [
+            {
+              "id": "ndg_77f66299-39c1-4db9-a77b-dedeb7932137",
+              "ok": true
+            },
+            {
+              "id": "ndg_6be093ea-cf84-4321-a2b2-38469fbcb32f",
+              "ok": true
+            },
+            {
+              "id": "ndg_2aa65006-d992-451a-a2d1-80b802042fb0",
+              "ok": true
+            }
+          ],
+          "T5": [
+            {
+              "id": "slot_1-4db9-a77b-dedeb7932137_monday_0",
+              "ok": true
+            },
+            {
+              "id": "slot_4-4321-a2b2-38469fbcb32f_wednesday_1",
+              "ok": true
+            }
+          ],
+          "T6": [
+            {
+              "id": "slot_1-4db9-a77b-dedeb7932137_monday_0",
+              "ok": false
+            },
+            {
+              "id": "slot_4-4321-a2b2-38469fbcb32f_wednesday_1",
+              "ok": false
+            }
+          ],
+          "T7": [],
+          "T8": [
+            {
+              "id": "085911262764f34d2832fdf8cb9785d3",
+              "ok": true
+            }
+          ],
+          "T9": [
+            {
+              "id": "schd_slot_1-4db9-a77b-dedeb7932137_monday_0_20261005",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_4-4321-a2b2-38469fbcb32f_wednesday_1_20261007",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_1-4db9-a77b-dedeb7932137_monday_0_20261012",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_4-4321-a2b2-38469fbcb32f_wednesday_1_20261014",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_1-4db9-a77b-dedeb7932137_monday_0_20261019",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_4-4321-a2b2-38469fbcb32f_wednesday_1_20261021",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_1-4db9-a77b-dedeb7932137_monday_0_20261026",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_4-4321-a2b2-38469fbcb32f_wednesday_1_20261028",
+              "ok": true
+            }
+          ],
+          "T10": [
+            {
+              "id": "schd_slot_1-4db9-a77b-dedeb7932137_monday_0_20261005",
+              "ok": true
+            },
+            {
+              "id": "schd_slot_4-4321-a2b2-38469fbcb32f_wednesday_1_20261007",
+              "ok": true
+            }
+          ],
+          "T11": [
+            {
+              "id": "SMf54c7798426d098d47e6b931296d33cc",
+              "ok": true
+            },
+            {
+              "id": "SMdb9ef5f261c6dbbccf3b597f631a9c40",
+              "ok": true
+            }
+          ],
+          "T12": [
+            {
+              "id": "reply_to_interaction",
+              "ok": true
+            }
+          ],
+          "T13": [
+            {
+              "id": "interaction_to_decision",
+              "ok": true
+            }
+          ],
+          "T14": [
+            {
+              "id": "decision_to_envelope",
+              "ok": true
+            }
+          ],
+          "T15": [
+            {
+              "id": "policy_to_audit",
+              "ok": true
+            }
+          ],
+          "T17": [
+            {
+              "id": "next_message_to_decision",
+              "ok": true
+            }
+          ],
+          "T18": [
+            {
+              "id": "next_message_to_prescription",
+              "ok": true
+            }
+          ],
+          "T19": [
+            {
+              "id": "tracked_link_to_next_message",
+              "ok": true
+            }
+          ]
+        },
+        "closure": {
+          "closed": true,
+          "path": [
+            "message SMdb9ef5f261c6dbbccf3b597f631a9c40 -> occurrence schd_slot_4-4321-a2b2-38469fbcb32f_wednesday_1_20261007",
+            "occurrence -> slot slot_4-4321-a2b2-38469fbcb32f_wednesday_1",
+            "slot -> LLM draft ndg_6be093ea-cf84-4321-a2b2-38469fbcb32f",
+            "draft -> prescription rx_59b1c0b4-2a4b-464f-a568-4b941d35c151",
+            "prescription -> submitted text"
+          ],
+          "broken_at": null
+        }
+      }
+    ],
+    "links": {
+      "T1": {
+        "present": 7,
+        "applicable": 7,
+        "missing": []
+      },
+      "T2": {
+        "present": 0,
+        "applicable": 7,
+        "missing": [
+          "B1",
+          "B2",
+          "B3",
+          "B4",
+          "B5",
+          "B6"
+        ]
+      },
+      "T3": {
+        "present": 15,
+        "applicable": 15,
+        "missing": []
+      },
+      "T4": {
+        "present": 15,
+        "applicable": 15,
+        "missing": []
+      },
+      "T5": {
+        "present": 14,
+        "applicable": 14,
+        "missing": []
+      },
+      "T6": {
+        "present": 0,
+        "applicable": 14,
+        "missing": [
+          "B1",
+          "B2",
+          "B3",
+          "B4",
+          "B5",
+          "B6"
+        ]
+      },
+      "T7": {
+        "present": 3,
+        "applicable": 4,
+        "missing": [
+          "B4"
+        ]
+      },
+      "T8": {
+        "present": 8,
+        "applicable": 8,
+        "missing": []
+      },
+      "T9": {
+        "present": 56,
+        "applicable": 56,
+        "missing": []
+      },
+      "T10": {
+        "present": 12,
+        "applicable": 12,
+        "missing": []
+      },
+      "T11": {
+        "present": 12,
+        "applicable": 12,
+        "missing": []
+      },
+      "T12": {
+        "present": 6,
+        "applicable": 6,
+        "missing": []
+      },
+      "T13": {
+        "present": 6,
+        "applicable": 6,
+        "missing": []
+      },
+      "T14": {
+        "present": 6,
+        "applicable": 6,
+        "missing": []
+      },
+      "T15": {
+        "present": 6,
+        "applicable": 6,
+        "missing": []
+      },
+      "T17": {
+        "present": 6,
+        "applicable": 6,
+        "missing": []
+      },
+      "T18": {
+        "present": 6,
+        "applicable": 6,
+        "missing": []
+      },
+      "T19": {
+        "present": 6,
+        "applicable": 6,
+        "missing": []
+      }
+    },
+    "chains_closed": 6,
+    "total": 6
+  },
+  "refused_outbound": []
+}

@@ -1,0 +1,1637 @@
+{
+  "status": "post hoc descriptive analysis; frozen artifact read, not refitted",
+  "model_sha256": "971e347d95f2d2eaf207db7d0d9978defe97df871eeb94068903eb989321aaa2",
+  "dataset_sha256": "b332923d43e528836c39259fbc35f99485601c60d5db33eddb0d9b3348f3a523",
+  "training_prevalence_constant": 0.19696176008381353,
+  "bins": 5,
+  "resamples": 10000,
+  "seed": 5128,
+  "splits": {
+    "validation": {
+      "rows": 118,
+      "positives": 19,
+      "reproduces_stored_metrics": true,
+      "point": {
+        "brier": 0.11276248439730868,
+        "constant_brier": 0.13638252067103465,
+        "difference": 0.02362003627372597,
+        "skill": 0.17318961519049314,
+        "calibration_in_the_large": 0.012402448331767707,
+        "calibration_intercept": 0.046539882289587685,
+        "calibration_slope": 1.111515778728304
+      },
+      "prediction_range": [
+        0.07117557501493807,
+        0.6347147368124947
+      ],
+      "reliability": [
+        {
+          "bin": 1,
+          "rows": 24,
+          "positives": 2,
+          "mean_predicted": 0.07120706005522948,
+          "observed_rate": 0.08333333333333333,
+          "observed_wilson_95": [
+            0.023158815087796644,
+            0.2584880237049766
+          ],
+          "predicted_range": [
+            0.07117557501493807,
+            0.0712442696483012
+          ]
+        },
+        {
+          "bin": 2,
+          "rows": 23,
+          "positives": 1,
+          "mean_predicted": 0.08675503282147615,
+          "observed_rate": 0.043478260869565216,
+          "observed_wilson_95": [
+            0.007716666057951335,
+            0.2099115525545071
+          ],
+          "predicted_range": [
+            0.07131302549145728,
+            0.10094946723386755
+          ]
+        },
+        {
+          "bin": 3,
+          "rows": 24,
+          "positives": 3,
+          "mean_predicted": 0.11142032501723735,
+          "observed_rate": 0.125,
+          "observed_wilson_95": [
+            0.04344334046194118,
+            0.3100388144515548
+          ],
+          "predicted_range": [
+            0.10094946723386755,
+            0.1411577774937273
+          ]
+        },
+        {
+          "bin": 4,
+          "rows": 23,
+          "positives": 4,
+          "mean_predicted": 0.19138211852695225,
+          "observed_rate": 0.17391304347826086,
+          "observed_wilson_95": [
+            0.0697865351446468,
+            0.3713764781499663
+          ],
+          "predicted_range": [
+            0.1411577774937273,
+            0.2621306733842961
+          ]
+        },
+        {
+          "bin": 5,
+          "rows": 24,
+          "positives": 9,
+          "mean_predicted": 0.4034698825164809,
+          "observed_rate": 0.375,
+          "observed_wilson_95": [
+            0.21159367459047676,
+            0.5729003770473553
+          ],
+          "predicted_range": [
+            0.2621306733842961,
+            0.6347147368124947
+          ]
+        }
+      ],
+      "bootstrap": {
+        "profiles": 30,
+        "resamples_used": 10000,
+        "percentile_95": {
+          "brier": [
+            0.06997993073618766,
+            0.15961888698344345
+          ],
+          "constant_brier": [
+            0.08930030825467812,
+            0.1980174169251743
+          ],
+          "difference": [
+            -0.009369205736087792,
+            0.07343827584526089
+          ],
+          "skill": [
+            -0.07064378849130509,
+            0.4264766853689037
+          ],
+          "calibration_in_the_large": [
+            -0.04024629686063868,
+            0.055932055646395674
+          ],
+          "calibration_intercept": [
+            -1.528048127903619,
+            1.055578145704224
+          ],
+          "calibration_slope": [
+            0.18220109057037104,
+            1.8868691482410729
+          ]
+        },
+        "share_model_better_than_constant": 0.8742
+      },
+      "predictions": [
+        {
+          "synthetic_user_id": "syn_241",
+          "week": 9,
+          "probability": 0.0712442696483012,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_241",
+          "week": 9,
+          "probability": 0.0712442696483012,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_241",
+          "week": 9,
+          "probability": 0.0712442696483012,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_241",
+          "week": 10,
+          "probability": 0.07117557501493807,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_241",
+          "week": 10,
+          "probability": 0.07117557501493807,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_241",
+          "week": 10,
+          "probability": 0.07117557501493807,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_242",
+          "week": 9,
+          "probability": 0.10094946723386755,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_242",
+          "week": 9,
+          "probability": 0.10094946723386755,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_242",
+          "week": 10,
+          "probability": 0.10094946723386755,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_242",
+          "week": 10,
+          "probability": 0.10094946723386755,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_243",
+          "week": 9,
+          "probability": 0.2909784713841791,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_243",
+          "week": 10,
+          "probability": 0.37941965938153177,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_244",
+          "week": 9,
+          "probability": 0.15673385128156175,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_244",
+          "week": 9,
+          "probability": 0.10085524077016972,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_244",
+          "week": 10,
+          "probability": 0.10094946723386755,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_244",
+          "week": 10,
+          "probability": 0.10094946723386755,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_245",
+          "week": 9,
+          "probability": 0.10094946723386755,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_245",
+          "week": 9,
+          "probability": 0.10094946723386755,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_245",
+          "week": 10,
+          "probability": 0.10094946723386755,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_245",
+          "week": 10,
+          "probability": 0.10094946723386755,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_246",
+          "week": 9,
+          "probability": 0.2984430554573477,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_246",
+          "week": 9,
+          "probability": 0.24847192492033116,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_246",
+          "week": 9,
+          "probability": 0.12604205935456378,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_246",
+          "week": 10,
+          "probability": 0.14103190782556527,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_247",
+          "week": 9,
+          "probability": 0.0712442696483012,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_247",
+          "week": 9,
+          "probability": 0.0712442696483012,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_247",
+          "week": 9,
+          "probability": 0.2350073824364296,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_247",
+          "week": 10,
+          "probability": 0.3661202045856365,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_247",
+          "week": 10,
+          "probability": 0.3177477072027483,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_248",
+          "week": 9,
+          "probability": 0.1411577774937273,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_248",
+          "week": 10,
+          "probability": 0.2909784713841791,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_249",
+          "week": 9,
+          "probability": 0.37941965938153177,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_249",
+          "week": 10,
+          "probability": 0.33839724803693777,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_250",
+          "week": 9,
+          "probability": 0.1411577774937273,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_250",
+          "week": 10,
+          "probability": 0.2621306733842961,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_250",
+          "week": 10,
+          "probability": 0.2226710921878948,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_251",
+          "week": 9,
+          "probability": 0.29076423623363573,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_251",
+          "week": 10,
+          "probability": 0.3666024254569873,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_251",
+          "week": 10,
+          "probability": 0.3181981985781843,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_252",
+          "week": 9,
+          "probability": 0.10104377183795014,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_252",
+          "week": 9,
+          "probability": 0.10104377183795014,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_252",
+          "week": 10,
+          "probability": 0.10094946723386755,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_252",
+          "week": 10,
+          "probability": 0.10094946723386755,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_253",
+          "week": 9,
+          "probability": 0.10104377183795014,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_253",
+          "week": 9,
+          "probability": 0.10104377183795014,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_253",
+          "week": 10,
+          "probability": 0.10094946723386755,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_253",
+          "week": 10,
+          "probability": 0.10094946723386755,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_254",
+          "week": 9,
+          "probability": 0.1411577774937273,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_254",
+          "week": 10,
+          "probability": 0.14128374102203808,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_255",
+          "week": 9,
+          "probability": 0.10085524077016972,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_255",
+          "week": 9,
+          "probability": 0.10085524077016972,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_255",
+          "week": 10,
+          "probability": 0.10094946723386755,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_255",
+          "week": 10,
+          "probability": 0.10094946723386755,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_256",
+          "week": 9,
+          "probability": 0.10085524077016972,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_256",
+          "week": 9,
+          "probability": 0.10085524077016972,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_256",
+          "week": 10,
+          "probability": 0.1411577774937273,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_257",
+          "week": 9,
+          "probability": 0.07117557501493807,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_257",
+          "week": 9,
+          "probability": 0.07117557501493807,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_257",
+          "week": 9,
+          "probability": 0.07117557501493807,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_257",
+          "week": 10,
+          "probability": 0.07117557501493807,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_257",
+          "week": 10,
+          "probability": 0.23482070838329572,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_257",
+          "week": 10,
+          "probability": 0.19257823552371095,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_258",
+          "week": 9,
+          "probability": 0.6347147368124947,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_258",
+          "week": 9,
+          "probability": 0.6347147368124947,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_258",
+          "week": 9,
+          "probability": 0.6347147368124947,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_258",
+          "week": 10,
+          "probability": 0.6052308722850585,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_258",
+          "week": 10,
+          "probability": 0.6052308722850585,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_259",
+          "week": 9,
+          "probability": 0.10094946723386755,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_259",
+          "week": 9,
+          "probability": 0.10094946723386755,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_259",
+          "week": 10,
+          "probability": 0.0712442696483012,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_259",
+          "week": 10,
+          "probability": 0.0712442696483012,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_259",
+          "week": 10,
+          "probability": 0.0712442696483012,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_260",
+          "week": 9,
+          "probability": 0.22295289404109647,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_260",
+          "week": 10,
+          "probability": 0.1570085975873564,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_260",
+          "week": 10,
+          "probability": 0.2621306733842961,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_261",
+          "week": 9,
+          "probability": 0.07131302549145728,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_261",
+          "week": 9,
+          "probability": 0.07131302549145728,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_261",
+          "week": 9,
+          "probability": 0.07131302549145728,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_261",
+          "week": 10,
+          "probability": 0.07117557501493807,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_261",
+          "week": 10,
+          "probability": 0.07117557501493807,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_261",
+          "week": 10,
+          "probability": 0.07117557501493807,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_262",
+          "week": 9,
+          "probability": 0.14128374102203808,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_262",
+          "week": 10,
+          "probability": 0.14128374102203808,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_263",
+          "week": 9,
+          "probability": 0.2621306733842961,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_263",
+          "week": 9,
+          "probability": 0.2226710921878948,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_263",
+          "week": 10,
+          "probability": 0.18748269889827204,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_263",
+          "week": 10,
+          "probability": 0.15687117547644513,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_264",
+          "week": 9,
+          "probability": 0.10104377183795014,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_264",
+          "week": 9,
+          "probability": 0.10104377183795014,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_264",
+          "week": 10,
+          "probability": 0.0712442696483012,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_264",
+          "week": 10,
+          "probability": 0.0712442696483012,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_264",
+          "week": 10,
+          "probability": 0.0712442696483012,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_265",
+          "week": 9,
+          "probability": 0.14103190782556527,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_265",
+          "week": 10,
+          "probability": 0.14128374102203808,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_266",
+          "week": 9,
+          "probability": 0.2905500941782294,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_266",
+          "week": 10,
+          "probability": 0.3666024254569873,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_266",
+          "week": 10,
+          "probability": 0.3181981985781843,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_267",
+          "week": 9,
+          "probability": 0.07131302549145728,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_267",
+          "week": 9,
+          "probability": 0.07131302549145728,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_267",
+          "week": 9,
+          "probability": 0.07131302549145728,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_267",
+          "week": 10,
+          "probability": 0.07117557501493807,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_267",
+          "week": 10,
+          "probability": 0.07117557501493807,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_267",
+          "week": 10,
+          "probability": 0.07117557501493807,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_268",
+          "week": 9,
+          "probability": 0.14103190782556527,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_268",
+          "week": 10,
+          "probability": 0.07131302549145728,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_268",
+          "week": 10,
+          "probability": 0.07131302549145728,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_268",
+          "week": 10,
+          "probability": 0.07131302549145728,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_269",
+          "week": 9,
+          "probability": 0.6347147368124947,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_269",
+          "week": 9,
+          "probability": 0.4311548819249196,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_269",
+          "week": 9,
+          "probability": 0.24847192492033116,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_269",
+          "week": 10,
+          "probability": 0.3661202045856365,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_269",
+          "week": 10,
+          "probability": 0.22231174591949251,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_270",
+          "week": 9,
+          "probability": 0.07131302549145728,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_270",
+          "week": 9,
+          "probability": 0.07131302549145728,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_270",
+          "week": 9,
+          "probability": 0.2351941592750982,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_270",
+          "week": 10,
+          "probability": 0.19257823552371095,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_270",
+          "week": 10,
+          "probability": 0.15638181509707721,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_270",
+          "week": 10,
+          "probability": 0.1259276919947378,
+          "label": 0
+        }
+      ]
+    },
+    "test": {
+      "rows": 109,
+      "positives": 24,
+      "reproduces_stored_metrics": true,
+      "point": {
+        "brier": 0.13716115380054356,
+        "constant_brier": 0.17224196719198281,
+        "difference": 0.03508081339143926,
+        "skill": 0.2036716949031231,
+        "calibration_in_the_large": -0.02298757899830242,
+        "calibration_intercept": 0.4208186901778627,
+        "calibration_slope": 1.206841209912689
+      },
+      "prediction_range": [
+        0.07117557501493807,
+        0.6349555136435776
+      ],
+      "reliability": [
+        {
+          "bin": 1,
+          "rows": 22,
+          "positives": 2,
+          "mean_predicted": 0.07125678740427313,
+          "observed_rate": 0.09090909090909091,
+          "observed_wilson_95": [
+            0.025295428762322658,
+            0.278149470278251
+          ],
+          "predicted_range": [
+            0.07117557501493807,
+            0.07131302549145728
+          ]
+        },
+        {
+          "bin": 2,
+          "rows": 22,
+          "positives": 3,
+          "mean_predicted": 0.09827240930811457,
+          "observed_rate": 0.13636363636363635,
+          "observed_wilson_95": [
+            0.047490036769455096,
+            0.3333498734888326
+          ],
+          "predicted_range": [
+            0.07131302549145728,
+            0.10104377183795014
+          ]
+        },
+        {
+          "bin": 3,
+          "rows": 21,
+          "positives": 2,
+          "mean_predicted": 0.13327329382845582,
+          "observed_rate": 0.09523809523809523,
+          "observed_wilson_95": [
+            0.026518767198269788,
+            0.2891413926484656
+          ],
+          "predicted_range": [
+            0.10104377183795014,
+            0.14128374102203808
+          ]
+        },
+        {
+          "bin": 4,
+          "rows": 22,
+          "positives": 4,
+          "mean_predicted": 0.21286833916673498,
+          "observed_rate": 0.18181818181818182,
+          "observed_wilson_95": [
+            0.07306884532528965,
+            0.3851660761507122
+          ],
+          "predicted_range": [
+            0.14128374102203808,
+            0.3177477072027483
+          ]
+        },
+        {
+          "bin": 5,
+          "rows": 22,
+          "positives": 13,
+          "mean_predicted": 0.467403133156671,
+          "observed_rate": 0.5909090909090909,
+          "observed_wilson_95": [
+            0.387348183298974,
+            0.7674418391364541
+          ],
+          "predicted_range": [
+            0.3539712056061079,
+            0.6349555136435776
+          ]
+        }
+      ],
+      "bootstrap": {
+        "profiles": 30,
+        "resamples_used": 10000,
+        "percentile_95": {
+          "brier": [
+            0.08912365044188736,
+            0.1883081996718534
+          ],
+          "constant_brier": [
+            0.11603627560699825,
+            0.23520760895506415
+          ],
+          "difference": [
+            0.011658491479361613,
+            0.06687135021049478
+          ],
+          "skill": [
+            0.07843199569573071,
+            0.3462201490484061
+          ],
+          "calibration_in_the_large": [
+            -0.0900227604817467,
+            0.036028147179548387
+          ],
+          "calibration_intercept": [
+            -0.3117422872769147,
+            1.1660349931136367
+          ],
+          "calibration_slope": [
+            0.7584093204854512,
+            1.7896516390375188
+          ]
+        },
+        "share_model_better_than_constant": 0.9993
+      },
+      "predictions": [
+        {
+          "synthetic_user_id": "syn_271",
+          "week": 11,
+          "probability": 0.0712442696483012,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_271",
+          "week": 11,
+          "probability": 0.0712442696483012,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_271",
+          "week": 11,
+          "probability": 0.0712442696483012,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_271",
+          "week": 12,
+          "probability": 0.07117557501493807,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_271",
+          "week": 12,
+          "probability": 0.07117557501493807,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_271",
+          "week": 12,
+          "probability": 0.07117557501493807,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_272",
+          "week": 11,
+          "probability": 0.4324602441291531,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_272",
+          "week": 12,
+          "probability": 0.24866592447352365,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_272",
+          "week": 12,
+          "probability": 0.3539712056061079,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_272",
+          "week": 12,
+          "probability": 0.3539712056061079,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_273",
+          "week": 11,
+          "probability": 0.0712442696483012,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_273",
+          "week": 11,
+          "probability": 0.0712442696483012,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_273",
+          "week": 11,
+          "probability": 0.0712442696483012,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_273",
+          "week": 12,
+          "probability": 0.14103190782556527,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_274",
+          "week": 11,
+          "probability": 0.14103190782556527,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_274",
+          "week": 12,
+          "probability": 0.07131302549145728,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_274",
+          "week": 12,
+          "probability": 0.2351941592750982,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_274",
+          "week": 12,
+          "probability": 0.19290144172569135,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_275",
+          "week": 11,
+          "probability": 0.6349555136435776,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_275",
+          "week": 11,
+          "probability": 0.4314096371625319,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_275",
+          "week": 11,
+          "probability": 0.49398869042870636,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_275",
+          "week": 12,
+          "probability": 0.4848060860167073,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_275",
+          "week": 12,
+          "probability": 0.3177477072027483,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_276",
+          "week": 11,
+          "probability": 0.14103190782556527,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_276",
+          "week": 12,
+          "probability": 0.14128374102203808,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_277",
+          "week": 11,
+          "probability": 0.14103190782556527,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_277",
+          "week": 12,
+          "probability": 0.14128374102203808,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_278",
+          "week": 11,
+          "probability": 0.10085524077016972,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_278",
+          "week": 11,
+          "probability": 0.10085524077016972,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_278",
+          "week": 12,
+          "probability": 0.1411577774937273,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_279",
+          "week": 11,
+          "probability": 0.1935707531888249,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_279",
+          "week": 12,
+          "probability": 0.10104377183795014,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_279",
+          "week": 12,
+          "probability": 0.10104377183795014,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_280",
+          "week": 11,
+          "probability": 0.14128374102203808,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_280",
+          "week": 12,
+          "probability": 0.07131302549145728,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_280",
+          "week": 12,
+          "probability": 0.07131302549145728,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_280",
+          "week": 12,
+          "probability": 0.07131302549145728,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_281",
+          "week": 11,
+          "probability": 0.5752146605734845,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_281",
+          "week": 12,
+          "probability": 0.5757221490881698,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_282",
+          "week": 11,
+          "probability": 0.14128374102203808,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_282",
+          "week": 12,
+          "probability": 0.2621306733842961,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_282",
+          "week": 12,
+          "probability": 0.3666024254569873,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_283",
+          "week": 11,
+          "probability": 0.1411577774937273,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_283",
+          "week": 12,
+          "probability": 0.07131302549145728,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_283",
+          "week": 12,
+          "probability": 0.07131302549145728,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_283",
+          "week": 12,
+          "probability": 0.07131302549145728,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_284",
+          "week": 11,
+          "probability": 0.1261565155911653,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_284",
+          "week": 11,
+          "probability": 0.07131302549145728,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_284",
+          "week": 11,
+          "probability": 0.07131302549145728,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_284",
+          "week": 12,
+          "probability": 0.10085524077016972,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_284",
+          "week": 12,
+          "probability": 0.26172908849700866,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_285",
+          "week": 11,
+          "probability": 0.3663612815546009,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_285",
+          "week": 11,
+          "probability": 0.3663612815546009,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_285",
+          "week": 12,
+          "probability": 0.49372906977376557,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_285",
+          "week": 12,
+          "probability": 0.6347147368124947,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_285",
+          "week": 12,
+          "probability": 0.4311548819249196,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_286",
+          "week": 11,
+          "probability": 0.19340867203033704,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_286",
+          "week": 12,
+          "probability": 0.07131302549145728,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_286",
+          "week": 12,
+          "probability": 0.07131302549145728,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_286",
+          "week": 12,
+          "probability": 0.07131302549145728,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_287",
+          "week": 11,
+          "probability": 0.48532494231876233,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_287",
+          "week": 11,
+          "probability": 0.48532494231876233,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_287",
+          "week": 12,
+          "probability": 0.43220534007858546,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_288",
+          "week": 11,
+          "probability": 0.1937329375511177,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_288",
+          "week": 12,
+          "probability": 0.10104377183795014,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_288",
+          "week": 12,
+          "probability": 0.10104377183795014,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_289",
+          "week": 11,
+          "probability": 0.2730136277367813,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_289",
+          "week": 11,
+          "probability": 0.15673385128156175,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_289",
+          "week": 12,
+          "probability": 0.1411577774937273,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_290",
+          "week": 11,
+          "probability": 0.10104377183795014,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_290",
+          "week": 11,
+          "probability": 0.10104377183795014,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_290",
+          "week": 12,
+          "probability": 0.1411577774937273,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_291",
+          "week": 11,
+          "probability": 0.14128374102203808,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_291",
+          "week": 12,
+          "probability": 0.10104377183795014,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_291",
+          "week": 12,
+          "probability": 0.10104377183795014,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_292",
+          "week": 11,
+          "probability": 0.18764096923586474,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_292",
+          "week": 11,
+          "probability": 0.1570085975873564,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_292",
+          "week": 12,
+          "probability": 0.1411577774937273,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_293",
+          "week": 11,
+          "probability": 0.14128374102203808,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_293",
+          "week": 12,
+          "probability": 0.10104377183795014,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_293",
+          "week": 12,
+          "probability": 0.10104377183795014,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_294",
+          "week": 11,
+          "probability": 0.14103190782556527,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_294",
+          "week": 12,
+          "probability": 0.10104377183795014,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_294",
+          "week": 12,
+          "probability": 0.10104377183795014,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_295",
+          "week": 11,
+          "probability": 0.5757221490881698,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_295",
+          "week": 12,
+          "probability": 0.5757221490881698,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_296",
+          "week": 11,
+          "probability": 0.1259276919947378,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_296",
+          "week": 11,
+          "probability": 0.07117557501493807,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_296",
+          "week": 11,
+          "probability": 0.07117557501493807,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_296",
+          "week": 12,
+          "probability": 0.07117557501493807,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_296",
+          "week": 12,
+          "probability": 0.23482070838329572,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_296",
+          "week": 12,
+          "probability": 0.19257823552371095,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_297",
+          "week": 11,
+          "probability": 0.10094946723386755,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_297",
+          "week": 11,
+          "probability": 0.10094946723386755,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_297",
+          "week": 12,
+          "probability": 0.10094946723386755,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_297",
+          "week": 12,
+          "probability": 0.10094946723386755,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_298",
+          "week": 11,
+          "probability": 0.24866592447352365,
+          "label": 1
+        },
+        {
+          "synthetic_user_id": "syn_298",
+          "week": 11,
+          "probability": 0.3539712056061079,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_298",
+          "week": 11,
+          "probability": 0.19290144172569135,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_298",
+          "week": 12,
+          "probability": 0.18732453127414106,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_298",
+          "week": 12,
+          "probability": 0.15673385128156175,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_299",
+          "week": 11,
+          "probability": 0.3791751316162908,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_299",
+          "week": 12,
+          "probability": 0.2986605658715664,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_299",
+          "week": 12,
+          "probability": 0.15665605894242993,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_299",
+          "week": 12,
+          "probability": 0.1261565155911653,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_300",
+          "week": 11,
+          "probability": 0.10085524077016972,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_300",
+          "week": 11,
+          "probability": 0.10085524077016972,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_300",
+          "week": 12,
+          "probability": 0.10094946723386755,
+          "label": 0
+        },
+        {
+          "synthetic_user_id": "syn_300",
+          "week": 12,
+          "probability": 0.10094946723386755,
+          "label": 1
+        }
+      ]
+    }
+  }
+}

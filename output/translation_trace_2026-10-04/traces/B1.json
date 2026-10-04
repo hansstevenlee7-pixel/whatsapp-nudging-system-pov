@@ -1,0 +1,4023 @@
+{
+  "case": {
+    "id": "B1",
+    "text": "Sleep: be in bed by 10:30 pm, 3 nights a week, for 8 weeks.",
+    "llm": {
+      "prescriptions": [
+        {
+          "ref": "p1",
+          "pillar": "sleep",
+          "category": "establish",
+          "frequency_per_week": 3,
+          "duration_weeks": 8
+        }
+      ],
+      "nudges": [
+        {
+          "prescription_ref": "p1",
+          "pillar": "sleep",
+          "nudge_type": "reminder",
+          "action_text": "Be in bed by 10:30 pm",
+          "scheduled_date": "2026-10-05",
+          "scheduled_time": "09:00",
+          "tone_variant": "encouraging",
+          "message_body": "Reminder: be in bed by 10:30 pm.",
+          "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+          "template_name": "health_plan_reminder"
+        },
+        {
+          "prescription_ref": "p1",
+          "pillar": "sleep",
+          "nudge_type": "reminder",
+          "action_text": "Be in bed by 10:30 pm",
+          "scheduled_date": "2026-10-07",
+          "scheduled_time": "09:00",
+          "tone_variant": "encouraging",
+          "message_body": "Reminder: be in bed by 10:30 pm.",
+          "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+          "template_name": "health_plan_reminder"
+        },
+        {
+          "prescription_ref": "p1",
+          "pillar": "sleep",
+          "nudge_type": "reminder",
+          "action_text": "Be in bed by 10:30 pm",
+          "scheduled_date": "2026-10-09",
+          "scheduled_time": "09:00",
+          "tone_variant": "encouraging",
+          "message_body": "Reminder: be in bed by 10:30 pm.",
+          "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+          "template_name": "health_plan_reminder"
+        }
+      ]
+    },
+    "review": {},
+    "reply": "Send fewer messages"
+  },
+  "result": {
+    "id": "B1",
+    "case_reply": "Send fewer messages",
+    "steps": [
+      {
+        "step": "intake via portal and Workflow A",
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "user_id": "usr-b1",
+          "prescriptions": 1,
+          "nudges": 3
+        }
+      },
+      {
+        "step": "clinician approval",
+        "status": 200,
+        "body": {
+          "slots": 3
+        }
+      },
+      {
+        "step": "envelope approval e32cfd97",
+        "status": 200
+      },
+      {
+        "step": "signed reply",
+        "status": 200
+      },
+      {
+        "step": "workflow C tick (after reply)",
+        "adaptation": "complete",
+        "decision": {
+          "outcome": "outside_envelope",
+          "rule": "explicit_request_guarded",
+          "reason": "frequency_outside_envelope"
+        },
+        "frequency": "idle",
+        "policy": null
+      },
+      {
+        "step": "workflow C tick (after the 24-hour window closes)",
+        "adaptation": "idle",
+        "decision": null,
+        "frequency": "complete",
+        "policy": {
+          "current": 3,
+          "recommended": 3,
+          "schedule": {
+            "applied": false,
+            "reason": "schedule_already_matches_policy"
+          }
+        }
+      }
+    ],
+    "decision": {
+      "outcome": "outside_envelope",
+      "rule": "explicit_request_guarded",
+      "reason": "frequency_outside_envelope",
+      "decision_id": "bd_3"
+    },
+    "acknowledgements": [],
+    "policy": {
+      "current": 3,
+      "recommended": 3,
+      "applied": false
+    },
+    "deliveries": [
+      {
+        "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261005",
+        "sid": "SM8099c868fc65a4d1494baa692aec384b",
+        "label": "first-delivery",
+        "callback": 200
+      },
+      {
+        "nudge_id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261007",
+        "sid": "SM7bb964267deed66f70388a1030c0a3e0",
+        "label": "delivery-1",
+        "callback": 200
+      }
+    ],
+    "clinician_changes": [],
+    "links": {
+      "T1": [
+        {
+          "id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+          "ok": true
+        }
+      ],
+      "T2": [
+        {
+          "id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+          "ok": false
+        }
+      ],
+      "T3": [
+        {
+          "id": "ndg_3700fc9e-ce79-4015-a5b0-84921f5a9715",
+          "ok": true
+        },
+        {
+          "id": "ndg_50825ba6-10bc-4be5-a257-6854b4c09950",
+          "ok": true
+        },
+        {
+          "id": "ndg_d6061eee-ec0c-49f7-a6f2-9458244b068f",
+          "ok": true
+        }
+      ],
+      "T4": [
+        {
+          "id": "ndg_3700fc9e-ce79-4015-a5b0-84921f5a9715",
+          "ok": true
+        },
+        {
+          "id": "ndg_50825ba6-10bc-4be5-a257-6854b4c09950",
+          "ok": true
+        },
+        {
+          "id": "ndg_d6061eee-ec0c-49f7-a6f2-9458244b068f",
+          "ok": true
+        }
+      ],
+      "T5": [
+        {
+          "id": "slot_9-4015-a5b0-84921f5a9715_monday_0",
+          "ok": true
+        },
+        {
+          "id": "slot_c-4be5-a257-6854b4c09950_wednesday_1",
+          "ok": true
+        },
+        {
+          "id": "slot_c-49f7-a6f2-9458244b068f_friday_2",
+          "ok": true
+        }
+      ],
+      "T6": [
+        {
+          "id": "slot_9-4015-a5b0-84921f5a9715_monday_0",
+          "ok": false
+        },
+        {
+          "id": "slot_c-4be5-a257-6854b4c09950_wednesday_1",
+          "ok": false
+        },
+        {
+          "id": "slot_c-49f7-a6f2-9458244b068f_friday_2",
+          "ok": false
+        }
+      ],
+      "T7": [],
+      "T8": [
+        {
+          "id": "e32cfd9765ae1a349b51c12545f33d27",
+          "ok": true
+        }
+      ],
+      "T9": [
+        {
+          "id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261005",
+          "ok": true
+        },
+        {
+          "id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261007",
+          "ok": true
+        },
+        {
+          "id": "schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261009",
+          "ok": true
+        },
+        {
+          "id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261012",
+          "ok": true
+        },
+        {
+          "id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261014",
+          "ok": true
+        },
+        {
+          "id": "schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261016",
+          "ok": true
+        },
+        {
+          "id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261019",
+          "ok": true
+        },
+        {
+          "id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261021",
+          "ok": true
+        },
+        {
+          "id": "schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261023",
+          "ok": true
+        },
+        {
+          "id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261026",
+          "ok": true
+        },
+        {
+          "id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261028",
+          "ok": true
+        },
+        {
+          "id": "schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261030",
+          "ok": true
+        }
+      ],
+      "T10": [
+        {
+          "id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261005",
+          "ok": true
+        },
+        {
+          "id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261007",
+          "ok": true
+        }
+      ],
+      "T11": [
+        {
+          "id": "SM8099c868fc65a4d1494baa692aec384b",
+          "ok": true
+        },
+        {
+          "id": "SM7bb964267deed66f70388a1030c0a3e0",
+          "ok": true
+        }
+      ],
+      "T12": [
+        {
+          "id": "reply_to_interaction",
+          "ok": true
+        }
+      ],
+      "T13": [
+        {
+          "id": "interaction_to_decision",
+          "ok": true
+        }
+      ],
+      "T14": [
+        {
+          "id": "decision_to_envelope",
+          "ok": true
+        }
+      ],
+      "T15": [
+        {
+          "id": "policy_to_audit",
+          "ok": true
+        }
+      ],
+      "T17": [
+        {
+          "id": "next_message_to_decision",
+          "ok": true
+        }
+      ],
+      "T18": [
+        {
+          "id": "next_message_to_prescription",
+          "ok": true
+        }
+      ],
+      "T19": [
+        {
+          "id": "tracked_link_to_next_message",
+          "ok": true
+        }
+      ]
+    },
+    "closure": {
+      "closed": true,
+      "path": [
+        "message SM7bb964267deed66f70388a1030c0a3e0 -> occurrence schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261007",
+        "occurrence -> slot slot_c-4be5-a257-6854b4c09950_wednesday_1",
+        "slot -> LLM draft ndg_50825ba6-10bc-4be5-a257-6854b4c09950",
+        "draft -> prescription rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+        "prescription -> submitted text"
+      ],
+      "broken_at": null
+    }
+  },
+  "prescriptions": [
+    "rx_ece603df-5930-4059-ac64-9230dc42bc6e"
+  ],
+  "drafts": [
+    "ndg_3700fc9e-ce79-4015-a5b0-84921f5a9715",
+    "ndg_50825ba6-10bc-4be5-a257-6854b4c09950",
+    "ndg_d6061eee-ec0c-49f7-a6f2-9458244b068f"
+  ],
+  "gemini_requests": [
+    {
+      "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[harness]",
+      "prompt_sha256": "6629d59b2ce40d6c78efb8350f124df868eb88bd19a23aa0f49f991f8568fbcb"
+    }
+  ],
+  "workflow_runs": [
+    {
+      "workflow": "A",
+      "visited": [
+        "Intake Webhook",
+        "Authorize Proxy",
+        "Proxy Authorized?",
+        "Extract Input",
+        "Build Gemini Prompt",
+        "Call Gemini Vision",
+        "Normalize Known Enum Drift",
+        "Validation Gate",
+        "Is Valid?",
+        "Prep User",
+        "Write User",
+        "Prep Questionnaire",
+        "Write Questionnaire",
+        "Prep Prescriptions",
+        "Write Prescriptions",
+        "Prep Nudges",
+        "Write Nudges",
+        "Prep Schedule State",
+        "Write Schedule State",
+        "Respond Success"
+      ],
+      "error": null,
+      "gate": [
+        {
+          "validation_passed": true,
+          "user": {
+            "user_id": "usr-b1",
+            "name": "Synthetic patient",
+            "phone": "+61400000001",
+            "email": "patient@harness.invalid",
+            "created_at": "2026-10-04T21:00:00.000Z",
+            "user_status": "active",
+            "doctor_id": "doc-harness"
+          },
+          "questionnaire": {
+            "questionnaire_id": "qn_3fd894a1-9b27-4e9f-acff-563601f1c4aa",
+            "user_id": "usr-b1",
+            "completed_at": "2026-10-04T21:00:00.000Z",
+            "age": null,
+            "opt_in_whatsapp": true
+          },
+          "prescriptions": [
+            {
+              "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+              "user_id": "usr-b1",
+              "doctor_id": "doc-harness",
+              "issued_date": "2026-10-04",
+              "pillar": "sleep",
+              "category": "establish",
+              "target_behavior": "",
+              "frequency_per_week": 3,
+              "duration_weeks": 8,
+              "prescription_raw_text": "Sleep: be in bed by 10:30 pm, 3 nights a week, for 8 weeks.",
+              "status": "active"
+            }
+          ],
+          "nudges": [
+            {
+              "nudge_id": "ndg_3700fc9e-ce79-4015-a5b0-84921f5a9715",
+              "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+              "user_id": "usr-b1",
+              "nudge_type": "reminder",
+              "pillar": "sleep",
+              "action_text": "Be in bed by 10:30 pm",
+              "scheduled_date": "2026-10-05",
+              "scheduled_time": "09:00",
+              "message_body": "Reminder: be in bed by 10:30 pm.",
+              "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+              "tone_variant": "encouraging",
+              "template_name": "health_plan_reminder",
+              "status": "needs_review",
+              "sent_at": "",
+              "reviewed_at": "",
+              "week_number": 1,
+              "schedule_slot_id": ""
+            },
+            {
+              "nudge_id": "ndg_50825ba6-10bc-4be5-a257-6854b4c09950",
+              "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+              "user_id": "usr-b1",
+              "nudge_type": "reminder",
+              "pillar": "sleep",
+              "action_text": "Be in bed by 10:30 pm",
+              "scheduled_date": "2026-10-07",
+              "scheduled_time": "09:00",
+              "message_body": "Reminder: be in bed by 10:30 pm.",
+              "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+              "tone_variant": "encouraging",
+              "template_name": "health_plan_reminder",
+              "status": "needs_review",
+              "sent_at": "",
+              "reviewed_at": "",
+              "week_number": 1,
+              "schedule_slot_id": ""
+            },
+            {
+              "nudge_id": "ndg_d6061eee-ec0c-49f7-a6f2-9458244b068f",
+              "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+              "user_id": "usr-b1",
+              "nudge_type": "reminder",
+              "pillar": "sleep",
+              "action_text": "Be in bed by 10:30 pm",
+              "scheduled_date": "2026-10-09",
+              "scheduled_time": "09:00",
+              "message_body": "Reminder: be in bed by 10:30 pm.",
+              "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+              "tone_variant": "encouraging",
+              "template_name": "health_plan_reminder",
+              "status": "needs_review",
+              "sent_at": "",
+              "reviewed_at": "",
+              "week_number": 1,
+              "schedule_slot_id": ""
+            }
+          ],
+          "schedule_state": [
+            {
+              "schedule_id": "sch_ndg_3700fc9e-ce79-4015-a5b0-84921f5a9715",
+              "nudge_id": "ndg_3700fc9e-ce79-4015-a5b0-84921f5a9715",
+              "user_id": "usr-b1",
+              "parent_nudge_id": "ndg_3700fc9e-ce79-4015-a5b0-84921f5a9715",
+              "status": "needs_review",
+              "sent_at": "",
+              "delivered_at": "",
+              "wa_message_id": "",
+              "tone_sent": "",
+              "last_updated": "2026-10-04T21:00:00.000Z"
+            },
+            {
+              "schedule_id": "sch_ndg_50825ba6-10bc-4be5-a257-6854b4c09950",
+              "nudge_id": "ndg_50825ba6-10bc-4be5-a257-6854b4c09950",
+              "user_id": "usr-b1",
+              "parent_nudge_id": "ndg_50825ba6-10bc-4be5-a257-6854b4c09950",
+              "status": "needs_review",
+              "sent_at": "",
+              "delivered_at": "",
+              "wa_message_id": "",
+              "tone_sent": "",
+              "last_updated": "2026-10-04T21:00:00.000Z"
+            },
+            {
+              "schedule_id": "sch_ndg_d6061eee-ec0c-49f7-a6f2-9458244b068f",
+              "nudge_id": "ndg_d6061eee-ec0c-49f7-a6f2-9458244b068f",
+              "user_id": "usr-b1",
+              "parent_nudge_id": "ndg_d6061eee-ec0c-49f7-a6f2-9458244b068f",
+              "status": "needs_review",
+              "sent_at": "",
+              "delivered_at": "",
+              "wa_message_id": "",
+              "tone_sent": "",
+              "last_updated": "2026-10-04T21:00:00.000Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "workflow": "B",
+      "label": "first-delivery",
+      "visited": [
+        "Melbourne Schedule Trigger",
+        "Read Users",
+        "Aggregate Users",
+        "Read Nudges",
+        "Deduplicate Generated Schedule",
+        "Prepare Due Nudges",
+        "Prepare Adaptive Media",
+        "Merge Adaptive Media",
+        "Build Twilio Requests",
+        "Send via Twilio",
+        "Merge Twilio Response",
+        "Mark Nudge Sent",
+        "Update Schedule State"
+      ],
+      "error": null
+    },
+    {
+      "workflow": "B",
+      "label": "delivery-1",
+      "visited": [
+        "Melbourne Schedule Trigger",
+        "Read Users",
+        "Aggregate Users",
+        "Read Nudges",
+        "Deduplicate Generated Schedule",
+        "Prepare Due Nudges",
+        "Prepare Adaptive Media",
+        "Merge Adaptive Media",
+        "Build Twilio Requests",
+        "Send via Twilio",
+        "Merge Twilio Response",
+        "Mark Nudge Sent",
+        "Update Schedule State"
+      ],
+      "error": null
+    }
+  ],
+  "after_intake": {
+    "sheets": {
+      "user": {
+        "headers": [
+          "user_id",
+          "name",
+          "phone",
+          "email",
+          "user_status",
+          "doctor_id"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "user_id": "usr-b1",
+            "name": "Synthetic patient",
+            "phone": "+61400000001",
+            "email": "patient@harness.invalid",
+            "user_status": "active",
+            "doctor_id": "doc-harness"
+          }
+        ]
+      },
+      "questionnaire": {
+        "headers": [
+          "questionnaire_id",
+          "user_id",
+          "preferred_nudge_time",
+          "opt_in_whatsapp"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "questionnaire_id": "qn_3fd894a1-9b27-4e9f-acff-563601f1c4aa",
+            "user_id": "usr-b1",
+            "preferred_nudge_time": "",
+            "opt_in_whatsapp": true
+          }
+        ]
+      },
+      "prescriptions": {
+        "headers": [
+          "prescription_id",
+          "user_id",
+          "doctor_id",
+          "issued_date",
+          "pillar",
+          "category",
+          "target_behavior",
+          "frequency_per_week",
+          "duration_weeks",
+          "prescription_raw_text",
+          "status"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "doctor_id": "doc-harness",
+            "issued_date": "2026-10-04",
+            "pillar": "sleep",
+            "category": "establish",
+            "target_behavior": "",
+            "frequency_per_week": 3,
+            "duration_weeks": 8,
+            "prescription_raw_text": "Sleep: be in bed by 10:30 pm, 3 nights a week, for 8 weeks.",
+            "status": "active"
+          }
+        ]
+      },
+      "nudges": {
+        "headers": [
+          "nudge_id",
+          "prescription_id",
+          "user_id",
+          "nudge_type",
+          "pillar",
+          "action_text",
+          "scheduled_date",
+          "scheduled_time",
+          "message_body",
+          "message_body_alt",
+          "tone_variant",
+          "template_name",
+          "status",
+          "sent_at",
+          "reviewed_at",
+          "week_number",
+          "schedule_slot_id",
+          "category",
+          "media_selection_mode",
+          "media_override_asset_id",
+          "media_asset_id",
+          "adaptation_decision_id"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "nudge_id": "ndg_3700fc9e-ce79-4015-a5b0-84921f5a9715",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "action_text": "Be in bed by 10:30 pm",
+            "scheduled_date": "2026-10-05",
+            "scheduled_time": "09:00",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "needs_review",
+            "sent_at": "",
+            "reviewed_at": "",
+            "week_number": 1,
+            "schedule_slot_id": ""
+          },
+          {
+            "row_number": 3,
+            "nudge_id": "ndg_50825ba6-10bc-4be5-a257-6854b4c09950",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "action_text": "Be in bed by 10:30 pm",
+            "scheduled_date": "2026-10-07",
+            "scheduled_time": "09:00",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "needs_review",
+            "sent_at": "",
+            "reviewed_at": "",
+            "week_number": 1,
+            "schedule_slot_id": ""
+          },
+          {
+            "row_number": 4,
+            "nudge_id": "ndg_d6061eee-ec0c-49f7-a6f2-9458244b068f",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "action_text": "Be in bed by 10:30 pm",
+            "scheduled_date": "2026-10-09",
+            "scheduled_time": "09:00",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "needs_review",
+            "sent_at": "",
+            "reviewed_at": "",
+            "week_number": 1,
+            "schedule_slot_id": ""
+          }
+        ]
+      },
+      "weekly_schedule": {
+        "headers": [
+          "schedule_slot_id",
+          "user_id",
+          "source_nudge_id",
+          "prescription_id",
+          "day",
+          "scheduled_time",
+          "nudge_type",
+          "pillar",
+          "action_text",
+          "tone_variant",
+          "message_body",
+          "message_body_alt",
+          "template_name",
+          "status",
+          "start_date",
+          "end_date",
+          "created_at",
+          "updated_at",
+          "category",
+          "media_selection_mode",
+          "media_override_asset_id",
+          "media_asset_id",
+          "adaptation_decision_id"
+        ],
+        "rows": []
+      },
+      "schedule_state": {
+        "headers": [
+          "schedule_id",
+          "nudge_id",
+          "user_id",
+          "parent_nudge_id",
+          "status",
+          "sent_at",
+          "delivered_at",
+          "wa_message_id",
+          "tone_sent",
+          "last_updated",
+          "read_at",
+          "interacted_at",
+          "last_inbound_message_sid",
+          "delivery_attempt_id",
+          "submission_started_at"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "schedule_id": "sch_ndg_3700fc9e-ce79-4015-a5b0-84921f5a9715",
+            "nudge_id": "ndg_3700fc9e-ce79-4015-a5b0-84921f5a9715",
+            "user_id": "usr-b1",
+            "parent_nudge_id": "ndg_3700fc9e-ce79-4015-a5b0-84921f5a9715",
+            "status": "needs_review",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:00:00.000Z"
+          },
+          {
+            "row_number": 3,
+            "schedule_id": "sch_ndg_50825ba6-10bc-4be5-a257-6854b4c09950",
+            "nudge_id": "ndg_50825ba6-10bc-4be5-a257-6854b4c09950",
+            "user_id": "usr-b1",
+            "parent_nudge_id": "ndg_50825ba6-10bc-4be5-a257-6854b4c09950",
+            "status": "needs_review",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:00:00.000Z"
+          },
+          {
+            "row_number": 4,
+            "schedule_id": "sch_ndg_d6061eee-ec0c-49f7-a6f2-9458244b068f",
+            "nudge_id": "ndg_d6061eee-ec0c-49f7-a6f2-9458244b068f",
+            "user_id": "usr-b1",
+            "parent_nudge_id": "ndg_d6061eee-ec0c-49f7-a6f2-9458244b068f",
+            "status": "needs_review",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:00:00.000Z"
+          }
+        ]
+      },
+      "delivery_events": {
+        "headers": [
+          "event_id",
+          "event_at",
+          "wa_message_id",
+          "nudge_id",
+          "user_id",
+          "status",
+          "error_code",
+          "error_message",
+          "channel_to",
+          "raw_payload"
+        ],
+        "rows": []
+      },
+      "media_assignments": {
+        "headers": [
+          "assignment_id",
+          "assigned_at",
+          "user_id",
+          "nudge_id",
+          "behaviour_key",
+          "media_asset_id",
+          "adaptation_decision_id",
+          "media_kind",
+          "selection_mode",
+          "source_url",
+          "tracked_url",
+          "planned_frequency",
+          "scheduled_at",
+          "sent_at",
+          "delivered_at",
+          "read_at",
+          "visited_at",
+          "replied_at",
+          "send_to_read_hours",
+          "send_to_visit_hours",
+          "send_to_reply_hours"
+        ],
+        "rows": []
+      },
+      "interaction_events": {
+        "headers": [
+          "interaction_id",
+          "event_at",
+          "inbound_message_sid",
+          "user_id",
+          "from_phone",
+          "reply_to_wa_message_id",
+          "nudge_id",
+          "body",
+          "media_count",
+          "correlation_method",
+          "ack_status"
+        ],
+        "rows": []
+      },
+      "adaptation_decisions": {
+        "headers": [
+          "decision_id",
+          "decided_at",
+          "user_id",
+          "behaviour_key",
+          "interaction_id",
+          "signal_type",
+          "rule_applied",
+          "outcome",
+          "reason",
+          "selected_asset_id",
+          "interpretation",
+          "previous_state",
+          "next_state",
+          "scope",
+          "decision_source",
+          "effective_at",
+          "state_version",
+          "changed_fields",
+          "frequency_before",
+          "frequency_after",
+          "media_mode_before",
+          "media_mode_after",
+          "media_kind_before",
+          "media_kind_after",
+          "nudge_id"
+        ],
+        "rows": []
+      },
+      "patient_adaptation_state": {
+        "headers": [
+          "user_id",
+          "scope",
+          "behaviour_key",
+          "state_version",
+          "preferred_format",
+          "preferred_frequency",
+          "planned_frequency",
+          "delivered_frequency",
+          "observed_frequency",
+          "last_change_at",
+          "updated_at"
+        ],
+        "rows": []
+      },
+      "patient_adaptation_timeline": {
+        "headers": [
+          "user_id",
+          "event_id",
+          "event_at",
+          "event_type",
+          "source",
+          "scope",
+          "behaviour_key",
+          "signal",
+          "rule_applied",
+          "outcome",
+          "reason",
+          "previous_state",
+          "new_state",
+          "changed_fields",
+          "selected_asset_id",
+          "selected_media_kind",
+          "nudge_id",
+          "interaction_id"
+        ],
+        "rows": []
+      }
+    },
+    "database": {
+      "profiles": [
+        {
+          "auth_user_id": "11111111-1111-4111-a111-111111111111",
+          "email": "clinician@harness.invalid",
+          "display_name": "Synthetic clinician",
+          "role": "doctor",
+          "doctor_id": "doc-harness",
+          "status": "active"
+        }
+      ],
+      "media_search_jobs": [],
+      "media_candidates": [],
+      "media_assets": [],
+      "adaptation_envelopes": [],
+      "user_adaptation_state": [],
+      "interaction_events": [],
+      "adaptation_decisions": [],
+      "tracked_links": [],
+      "patient_adaptation_state": [],
+      "patient_adaptation_timeline": []
+    }
+  },
+  "after_approval": {
+    "sheets": {
+      "user": {
+        "headers": [
+          "user_id",
+          "name",
+          "phone",
+          "email",
+          "user_status",
+          "doctor_id"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "user_id": "usr-b1",
+            "name": "Synthetic patient",
+            "phone": "+61400000001",
+            "email": "patient@harness.invalid",
+            "user_status": "active",
+            "doctor_id": "doc-harness"
+          }
+        ]
+      },
+      "questionnaire": {
+        "headers": [
+          "questionnaire_id",
+          "user_id",
+          "preferred_nudge_time",
+          "opt_in_whatsapp"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "questionnaire_id": "qn_3fd894a1-9b27-4e9f-acff-563601f1c4aa",
+            "user_id": "usr-b1",
+            "preferred_nudge_time": "",
+            "opt_in_whatsapp": true
+          }
+        ]
+      },
+      "prescriptions": {
+        "headers": [
+          "prescription_id",
+          "user_id",
+          "doctor_id",
+          "issued_date",
+          "pillar",
+          "category",
+          "target_behavior",
+          "frequency_per_week",
+          "duration_weeks",
+          "prescription_raw_text",
+          "status"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "doctor_id": "doc-harness",
+            "issued_date": "2026-10-04",
+            "pillar": "sleep",
+            "category": "establish",
+            "target_behavior": "",
+            "frequency_per_week": 3,
+            "duration_weeks": 8,
+            "prescription_raw_text": "Sleep: be in bed by 10:30 pm, 3 nights a week, for 8 weeks.",
+            "status": "active"
+          }
+        ]
+      },
+      "nudges": {
+        "headers": [
+          "nudge_id",
+          "prescription_id",
+          "user_id",
+          "nudge_type",
+          "pillar",
+          "action_text",
+          "scheduled_date",
+          "scheduled_time",
+          "message_body",
+          "message_body_alt",
+          "tone_variant",
+          "template_name",
+          "status",
+          "sent_at",
+          "reviewed_at",
+          "week_number",
+          "schedule_slot_id",
+          "category",
+          "media_selection_mode",
+          "media_override_asset_id",
+          "media_asset_id",
+          "adaptation_decision_id"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "nudge_id": "ndg_3700fc9e-ce79-4015-a5b0-84921f5a9715",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "action_text": "Be in bed by 10:30 pm",
+            "scheduled_date": "2026-10-05",
+            "scheduled_time": "09:00",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 1,
+            "schedule_slot_id": "",
+            "category": "establish"
+          },
+          {
+            "row_number": 3,
+            "nudge_id": "ndg_50825ba6-10bc-4be5-a257-6854b4c09950",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "action_text": "Be in bed by 10:30 pm",
+            "scheduled_date": "2026-10-07",
+            "scheduled_time": "09:00",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 1,
+            "schedule_slot_id": "",
+            "category": "establish"
+          },
+          {
+            "row_number": 4,
+            "nudge_id": "ndg_d6061eee-ec0c-49f7-a6f2-9458244b068f",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "action_text": "Be in bed by 10:30 pm",
+            "scheduled_date": "2026-10-09",
+            "scheduled_time": "09:00",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 1,
+            "schedule_slot_id": "",
+            "category": "establish"
+          },
+          {
+            "row_number": 5,
+            "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261005",
+            "schedule_slot_id": "slot_9-4015-a5b0-84921f5a9715_monday_0",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "category": "establish",
+            "action_text": "Be in bed by 10:30 pm",
+            "scheduled_date": "2026-10-05",
+            "scheduled_time": "09:00",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 1,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          },
+          {
+            "row_number": 6,
+            "nudge_id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261007",
+            "schedule_slot_id": "slot_c-4be5-a257-6854b4c09950_wednesday_1",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "category": "establish",
+            "action_text": "Be in bed by 10:30 pm",
+            "scheduled_date": "2026-10-07",
+            "scheduled_time": "09:00",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 1,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          },
+          {
+            "row_number": 7,
+            "nudge_id": "schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261009",
+            "schedule_slot_id": "slot_c-49f7-a6f2-9458244b068f_friday_2",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "category": "establish",
+            "action_text": "Be in bed by 10:30 pm",
+            "scheduled_date": "2026-10-09",
+            "scheduled_time": "09:00",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 1,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          },
+          {
+            "row_number": 8,
+            "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261012",
+            "schedule_slot_id": "slot_9-4015-a5b0-84921f5a9715_monday_0",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "category": "establish",
+            "action_text": "Be in bed by 10:30 pm",
+            "scheduled_date": "2026-10-12",
+            "scheduled_time": "09:00",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 2,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          },
+          {
+            "row_number": 9,
+            "nudge_id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261014",
+            "schedule_slot_id": "slot_c-4be5-a257-6854b4c09950_wednesday_1",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "category": "establish",
+            "action_text": "Be in bed by 10:30 pm",
+            "scheduled_date": "2026-10-14",
+            "scheduled_time": "09:00",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 2,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          },
+          {
+            "row_number": 10,
+            "nudge_id": "schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261016",
+            "schedule_slot_id": "slot_c-49f7-a6f2-9458244b068f_friday_2",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "category": "establish",
+            "action_text": "Be in bed by 10:30 pm",
+            "scheduled_date": "2026-10-16",
+            "scheduled_time": "09:00",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 2,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          },
+          {
+            "row_number": 11,
+            "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261019",
+            "schedule_slot_id": "slot_9-4015-a5b0-84921f5a9715_monday_0",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "category": "establish",
+            "action_text": "Be in bed by 10:30 pm",
+            "scheduled_date": "2026-10-19",
+            "scheduled_time": "09:00",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 3,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          },
+          {
+            "row_number": 12,
+            "nudge_id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261021",
+            "schedule_slot_id": "slot_c-4be5-a257-6854b4c09950_wednesday_1",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "category": "establish",
+            "action_text": "Be in bed by 10:30 pm",
+            "scheduled_date": "2026-10-21",
+            "scheduled_time": "09:00",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 3,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          },
+          {
+            "row_number": 13,
+            "nudge_id": "schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261023",
+            "schedule_slot_id": "slot_c-49f7-a6f2-9458244b068f_friday_2",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "category": "establish",
+            "action_text": "Be in bed by 10:30 pm",
+            "scheduled_date": "2026-10-23",
+            "scheduled_time": "09:00",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 3,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          },
+          {
+            "row_number": 14,
+            "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261026",
+            "schedule_slot_id": "slot_9-4015-a5b0-84921f5a9715_monday_0",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "category": "establish",
+            "action_text": "Be in bed by 10:30 pm",
+            "scheduled_date": "2026-10-26",
+            "scheduled_time": "09:00",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 4,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          },
+          {
+            "row_number": 15,
+            "nudge_id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261028",
+            "schedule_slot_id": "slot_c-4be5-a257-6854b4c09950_wednesday_1",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "category": "establish",
+            "action_text": "Be in bed by 10:30 pm",
+            "scheduled_date": "2026-10-28",
+            "scheduled_time": "09:00",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 4,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          },
+          {
+            "row_number": 16,
+            "nudge_id": "schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261030",
+            "schedule_slot_id": "slot_c-49f7-a6f2-9458244b068f_friday_2",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "category": "establish",
+            "action_text": "Be in bed by 10:30 pm",
+            "scheduled_date": "2026-10-30",
+            "scheduled_time": "09:00",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 4,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          }
+        ]
+      },
+      "weekly_schedule": {
+        "headers": [
+          "schedule_slot_id",
+          "user_id",
+          "source_nudge_id",
+          "prescription_id",
+          "day",
+          "scheduled_time",
+          "nudge_type",
+          "pillar",
+          "action_text",
+          "tone_variant",
+          "message_body",
+          "message_body_alt",
+          "template_name",
+          "status",
+          "start_date",
+          "end_date",
+          "created_at",
+          "updated_at",
+          "category",
+          "media_selection_mode",
+          "media_override_asset_id",
+          "media_asset_id",
+          "adaptation_decision_id"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "schedule_slot_id": "slot_9-4015-a5b0-84921f5a9715_monday_0",
+            "user_id": "usr-b1",
+            "source_nudge_id": "ndg_3700fc9e-ce79-4015-a5b0-84921f5a9715",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "day": "monday",
+            "scheduled_time": "09:00",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "category": "establish",
+            "action_text": "Be in bed by 10:30 pm",
+            "tone_variant": "encouraging",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "template_name": "health_plan_reminder",
+            "status": "active",
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": "",
+            "start_date": "2026-10-05",
+            "end_date": "2026-11-01",
+            "created_at": "2026-10-04T21:30:00.000Z",
+            "updated_at": "2026-10-04T21:30:00.000Z"
+          },
+          {
+            "row_number": 3,
+            "schedule_slot_id": "slot_c-4be5-a257-6854b4c09950_wednesday_1",
+            "user_id": "usr-b1",
+            "source_nudge_id": "ndg_50825ba6-10bc-4be5-a257-6854b4c09950",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "day": "wednesday",
+            "scheduled_time": "09:00",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "category": "establish",
+            "action_text": "Be in bed by 10:30 pm",
+            "tone_variant": "encouraging",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "template_name": "health_plan_reminder",
+            "status": "active",
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": "",
+            "start_date": "2026-10-05",
+            "end_date": "2026-11-01",
+            "created_at": "2026-10-04T21:30:00.000Z",
+            "updated_at": "2026-10-04T21:30:00.000Z"
+          },
+          {
+            "row_number": 4,
+            "schedule_slot_id": "slot_c-49f7-a6f2-9458244b068f_friday_2",
+            "user_id": "usr-b1",
+            "source_nudge_id": "ndg_d6061eee-ec0c-49f7-a6f2-9458244b068f",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "day": "friday",
+            "scheduled_time": "09:00",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "category": "establish",
+            "action_text": "Be in bed by 10:30 pm",
+            "tone_variant": "encouraging",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "template_name": "health_plan_reminder",
+            "status": "active",
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": "",
+            "start_date": "2026-10-05",
+            "end_date": "2026-11-01",
+            "created_at": "2026-10-04T21:30:00.000Z",
+            "updated_at": "2026-10-04T21:30:00.000Z"
+          }
+        ]
+      },
+      "schedule_state": {
+        "headers": [
+          "schedule_id",
+          "nudge_id",
+          "user_id",
+          "parent_nudge_id",
+          "status",
+          "sent_at",
+          "delivered_at",
+          "wa_message_id",
+          "tone_sent",
+          "last_updated",
+          "read_at",
+          "interacted_at",
+          "last_inbound_message_sid",
+          "delivery_attempt_id",
+          "submission_started_at"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "schedule_id": "sch_ndg_3700fc9e-ce79-4015-a5b0-84921f5a9715",
+            "nudge_id": "ndg_3700fc9e-ce79-4015-a5b0-84921f5a9715",
+            "user_id": "usr-b1",
+            "parent_nudge_id": "ndg_3700fc9e-ce79-4015-a5b0-84921f5a9715",
+            "status": "needs_review",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:00:00.000Z"
+          },
+          {
+            "row_number": 3,
+            "schedule_id": "sch_ndg_50825ba6-10bc-4be5-a257-6854b4c09950",
+            "nudge_id": "ndg_50825ba6-10bc-4be5-a257-6854b4c09950",
+            "user_id": "usr-b1",
+            "parent_nudge_id": "ndg_50825ba6-10bc-4be5-a257-6854b4c09950",
+            "status": "needs_review",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:00:00.000Z"
+          },
+          {
+            "row_number": 4,
+            "schedule_id": "sch_ndg_d6061eee-ec0c-49f7-a6f2-9458244b068f",
+            "nudge_id": "ndg_d6061eee-ec0c-49f7-a6f2-9458244b068f",
+            "user_id": "usr-b1",
+            "parent_nudge_id": "ndg_d6061eee-ec0c-49f7-a6f2-9458244b068f",
+            "status": "needs_review",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:00:00.000Z"
+          },
+          {
+            "row_number": 5,
+            "schedule_id": "sch_schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261005",
+            "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261005",
+            "user_id": "usr-b1",
+            "parent_nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261005",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          },
+          {
+            "row_number": 6,
+            "schedule_id": "sch_schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261007",
+            "nudge_id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261007",
+            "user_id": "usr-b1",
+            "parent_nudge_id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261007",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          },
+          {
+            "row_number": 7,
+            "schedule_id": "sch_schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261009",
+            "nudge_id": "schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261009",
+            "user_id": "usr-b1",
+            "parent_nudge_id": "schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261009",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          },
+          {
+            "row_number": 8,
+            "schedule_id": "sch_schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261012",
+            "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261012",
+            "user_id": "usr-b1",
+            "parent_nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261012",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          },
+          {
+            "row_number": 9,
+            "schedule_id": "sch_schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261014",
+            "nudge_id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261014",
+            "user_id": "usr-b1",
+            "parent_nudge_id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261014",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          },
+          {
+            "row_number": 10,
+            "schedule_id": "sch_schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261016",
+            "nudge_id": "schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261016",
+            "user_id": "usr-b1",
+            "parent_nudge_id": "schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261016",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          },
+          {
+            "row_number": 11,
+            "schedule_id": "sch_schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261019",
+            "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261019",
+            "user_id": "usr-b1",
+            "parent_nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261019",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          },
+          {
+            "row_number": 12,
+            "schedule_id": "sch_schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261021",
+            "nudge_id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261021",
+            "user_id": "usr-b1",
+            "parent_nudge_id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261021",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          },
+          {
+            "row_number": 13,
+            "schedule_id": "sch_schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261023",
+            "nudge_id": "schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261023",
+            "user_id": "usr-b1",
+            "parent_nudge_id": "schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261023",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          },
+          {
+            "row_number": 14,
+            "schedule_id": "sch_schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261026",
+            "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261026",
+            "user_id": "usr-b1",
+            "parent_nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261026",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          },
+          {
+            "row_number": 15,
+            "schedule_id": "sch_schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261028",
+            "nudge_id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261028",
+            "user_id": "usr-b1",
+            "parent_nudge_id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261028",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          },
+          {
+            "row_number": 16,
+            "schedule_id": "sch_schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261030",
+            "nudge_id": "schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261030",
+            "user_id": "usr-b1",
+            "parent_nudge_id": "schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261030",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          }
+        ]
+      },
+      "delivery_events": {
+        "headers": [
+          "event_id",
+          "event_at",
+          "wa_message_id",
+          "nudge_id",
+          "user_id",
+          "status",
+          "error_code",
+          "error_message",
+          "channel_to",
+          "raw_payload"
+        ],
+        "rows": []
+      },
+      "media_assignments": {
+        "headers": [
+          "assignment_id",
+          "assigned_at",
+          "user_id",
+          "nudge_id",
+          "behaviour_key",
+          "media_asset_id",
+          "adaptation_decision_id",
+          "media_kind",
+          "selection_mode",
+          "source_url",
+          "tracked_url",
+          "planned_frequency",
+          "scheduled_at",
+          "sent_at",
+          "delivered_at",
+          "read_at",
+          "visited_at",
+          "replied_at",
+          "send_to_read_hours",
+          "send_to_visit_hours",
+          "send_to_reply_hours"
+        ],
+        "rows": []
+      },
+      "interaction_events": {
+        "headers": [
+          "interaction_id",
+          "event_at",
+          "inbound_message_sid",
+          "user_id",
+          "from_phone",
+          "reply_to_wa_message_id",
+          "nudge_id",
+          "body",
+          "media_count",
+          "correlation_method",
+          "ack_status"
+        ],
+        "rows": []
+      },
+      "adaptation_decisions": {
+        "headers": [
+          "decision_id",
+          "decided_at",
+          "user_id",
+          "behaviour_key",
+          "interaction_id",
+          "signal_type",
+          "rule_applied",
+          "outcome",
+          "reason",
+          "selected_asset_id",
+          "interpretation",
+          "previous_state",
+          "next_state",
+          "scope",
+          "decision_source",
+          "effective_at",
+          "state_version",
+          "changed_fields",
+          "frequency_before",
+          "frequency_after",
+          "media_mode_before",
+          "media_mode_after",
+          "media_kind_before",
+          "media_kind_after",
+          "nudge_id"
+        ],
+        "rows": []
+      },
+      "patient_adaptation_state": {
+        "headers": [
+          "user_id",
+          "scope",
+          "behaviour_key",
+          "state_version",
+          "preferred_format",
+          "preferred_frequency",
+          "planned_frequency",
+          "delivered_frequency",
+          "observed_frequency",
+          "last_change_at",
+          "updated_at"
+        ],
+        "rows": []
+      },
+      "patient_adaptation_timeline": {
+        "headers": [
+          "user_id",
+          "event_id",
+          "event_at",
+          "event_type",
+          "source",
+          "scope",
+          "behaviour_key",
+          "signal",
+          "rule_applied",
+          "outcome",
+          "reason",
+          "previous_state",
+          "new_state",
+          "changed_fields",
+          "selected_asset_id",
+          "selected_media_kind",
+          "nudge_id",
+          "interaction_id"
+        ],
+        "rows": []
+      }
+    },
+    "database": {
+      "profiles": [
+        {
+          "auth_user_id": "11111111-1111-4111-a111-111111111111",
+          "email": "clinician@harness.invalid",
+          "display_name": "Synthetic clinician",
+          "role": "doctor",
+          "doctor_id": "doc-harness",
+          "status": "active"
+        }
+      ],
+      "media_search_jobs": [
+        {
+          "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+          "user_id": "usr-b1",
+          "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+          "action_text": "Be in bed by 10:30 pm",
+          "pillar": "sleep",
+          "category": "establish",
+          "status": "pending",
+          "updated_at": "2026-10-04T21:30:00.000Z",
+          "job_id": "868b6985-51f9-46e4-ab29-8b30098417c4",
+          "created_at": "2026-10-04T21:30:00.000Z"
+        }
+      ],
+      "media_candidates": [
+        {
+          "candidate_id": "3b7f08ff-815c-4581-a1a8-aa4a1d642982",
+          "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+          "media_kind": "video",
+          "title": "Synthetic video for Be in bed by 10:30 pm",
+          "source_name": "Synthetic approved pool",
+          "source_url": "https://example.test/e32cfd9765ae1a349b51c12545f33d27/video",
+          "open_access": false,
+          "short_summary": "SHORT synthetic explanation.",
+          "detailed_summary": "DETAILED synthetic explanation for this controlled evaluation.",
+          "ranking_score": 2,
+          "ranking_reasons": [],
+          "metadata": {}
+        },
+        {
+          "candidate_id": "c9a027b6-0e95-4a49-a8d2-edc91134ecd7",
+          "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+          "media_kind": "paper",
+          "title": "Synthetic paper for Be in bed by 10:30 pm",
+          "source_name": "Synthetic approved pool",
+          "source_url": "https://example.test/e32cfd9765ae1a349b51c12545f33d27/paper",
+          "open_access": true,
+          "short_summary": "SHORT synthetic explanation.",
+          "detailed_summary": "DETAILED synthetic explanation for this controlled evaluation.",
+          "ranking_score": 1,
+          "ranking_reasons": [],
+          "metadata": {}
+        }
+      ],
+      "media_assets": [
+        {
+          "candidate_id": "3b7f08ff-815c-4581-a1a8-aa4a1d642982",
+          "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+          "media_kind": "video",
+          "title": "Synthetic video for Be in bed by 10:30 pm",
+          "source_name": "Synthetic approved pool",
+          "source_url": "https://example.test/e32cfd9765ae1a349b51c12545f33d27/video",
+          "short_summary": "SHORT synthetic explanation.",
+          "detailed_summary": "DETAILED synthetic explanation for this controlled evaluation.",
+          "limitations": "",
+          "status": "approved",
+          "approved_at": "2026-10-04T21:30:00.000Z",
+          "approved_by": "11111111-1111-4111-a111-111111111111",
+          "asset_id": "482e0851-0c14-4d59-a6f4-84438b7661d1",
+          "created_at": "2026-10-04T21:30:00.000Z"
+        },
+        {
+          "candidate_id": "c9a027b6-0e95-4a49-a8d2-edc91134ecd7",
+          "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+          "media_kind": "paper",
+          "title": "Synthetic paper for Be in bed by 10:30 pm",
+          "source_name": "Synthetic approved pool",
+          "source_url": "https://example.test/e32cfd9765ae1a349b51c12545f33d27/paper",
+          "short_summary": "SHORT synthetic explanation.",
+          "detailed_summary": "DETAILED synthetic explanation for this controlled evaluation.",
+          "limitations": "",
+          "status": "approved",
+          "approved_at": "2026-10-04T21:30:00.000Z",
+          "approved_by": "11111111-1111-4111-a111-111111111111",
+          "asset_id": "f690f544-4b5e-40d5-aeff-dca9cc405e5d",
+          "created_at": "2026-10-04T21:30:00.000Z"
+        }
+      ],
+      "adaptation_envelopes": [
+        {
+          "action_text": "Be in bed by 10:30 pm",
+          "pillar": "sleep",
+          "category": "establish",
+          "formats": [
+            "video",
+            "paper",
+            "reading"
+          ],
+          "summary_lengths": [
+            "short",
+            "detailed"
+          ],
+          "tones": [
+            "encouraging",
+            "neutral_informational"
+          ],
+          "earliest_time": "08:00",
+          "latest_time": "21:00",
+          "frequency_min": 1,
+          "frequency_max": 3,
+          "action_alternatives": [
+            "Be in bed by 10:30 pm"
+          ],
+          "user_id": "usr-b1",
+          "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+          "status": "approved",
+          "updated_at": "2026-10-04T21:30:00.000Z",
+          "envelope_id": "97a17758-a6d9-4290-ae6c-84440a044ea4",
+          "created_at": "2026-10-04T21:30:00.000Z",
+          "automatic_schedule_apply": true,
+          "approved_asset_ids": [
+            "482e0851-0c14-4d59-a6f4-84438b7661d1",
+            "f690f544-4b5e-40d5-aeff-dca9cc405e5d"
+          ],
+          "approved_at": "2026-10-04T21:30:00.000Z",
+          "approved_by": "11111111-1111-4111-a111-111111111111"
+        }
+      ],
+      "user_adaptation_state": [],
+      "interaction_events": [],
+      "adaptation_decisions": [
+        {
+          "user_id": "usr-b1",
+          "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+          "interaction_id": null,
+          "nudge_id": null,
+          "signal_type": "clinician_schedule_change",
+          "scope": "behaviour",
+          "decision_source": "clinician",
+          "effective_at": "2026-10-04T21:30:00.000Z",
+          "state_version": 1,
+          "interpretation": {},
+          "scores_before": {},
+          "scores_after": {},
+          "rule_applied": "clinician_saved_schedule",
+          "previous_state": {
+            "planned_frequency": 0,
+            "media_selection_mode": "automatic"
+          },
+          "next_state": {
+            "planned_frequency": 3,
+            "media_selection_mode": "automatic"
+          },
+          "changed_fields": [
+            "planned_frequency",
+            "media_selection_mode"
+          ],
+          "frequency_before": null,
+          "frequency_after": null,
+          "media_mode_before": "automatic",
+          "media_mode_after": "automatic",
+          "media_kind_before": null,
+          "media_kind_after": null,
+          "selected_asset_id": null,
+          "outcome": "applied",
+          "reason": "Clinician saved a weekly schedule or media change",
+          "fulfilled_at": "2026-10-04T21:30:00.000Z",
+          "decision_id": "bd_1",
+          "decided_at": "2026-10-04T21:30:00.000Z"
+        }
+      ],
+      "tracked_links": [],
+      "patient_adaptation_state": [],
+      "patient_adaptation_timeline": []
+    }
+  },
+  "final": {
+    "sheets": {
+      "user": {
+        "headers": [
+          "user_id",
+          "name",
+          "phone",
+          "email",
+          "user_status",
+          "doctor_id"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "user_id": "usr-b1",
+            "name": "Synthetic patient",
+            "phone": "+61400000001",
+            "email": "patient@harness.invalid",
+            "user_status": "active",
+            "doctor_id": "doc-harness"
+          }
+        ]
+      },
+      "questionnaire": {
+        "headers": [
+          "questionnaire_id",
+          "user_id",
+          "preferred_nudge_time",
+          "opt_in_whatsapp"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "questionnaire_id": "qn_3fd894a1-9b27-4e9f-acff-563601f1c4aa",
+            "user_id": "usr-b1",
+            "preferred_nudge_time": "",
+            "opt_in_whatsapp": true
+          }
+        ]
+      },
+      "prescriptions": {
+        "headers": [
+          "prescription_id",
+          "user_id",
+          "doctor_id",
+          "issued_date",
+          "pillar",
+          "category",
+          "target_behavior",
+          "frequency_per_week",
+          "duration_weeks",
+          "prescription_raw_text",
+          "status"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "doctor_id": "doc-harness",
+            "issued_date": "2026-10-04",
+            "pillar": "sleep",
+            "category": "establish",
+            "target_behavior": "",
+            "frequency_per_week": 3,
+            "duration_weeks": 8,
+            "prescription_raw_text": "Sleep: be in bed by 10:30 pm, 3 nights a week, for 8 weeks.",
+            "status": "active"
+          }
+        ]
+      },
+      "nudges": {
+        "headers": [
+          "nudge_id",
+          "prescription_id",
+          "user_id",
+          "nudge_type",
+          "pillar",
+          "action_text",
+          "scheduled_date",
+          "scheduled_time",
+          "message_body",
+          "message_body_alt",
+          "tone_variant",
+          "template_name",
+          "status",
+          "sent_at",
+          "reviewed_at",
+          "week_number",
+          "schedule_slot_id",
+          "category",
+          "media_selection_mode",
+          "media_override_asset_id",
+          "media_asset_id",
+          "adaptation_decision_id"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "nudge_id": "ndg_3700fc9e-ce79-4015-a5b0-84921f5a9715",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "action_text": "Be in bed by 10:30 pm",
+            "scheduled_date": "2026-10-05",
+            "scheduled_time": "09:00",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 1,
+            "schedule_slot_id": "",
+            "category": "establish"
+          },
+          {
+            "row_number": 3,
+            "nudge_id": "ndg_50825ba6-10bc-4be5-a257-6854b4c09950",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "action_text": "Be in bed by 10:30 pm",
+            "scheduled_date": "2026-10-07",
+            "scheduled_time": "09:00",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 1,
+            "schedule_slot_id": "",
+            "category": "establish"
+          },
+          {
+            "row_number": 4,
+            "nudge_id": "ndg_d6061eee-ec0c-49f7-a6f2-9458244b068f",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "action_text": "Be in bed by 10:30 pm",
+            "scheduled_date": "2026-10-09",
+            "scheduled_time": "09:00",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 1,
+            "schedule_slot_id": "",
+            "category": "establish"
+          },
+          {
+            "row_number": 5,
+            "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261005",
+            "schedule_slot_id": "slot_9-4015-a5b0-84921f5a9715_monday_0",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "category": "establish",
+            "action_text": "Be in bed by 10:30 pm",
+            "scheduled_date": "2026-10-05",
+            "scheduled_time": "09:00",
+            "message_body": "Reminder: be in bed by 10:30 pm.\n\nSHORT synthetic explanation.\n\nSynthetic video for Be in bed by 10:30 pm — Synthetic approved pool\nhttps://portal.invalid/api/r/JySrKBmStxR-PV6Q3IrrfrnOM3KwvNg4",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "sent",
+            "sent_at": "2026-10-05T09:01:00.000+11:00",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 1,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "482e0851-0c14-4d59-a6f4-84438b7661d1",
+            "adaptation_decision_id": "bd_2"
+          },
+          {
+            "row_number": 6,
+            "nudge_id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261007",
+            "schedule_slot_id": "slot_c-4be5-a257-6854b4c09950_wednesday_1",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "category": "establish",
+            "action_text": "Be in bed by 10:30 pm",
+            "scheduled_date": "2026-10-07",
+            "scheduled_time": "09:00",
+            "message_body": "Reminder: be in bed by 10:30 pm.\n\nSHORT synthetic explanation.\n\nSynthetic paper for Be in bed by 10:30 pm — Synthetic approved pool\nhttps://portal.invalid/api/r/LrLX5Dyu3cOupjkUicg4rVOFHYGdpk3z",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "sent",
+            "sent_at": "2026-10-07T09:01:00.000+11:00",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 1,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "f690f544-4b5e-40d5-aeff-dca9cc405e5d",
+            "adaptation_decision_id": "bd_5"
+          },
+          {
+            "row_number": 7,
+            "nudge_id": "schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261009",
+            "schedule_slot_id": "slot_c-49f7-a6f2-9458244b068f_friday_2",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "category": "establish",
+            "action_text": "Be in bed by 10:30 pm",
+            "scheduled_date": "2026-10-09",
+            "scheduled_time": "09:00",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 1,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          },
+          {
+            "row_number": 8,
+            "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261012",
+            "schedule_slot_id": "slot_9-4015-a5b0-84921f5a9715_monday_0",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "category": "establish",
+            "action_text": "Be in bed by 10:30 pm",
+            "scheduled_date": "2026-10-12",
+            "scheduled_time": "09:00",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 2,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          },
+          {
+            "row_number": 9,
+            "nudge_id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261014",
+            "schedule_slot_id": "slot_c-4be5-a257-6854b4c09950_wednesday_1",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "category": "establish",
+            "action_text": "Be in bed by 10:30 pm",
+            "scheduled_date": "2026-10-14",
+            "scheduled_time": "09:00",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 2,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          },
+          {
+            "row_number": 10,
+            "nudge_id": "schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261016",
+            "schedule_slot_id": "slot_c-49f7-a6f2-9458244b068f_friday_2",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "category": "establish",
+            "action_text": "Be in bed by 10:30 pm",
+            "scheduled_date": "2026-10-16",
+            "scheduled_time": "09:00",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 2,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          },
+          {
+            "row_number": 11,
+            "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261019",
+            "schedule_slot_id": "slot_9-4015-a5b0-84921f5a9715_monday_0",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "category": "establish",
+            "action_text": "Be in bed by 10:30 pm",
+            "scheduled_date": "2026-10-19",
+            "scheduled_time": "09:00",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 3,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          },
+          {
+            "row_number": 12,
+            "nudge_id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261021",
+            "schedule_slot_id": "slot_c-4be5-a257-6854b4c09950_wednesday_1",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "category": "establish",
+            "action_text": "Be in bed by 10:30 pm",
+            "scheduled_date": "2026-10-21",
+            "scheduled_time": "09:00",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 3,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          },
+          {
+            "row_number": 13,
+            "nudge_id": "schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261023",
+            "schedule_slot_id": "slot_c-49f7-a6f2-9458244b068f_friday_2",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "category": "establish",
+            "action_text": "Be in bed by 10:30 pm",
+            "scheduled_date": "2026-10-23",
+            "scheduled_time": "09:00",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 3,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          },
+          {
+            "row_number": 14,
+            "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261026",
+            "schedule_slot_id": "slot_9-4015-a5b0-84921f5a9715_monday_0",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "category": "establish",
+            "action_text": "Be in bed by 10:30 pm",
+            "scheduled_date": "2026-10-26",
+            "scheduled_time": "09:00",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 4,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          },
+          {
+            "row_number": 15,
+            "nudge_id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261028",
+            "schedule_slot_id": "slot_c-4be5-a257-6854b4c09950_wednesday_1",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "category": "establish",
+            "action_text": "Be in bed by 10:30 pm",
+            "scheduled_date": "2026-10-28",
+            "scheduled_time": "09:00",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 4,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          },
+          {
+            "row_number": 16,
+            "nudge_id": "schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261030",
+            "schedule_slot_id": "slot_c-49f7-a6f2-9458244b068f_friday_2",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "user_id": "usr-b1",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "category": "establish",
+            "action_text": "Be in bed by 10:30 pm",
+            "scheduled_date": "2026-10-30",
+            "scheduled_time": "09:00",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 4,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          }
+        ]
+      },
+      "weekly_schedule": {
+        "headers": [
+          "schedule_slot_id",
+          "user_id",
+          "source_nudge_id",
+          "prescription_id",
+          "day",
+          "scheduled_time",
+          "nudge_type",
+          "pillar",
+          "action_text",
+          "tone_variant",
+          "message_body",
+          "message_body_alt",
+          "template_name",
+          "status",
+          "start_date",
+          "end_date",
+          "created_at",
+          "updated_at",
+          "category",
+          "media_selection_mode",
+          "media_override_asset_id",
+          "media_asset_id",
+          "adaptation_decision_id"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "schedule_slot_id": "slot_9-4015-a5b0-84921f5a9715_monday_0",
+            "user_id": "usr-b1",
+            "source_nudge_id": "ndg_3700fc9e-ce79-4015-a5b0-84921f5a9715",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "day": "monday",
+            "scheduled_time": "09:00",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "category": "establish",
+            "action_text": "Be in bed by 10:30 pm",
+            "tone_variant": "encouraging",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "template_name": "health_plan_reminder",
+            "status": "active",
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": "",
+            "start_date": "2026-10-05",
+            "end_date": "2026-11-01",
+            "created_at": "2026-10-04T21:30:00.000Z",
+            "updated_at": "2026-10-04T21:30:00.000Z"
+          },
+          {
+            "row_number": 3,
+            "schedule_slot_id": "slot_c-4be5-a257-6854b4c09950_wednesday_1",
+            "user_id": "usr-b1",
+            "source_nudge_id": "ndg_50825ba6-10bc-4be5-a257-6854b4c09950",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "day": "wednesday",
+            "scheduled_time": "09:00",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "category": "establish",
+            "action_text": "Be in bed by 10:30 pm",
+            "tone_variant": "encouraging",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "template_name": "health_plan_reminder",
+            "status": "active",
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": "",
+            "start_date": "2026-10-05",
+            "end_date": "2026-11-01",
+            "created_at": "2026-10-04T21:30:00.000Z",
+            "updated_at": "2026-10-04T21:30:00.000Z"
+          },
+          {
+            "row_number": 4,
+            "schedule_slot_id": "slot_c-49f7-a6f2-9458244b068f_friday_2",
+            "user_id": "usr-b1",
+            "source_nudge_id": "ndg_d6061eee-ec0c-49f7-a6f2-9458244b068f",
+            "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+            "day": "friday",
+            "scheduled_time": "09:00",
+            "nudge_type": "reminder",
+            "pillar": "sleep",
+            "category": "establish",
+            "action_text": "Be in bed by 10:30 pm",
+            "tone_variant": "encouraging",
+            "message_body": "Reminder: be in bed by 10:30 pm.",
+            "message_body_alt": "Today's step: be in bed by 10:30 pm.",
+            "template_name": "health_plan_reminder",
+            "status": "active",
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": "",
+            "start_date": "2026-10-05",
+            "end_date": "2026-11-01",
+            "created_at": "2026-10-04T21:30:00.000Z",
+            "updated_at": "2026-10-04T21:30:00.000Z"
+          }
+        ]
+      },
+      "schedule_state": {
+        "headers": [
+          "schedule_id",
+          "nudge_id",
+          "user_id",
+          "parent_nudge_id",
+          "status",
+          "sent_at",
+          "delivered_at",
+          "wa_message_id",
+          "tone_sent",
+          "last_updated",
+          "read_at",
+          "interacted_at",
+          "last_inbound_message_sid",
+          "delivery_attempt_id",
+          "submission_started_at"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "schedule_id": "sch_ndg_3700fc9e-ce79-4015-a5b0-84921f5a9715",
+            "nudge_id": "ndg_3700fc9e-ce79-4015-a5b0-84921f5a9715",
+            "user_id": "usr-b1",
+            "parent_nudge_id": "ndg_3700fc9e-ce79-4015-a5b0-84921f5a9715",
+            "status": "needs_review",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:00:00.000Z"
+          },
+          {
+            "row_number": 3,
+            "schedule_id": "sch_ndg_50825ba6-10bc-4be5-a257-6854b4c09950",
+            "nudge_id": "ndg_50825ba6-10bc-4be5-a257-6854b4c09950",
+            "user_id": "usr-b1",
+            "parent_nudge_id": "ndg_50825ba6-10bc-4be5-a257-6854b4c09950",
+            "status": "needs_review",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:00:00.000Z"
+          },
+          {
+            "row_number": 4,
+            "schedule_id": "sch_ndg_d6061eee-ec0c-49f7-a6f2-9458244b068f",
+            "nudge_id": "ndg_d6061eee-ec0c-49f7-a6f2-9458244b068f",
+            "user_id": "usr-b1",
+            "parent_nudge_id": "ndg_d6061eee-ec0c-49f7-a6f2-9458244b068f",
+            "status": "needs_review",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:00:00.000Z"
+          },
+          {
+            "row_number": 5,
+            "schedule_id": "sch_schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261005",
+            "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261005",
+            "user_id": "usr-b1",
+            "parent_nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261005",
+            "status": "delivered",
+            "sent_at": "2026-10-05T09:01:00.000+11:00",
+            "delivered_at": "2026-10-04T22:02:00.000Z",
+            "wa_message_id": "SM8099c868fc65a4d1494baa692aec384b",
+            "tone_sent": "encouraging",
+            "last_updated": "2026-10-04T22:30:00.000Z",
+            "delivery_attempt_id": "att_8d2402ed-ec1d-4305-a45d-c1fce70bd4a0",
+            "submission_started_at": "2026-10-04T22:01:00.000Z",
+            "interacted_at": "2026-10-04T22:30:00.000Z",
+            "last_inbound_message_sid": "SMcbd411354c9466a468bb32f276a8da2d"
+          },
+          {
+            "row_number": 6,
+            "schedule_id": "sch_schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261007",
+            "nudge_id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261007",
+            "user_id": "usr-b1",
+            "parent_nudge_id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261007",
+            "status": "delivered",
+            "sent_at": "2026-10-07T09:01:00.000+11:00",
+            "delivered_at": "2026-10-06T22:02:00.000Z",
+            "wa_message_id": "SM7bb964267deed66f70388a1030c0a3e0",
+            "tone_sent": "encouraging",
+            "last_updated": "2026-10-06T22:02:00.000Z",
+            "delivery_attempt_id": "att_802ebf85-d6c1-44a7-a700-badf117854bb",
+            "submission_started_at": "2026-10-06T22:01:00.000Z"
+          },
+          {
+            "row_number": 7,
+            "schedule_id": "sch_schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261009",
+            "nudge_id": "schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261009",
+            "user_id": "usr-b1",
+            "parent_nudge_id": "schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261009",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          },
+          {
+            "row_number": 8,
+            "schedule_id": "sch_schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261012",
+            "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261012",
+            "user_id": "usr-b1",
+            "parent_nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261012",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          },
+          {
+            "row_number": 9,
+            "schedule_id": "sch_schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261014",
+            "nudge_id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261014",
+            "user_id": "usr-b1",
+            "parent_nudge_id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261014",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          },
+          {
+            "row_number": 10,
+            "schedule_id": "sch_schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261016",
+            "nudge_id": "schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261016",
+            "user_id": "usr-b1",
+            "parent_nudge_id": "schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261016",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          },
+          {
+            "row_number": 11,
+            "schedule_id": "sch_schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261019",
+            "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261019",
+            "user_id": "usr-b1",
+            "parent_nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261019",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          },
+          {
+            "row_number": 12,
+            "schedule_id": "sch_schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261021",
+            "nudge_id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261021",
+            "user_id": "usr-b1",
+            "parent_nudge_id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261021",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          },
+          {
+            "row_number": 13,
+            "schedule_id": "sch_schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261023",
+            "nudge_id": "schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261023",
+            "user_id": "usr-b1",
+            "parent_nudge_id": "schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261023",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          },
+          {
+            "row_number": 14,
+            "schedule_id": "sch_schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261026",
+            "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261026",
+            "user_id": "usr-b1",
+            "parent_nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261026",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          },
+          {
+            "row_number": 15,
+            "schedule_id": "sch_schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261028",
+            "nudge_id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261028",
+            "user_id": "usr-b1",
+            "parent_nudge_id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261028",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          },
+          {
+            "row_number": 16,
+            "schedule_id": "sch_schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261030",
+            "nudge_id": "schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261030",
+            "user_id": "usr-b1",
+            "parent_nudge_id": "schd_slot_c-49f7-a6f2-9458244b068f_friday_2_20261030",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          }
+        ]
+      },
+      "delivery_events": {
+        "headers": [
+          "event_id",
+          "event_at",
+          "wa_message_id",
+          "nudge_id",
+          "user_id",
+          "status",
+          "error_code",
+          "error_message",
+          "channel_to",
+          "raw_payload"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "event_id": "evt_eda837b92d87a77f2775ff42",
+            "event_at": "2026-10-04T22:02:00.000Z",
+            "wa_message_id": "SM8099c868fc65a4d1494baa692aec384b",
+            "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261005",
+            "user_id": "usr-b1",
+            "status": "delivered",
+            "error_code": "",
+            "error_message": "",
+            "channel_to": "whatsapp:+61400000001",
+            "raw_payload": "{\"MessageSid\":\"SM8099c868fc65a4d1494baa692aec384b\",\"MessageStatus\":\"delivered\",\"AccountSid\":\"AC00000000000000000000000000000000\",\"From\":\"whatsapp:+14155238886\",\"To\":\"whatsapp:+61400000001\"}"
+          },
+          {
+            "row_number": 3,
+            "event_id": "evt_73fbbcdb8d8fa11d1a83bafb",
+            "event_at": "2026-10-06T22:02:00.000Z",
+            "wa_message_id": "SM7bb964267deed66f70388a1030c0a3e0",
+            "nudge_id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261007",
+            "user_id": "usr-b1",
+            "status": "delivered",
+            "error_code": "",
+            "error_message": "",
+            "channel_to": "whatsapp:+61400000001",
+            "raw_payload": "{\"MessageSid\":\"SM7bb964267deed66f70388a1030c0a3e0\",\"MessageStatus\":\"delivered\",\"AccountSid\":\"AC00000000000000000000000000000000\",\"From\":\"whatsapp:+14155238886\",\"To\":\"whatsapp:+61400000001\"}"
+          }
+        ]
+      },
+      "media_assignments": {
+        "headers": [
+          "assignment_id",
+          "assigned_at",
+          "user_id",
+          "nudge_id",
+          "behaviour_key",
+          "media_asset_id",
+          "adaptation_decision_id",
+          "media_kind",
+          "selection_mode",
+          "source_url",
+          "tracked_url",
+          "planned_frequency",
+          "scheduled_at",
+          "sent_at",
+          "delivered_at",
+          "read_at",
+          "visited_at",
+          "replied_at",
+          "send_to_read_hours",
+          "send_to_visit_hours",
+          "send_to_reply_hours"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "assignment_id": "ma_52789e81d1e9c2b0c12f1d0c",
+            "assigned_at": "2026-10-04T22:01:00.000Z",
+            "user_id": "usr-b1",
+            "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261005",
+            "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+            "media_asset_id": "482e0851-0c14-4d59-a6f4-84438b7661d1",
+            "adaptation_decision_id": "bd_2",
+            "media_kind": "video",
+            "selection_mode": "automatic",
+            "source_url": "https://example.test/e32cfd9765ae1a349b51c12545f33d27/video",
+            "tracked_url": "https://portal.invalid/api/r/JySrKBmStxR-PV6Q3IrrfrnOM3KwvNg4",
+            "planned_frequency": 3,
+            "scheduled_at": "2026-10-05T09:00:00",
+            "sent_at": "",
+            "delivered_at": "",
+            "read_at": "",
+            "visited_at": "",
+            "replied_at": "",
+            "send_to_read_hours": "",
+            "send_to_visit_hours": "",
+            "send_to_reply_hours": ""
+          },
+          {
+            "row_number": 3,
+            "assignment_id": "ma_ad77dc577428a5e52ba09f7a",
+            "assigned_at": "2026-10-06T22:01:00.000Z",
+            "user_id": "usr-b1",
+            "nudge_id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261007",
+            "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+            "media_asset_id": "f690f544-4b5e-40d5-aeff-dca9cc405e5d",
+            "adaptation_decision_id": "bd_5",
+            "media_kind": "paper",
+            "selection_mode": "automatic",
+            "source_url": "https://example.test/e32cfd9765ae1a349b51c12545f33d27/paper",
+            "tracked_url": "https://portal.invalid/api/r/LrLX5Dyu3cOupjkUicg4rVOFHYGdpk3z",
+            "planned_frequency": 3,
+            "scheduled_at": "2026-10-07T09:00:00",
+            "sent_at": "",
+            "delivered_at": "",
+            "read_at": "",
+            "visited_at": "",
+            "replied_at": "",
+            "send_to_read_hours": "",
+            "send_to_visit_hours": "",
+            "send_to_reply_hours": ""
+          }
+        ]
+      },
+      "interaction_events": {
+        "headers": [
+          "interaction_id",
+          "event_at",
+          "inbound_message_sid",
+          "user_id",
+          "from_phone",
+          "reply_to_wa_message_id",
+          "nudge_id",
+          "body",
+          "media_count",
+          "correlation_method",
+          "ack_status"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "interaction_id": "in_e5bab84d5491f42b0207fbc5",
+            "event_at": "2026-10-04T22:30:00.000Z",
+            "inbound_message_sid": "SMcbd411354c9466a468bb32f276a8da2d",
+            "user_id": "usr-b1",
+            "from_phone": "+61400000001",
+            "reply_to_wa_message_id": "SM8099c868fc65a4d1494baa692aec384b",
+            "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261005",
+            "body": "Send fewer messages",
+            "media_count": 0,
+            "correlation_method": "original_replied_message_sid",
+            "ack_status": "sent"
+          }
+        ]
+      },
+      "adaptation_decisions": {
+        "headers": [
+          "decision_id",
+          "decided_at",
+          "user_id",
+          "behaviour_key",
+          "interaction_id",
+          "signal_type",
+          "rule_applied",
+          "outcome",
+          "reason",
+          "selected_asset_id",
+          "interpretation",
+          "previous_state",
+          "next_state",
+          "scope",
+          "decision_source",
+          "effective_at",
+          "state_version",
+          "changed_fields",
+          "frequency_before",
+          "frequency_after",
+          "media_mode_before",
+          "media_mode_after",
+          "media_kind_before",
+          "media_kind_after",
+          "nudge_id"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "decision_id": "bd_2",
+            "decided_at": "2026-10-04T22:01:00.000Z",
+            "user_id": "usr-b1",
+            "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+            "interaction_id": "",
+            "signal_type": "scheduled_selection",
+            "rule_applied": "least_recently_used_rotation",
+            "outcome": "applied",
+            "reason": "no explicit preference; rotated approved media",
+            "selected_asset_id": "482e0851-0c14-4d59-a6f4-84438b7661d1",
+            "interpretation": "{\"explicit\":false,\"format\":null,\"summary_length\":null,\"tone\":null,\"time\":null,\"frequency_delta\":0,\"action\":null}",
+            "previous_state": "{\"format_scores\":{},\"asset_history\":[],\"media_selection_mode\":\"automatic\"}",
+            "next_state": "{\"format_scores\":{},\"asset_history\":[\"482e0851-0c14-4d59-a6f4-84438b7661d1\"],\"last_asset_id\":\"482e0851-0c14-4d59-a6f4-84438b7661d1\",\"media_selection_mode\":\"automatic\"}",
+            "scope": "behaviour",
+            "decision_source": "system",
+            "effective_at": "2026-10-04T22:01:00.000Z",
+            "state_version": 1,
+            "changed_fields": "[\"last_asset_id\"]",
+            "frequency_before": "",
+            "frequency_after": "",
+            "media_mode_before": "automatic",
+            "media_mode_after": "automatic",
+            "media_kind_before": "",
+            "media_kind_after": "video",
+            "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261005"
+          },
+          {
+            "row_number": 3,
+            "decision_id": "bd_5",
+            "decided_at": "2026-10-06T22:01:00.000Z",
+            "user_id": "usr-b1",
+            "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+            "interaction_id": "",
+            "signal_type": "scheduled_selection",
+            "rule_applied": "least_recently_used_rotation",
+            "outcome": "applied",
+            "reason": "no explicit preference; rotated approved media",
+            "selected_asset_id": "f690f544-4b5e-40d5-aeff-dca9cc405e5d",
+            "interpretation": "{\"explicit\":false,\"format\":null,\"summary_length\":null,\"tone\":null,\"time\":null,\"frequency_delta\":0,\"action\":null}",
+            "previous_state": "{\"format_scores\":{},\"asset_history\":[\"482e0851-0c14-4d59-a6f4-84438b7661d1\"],\"last_asset_id\":\"482e0851-0c14-4d59-a6f4-84438b7661d1\",\"media_selection_mode\":\"automatic\",\"user_id\":\"usr-b1\",\"behaviour_key\":\"e32cfd9765ae1a349b51c12545f33d27\",\"state_version\":2,\"updated_at\":\"2026-10-04T22:32:00.000Z\",\"last_signal_at\":\"2026-10-04T22:30:00.000Z\",\"last_decision_id\":\"bd_3\"}",
+            "next_state": "{\"format_scores\":{},\"asset_history\":[\"482e0851-0c14-4d59-a6f4-84438b7661d1\",\"f690f544-4b5e-40d5-aeff-dca9cc405e5d\"],\"last_asset_id\":\"f690f544-4b5e-40d5-aeff-dca9cc405e5d\",\"media_selection_mode\":\"automatic\",\"user_id\":\"usr-b1\",\"behaviour_key\":\"e32cfd9765ae1a349b51c12545f33d27\",\"state_version\":2,\"updated_at\":\"2026-10-04T22:32:00.000Z\",\"last_signal_at\":\"2026-10-04T22:30:00.000Z\",\"last_decision_id\":\"bd_3\"}",
+            "scope": "behaviour",
+            "decision_source": "system",
+            "effective_at": "2026-10-06T22:01:00.000Z",
+            "state_version": 3,
+            "changed_fields": "[\"last_asset_id\"]",
+            "frequency_before": "",
+            "frequency_after": "",
+            "media_mode_before": "automatic",
+            "media_mode_after": "automatic",
+            "media_kind_before": "",
+            "media_kind_after": "paper",
+            "nudge_id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261007"
+          }
+        ]
+      },
+      "patient_adaptation_state": {
+        "headers": [
+          "user_id",
+          "scope",
+          "behaviour_key",
+          "state_version",
+          "preferred_format",
+          "preferred_frequency",
+          "planned_frequency",
+          "delivered_frequency",
+          "observed_frequency",
+          "last_change_at",
+          "updated_at"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "user_id": "usr-b1",
+            "scope": "global",
+            "behaviour_key": "",
+            "state_version": "",
+            "preferred_format": "",
+            "preferred_frequency": "",
+            "updated_at": "2026-10-05T22:04:00.000Z"
+          },
+          {
+            "row_number": 3,
+            "user_id": "usr-b1",
+            "scope": "behaviour",
+            "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+            "state_version": 2,
+            "preferred_format": "",
+            "preferred_frequency": "",
+            "planned_frequency": 3,
+            "delivered_frequency": 1,
+            "observed_frequency": 0,
+            "last_change_at": "2026-10-05T22:04:00.000Z",
+            "updated_at": "2026-10-04T22:32:00.000Z"
+          }
+        ]
+      },
+      "patient_adaptation_timeline": {
+        "headers": [
+          "user_id",
+          "event_id",
+          "event_at",
+          "event_type",
+          "source",
+          "scope",
+          "behaviour_key",
+          "signal",
+          "rule_applied",
+          "outcome",
+          "reason",
+          "previous_state",
+          "new_state",
+          "changed_fields",
+          "selected_asset_id",
+          "selected_media_kind",
+          "nudge_id",
+          "interaction_id"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "user_id": "usr-b1",
+            "event_id": "bd_1",
+            "event_at": "2026-10-04T21:30:00.000Z",
+            "event_type": "adaptation_decision",
+            "source": "clinician",
+            "scope": "behaviour",
+            "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+            "signal": "clinician_schedule_change",
+            "rule_applied": "clinician_saved_schedule",
+            "outcome": "applied",
+            "reason": "Clinician saved a weekly schedule or media change",
+            "previous_state": "{\"planned_frequency\":0,\"media_selection_mode\":\"automatic\"}",
+            "new_state": "{\"planned_frequency\":3,\"media_selection_mode\":\"automatic\"}",
+            "changed_fields": "[\"planned_frequency\",\"media_selection_mode\"]",
+            "selected_asset_id": "",
+            "selected_media_kind": "",
+            "nudge_id": "",
+            "interaction_id": ""
+          },
+          {
+            "row_number": 3,
+            "user_id": "usr-b1",
+            "event_id": "bd_2",
+            "event_at": "2026-10-04T22:01:00.000Z",
+            "event_type": "adaptation_decision",
+            "source": "system",
+            "scope": "behaviour",
+            "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+            "signal": "scheduled_selection",
+            "rule_applied": "least_recently_used_rotation",
+            "outcome": "applied",
+            "reason": "no explicit preference; rotated approved media",
+            "previous_state": "{\"format_scores\":{},\"asset_history\":[],\"media_selection_mode\":\"automatic\"}",
+            "new_state": "{\"format_scores\":{},\"asset_history\":[\"482e0851-0c14-4d59-a6f4-84438b7661d1\"],\"last_asset_id\":\"482e0851-0c14-4d59-a6f4-84438b7661d1\",\"media_selection_mode\":\"automatic\"}",
+            "changed_fields": "[\"last_asset_id\"]",
+            "selected_asset_id": "482e0851-0c14-4d59-a6f4-84438b7661d1",
+            "selected_media_kind": "video",
+            "nudge_id": "",
+            "interaction_id": ""
+          },
+          {
+            "row_number": 4,
+            "user_id": "usr-b1",
+            "event_id": "evt_eda837b92d87a77f2775ff42",
+            "event_at": "2026-10-04T22:02:00.000Z",
+            "event_type": "delivery_status",
+            "source": "provider",
+            "scope": "behaviour",
+            "behaviour_key": "",
+            "signal": "delivered",
+            "rule_applied": "exposure_only",
+            "outcome": "observed",
+            "reason": "Provider exposure evidence only",
+            "previous_state": "{}",
+            "new_state": "{}",
+            "changed_fields": "[]",
+            "selected_asset_id": "",
+            "selected_media_kind": "",
+            "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261005",
+            "interaction_id": "evt_eda837b92d87a77f2775ff42"
+          },
+          {
+            "row_number": 5,
+            "user_id": "usr-b1",
+            "event_id": "bd_3",
+            "event_at": "2026-10-04T22:30:00.000Z",
+            "event_type": "adaptation_decision",
+            "source": "patient",
+            "scope": "behaviour",
+            "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+            "signal": "inbound_reply",
+            "rule_applied": "explicit_request_guarded",
+            "outcome": "outside_envelope",
+            "reason": "frequency_outside_envelope",
+            "previous_state": "{\"format_scores\":{},\"asset_history\":[\"482e0851-0c14-4d59-a6f4-84438b7661d1\"],\"last_asset_id\":\"482e0851-0c14-4d59-a6f4-84438b7661d1\",\"media_selection_mode\":\"automatic\",\"user_id\":\"usr-b1\",\"behaviour_key\":\"e32cfd9765ae1a349b51c12545f33d27\",\"state_version\":1,\"updated_at\":\"2026-10-04T22:01:00.000Z\"}",
+            "new_state": "{\"format_scores\":{},\"asset_history\":[\"482e0851-0c14-4d59-a6f4-84438b7661d1\"],\"last_asset_id\":\"482e0851-0c14-4d59-a6f4-84438b7661d1\",\"media_selection_mode\":\"automatic\",\"user_id\":\"usr-b1\",\"behaviour_key\":\"e32cfd9765ae1a349b51c12545f33d27\",\"state_version\":1,\"updated_at\":\"2026-10-04T22:01:00.000Z\"}",
+            "changed_fields": "[]",
+            "selected_asset_id": "",
+            "selected_media_kind": "",
+            "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261005",
+            "interaction_id": "in_e5bab84d5491f42b0207fbc5"
+          },
+          {
+            "row_number": 6,
+            "user_id": "usr-b1",
+            "event_id": "1372121f-7bc8-4120-a27d-af6cabbc09f0",
+            "event_at": "2026-10-05T22:04:00.000Z",
+            "event_type": "adaptation_decision",
+            "source": "system",
+            "scope": "behaviour",
+            "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+            "signal": "adaptive_policy_no_change",
+            "rule_applied": "bounded_frequency_time_media_policy",
+            "outcome": "no_change",
+            "reason": "Policy evaluated; future schedule already matches or no bounded change was supported",
+            "previous_state": "{\"format_scores\":{},\"asset_history\":[\"482e0851-0c14-4d59-a6f4-84438b7661d1\"],\"last_asset_id\":\"482e0851-0c14-4d59-a6f4-84438b7661d1\",\"media_selection_mode\":\"automatic\",\"user_id\":\"usr-b1\",\"behaviour_key\":\"e32cfd9765ae1a349b51c12545f33d27\",\"state_version\":2,\"updated_at\":\"2026-10-04T22:32:00.000Z\",\"last_signal_at\":\"2026-10-04T22:30:00.000Z\",\"last_decision_id\":\"bd_3\",\"planned_frequency\":3,\"preferred_time\":\"09:00\",\"preferred_format\":null}",
+            "new_state": "{\"format_scores\":{},\"asset_history\":[\"482e0851-0c14-4d59-a6f4-84438b7661d1\"],\"last_asset_id\":\"482e0851-0c14-4d59-a6f4-84438b7661d1\",\"media_selection_mode\":\"automatic\",\"user_id\":\"usr-b1\",\"behaviour_key\":\"e32cfd9765ae1a349b51c12545f33d27\",\"state_version\":2,\"updated_at\":\"2026-10-04T22:32:00.000Z\",\"last_signal_at\":\"2026-10-04T22:30:00.000Z\",\"last_decision_id\":\"bd_3\",\"planned_frequency\":3,\"preferred_time\":\"09:00\",\"preferred_format\":null}",
+            "changed_fields": "[]",
+            "selected_asset_id": "",
+            "selected_media_kind": "",
+            "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261005",
+            "interaction_id": ""
+          },
+          {
+            "row_number": 7,
+            "user_id": "usr-b1",
+            "event_id": "bd_4",
+            "event_at": "2026-10-05T22:04:00.000Z",
+            "event_type": "adaptation_decision",
+            "source": "system",
+            "scope": "behaviour",
+            "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+            "signal": "frequency_model_recommendation",
+            "rule_applied": "regularized_logistic_regression",
+            "outcome": "no_change",
+            "reason": "Model recommendation: 2 per week",
+            "previous_state": "{\"format_scores\":{},\"asset_history\":[\"482e0851-0c14-4d59-a6f4-84438b7661d1\"],\"last_asset_id\":\"482e0851-0c14-4d59-a6f4-84438b7661d1\",\"media_selection_mode\":\"automatic\",\"user_id\":\"usr-b1\",\"behaviour_key\":\"e32cfd9765ae1a349b51c12545f33d27\",\"state_version\":2,\"updated_at\":\"2026-10-04T22:32:00.000Z\",\"last_signal_at\":\"2026-10-04T22:30:00.000Z\",\"last_decision_id\":\"bd_3\",\"planned_frequency\":3,\"preferred_time\":\"09:00\",\"preferred_format\":null}",
+            "new_state": "{\"format_scores\":{},\"asset_history\":[\"482e0851-0c14-4d59-a6f4-84438b7661d1\"],\"last_asset_id\":\"482e0851-0c14-4d59-a6f4-84438b7661d1\",\"media_selection_mode\":\"automatic\",\"user_id\":\"usr-b1\",\"behaviour_key\":\"e32cfd9765ae1a349b51c12545f33d27\",\"state_version\":2,\"updated_at\":\"2026-10-04T22:32:00.000Z\",\"last_signal_at\":\"2026-10-04T22:30:00.000Z\",\"last_decision_id\":\"bd_3\",\"planned_frequency\":2,\"preferred_time\":\"09:00\",\"preferred_format\":null}",
+            "changed_fields": "[\"planned_frequency\"]",
+            "selected_asset_id": "",
+            "selected_media_kind": "",
+            "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261005",
+            "interaction_id": ""
+          }
+        ]
+      }
+    },
+    "database": {
+      "profiles": [
+        {
+          "auth_user_id": "11111111-1111-4111-a111-111111111111",
+          "email": "clinician@harness.invalid",
+          "display_name": "Synthetic clinician",
+          "role": "doctor",
+          "doctor_id": "doc-harness",
+          "status": "active"
+        }
+      ],
+      "media_search_jobs": [
+        {
+          "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+          "user_id": "usr-b1",
+          "prescription_id": "rx_ece603df-5930-4059-ac64-9230dc42bc6e",
+          "action_text": "Be in bed by 10:30 pm",
+          "pillar": "sleep",
+          "category": "establish",
+          "status": "pending",
+          "updated_at": "2026-10-04T21:30:00.000Z",
+          "job_id": "868b6985-51f9-46e4-ab29-8b30098417c4",
+          "created_at": "2026-10-04T21:30:00.000Z"
+        }
+      ],
+      "media_candidates": [
+        {
+          "candidate_id": "3b7f08ff-815c-4581-a1a8-aa4a1d642982",
+          "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+          "media_kind": "video",
+          "title": "Synthetic video for Be in bed by 10:30 pm",
+          "source_name": "Synthetic approved pool",
+          "source_url": "https://example.test/e32cfd9765ae1a349b51c12545f33d27/video",
+          "open_access": false,
+          "short_summary": "SHORT synthetic explanation.",
+          "detailed_summary": "DETAILED synthetic explanation for this controlled evaluation.",
+          "ranking_score": 2,
+          "ranking_reasons": [],
+          "metadata": {}
+        },
+        {
+          "candidate_id": "c9a027b6-0e95-4a49-a8d2-edc91134ecd7",
+          "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+          "media_kind": "paper",
+          "title": "Synthetic paper for Be in bed by 10:30 pm",
+          "source_name": "Synthetic approved pool",
+          "source_url": "https://example.test/e32cfd9765ae1a349b51c12545f33d27/paper",
+          "open_access": true,
+          "short_summary": "SHORT synthetic explanation.",
+          "detailed_summary": "DETAILED synthetic explanation for this controlled evaluation.",
+          "ranking_score": 1,
+          "ranking_reasons": [],
+          "metadata": {}
+        }
+      ],
+      "media_assets": [
+        {
+          "candidate_id": "3b7f08ff-815c-4581-a1a8-aa4a1d642982",
+          "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+          "media_kind": "video",
+          "title": "Synthetic video for Be in bed by 10:30 pm",
+          "source_name": "Synthetic approved pool",
+          "source_url": "https://example.test/e32cfd9765ae1a349b51c12545f33d27/video",
+          "short_summary": "SHORT synthetic explanation.",
+          "detailed_summary": "DETAILED synthetic explanation for this controlled evaluation.",
+          "limitations": "",
+          "status": "approved",
+          "approved_at": "2026-10-04T21:30:00.000Z",
+          "approved_by": "11111111-1111-4111-a111-111111111111",
+          "asset_id": "482e0851-0c14-4d59-a6f4-84438b7661d1",
+          "created_at": "2026-10-04T21:30:00.000Z"
+        },
+        {
+          "candidate_id": "c9a027b6-0e95-4a49-a8d2-edc91134ecd7",
+          "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+          "media_kind": "paper",
+          "title": "Synthetic paper for Be in bed by 10:30 pm",
+          "source_name": "Synthetic approved pool",
+          "source_url": "https://example.test/e32cfd9765ae1a349b51c12545f33d27/paper",
+          "short_summary": "SHORT synthetic explanation.",
+          "detailed_summary": "DETAILED synthetic explanation for this controlled evaluation.",
+          "limitations": "",
+          "status": "approved",
+          "approved_at": "2026-10-04T21:30:00.000Z",
+          "approved_by": "11111111-1111-4111-a111-111111111111",
+          "asset_id": "f690f544-4b5e-40d5-aeff-dca9cc405e5d",
+          "created_at": "2026-10-04T21:30:00.000Z"
+        }
+      ],
+      "adaptation_envelopes": [
+        {
+          "action_text": "Be in bed by 10:30 pm",
+          "pillar": "sleep",
+          "category": "establish",
+          "formats": [
+            "video",
+            "paper",
+            "reading"
+          ],
+          "summary_lengths": [
+            "short",
+            "detailed"
+          ],
+          "tones": [
+            "encouraging",
+            "neutral_informational"
+          ],
+          "earliest_time": "08:00",
+          "latest_time": "21:00",
+          "frequency_min": 1,
+          "frequency_max": 3,
+          "action_alternatives": [
+            "Be in bed by 10:30 pm"
+          ],
+          "user_id": "usr-b1",
+          "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+          "status": "approved",
+          "updated_at": "2026-10-04T21:30:00.000Z",
+          "envelope_id": "97a17758-a6d9-4290-ae6c-84440a044ea4",
+          "created_at": "2026-10-04T21:30:00.000Z",
+          "automatic_schedule_apply": true,
+          "approved_asset_ids": [
+            "482e0851-0c14-4d59-a6f4-84438b7661d1",
+            "f690f544-4b5e-40d5-aeff-dca9cc405e5d"
+          ],
+          "approved_at": "2026-10-04T21:30:00.000Z",
+          "approved_by": "11111111-1111-4111-a111-111111111111"
+        }
+      ],
+      "user_adaptation_state": [
+        {
+          "format_scores": {},
+          "asset_history": [
+            "482e0851-0c14-4d59-a6f4-84438b7661d1",
+            "f690f544-4b5e-40d5-aeff-dca9cc405e5d"
+          ],
+          "last_asset_id": "f690f544-4b5e-40d5-aeff-dca9cc405e5d",
+          "media_selection_mode": "automatic",
+          "user_id": "usr-b1",
+          "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+          "state_version": 3,
+          "updated_at": "2026-10-06T22:01:00.000Z",
+          "last_signal_at": "2026-10-04T22:30:00.000Z",
+          "last_decision_id": "bd_3"
+        }
+      ],
+      "interaction_events": [
+        {
+          "interaction_id": "evt_eda837b92d87a77f2775ff42",
+          "event_at": "2026-10-04T22:02:00.000Z",
+          "event_type": "delivery_status",
+          "user_id": "usr-b1",
+          "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261005",
+          "wa_message_id": "SM8099c868fc65a4d1494baa692aec384b",
+          "status": "delivered",
+          "correlation_method": "twilio_message_sid",
+          "raw_payload": {
+            "MessageSid": "SM8099c868fc65a4d1494baa692aec384b",
+            "MessageStatus": "delivered",
+            "AccountSid": "AC00000000000000000000000000000000",
+            "From": "whatsapp:+14155238886",
+            "To": "whatsapp:+61400000001"
+          }
+        },
+        {
+          "interaction_id": "in_e5bab84d5491f42b0207fbc5",
+          "event_at": "2026-10-04T22:30:00.000Z",
+          "event_type": "inbound_reply",
+          "user_id": "usr-b1",
+          "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+          "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261005",
+          "wa_message_id": "SM8099c868fc65a4d1494baa692aec384b",
+          "inbound_message_sid": "SMcbd411354c9466a468bb32f276a8da2d",
+          "reply_to_wa_message_id": "SM8099c868fc65a4d1494baa692aec384b",
+          "body": "Send fewer messages",
+          "media_count": 0,
+          "correlation_method": "original_replied_message_sid",
+          "raw_payload": {
+            "from": "whatsapp:+61400000001",
+            "num_media": "0"
+          },
+          "processed_at": "2026-10-04T22:32:00.000Z"
+        },
+        {
+          "interaction_id": "evt_73fbbcdb8d8fa11d1a83bafb",
+          "event_at": "2026-10-06T22:02:00.000Z",
+          "event_type": "delivery_status",
+          "user_id": "usr-b1",
+          "nudge_id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261007",
+          "wa_message_id": "SM7bb964267deed66f70388a1030c0a3e0",
+          "status": "delivered",
+          "correlation_method": "twilio_message_sid",
+          "raw_payload": {
+            "MessageSid": "SM7bb964267deed66f70388a1030c0a3e0",
+            "MessageStatus": "delivered",
+            "AccountSid": "AC00000000000000000000000000000000",
+            "From": "whatsapp:+14155238886",
+            "To": "whatsapp:+61400000001"
+          }
+        }
+      ],
+      "adaptation_decisions": [
+        {
+          "user_id": "usr-b1",
+          "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+          "interaction_id": null,
+          "nudge_id": null,
+          "signal_type": "clinician_schedule_change",
+          "scope": "behaviour",
+          "decision_source": "clinician",
+          "effective_at": "2026-10-04T21:30:00.000Z",
+          "state_version": 1,
+          "interpretation": {},
+          "scores_before": {},
+          "scores_after": {},
+          "rule_applied": "clinician_saved_schedule",
+          "previous_state": {
+            "planned_frequency": 0,
+            "media_selection_mode": "automatic"
+          },
+          "next_state": {
+            "planned_frequency": 3,
+            "media_selection_mode": "automatic"
+          },
+          "changed_fields": [
+            "planned_frequency",
+            "media_selection_mode"
+          ],
+          "frequency_before": null,
+          "frequency_after": null,
+          "media_mode_before": "automatic",
+          "media_mode_after": "automatic",
+          "media_kind_before": null,
+          "media_kind_after": null,
+          "selected_asset_id": null,
+          "outcome": "applied",
+          "reason": "Clinician saved a weekly schedule or media change",
+          "fulfilled_at": "2026-10-04T21:30:00.000Z",
+          "decision_id": "bd_1",
+          "decided_at": "2026-10-04T21:30:00.000Z"
+        },
+        {
+          "user_id": "usr-b1",
+          "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+          "interaction_id": null,
+          "nudge_id": null,
+          "signal_type": "scheduled_selection",
+          "scope": "behaviour",
+          "decision_source": "system",
+          "effective_at": "2026-10-04T22:01:00.000Z",
+          "state_version": 1,
+          "interpretation": {
+            "explicit": false,
+            "format": null,
+            "summary_length": null,
+            "tone": null,
+            "time": null,
+            "frequency_delta": 0,
+            "action": null
+          },
+          "scores_before": {},
+          "scores_after": {},
+          "rule_applied": "least_recently_used_rotation",
+          "previous_state": {
+            "format_scores": {},
+            "asset_history": [],
+            "media_selection_mode": "automatic"
+          },
+          "next_state": {
+            "format_scores": {},
+            "asset_history": [
+              "482e0851-0c14-4d59-a6f4-84438b7661d1"
+            ],
+            "last_asset_id": "482e0851-0c14-4d59-a6f4-84438b7661d1",
+            "media_selection_mode": "automatic"
+          },
+          "changed_fields": [
+            "last_asset_id"
+          ],
+          "frequency_before": null,
+          "frequency_after": null,
+          "media_mode_before": "automatic",
+          "media_mode_after": "automatic",
+          "media_kind_before": null,
+          "media_kind_after": "video",
+          "selected_asset_id": "482e0851-0c14-4d59-a6f4-84438b7661d1",
+          "outcome": "applied",
+          "reason": "no explicit preference; rotated approved media",
+          "fulfilled_at": "2026-10-04T22:01:00.000Z",
+          "decision_id": "bd_2",
+          "decided_at": "2026-10-04T22:01:00.000Z"
+        },
+        {
+          "user_id": "usr-b1",
+          "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+          "interaction_id": "in_e5bab84d5491f42b0207fbc5",
+          "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261005",
+          "signal_type": "inbound_reply",
+          "scope": "behaviour",
+          "decision_source": "patient",
+          "effective_at": "2026-10-04T22:30:00.000Z",
+          "state_version": 2,
+          "interpretation": {
+            "explicit": true,
+            "format": null,
+            "summary_length": null,
+            "tone": null,
+            "time": null,
+            "frequency_delta": -1,
+            "action": null
+          },
+          "scores_before": {},
+          "scores_after": {},
+          "rule_applied": "explicit_request_guarded",
+          "previous_state": {
+            "format_scores": {},
+            "asset_history": [
+              "482e0851-0c14-4d59-a6f4-84438b7661d1"
+            ],
+            "last_asset_id": "482e0851-0c14-4d59-a6f4-84438b7661d1",
+            "media_selection_mode": "automatic",
+            "user_id": "usr-b1",
+            "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+            "state_version": 1,
+            "updated_at": "2026-10-04T22:01:00.000Z"
+          },
+          "next_state": {
+            "format_scores": {},
+            "asset_history": [
+              "482e0851-0c14-4d59-a6f4-84438b7661d1"
+            ],
+            "last_asset_id": "482e0851-0c14-4d59-a6f4-84438b7661d1",
+            "media_selection_mode": "automatic",
+            "user_id": "usr-b1",
+            "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+            "state_version": 1,
+            "updated_at": "2026-10-04T22:01:00.000Z"
+          },
+          "changed_fields": [],
+          "frequency_before": null,
+          "frequency_after": null,
+          "media_mode_before": "automatic",
+          "media_mode_after": "automatic",
+          "media_kind_before": null,
+          "media_kind_after": null,
+          "selected_asset_id": null,
+          "outcome": "outside_envelope",
+          "reason": "frequency_outside_envelope",
+          "fulfilled_at": null,
+          "decision_id": "bd_3",
+          "decided_at": "2026-10-04T22:32:00.000Z"
+        },
+        {
+          "decided_at": "2026-10-05T22:04:00.000Z",
+          "effective_at": "2026-10-05T22:04:00.000Z",
+          "user_id": "usr-b1",
+          "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+          "interaction_id": null,
+          "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261005",
+          "scope": "behaviour",
+          "decision_source": "system",
+          "media_mode_before": null,
+          "media_mode_after": null,
+          "media_kind_before": null,
+          "media_kind_after": null,
+          "selected_asset_id": null,
+          "signal_type": "frequency_model_recommendation",
+          "interpretation": {
+            "evaluation_key": "frequency-logistic-v1:e32cfd9765ae1a349b51c12545f33d27:schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261005:2026-10-04T22:02:00.000Z",
+            "model_id": "frequency-logistic-v1",
+            "mode": "apply",
+            "closed_delivery_count": 1,
+            "recent_outcomes": [
+              {
+                "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261005",
+                "delivered_at": "2026-10-04T22:02:00.000Z",
+                "read_at": null,
+                "scheduled_time": "09:00",
+                "media_kind": "video",
+                "first_visit_at": null,
+                "first_reply_at": "2026-10-04T22:30:00.000Z",
+                "first_interaction_at": "2026-10-04T22:30:00.000Z",
+                "read_latency_minutes": null,
+                "visit_latency_minutes": null,
+                "reply_latency_minutes": 28,
+                "interaction_window": "morning",
+                "link_visit_count": 0,
+                "ordinary_reply_count": 1,
+                "closed_24h": true,
+                "interacted_within_24h": 1,
+                "outcome": "ordinary_interaction"
+              }
+            ],
+            "features": {
+              "recent_interaction_rate": 1,
+              "noninteraction_streak": 0,
+              "has_previous_interaction": true,
+              "has_recent_interaction": true
+            },
+            "candidate_scores": {
+              "1": 0.5752146605734844,
+              "2": 0.6052308722850585,
+              "3": 0.6344738925929893
+            },
+            "model_recommended_frequency": 2,
+            "recommended_frequency": 3,
+            "direction": "hold",
+            "policy_reason": "decrease_held_until_two_closed_noninteractions",
+            "time_recommendation": {
+              "recommended_time": "09:00",
+              "direction": "hold",
+              "source": "policy",
+              "reason": "fewer_than_two_positive_timing_observations",
+              "evidence_count": 1
+            },
+            "media_recommendation": {
+              "recommended_format": null,
+              "direction": "rotate",
+              "source": "novelty_policy",
+              "reason": "no_format_signal_rotate_least_recently_used",
+              "evidence_count": 0
+            },
+            "passive_evidence": {
+              "delivered_count": 1,
+              "read_count": 0,
+              "read_unknown_count": 1,
+              "visit_count": 0,
+              "reply_count": 1,
+              "no_observable_interaction_count": 0,
+              "open_24h_count": 0,
+              "median_read_latency_minutes": null,
+              "interaction_windows": {
+                "morning": 1
+              },
+              "media_visits": {}
+            },
+            "schedule_applied": false
+          },
+          "scores_before": {},
+          "scores_after": {
+            "1": 0.5752146605734844,
+            "2": 0.6052308722850585,
+            "3": 0.6344738925929893
+          },
+          "rule_applied": "regularized_logistic_regression",
+          "previous_state": {
+            "format_scores": {},
+            "asset_history": [
+              "482e0851-0c14-4d59-a6f4-84438b7661d1"
+            ],
+            "last_asset_id": "482e0851-0c14-4d59-a6f4-84438b7661d1",
+            "media_selection_mode": "automatic",
+            "user_id": "usr-b1",
+            "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+            "state_version": 2,
+            "updated_at": "2026-10-04T22:32:00.000Z",
+            "last_signal_at": "2026-10-04T22:30:00.000Z",
+            "last_decision_id": "bd_3",
+            "planned_frequency": 3,
+            "preferred_time": "09:00",
+            "preferred_format": null
+          },
+          "next_state": {
+            "format_scores": {},
+            "asset_history": [
+              "482e0851-0c14-4d59-a6f4-84438b7661d1"
+            ],
+            "last_asset_id": "482e0851-0c14-4d59-a6f4-84438b7661d1",
+            "media_selection_mode": "automatic",
+            "user_id": "usr-b1",
+            "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+            "state_version": 2,
+            "updated_at": "2026-10-04T22:32:00.000Z",
+            "last_signal_at": "2026-10-04T22:30:00.000Z",
+            "last_decision_id": "bd_3",
+            "planned_frequency": 2,
+            "preferred_time": "09:00",
+            "preferred_format": null
+          },
+          "changed_fields": [
+            "planned_frequency"
+          ],
+          "frequency_before": 3,
+          "frequency_after": 2,
+          "outcome": "no_change",
+          "reason": "Model recommendation: 2 per week",
+          "fulfilled_at": null,
+          "decision_id": "bd_4"
+        },
+        {
+          "decided_at": "2026-10-05T22:04:00.000Z",
+          "effective_at": "2026-10-05T22:04:00.000Z",
+          "user_id": "usr-b1",
+          "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+          "interaction_id": null,
+          "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261005",
+          "scope": "behaviour",
+          "decision_source": "system",
+          "media_mode_before": null,
+          "media_mode_after": null,
+          "media_kind_before": null,
+          "media_kind_after": null,
+          "selected_asset_id": null,
+          "decision_id": "1372121f-7bc8-4120-a27d-af6cabbc09f0",
+          "signal_type": "adaptive_policy_no_change",
+          "interpretation": {
+            "evaluation_key": "frequency-logistic-v1:e32cfd9765ae1a349b51c12545f33d27:schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261005:2026-10-04T22:02:00.000Z",
+            "model_id": "frequency-logistic-v1",
+            "mode": "apply",
+            "closed_delivery_count": 1,
+            "recent_outcomes": [
+              {
+                "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261005",
+                "delivered_at": "2026-10-04T22:02:00.000Z",
+                "read_at": null,
+                "scheduled_time": "09:00",
+                "media_kind": "video",
+                "first_visit_at": null,
+                "first_reply_at": "2026-10-04T22:30:00.000Z",
+                "first_interaction_at": "2026-10-04T22:30:00.000Z",
+                "read_latency_minutes": null,
+                "visit_latency_minutes": null,
+                "reply_latency_minutes": 28,
+                "interaction_window": "morning",
+                "link_visit_count": 0,
+                "ordinary_reply_count": 1,
+                "closed_24h": true,
+                "interacted_within_24h": 1,
+                "outcome": "ordinary_interaction"
+              }
+            ],
+            "features": {
+              "recent_interaction_rate": 1,
+              "noninteraction_streak": 0,
+              "has_previous_interaction": true,
+              "has_recent_interaction": true
+            },
+            "candidate_scores": {
+              "1": 0.5752146605734844,
+              "2": 0.6052308722850585,
+              "3": 0.6344738925929893
+            },
+            "model_recommended_frequency": 2,
+            "recommended_frequency": 3,
+            "direction": "hold",
+            "policy_reason": "decrease_held_until_two_closed_noninteractions",
+            "time_recommendation": {
+              "recommended_time": "09:00",
+              "direction": "hold",
+              "source": "policy",
+              "reason": "fewer_than_two_positive_timing_observations",
+              "evidence_count": 1
+            },
+            "media_recommendation": {
+              "recommended_format": null,
+              "direction": "rotate",
+              "source": "novelty_policy",
+              "reason": "no_format_signal_rotate_least_recently_used",
+              "evidence_count": 0
+            },
+            "passive_evidence": {
+              "delivered_count": 1,
+              "read_count": 0,
+              "read_unknown_count": 1,
+              "visit_count": 0,
+              "reply_count": 1,
+              "no_observable_interaction_count": 0,
+              "open_24h_count": 0,
+              "median_read_latency_minutes": null,
+              "interaction_windows": {
+                "morning": 1
+              },
+              "media_visits": {}
+            },
+            "schedule_applied": false
+          },
+          "scores_before": {
+            "1": 0.5752146605734844,
+            "2": 0.6052308722850585,
+            "3": 0.6344738925929893
+          },
+          "scores_after": {
+            "1": 0.5752146605734844,
+            "2": 0.6052308722850585,
+            "3": 0.6344738925929893
+          },
+          "rule_applied": "bounded_frequency_time_media_policy",
+          "previous_state": {
+            "format_scores": {},
+            "asset_history": [
+              "482e0851-0c14-4d59-a6f4-84438b7661d1"
+            ],
+            "last_asset_id": "482e0851-0c14-4d59-a6f4-84438b7661d1",
+            "media_selection_mode": "automatic",
+            "user_id": "usr-b1",
+            "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+            "state_version": 2,
+            "updated_at": "2026-10-04T22:32:00.000Z",
+            "last_signal_at": "2026-10-04T22:30:00.000Z",
+            "last_decision_id": "bd_3",
+            "planned_frequency": 3,
+            "preferred_time": "09:00",
+            "preferred_format": null
+          },
+          "next_state": {
+            "format_scores": {},
+            "asset_history": [
+              "482e0851-0c14-4d59-a6f4-84438b7661d1"
+            ],
+            "last_asset_id": "482e0851-0c14-4d59-a6f4-84438b7661d1",
+            "media_selection_mode": "automatic",
+            "user_id": "usr-b1",
+            "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+            "state_version": 2,
+            "updated_at": "2026-10-04T22:32:00.000Z",
+            "last_signal_at": "2026-10-04T22:30:00.000Z",
+            "last_decision_id": "bd_3",
+            "planned_frequency": 3,
+            "preferred_time": "09:00",
+            "preferred_format": null
+          },
+          "changed_fields": [],
+          "frequency_before": 3,
+          "frequency_after": 3,
+          "outcome": "no_change",
+          "reason": "Policy evaluated; future schedule already matches or no bounded change was supported",
+          "fulfilled_at": null
+        },
+        {
+          "user_id": "usr-b1",
+          "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+          "interaction_id": null,
+          "nudge_id": null,
+          "signal_type": "scheduled_selection",
+          "scope": "behaviour",
+          "decision_source": "system",
+          "effective_at": "2026-10-06T22:01:00.000Z",
+          "state_version": 3,
+          "interpretation": {
+            "explicit": false,
+            "format": null,
+            "summary_length": null,
+            "tone": null,
+            "time": null,
+            "frequency_delta": 0,
+            "action": null
+          },
+          "scores_before": {},
+          "scores_after": {},
+          "rule_applied": "least_recently_used_rotation",
+          "previous_state": {
+            "format_scores": {},
+            "asset_history": [
+              "482e0851-0c14-4d59-a6f4-84438b7661d1"
+            ],
+            "last_asset_id": "482e0851-0c14-4d59-a6f4-84438b7661d1",
+            "media_selection_mode": "automatic",
+            "user_id": "usr-b1",
+            "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+            "state_version": 2,
+            "updated_at": "2026-10-04T22:32:00.000Z",
+            "last_signal_at": "2026-10-04T22:30:00.000Z",
+            "last_decision_id": "bd_3"
+          },
+          "next_state": {
+            "format_scores": {},
+            "asset_history": [
+              "482e0851-0c14-4d59-a6f4-84438b7661d1",
+              "f690f544-4b5e-40d5-aeff-dca9cc405e5d"
+            ],
+            "last_asset_id": "f690f544-4b5e-40d5-aeff-dca9cc405e5d",
+            "media_selection_mode": "automatic",
+            "user_id": "usr-b1",
+            "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+            "state_version": 2,
+            "updated_at": "2026-10-04T22:32:00.000Z",
+            "last_signal_at": "2026-10-04T22:30:00.000Z",
+            "last_decision_id": "bd_3"
+          },
+          "changed_fields": [
+            "last_asset_id"
+          ],
+          "frequency_before": null,
+          "frequency_after": null,
+          "media_mode_before": "automatic",
+          "media_mode_after": "automatic",
+          "media_kind_before": null,
+          "media_kind_after": "paper",
+          "selected_asset_id": "f690f544-4b5e-40d5-aeff-dca9cc405e5d",
+          "outcome": "applied",
+          "reason": "no explicit preference; rotated approved media",
+          "fulfilled_at": "2026-10-06T22:01:00.000Z",
+          "decision_id": "bd_5",
+          "decided_at": "2026-10-06T22:01:00.000Z"
+        }
+      ],
+      "tracked_links": [
+        {
+          "token": "JySrKBmStxR-PV6Q3IrrfrnOM3KwvNg4",
+          "expires_at": "2027-04-02T22:01:00.000Z",
+          "asset_id": "482e0851-0c14-4d59-a6f4-84438b7661d1",
+          "user_id": "usr-b1",
+          "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+          "nudge_id": "schd_slot_9-4015-a5b0-84921f5a9715_monday_0_20261005",
+          "target_url": "https://example.test/e32cfd9765ae1a349b51c12545f33d27/video"
+        },
+        {
+          "token": "LrLX5Dyu3cOupjkUicg4rVOFHYGdpk3z",
+          "expires_at": "2027-04-04T22:01:00.000Z",
+          "asset_id": "f690f544-4b5e-40d5-aeff-dca9cc405e5d",
+          "user_id": "usr-b1",
+          "behaviour_key": "e32cfd9765ae1a349b51c12545f33d27",
+          "nudge_id": "schd_slot_c-4be5-a257-6854b4c09950_wednesday_1_20261007",
+          "target_url": "https://example.test/e32cfd9765ae1a349b51c12545f33d27/paper"
+        }
+      ],
+      "patient_adaptation_state": [],
+      "patient_adaptation_timeline": []
+    }
+  }
+}

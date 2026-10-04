@@ -1,0 +1,3044 @@
+{
+  "case": {
+    "id": "F06-chain",
+    "text": "Keep up your three gym sessions a week; one reminder a week for 8 weeks.",
+    "llm": {
+      "prescriptions": [
+        {
+          "ref": "p1",
+          "pillar": "physical_activity",
+          "category": "maintain",
+          "frequency_per_week": 1,
+          "duration_weeks": 8,
+          "_normalised": ""
+        }
+      ],
+      "nudges": [
+        {
+          "prescription_ref": "p1",
+          "pillar": "physical_activity",
+          "nudge_type": "reminder",
+          "action_text": "Attend your three gym sessions this week.",
+          "scheduled_date": "2026-10-05",
+          "scheduled_time": "09:00",
+          "tone_variant": "encouraging",
+          "message_body": "Remember to keep up with your three gym sessions this week. You've got this!",
+          "message_body_alt": "This is a reminder to attend your three gym sessions this week.",
+          "template_name": "health_plan_reminder"
+        }
+      ]
+    },
+    "review": {},
+    "reply": "Send fewer messages"
+  },
+  "result": {
+    "id": "F06-chain",
+    "case_reply": "Send fewer messages",
+    "steps": [
+      {
+        "step": "intake via portal and Workflow A",
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "user_id": "usr-f06-chain",
+          "prescriptions": 1,
+          "nudges": 1
+        }
+      },
+      {
+        "step": "clinician approval",
+        "status": 200,
+        "body": {
+          "slots": 1
+        }
+      },
+      {
+        "step": "envelope approval 2bb3723c",
+        "status": 200
+      },
+      {
+        "step": "signed reply",
+        "status": 200
+      },
+      {
+        "step": "workflow C tick (after reply)",
+        "adaptation": "complete",
+        "decision": {
+          "outcome": "outside_envelope",
+          "rule": "explicit_request_guarded",
+          "reason": "frequency_outside_envelope"
+        },
+        "frequency": "idle",
+        "policy": null
+      },
+      {
+        "step": "workflow C tick (after the 24-hour window closes)",
+        "adaptation": "idle",
+        "decision": null,
+        "frequency": "complete",
+        "policy": {
+          "current": 1,
+          "recommended": 1,
+          "schedule": {
+            "applied": false,
+            "reason": "schedule_already_matches_policy"
+          }
+        }
+      }
+    ],
+    "decision": {
+      "outcome": "outside_envelope",
+      "rule": "explicit_request_guarded",
+      "reason": "frequency_outside_envelope",
+      "decision_id": "bd_3"
+    },
+    "acknowledgements": [],
+    "policy": {
+      "current": 1,
+      "recommended": 1,
+      "applied": false
+    },
+    "deliveries": [
+      {
+        "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261005",
+        "sid": "SM10a73a2f7d9fa67bdacdecdfdd0bd078",
+        "label": "first-delivery",
+        "callback": 200
+      },
+      {
+        "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261012",
+        "sid": "SM42dbdfab08783bb17a640f1b61647c17",
+        "label": "delivery-1",
+        "callback": 200
+      }
+    ],
+    "clinician_changes": [],
+    "links": {
+      "T1": [
+        {
+          "id": "rx_6df0277a-6518-4ff2-afb9-d1e09114eda6",
+          "ok": true
+        }
+      ],
+      "T2": [
+        {
+          "id": "rx_6df0277a-6518-4ff2-afb9-d1e09114eda6",
+          "ok": true
+        }
+      ],
+      "T3": [
+        {
+          "id": "ndg_e96f3672-cfe8-4f34-a76b-3f920a2d97f4",
+          "ok": true
+        }
+      ],
+      "T4": [
+        {
+          "id": "ndg_e96f3672-cfe8-4f34-a76b-3f920a2d97f4",
+          "ok": true
+        }
+      ],
+      "T5": [
+        {
+          "id": "slot_8-4f34-a76b-3f920a2d97f4_monday_0",
+          "ok": true
+        }
+      ],
+      "T6": [
+        {
+          "id": "slot_8-4f34-a76b-3f920a2d97f4_monday_0",
+          "ok": true
+        }
+      ],
+      "T7": [],
+      "T8": [
+        {
+          "id": "2bb3723c492c4cd9bb49194016265527",
+          "ok": true
+        }
+      ],
+      "T9": [
+        {
+          "id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261005",
+          "ok": true
+        },
+        {
+          "id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261012",
+          "ok": true
+        },
+        {
+          "id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261019",
+          "ok": true
+        },
+        {
+          "id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261026",
+          "ok": true
+        }
+      ],
+      "T10": [
+        {
+          "id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261005",
+          "ok": true
+        },
+        {
+          "id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261012",
+          "ok": true
+        }
+      ],
+      "T11": [
+        {
+          "id": "SM10a73a2f7d9fa67bdacdecdfdd0bd078",
+          "ok": true
+        },
+        {
+          "id": "SM42dbdfab08783bb17a640f1b61647c17",
+          "ok": true
+        }
+      ],
+      "T12": [
+        {
+          "id": "reply_to_interaction",
+          "ok": true
+        }
+      ],
+      "T13": [
+        {
+          "id": "interaction_to_decision",
+          "ok": true
+        }
+      ],
+      "T14": [
+        {
+          "id": "decision_to_envelope",
+          "ok": true
+        }
+      ],
+      "T15": [
+        {
+          "id": "policy_to_audit",
+          "ok": true
+        }
+      ],
+      "T17": [
+        {
+          "id": "next_message_to_decision",
+          "ok": true
+        }
+      ],
+      "T18": [
+        {
+          "id": "next_message_to_prescription",
+          "ok": true
+        }
+      ],
+      "T19": [
+        {
+          "id": "tracked_link_to_next_message",
+          "ok": true
+        }
+      ]
+    },
+    "closure": {
+      "closed": true,
+      "path": [
+        "message SM42dbdfab08783bb17a640f1b61647c17 -> occurrence schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261012",
+        "occurrence -> slot slot_8-4f34-a76b-3f920a2d97f4_monday_0",
+        "slot -> LLM draft ndg_e96f3672-cfe8-4f34-a76b-3f920a2d97f4",
+        "draft -> prescription rx_6df0277a-6518-4ff2-afb9-d1e09114eda6",
+        "prescription -> submitted text"
+      ],
+      "broken_at": null
+    }
+  },
+  "prescriptions": [
+    "rx_6df0277a-6518-4ff2-afb9-d1e09114eda6"
+  ],
+  "drafts": [
+    "ndg_e96f3672-cfe8-4f34-a76b-3f920a2d97f4"
+  ],
+  "gemini_requests": [
+    {
+      "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=[harness]",
+      "prompt_sha256": "60b9c5b45b7c532ae4f9286f05d247980317c91fd99e896a43ae3b41e8c522e4"
+    }
+  ],
+  "workflow_runs": [
+    {
+      "workflow": "A",
+      "visited": [
+        "Intake Webhook",
+        "Authorize Proxy",
+        "Proxy Authorized?",
+        "Extract Input",
+        "Build Gemini Prompt",
+        "Call Gemini Vision",
+        "Normalize Known Enum Drift",
+        "Validation Gate",
+        "Is Valid?",
+        "Prep User",
+        "Write User",
+        "Prep Questionnaire",
+        "Write Questionnaire",
+        "Prep Prescriptions",
+        "Write Prescriptions",
+        "Prep Nudges",
+        "Write Nudges",
+        "Prep Schedule State",
+        "Write Schedule State",
+        "Respond Success"
+      ],
+      "error": null,
+      "gate": [
+        {
+          "validation_passed": true,
+          "user": {
+            "user_id": "usr-f06-chain",
+            "name": "Synthetic patient",
+            "phone": "+61400000001",
+            "email": "patient@harness.invalid",
+            "created_at": "2026-10-04T21:00:00.000Z",
+            "user_status": "active",
+            "doctor_id": "doc-harness"
+          },
+          "questionnaire": {
+            "questionnaire_id": "qn_fb6bc2bc-5af5-4163-a320-76f2c4db310b",
+            "user_id": "usr-f06-chain",
+            "completed_at": "2026-10-04T21:00:00.000Z",
+            "age": null,
+            "opt_in_whatsapp": true
+          },
+          "prescriptions": [
+            {
+              "prescription_id": "rx_6df0277a-6518-4ff2-afb9-d1e09114eda6",
+              "user_id": "usr-f06-chain",
+              "doctor_id": "doc-harness",
+              "issued_date": "2026-10-04",
+              "pillar": "physical_activity",
+              "category": "maintain",
+              "target_behavior": "",
+              "frequency_per_week": 1,
+              "duration_weeks": 8,
+              "prescription_raw_text": "Keep up your three gym sessions a week; one reminder a week for 8 weeks.",
+              "status": "active",
+              "translation_model": "gemini-2.5-flash",
+              "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+              "translation_response_id": "GhfCaqb4H4-x1e8P9r_6-AU",
+              "translated_at": "2026-10-04T21:00:00.000Z",
+              "translation_normalised": ""
+            }
+          ],
+          "nudges": [
+            {
+              "nudge_id": "ndg_e96f3672-cfe8-4f34-a76b-3f920a2d97f4",
+              "prescription_id": "rx_6df0277a-6518-4ff2-afb9-d1e09114eda6",
+              "user_id": "usr-f06-chain",
+              "nudge_type": "reminder",
+              "pillar": "physical_activity",
+              "action_text": "Attend your three gym sessions this week.",
+              "scheduled_date": "2026-10-05",
+              "scheduled_time": "09:00",
+              "message_body": "Remember to keep up with your three gym sessions this week. You've got this!",
+              "message_body_alt": "This is a reminder to attend your three gym sessions this week.",
+              "tone_variant": "encouraging",
+              "template_name": "health_plan_reminder",
+              "status": "needs_review",
+              "sent_at": "",
+              "reviewed_at": "",
+              "week_number": 1,
+              "schedule_slot_id": "",
+              "translation_model": "gemini-2.5-flash",
+              "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+              "translation_response_id": "GhfCaqb4H4-x1e8P9r_6-AU",
+              "translated_at": "2026-10-04T21:00:00.000Z"
+            }
+          ],
+          "schedule_state": [
+            {
+              "schedule_id": "sch_ndg_e96f3672-cfe8-4f34-a76b-3f920a2d97f4",
+              "nudge_id": "ndg_e96f3672-cfe8-4f34-a76b-3f920a2d97f4",
+              "user_id": "usr-f06-chain",
+              "parent_nudge_id": "ndg_e96f3672-cfe8-4f34-a76b-3f920a2d97f4",
+              "status": "needs_review",
+              "sent_at": "",
+              "delivered_at": "",
+              "wa_message_id": "",
+              "tone_sent": "",
+              "last_updated": "2026-10-04T21:00:00.000Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "workflow": "B",
+      "label": "first-delivery",
+      "visited": [
+        "Melbourne Schedule Trigger",
+        "Read Users",
+        "Aggregate Users",
+        "Read Nudges",
+        "Deduplicate Generated Schedule",
+        "Prepare Due Nudges",
+        "Prepare Adaptive Media",
+        "Merge Adaptive Media",
+        "Build Twilio Requests",
+        "Send via Twilio",
+        "Merge Twilio Response",
+        "Mark Nudge Sent",
+        "Update Schedule State"
+      ],
+      "error": null
+    },
+    {
+      "workflow": "B",
+      "label": "delivery-1",
+      "visited": [
+        "Melbourne Schedule Trigger",
+        "Read Users",
+        "Aggregate Users",
+        "Read Nudges",
+        "Deduplicate Generated Schedule",
+        "Prepare Due Nudges",
+        "Prepare Adaptive Media",
+        "Merge Adaptive Media",
+        "Build Twilio Requests",
+        "Send via Twilio",
+        "Merge Twilio Response",
+        "Mark Nudge Sent",
+        "Update Schedule State"
+      ],
+      "error": null
+    }
+  ],
+  "after_intake": {
+    "sheets": {
+      "user": {
+        "headers": [
+          "user_id",
+          "name",
+          "phone",
+          "email",
+          "user_status",
+          "doctor_id"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "user_id": "usr-f06-chain",
+            "name": "Synthetic patient",
+            "phone": "+61400000001",
+            "email": "patient@harness.invalid",
+            "user_status": "active",
+            "doctor_id": "doc-harness"
+          }
+        ]
+      },
+      "questionnaire": {
+        "headers": [
+          "questionnaire_id",
+          "user_id",
+          "preferred_nudge_time",
+          "opt_in_whatsapp"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "questionnaire_id": "qn_fb6bc2bc-5af5-4163-a320-76f2c4db310b",
+            "user_id": "usr-f06-chain",
+            "preferred_nudge_time": "",
+            "opt_in_whatsapp": true
+          }
+        ]
+      },
+      "prescriptions": {
+        "headers": [
+          "prescription_id",
+          "user_id",
+          "doctor_id",
+          "issued_date",
+          "pillar",
+          "category",
+          "target_behavior",
+          "frequency_per_week",
+          "duration_weeks",
+          "prescription_raw_text",
+          "status",
+          "translation_model",
+          "translation_prompt_sha256",
+          "translation_response_id",
+          "translated_at",
+          "translation_normalised"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "prescription_id": "rx_6df0277a-6518-4ff2-afb9-d1e09114eda6",
+            "user_id": "usr-f06-chain",
+            "doctor_id": "doc-harness",
+            "issued_date": "2026-10-04",
+            "pillar": "physical_activity",
+            "category": "maintain",
+            "target_behavior": "",
+            "frequency_per_week": 1,
+            "duration_weeks": 8,
+            "prescription_raw_text": "Keep up your three gym sessions a week; one reminder a week for 8 weeks.",
+            "status": "active",
+            "translation_model": "gemini-2.5-flash",
+            "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+            "translation_response_id": "GhfCaqb4H4-x1e8P9r_6-AU",
+            "translated_at": "2026-10-04T21:00:00.000Z",
+            "translation_normalised": ""
+          }
+        ]
+      },
+      "nudges": {
+        "headers": [
+          "nudge_id",
+          "prescription_id",
+          "user_id",
+          "nudge_type",
+          "pillar",
+          "action_text",
+          "scheduled_date",
+          "scheduled_time",
+          "message_body",
+          "message_body_alt",
+          "tone_variant",
+          "template_name",
+          "status",
+          "sent_at",
+          "reviewed_at",
+          "week_number",
+          "schedule_slot_id",
+          "category",
+          "media_selection_mode",
+          "media_override_asset_id",
+          "media_asset_id",
+          "adaptation_decision_id",
+          "translation_model",
+          "translation_prompt_sha256",
+          "translation_response_id",
+          "translated_at"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "nudge_id": "ndg_e96f3672-cfe8-4f34-a76b-3f920a2d97f4",
+            "prescription_id": "rx_6df0277a-6518-4ff2-afb9-d1e09114eda6",
+            "user_id": "usr-f06-chain",
+            "nudge_type": "reminder",
+            "pillar": "physical_activity",
+            "action_text": "Attend your three gym sessions this week.",
+            "scheduled_date": "2026-10-05",
+            "scheduled_time": "09:00",
+            "message_body": "Remember to keep up with your three gym sessions this week. You've got this!",
+            "message_body_alt": "This is a reminder to attend your three gym sessions this week.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "needs_review",
+            "sent_at": "",
+            "reviewed_at": "",
+            "week_number": 1,
+            "schedule_slot_id": "",
+            "translation_model": "gemini-2.5-flash",
+            "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+            "translation_response_id": "GhfCaqb4H4-x1e8P9r_6-AU",
+            "translated_at": "2026-10-04T21:00:00.000Z"
+          }
+        ]
+      },
+      "weekly_schedule": {
+        "headers": [
+          "schedule_slot_id",
+          "user_id",
+          "source_nudge_id",
+          "prescription_id",
+          "day",
+          "scheduled_time",
+          "nudge_type",
+          "pillar",
+          "action_text",
+          "tone_variant",
+          "message_body",
+          "message_body_alt",
+          "template_name",
+          "status",
+          "start_date",
+          "end_date",
+          "created_at",
+          "updated_at",
+          "category",
+          "media_selection_mode",
+          "media_override_asset_id",
+          "media_asset_id",
+          "adaptation_decision_id",
+          "approved_by",
+          "approved_at"
+        ],
+        "rows": []
+      },
+      "schedule_state": {
+        "headers": [
+          "schedule_id",
+          "nudge_id",
+          "user_id",
+          "parent_nudge_id",
+          "status",
+          "sent_at",
+          "delivered_at",
+          "wa_message_id",
+          "tone_sent",
+          "last_updated",
+          "read_at",
+          "interacted_at",
+          "last_inbound_message_sid",
+          "delivery_attempt_id",
+          "submission_started_at"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "schedule_id": "sch_ndg_e96f3672-cfe8-4f34-a76b-3f920a2d97f4",
+            "nudge_id": "ndg_e96f3672-cfe8-4f34-a76b-3f920a2d97f4",
+            "user_id": "usr-f06-chain",
+            "parent_nudge_id": "ndg_e96f3672-cfe8-4f34-a76b-3f920a2d97f4",
+            "status": "needs_review",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:00:00.000Z"
+          }
+        ]
+      },
+      "delivery_events": {
+        "headers": [
+          "event_id",
+          "event_at",
+          "wa_message_id",
+          "nudge_id",
+          "user_id",
+          "status",
+          "error_code",
+          "error_message",
+          "channel_to",
+          "raw_payload"
+        ],
+        "rows": []
+      },
+      "media_assignments": {
+        "headers": [
+          "assignment_id",
+          "assigned_at",
+          "user_id",
+          "nudge_id",
+          "behaviour_key",
+          "media_asset_id",
+          "adaptation_decision_id",
+          "media_kind",
+          "selection_mode",
+          "source_url",
+          "tracked_url",
+          "planned_frequency",
+          "scheduled_at",
+          "sent_at",
+          "delivered_at",
+          "read_at",
+          "visited_at",
+          "replied_at",
+          "send_to_read_hours",
+          "send_to_visit_hours",
+          "send_to_reply_hours"
+        ],
+        "rows": []
+      },
+      "interaction_events": {
+        "headers": [
+          "interaction_id",
+          "event_at",
+          "inbound_message_sid",
+          "user_id",
+          "from_phone",
+          "reply_to_wa_message_id",
+          "nudge_id",
+          "body",
+          "media_count",
+          "correlation_method",
+          "ack_status"
+        ],
+        "rows": []
+      },
+      "adaptation_decisions": {
+        "headers": [
+          "decision_id",
+          "decided_at",
+          "user_id",
+          "behaviour_key",
+          "interaction_id",
+          "signal_type",
+          "rule_applied",
+          "outcome",
+          "reason",
+          "selected_asset_id",
+          "interpretation",
+          "previous_state",
+          "next_state",
+          "scope",
+          "decision_source",
+          "effective_at",
+          "state_version",
+          "changed_fields",
+          "frequency_before",
+          "frequency_after",
+          "media_mode_before",
+          "media_mode_after",
+          "media_kind_before",
+          "media_kind_after",
+          "nudge_id"
+        ],
+        "rows": []
+      },
+      "patient_adaptation_state": {
+        "headers": [
+          "user_id",
+          "scope",
+          "behaviour_key",
+          "state_version",
+          "preferred_format",
+          "preferred_frequency",
+          "planned_frequency",
+          "delivered_frequency",
+          "observed_frequency",
+          "last_change_at",
+          "updated_at"
+        ],
+        "rows": []
+      },
+      "prescription_revisions": {
+        "headers": [
+          "revision_id",
+          "prescription_id",
+          "user_id",
+          "changed_at",
+          "changed_by",
+          "field",
+          "previous_value",
+          "new_value",
+          "previous_source",
+          "reason"
+        ],
+        "rows": []
+      },
+      "patient_adaptation_timeline": {
+        "headers": [
+          "user_id",
+          "event_id",
+          "event_at",
+          "event_type",
+          "source",
+          "scope",
+          "behaviour_key",
+          "signal",
+          "rule_applied",
+          "outcome",
+          "reason",
+          "previous_state",
+          "new_state",
+          "changed_fields",
+          "selected_asset_id",
+          "selected_media_kind",
+          "nudge_id",
+          "interaction_id"
+        ],
+        "rows": []
+      }
+    },
+    "database": {
+      "profiles": [
+        {
+          "auth_user_id": "11111111-1111-4111-a111-111111111111",
+          "email": "clinician@harness.invalid",
+          "display_name": "Synthetic clinician",
+          "role": "doctor",
+          "doctor_id": "doc-harness",
+          "status": "active"
+        }
+      ],
+      "media_search_jobs": [],
+      "media_candidates": [],
+      "media_assets": [],
+      "adaptation_envelopes": [],
+      "user_adaptation_state": [],
+      "interaction_events": [],
+      "adaptation_decisions": [],
+      "tracked_links": [],
+      "patient_adaptation_state": [],
+      "patient_adaptation_timeline": []
+    }
+  },
+  "after_approval": {
+    "sheets": {
+      "user": {
+        "headers": [
+          "user_id",
+          "name",
+          "phone",
+          "email",
+          "user_status",
+          "doctor_id"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "user_id": "usr-f06-chain",
+            "name": "Synthetic patient",
+            "phone": "+61400000001",
+            "email": "patient@harness.invalid",
+            "user_status": "active",
+            "doctor_id": "doc-harness"
+          }
+        ]
+      },
+      "questionnaire": {
+        "headers": [
+          "questionnaire_id",
+          "user_id",
+          "preferred_nudge_time",
+          "opt_in_whatsapp"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "questionnaire_id": "qn_fb6bc2bc-5af5-4163-a320-76f2c4db310b",
+            "user_id": "usr-f06-chain",
+            "preferred_nudge_time": "",
+            "opt_in_whatsapp": true
+          }
+        ]
+      },
+      "prescriptions": {
+        "headers": [
+          "prescription_id",
+          "user_id",
+          "doctor_id",
+          "issued_date",
+          "pillar",
+          "category",
+          "target_behavior",
+          "frequency_per_week",
+          "duration_weeks",
+          "prescription_raw_text",
+          "status",
+          "translation_model",
+          "translation_prompt_sha256",
+          "translation_response_id",
+          "translated_at",
+          "translation_normalised"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "prescription_id": "rx_6df0277a-6518-4ff2-afb9-d1e09114eda6",
+            "user_id": "usr-f06-chain",
+            "doctor_id": "doc-harness",
+            "issued_date": "2026-10-04",
+            "pillar": "physical_activity",
+            "category": "maintain",
+            "target_behavior": "",
+            "frequency_per_week": 1,
+            "duration_weeks": 8,
+            "prescription_raw_text": "Keep up your three gym sessions a week; one reminder a week for 8 weeks.",
+            "status": "active",
+            "translation_model": "gemini-2.5-flash",
+            "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+            "translation_response_id": "GhfCaqb4H4-x1e8P9r_6-AU",
+            "translated_at": "2026-10-04T21:00:00.000Z",
+            "translation_normalised": ""
+          }
+        ]
+      },
+      "nudges": {
+        "headers": [
+          "nudge_id",
+          "prescription_id",
+          "user_id",
+          "nudge_type",
+          "pillar",
+          "action_text",
+          "scheduled_date",
+          "scheduled_time",
+          "message_body",
+          "message_body_alt",
+          "tone_variant",
+          "template_name",
+          "status",
+          "sent_at",
+          "reviewed_at",
+          "week_number",
+          "schedule_slot_id",
+          "category",
+          "media_selection_mode",
+          "media_override_asset_id",
+          "media_asset_id",
+          "adaptation_decision_id",
+          "translation_model",
+          "translation_prompt_sha256",
+          "translation_response_id",
+          "translated_at"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "nudge_id": "ndg_e96f3672-cfe8-4f34-a76b-3f920a2d97f4",
+            "prescription_id": "rx_6df0277a-6518-4ff2-afb9-d1e09114eda6",
+            "user_id": "usr-f06-chain",
+            "nudge_type": "reminder",
+            "pillar": "physical_activity",
+            "action_text": "Attend your three gym sessions this week.",
+            "scheduled_date": "2026-10-05",
+            "scheduled_time": "09:00",
+            "message_body": "Remember to keep up with your three gym sessions this week. You've got this!",
+            "message_body_alt": "This is a reminder to attend your three gym sessions this week.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 1,
+            "schedule_slot_id": "",
+            "translation_model": "gemini-2.5-flash",
+            "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+            "translation_response_id": "GhfCaqb4H4-x1e8P9r_6-AU",
+            "translated_at": "2026-10-04T21:00:00.000Z",
+            "category": "maintain"
+          },
+          {
+            "row_number": 3,
+            "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261005",
+            "schedule_slot_id": "slot_8-4f34-a76b-3f920a2d97f4_monday_0",
+            "prescription_id": "rx_6df0277a-6518-4ff2-afb9-d1e09114eda6",
+            "user_id": "usr-f06-chain",
+            "nudge_type": "reminder",
+            "pillar": "physical_activity",
+            "category": "maintain",
+            "action_text": "Attend your three gym sessions this week.",
+            "scheduled_date": "2026-10-05",
+            "scheduled_time": "09:00",
+            "message_body": "Remember to keep up with your three gym sessions this week. You've got this!",
+            "message_body_alt": "This is a reminder to attend your three gym sessions this week.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 1,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          },
+          {
+            "row_number": 4,
+            "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261012",
+            "schedule_slot_id": "slot_8-4f34-a76b-3f920a2d97f4_monday_0",
+            "prescription_id": "rx_6df0277a-6518-4ff2-afb9-d1e09114eda6",
+            "user_id": "usr-f06-chain",
+            "nudge_type": "reminder",
+            "pillar": "physical_activity",
+            "category": "maintain",
+            "action_text": "Attend your three gym sessions this week.",
+            "scheduled_date": "2026-10-12",
+            "scheduled_time": "09:00",
+            "message_body": "Remember to keep up with your three gym sessions this week. You've got this!",
+            "message_body_alt": "This is a reminder to attend your three gym sessions this week.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 2,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          },
+          {
+            "row_number": 5,
+            "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261019",
+            "schedule_slot_id": "slot_8-4f34-a76b-3f920a2d97f4_monday_0",
+            "prescription_id": "rx_6df0277a-6518-4ff2-afb9-d1e09114eda6",
+            "user_id": "usr-f06-chain",
+            "nudge_type": "reminder",
+            "pillar": "physical_activity",
+            "category": "maintain",
+            "action_text": "Attend your three gym sessions this week.",
+            "scheduled_date": "2026-10-19",
+            "scheduled_time": "09:00",
+            "message_body": "Remember to keep up with your three gym sessions this week. You've got this!",
+            "message_body_alt": "This is a reminder to attend your three gym sessions this week.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 3,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          },
+          {
+            "row_number": 6,
+            "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261026",
+            "schedule_slot_id": "slot_8-4f34-a76b-3f920a2d97f4_monday_0",
+            "prescription_id": "rx_6df0277a-6518-4ff2-afb9-d1e09114eda6",
+            "user_id": "usr-f06-chain",
+            "nudge_type": "reminder",
+            "pillar": "physical_activity",
+            "category": "maintain",
+            "action_text": "Attend your three gym sessions this week.",
+            "scheduled_date": "2026-10-26",
+            "scheduled_time": "09:00",
+            "message_body": "Remember to keep up with your three gym sessions this week. You've got this!",
+            "message_body_alt": "This is a reminder to attend your three gym sessions this week.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 4,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          }
+        ]
+      },
+      "weekly_schedule": {
+        "headers": [
+          "schedule_slot_id",
+          "user_id",
+          "source_nudge_id",
+          "prescription_id",
+          "day",
+          "scheduled_time",
+          "nudge_type",
+          "pillar",
+          "action_text",
+          "tone_variant",
+          "message_body",
+          "message_body_alt",
+          "template_name",
+          "status",
+          "start_date",
+          "end_date",
+          "created_at",
+          "updated_at",
+          "category",
+          "media_selection_mode",
+          "media_override_asset_id",
+          "media_asset_id",
+          "adaptation_decision_id",
+          "approved_by",
+          "approved_at"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "schedule_slot_id": "slot_8-4f34-a76b-3f920a2d97f4_monday_0",
+            "user_id": "usr-f06-chain",
+            "source_nudge_id": "ndg_e96f3672-cfe8-4f34-a76b-3f920a2d97f4",
+            "prescription_id": "rx_6df0277a-6518-4ff2-afb9-d1e09114eda6",
+            "day": "monday",
+            "scheduled_time": "09:00",
+            "nudge_type": "reminder",
+            "pillar": "physical_activity",
+            "category": "maintain",
+            "action_text": "Attend your three gym sessions this week.",
+            "tone_variant": "encouraging",
+            "message_body": "Remember to keep up with your three gym sessions this week. You've got this!",
+            "message_body_alt": "This is a reminder to attend your three gym sessions this week.",
+            "template_name": "health_plan_reminder",
+            "status": "active",
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": "",
+            "start_date": "2026-10-05",
+            "end_date": "2026-11-01",
+            "created_at": "2026-10-04T21:30:00.000Z",
+            "updated_at": "2026-10-04T21:30:00.000Z",
+            "approved_by": "11111111-1111-4111-a111-111111111111",
+            "approved_at": "2026-10-04T21:30:00.000Z"
+          }
+        ]
+      },
+      "schedule_state": {
+        "headers": [
+          "schedule_id",
+          "nudge_id",
+          "user_id",
+          "parent_nudge_id",
+          "status",
+          "sent_at",
+          "delivered_at",
+          "wa_message_id",
+          "tone_sent",
+          "last_updated",
+          "read_at",
+          "interacted_at",
+          "last_inbound_message_sid",
+          "delivery_attempt_id",
+          "submission_started_at"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "schedule_id": "sch_ndg_e96f3672-cfe8-4f34-a76b-3f920a2d97f4",
+            "nudge_id": "ndg_e96f3672-cfe8-4f34-a76b-3f920a2d97f4",
+            "user_id": "usr-f06-chain",
+            "parent_nudge_id": "ndg_e96f3672-cfe8-4f34-a76b-3f920a2d97f4",
+            "status": "needs_review",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:00:00.000Z"
+          },
+          {
+            "row_number": 3,
+            "schedule_id": "sch_schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261005",
+            "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261005",
+            "user_id": "usr-f06-chain",
+            "parent_nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261005",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          },
+          {
+            "row_number": 4,
+            "schedule_id": "sch_schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261012",
+            "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261012",
+            "user_id": "usr-f06-chain",
+            "parent_nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261012",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          },
+          {
+            "row_number": 5,
+            "schedule_id": "sch_schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261019",
+            "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261019",
+            "user_id": "usr-f06-chain",
+            "parent_nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261019",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          },
+          {
+            "row_number": 6,
+            "schedule_id": "sch_schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261026",
+            "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261026",
+            "user_id": "usr-f06-chain",
+            "parent_nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261026",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          }
+        ]
+      },
+      "delivery_events": {
+        "headers": [
+          "event_id",
+          "event_at",
+          "wa_message_id",
+          "nudge_id",
+          "user_id",
+          "status",
+          "error_code",
+          "error_message",
+          "channel_to",
+          "raw_payload"
+        ],
+        "rows": []
+      },
+      "media_assignments": {
+        "headers": [
+          "assignment_id",
+          "assigned_at",
+          "user_id",
+          "nudge_id",
+          "behaviour_key",
+          "media_asset_id",
+          "adaptation_decision_id",
+          "media_kind",
+          "selection_mode",
+          "source_url",
+          "tracked_url",
+          "planned_frequency",
+          "scheduled_at",
+          "sent_at",
+          "delivered_at",
+          "read_at",
+          "visited_at",
+          "replied_at",
+          "send_to_read_hours",
+          "send_to_visit_hours",
+          "send_to_reply_hours"
+        ],
+        "rows": []
+      },
+      "interaction_events": {
+        "headers": [
+          "interaction_id",
+          "event_at",
+          "inbound_message_sid",
+          "user_id",
+          "from_phone",
+          "reply_to_wa_message_id",
+          "nudge_id",
+          "body",
+          "media_count",
+          "correlation_method",
+          "ack_status"
+        ],
+        "rows": []
+      },
+      "adaptation_decisions": {
+        "headers": [
+          "decision_id",
+          "decided_at",
+          "user_id",
+          "behaviour_key",
+          "interaction_id",
+          "signal_type",
+          "rule_applied",
+          "outcome",
+          "reason",
+          "selected_asset_id",
+          "interpretation",
+          "previous_state",
+          "next_state",
+          "scope",
+          "decision_source",
+          "effective_at",
+          "state_version",
+          "changed_fields",
+          "frequency_before",
+          "frequency_after",
+          "media_mode_before",
+          "media_mode_after",
+          "media_kind_before",
+          "media_kind_after",
+          "nudge_id"
+        ],
+        "rows": []
+      },
+      "patient_adaptation_state": {
+        "headers": [
+          "user_id",
+          "scope",
+          "behaviour_key",
+          "state_version",
+          "preferred_format",
+          "preferred_frequency",
+          "planned_frequency",
+          "delivered_frequency",
+          "observed_frequency",
+          "last_change_at",
+          "updated_at"
+        ],
+        "rows": []
+      },
+      "prescription_revisions": {
+        "headers": [
+          "revision_id",
+          "prescription_id",
+          "user_id",
+          "changed_at",
+          "changed_by",
+          "field",
+          "previous_value",
+          "new_value",
+          "previous_source",
+          "reason"
+        ],
+        "rows": []
+      },
+      "patient_adaptation_timeline": {
+        "headers": [
+          "user_id",
+          "event_id",
+          "event_at",
+          "event_type",
+          "source",
+          "scope",
+          "behaviour_key",
+          "signal",
+          "rule_applied",
+          "outcome",
+          "reason",
+          "previous_state",
+          "new_state",
+          "changed_fields",
+          "selected_asset_id",
+          "selected_media_kind",
+          "nudge_id",
+          "interaction_id"
+        ],
+        "rows": []
+      }
+    },
+    "database": {
+      "profiles": [
+        {
+          "auth_user_id": "11111111-1111-4111-a111-111111111111",
+          "email": "clinician@harness.invalid",
+          "display_name": "Synthetic clinician",
+          "role": "doctor",
+          "doctor_id": "doc-harness",
+          "status": "active"
+        }
+      ],
+      "media_search_jobs": [
+        {
+          "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+          "user_id": "usr-f06-chain",
+          "prescription_id": "rx_6df0277a-6518-4ff2-afb9-d1e09114eda6",
+          "action_text": "Attend your three gym sessions this week.",
+          "pillar": "physical_activity",
+          "category": "maintain",
+          "status": "pending",
+          "updated_at": "2026-10-04T21:30:00.000Z",
+          "job_id": "7f8ae2fe-70bf-475e-a6ea-47830847680f",
+          "created_at": "2026-10-04T21:30:00.000Z"
+        }
+      ],
+      "media_candidates": [
+        {
+          "candidate_id": "f68fd8ec-eb8f-47df-ae06-43d0e8cff946",
+          "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+          "media_kind": "video",
+          "title": "Synthetic video for Attend your three gym sessions this week.",
+          "source_name": "Synthetic approved pool",
+          "source_url": "https://example.test/2bb3723c492c4cd9bb49194016265527/video",
+          "open_access": false,
+          "short_summary": "SHORT synthetic explanation.",
+          "detailed_summary": "DETAILED synthetic explanation for this controlled evaluation.",
+          "ranking_score": 2,
+          "ranking_reasons": [],
+          "metadata": {}
+        },
+        {
+          "candidate_id": "19182554-1aea-4ba4-af5a-7b4a17855c83",
+          "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+          "media_kind": "paper",
+          "title": "Synthetic paper for Attend your three gym sessions this week.",
+          "source_name": "Synthetic approved pool",
+          "source_url": "https://example.test/2bb3723c492c4cd9bb49194016265527/paper",
+          "open_access": true,
+          "short_summary": "SHORT synthetic explanation.",
+          "detailed_summary": "DETAILED synthetic explanation for this controlled evaluation.",
+          "ranking_score": 1,
+          "ranking_reasons": [],
+          "metadata": {}
+        }
+      ],
+      "media_assets": [
+        {
+          "candidate_id": "f68fd8ec-eb8f-47df-ae06-43d0e8cff946",
+          "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+          "media_kind": "video",
+          "title": "Synthetic video for Attend your three gym sessions this week.",
+          "source_name": "Synthetic approved pool",
+          "source_url": "https://example.test/2bb3723c492c4cd9bb49194016265527/video",
+          "short_summary": "SHORT synthetic explanation.",
+          "detailed_summary": "DETAILED synthetic explanation for this controlled evaluation.",
+          "limitations": "",
+          "status": "approved",
+          "approved_at": "2026-10-04T21:30:00.000Z",
+          "approved_by": "11111111-1111-4111-a111-111111111111",
+          "asset_id": "9928748b-67e5-4bdf-a3f4-f54c91689ddb",
+          "created_at": "2026-10-04T21:30:00.000Z"
+        },
+        {
+          "candidate_id": "19182554-1aea-4ba4-af5a-7b4a17855c83",
+          "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+          "media_kind": "paper",
+          "title": "Synthetic paper for Attend your three gym sessions this week.",
+          "source_name": "Synthetic approved pool",
+          "source_url": "https://example.test/2bb3723c492c4cd9bb49194016265527/paper",
+          "short_summary": "SHORT synthetic explanation.",
+          "detailed_summary": "DETAILED synthetic explanation for this controlled evaluation.",
+          "limitations": "",
+          "status": "approved",
+          "approved_at": "2026-10-04T21:30:00.000Z",
+          "approved_by": "11111111-1111-4111-a111-111111111111",
+          "asset_id": "8f7e6152-8088-499f-a1f4-c92c350e40fc",
+          "created_at": "2026-10-04T21:30:00.000Z"
+        }
+      ],
+      "adaptation_envelopes": [
+        {
+          "action_text": "Attend your three gym sessions this week.",
+          "pillar": "physical_activity",
+          "category": "maintain",
+          "formats": [
+            "video",
+            "paper",
+            "reading"
+          ],
+          "summary_lengths": [
+            "short",
+            "detailed"
+          ],
+          "tones": [
+            "encouraging",
+            "neutral_informational"
+          ],
+          "earliest_time": "08:00",
+          "latest_time": "21:00",
+          "frequency_min": 1,
+          "frequency_max": 3,
+          "action_alternatives": [
+            "Attend your three gym sessions this week."
+          ],
+          "user_id": "usr-f06-chain",
+          "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+          "status": "approved",
+          "updated_at": "2026-10-04T21:30:00.000Z",
+          "envelope_id": "eda5e35a-c75e-4519-a17b-a477d2c3a2ac",
+          "created_at": "2026-10-04T21:30:00.000Z",
+          "automatic_schedule_apply": true,
+          "approved_asset_ids": [
+            "9928748b-67e5-4bdf-a3f4-f54c91689ddb",
+            "8f7e6152-8088-499f-a1f4-c92c350e40fc"
+          ],
+          "approved_at": "2026-10-04T21:30:00.000Z",
+          "approved_by": "11111111-1111-4111-a111-111111111111"
+        }
+      ],
+      "user_adaptation_state": [],
+      "interaction_events": [],
+      "adaptation_decisions": [
+        {
+          "user_id": "usr-f06-chain",
+          "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+          "interaction_id": null,
+          "nudge_id": null,
+          "signal_type": "clinician_schedule_change",
+          "scope": "behaviour",
+          "decision_source": "clinician",
+          "effective_at": "2026-10-04T21:30:00.000Z",
+          "state_version": 1,
+          "interpretation": {},
+          "scores_before": {},
+          "scores_after": {},
+          "rule_applied": "clinician_saved_schedule",
+          "previous_state": {
+            "planned_frequency": 0,
+            "media_selection_mode": "automatic"
+          },
+          "next_state": {
+            "planned_frequency": 1,
+            "media_selection_mode": "automatic"
+          },
+          "changed_fields": [
+            "planned_frequency",
+            "media_selection_mode"
+          ],
+          "frequency_before": null,
+          "frequency_after": null,
+          "media_mode_before": "automatic",
+          "media_mode_after": "automatic",
+          "media_kind_before": null,
+          "media_kind_after": null,
+          "selected_asset_id": null,
+          "outcome": "applied",
+          "reason": "Clinician saved a weekly schedule or media change",
+          "fulfilled_at": "2026-10-04T21:30:00.000Z",
+          "decision_id": "bd_1",
+          "decided_at": "2026-10-04T21:30:00.000Z"
+        }
+      ],
+      "tracked_links": [],
+      "patient_adaptation_state": [],
+      "patient_adaptation_timeline": []
+    }
+  },
+  "final": {
+    "sheets": {
+      "user": {
+        "headers": [
+          "user_id",
+          "name",
+          "phone",
+          "email",
+          "user_status",
+          "doctor_id"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "user_id": "usr-f06-chain",
+            "name": "Synthetic patient",
+            "phone": "+61400000001",
+            "email": "patient@harness.invalid",
+            "user_status": "active",
+            "doctor_id": "doc-harness"
+          }
+        ]
+      },
+      "questionnaire": {
+        "headers": [
+          "questionnaire_id",
+          "user_id",
+          "preferred_nudge_time",
+          "opt_in_whatsapp"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "questionnaire_id": "qn_fb6bc2bc-5af5-4163-a320-76f2c4db310b",
+            "user_id": "usr-f06-chain",
+            "preferred_nudge_time": "",
+            "opt_in_whatsapp": true
+          }
+        ]
+      },
+      "prescriptions": {
+        "headers": [
+          "prescription_id",
+          "user_id",
+          "doctor_id",
+          "issued_date",
+          "pillar",
+          "category",
+          "target_behavior",
+          "frequency_per_week",
+          "duration_weeks",
+          "prescription_raw_text",
+          "status",
+          "translation_model",
+          "translation_prompt_sha256",
+          "translation_response_id",
+          "translated_at",
+          "translation_normalised"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "prescription_id": "rx_6df0277a-6518-4ff2-afb9-d1e09114eda6",
+            "user_id": "usr-f06-chain",
+            "doctor_id": "doc-harness",
+            "issued_date": "2026-10-04",
+            "pillar": "physical_activity",
+            "category": "maintain",
+            "target_behavior": "",
+            "frequency_per_week": 1,
+            "duration_weeks": 8,
+            "prescription_raw_text": "Keep up your three gym sessions a week; one reminder a week for 8 weeks.",
+            "status": "active",
+            "translation_model": "gemini-2.5-flash",
+            "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+            "translation_response_id": "GhfCaqb4H4-x1e8P9r_6-AU",
+            "translated_at": "2026-10-04T21:00:00.000Z",
+            "translation_normalised": ""
+          }
+        ]
+      },
+      "nudges": {
+        "headers": [
+          "nudge_id",
+          "prescription_id",
+          "user_id",
+          "nudge_type",
+          "pillar",
+          "action_text",
+          "scheduled_date",
+          "scheduled_time",
+          "message_body",
+          "message_body_alt",
+          "tone_variant",
+          "template_name",
+          "status",
+          "sent_at",
+          "reviewed_at",
+          "week_number",
+          "schedule_slot_id",
+          "category",
+          "media_selection_mode",
+          "media_override_asset_id",
+          "media_asset_id",
+          "adaptation_decision_id",
+          "translation_model",
+          "translation_prompt_sha256",
+          "translation_response_id",
+          "translated_at"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "nudge_id": "ndg_e96f3672-cfe8-4f34-a76b-3f920a2d97f4",
+            "prescription_id": "rx_6df0277a-6518-4ff2-afb9-d1e09114eda6",
+            "user_id": "usr-f06-chain",
+            "nudge_type": "reminder",
+            "pillar": "physical_activity",
+            "action_text": "Attend your three gym sessions this week.",
+            "scheduled_date": "2026-10-05",
+            "scheduled_time": "09:00",
+            "message_body": "Remember to keep up with your three gym sessions this week. You've got this!",
+            "message_body_alt": "This is a reminder to attend your three gym sessions this week.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 1,
+            "schedule_slot_id": "",
+            "translation_model": "gemini-2.5-flash",
+            "translation_prompt_sha256": "1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a",
+            "translation_response_id": "GhfCaqb4H4-x1e8P9r_6-AU",
+            "translated_at": "2026-10-04T21:00:00.000Z",
+            "category": "maintain"
+          },
+          {
+            "row_number": 3,
+            "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261005",
+            "schedule_slot_id": "slot_8-4f34-a76b-3f920a2d97f4_monday_0",
+            "prescription_id": "rx_6df0277a-6518-4ff2-afb9-d1e09114eda6",
+            "user_id": "usr-f06-chain",
+            "nudge_type": "reminder",
+            "pillar": "physical_activity",
+            "category": "maintain",
+            "action_text": "Attend your three gym sessions this week.",
+            "scheduled_date": "2026-10-05",
+            "scheduled_time": "09:00",
+            "message_body": "Remember to keep up with your three gym sessions this week. You've got this!\n\nSHORT synthetic explanation.\n\nSynthetic video for Attend your three gym sessions this week. — Synthetic approved pool\nhttps://portal.invalid/api/r/Cb1i9rtu99ksSs-9hhGxjg38G6BfzcHQ",
+            "message_body_alt": "This is a reminder to attend your three gym sessions this week.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "sent",
+            "sent_at": "2026-10-05T09:01:00.000+11:00",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 1,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "9928748b-67e5-4bdf-a3f4-f54c91689ddb",
+            "adaptation_decision_id": "bd_2"
+          },
+          {
+            "row_number": 4,
+            "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261012",
+            "schedule_slot_id": "slot_8-4f34-a76b-3f920a2d97f4_monday_0",
+            "prescription_id": "rx_6df0277a-6518-4ff2-afb9-d1e09114eda6",
+            "user_id": "usr-f06-chain",
+            "nudge_type": "reminder",
+            "pillar": "physical_activity",
+            "category": "maintain",
+            "action_text": "Attend your three gym sessions this week.",
+            "scheduled_date": "2026-10-12",
+            "scheduled_time": "09:00",
+            "message_body": "Remember to keep up with your three gym sessions this week. You've got this!\n\nSHORT synthetic explanation.\n\nSynthetic paper for Attend your three gym sessions this week. — Synthetic approved pool\nhttps://portal.invalid/api/r/ez-uSJkQKTqp-I3D11T0m66GxcR6AnJe",
+            "message_body_alt": "This is a reminder to attend your three gym sessions this week.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "sent",
+            "sent_at": "2026-10-12T09:01:00.000+11:00",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 2,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "8f7e6152-8088-499f-a1f4-c92c350e40fc",
+            "adaptation_decision_id": "bd_5"
+          },
+          {
+            "row_number": 5,
+            "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261019",
+            "schedule_slot_id": "slot_8-4f34-a76b-3f920a2d97f4_monday_0",
+            "prescription_id": "rx_6df0277a-6518-4ff2-afb9-d1e09114eda6",
+            "user_id": "usr-f06-chain",
+            "nudge_type": "reminder",
+            "pillar": "physical_activity",
+            "category": "maintain",
+            "action_text": "Attend your three gym sessions this week.",
+            "scheduled_date": "2026-10-19",
+            "scheduled_time": "09:00",
+            "message_body": "Remember to keep up with your three gym sessions this week. You've got this!",
+            "message_body_alt": "This is a reminder to attend your three gym sessions this week.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 3,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          },
+          {
+            "row_number": 6,
+            "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261026",
+            "schedule_slot_id": "slot_8-4f34-a76b-3f920a2d97f4_monday_0",
+            "prescription_id": "rx_6df0277a-6518-4ff2-afb9-d1e09114eda6",
+            "user_id": "usr-f06-chain",
+            "nudge_type": "reminder",
+            "pillar": "physical_activity",
+            "category": "maintain",
+            "action_text": "Attend your three gym sessions this week.",
+            "scheduled_date": "2026-10-26",
+            "scheduled_time": "09:00",
+            "message_body": "Remember to keep up with your three gym sessions this week. You've got this!",
+            "message_body_alt": "This is a reminder to attend your three gym sessions this week.",
+            "tone_variant": "encouraging",
+            "template_name": "health_plan_reminder",
+            "status": "approved",
+            "sent_at": "",
+            "reviewed_at": "2026-10-04T21:30:00.000Z",
+            "week_number": 4,
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": ""
+          }
+        ]
+      },
+      "weekly_schedule": {
+        "headers": [
+          "schedule_slot_id",
+          "user_id",
+          "source_nudge_id",
+          "prescription_id",
+          "day",
+          "scheduled_time",
+          "nudge_type",
+          "pillar",
+          "action_text",
+          "tone_variant",
+          "message_body",
+          "message_body_alt",
+          "template_name",
+          "status",
+          "start_date",
+          "end_date",
+          "created_at",
+          "updated_at",
+          "category",
+          "media_selection_mode",
+          "media_override_asset_id",
+          "media_asset_id",
+          "adaptation_decision_id",
+          "approved_by",
+          "approved_at"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "schedule_slot_id": "slot_8-4f34-a76b-3f920a2d97f4_monday_0",
+            "user_id": "usr-f06-chain",
+            "source_nudge_id": "ndg_e96f3672-cfe8-4f34-a76b-3f920a2d97f4",
+            "prescription_id": "rx_6df0277a-6518-4ff2-afb9-d1e09114eda6",
+            "day": "monday",
+            "scheduled_time": "09:00",
+            "nudge_type": "reminder",
+            "pillar": "physical_activity",
+            "category": "maintain",
+            "action_text": "Attend your three gym sessions this week.",
+            "tone_variant": "encouraging",
+            "message_body": "Remember to keep up with your three gym sessions this week. You've got this!",
+            "message_body_alt": "This is a reminder to attend your three gym sessions this week.",
+            "template_name": "health_plan_reminder",
+            "status": "active",
+            "media_selection_mode": "automatic",
+            "media_override_asset_id": "",
+            "media_asset_id": "",
+            "adaptation_decision_id": "",
+            "start_date": "2026-10-05",
+            "end_date": "2026-11-01",
+            "created_at": "2026-10-04T21:30:00.000Z",
+            "updated_at": "2026-10-04T21:30:00.000Z",
+            "approved_by": "11111111-1111-4111-a111-111111111111",
+            "approved_at": "2026-10-04T21:30:00.000Z"
+          }
+        ]
+      },
+      "schedule_state": {
+        "headers": [
+          "schedule_id",
+          "nudge_id",
+          "user_id",
+          "parent_nudge_id",
+          "status",
+          "sent_at",
+          "delivered_at",
+          "wa_message_id",
+          "tone_sent",
+          "last_updated",
+          "read_at",
+          "interacted_at",
+          "last_inbound_message_sid",
+          "delivery_attempt_id",
+          "submission_started_at"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "schedule_id": "sch_ndg_e96f3672-cfe8-4f34-a76b-3f920a2d97f4",
+            "nudge_id": "ndg_e96f3672-cfe8-4f34-a76b-3f920a2d97f4",
+            "user_id": "usr-f06-chain",
+            "parent_nudge_id": "ndg_e96f3672-cfe8-4f34-a76b-3f920a2d97f4",
+            "status": "needs_review",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:00:00.000Z"
+          },
+          {
+            "row_number": 3,
+            "schedule_id": "sch_schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261005",
+            "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261005",
+            "user_id": "usr-f06-chain",
+            "parent_nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261005",
+            "status": "delivered",
+            "sent_at": "2026-10-05T09:01:00.000+11:00",
+            "delivered_at": "2026-10-04T22:02:00.000Z",
+            "wa_message_id": "SM10a73a2f7d9fa67bdacdecdfdd0bd078",
+            "tone_sent": "encouraging",
+            "last_updated": "2026-10-04T22:30:00.000Z",
+            "delivery_attempt_id": "att_01937343-72d6-4acc-abf1-493e53b36940",
+            "submission_started_at": "2026-10-04T22:01:00.000Z",
+            "interacted_at": "2026-10-04T22:30:00.000Z",
+            "last_inbound_message_sid": "SMf99721c2ffd0ec8f2596f08209995e3b"
+          },
+          {
+            "row_number": 4,
+            "schedule_id": "sch_schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261012",
+            "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261012",
+            "user_id": "usr-f06-chain",
+            "parent_nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261012",
+            "status": "delivered",
+            "sent_at": "2026-10-12T09:01:00.000+11:00",
+            "delivered_at": "2026-10-11T22:02:00.000Z",
+            "wa_message_id": "SM42dbdfab08783bb17a640f1b61647c17",
+            "tone_sent": "encouraging",
+            "last_updated": "2026-10-11T22:02:00.000Z",
+            "delivery_attempt_id": "att_384ef0e3-c400-41f5-a540-a4c0e3eafa88",
+            "submission_started_at": "2026-10-11T22:01:00.000Z"
+          },
+          {
+            "row_number": 5,
+            "schedule_id": "sch_schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261019",
+            "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261019",
+            "user_id": "usr-f06-chain",
+            "parent_nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261019",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          },
+          {
+            "row_number": 6,
+            "schedule_id": "sch_schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261026",
+            "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261026",
+            "user_id": "usr-f06-chain",
+            "parent_nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261026",
+            "status": "approved",
+            "sent_at": "",
+            "delivered_at": "",
+            "wa_message_id": "",
+            "tone_sent": "",
+            "last_updated": "2026-10-04T21:30:00.000Z",
+            "delivery_attempt_id": "",
+            "submission_started_at": ""
+          }
+        ]
+      },
+      "delivery_events": {
+        "headers": [
+          "event_id",
+          "event_at",
+          "wa_message_id",
+          "nudge_id",
+          "user_id",
+          "status",
+          "error_code",
+          "error_message",
+          "channel_to",
+          "raw_payload"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "event_id": "evt_bd6522613273c479beac5df5",
+            "event_at": "2026-10-04T22:02:00.000Z",
+            "wa_message_id": "SM10a73a2f7d9fa67bdacdecdfdd0bd078",
+            "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261005",
+            "user_id": "usr-f06-chain",
+            "status": "delivered",
+            "error_code": "",
+            "error_message": "",
+            "channel_to": "whatsapp:+61400000001",
+            "raw_payload": "{\"MessageSid\":\"SM10a73a2f7d9fa67bdacdecdfdd0bd078\",\"MessageStatus\":\"delivered\",\"AccountSid\":\"AC00000000000000000000000000000000\",\"From\":\"whatsapp:+14155238886\",\"To\":\"whatsapp:+61400000001\"}"
+          },
+          {
+            "row_number": 3,
+            "event_id": "evt_266442c2fe80215709519f8b",
+            "event_at": "2026-10-11T22:02:00.000Z",
+            "wa_message_id": "SM42dbdfab08783bb17a640f1b61647c17",
+            "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261012",
+            "user_id": "usr-f06-chain",
+            "status": "delivered",
+            "error_code": "",
+            "error_message": "",
+            "channel_to": "whatsapp:+61400000001",
+            "raw_payload": "{\"MessageSid\":\"SM42dbdfab08783bb17a640f1b61647c17\",\"MessageStatus\":\"delivered\",\"AccountSid\":\"AC00000000000000000000000000000000\",\"From\":\"whatsapp:+14155238886\",\"To\":\"whatsapp:+61400000001\"}"
+          }
+        ]
+      },
+      "media_assignments": {
+        "headers": [
+          "assignment_id",
+          "assigned_at",
+          "user_id",
+          "nudge_id",
+          "behaviour_key",
+          "media_asset_id",
+          "adaptation_decision_id",
+          "media_kind",
+          "selection_mode",
+          "source_url",
+          "tracked_url",
+          "planned_frequency",
+          "scheduled_at",
+          "sent_at",
+          "delivered_at",
+          "read_at",
+          "visited_at",
+          "replied_at",
+          "send_to_read_hours",
+          "send_to_visit_hours",
+          "send_to_reply_hours"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "assignment_id": "ma_4f27793804ead2cc51e2a5d1",
+            "assigned_at": "2026-10-04T22:01:00.000Z",
+            "user_id": "usr-f06-chain",
+            "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261005",
+            "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+            "media_asset_id": "9928748b-67e5-4bdf-a3f4-f54c91689ddb",
+            "adaptation_decision_id": "bd_2",
+            "media_kind": "video",
+            "selection_mode": "automatic",
+            "source_url": "https://example.test/2bb3723c492c4cd9bb49194016265527/video",
+            "tracked_url": "https://portal.invalid/api/r/Cb1i9rtu99ksSs-9hhGxjg38G6BfzcHQ",
+            "planned_frequency": 1,
+            "scheduled_at": "2026-10-05T09:00:00",
+            "sent_at": "",
+            "delivered_at": "",
+            "read_at": "",
+            "visited_at": "",
+            "replied_at": "",
+            "send_to_read_hours": "",
+            "send_to_visit_hours": "",
+            "send_to_reply_hours": ""
+          },
+          {
+            "row_number": 3,
+            "assignment_id": "ma_8fd9d99e1e5b21cad17cc173",
+            "assigned_at": "2026-10-11T22:01:00.000Z",
+            "user_id": "usr-f06-chain",
+            "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261012",
+            "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+            "media_asset_id": "8f7e6152-8088-499f-a1f4-c92c350e40fc",
+            "adaptation_decision_id": "bd_5",
+            "media_kind": "paper",
+            "selection_mode": "automatic",
+            "source_url": "https://example.test/2bb3723c492c4cd9bb49194016265527/paper",
+            "tracked_url": "https://portal.invalid/api/r/ez-uSJkQKTqp-I3D11T0m66GxcR6AnJe",
+            "planned_frequency": 1,
+            "scheduled_at": "2026-10-12T09:00:00",
+            "sent_at": "",
+            "delivered_at": "",
+            "read_at": "",
+            "visited_at": "",
+            "replied_at": "",
+            "send_to_read_hours": "",
+            "send_to_visit_hours": "",
+            "send_to_reply_hours": ""
+          }
+        ]
+      },
+      "interaction_events": {
+        "headers": [
+          "interaction_id",
+          "event_at",
+          "inbound_message_sid",
+          "user_id",
+          "from_phone",
+          "reply_to_wa_message_id",
+          "nudge_id",
+          "body",
+          "media_count",
+          "correlation_method",
+          "ack_status"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "interaction_id": "in_77e55587919d86d7f78e1afa",
+            "event_at": "2026-10-04T22:30:00.000Z",
+            "inbound_message_sid": "SMf99721c2ffd0ec8f2596f08209995e3b",
+            "user_id": "usr-f06-chain",
+            "from_phone": "+61400000001",
+            "reply_to_wa_message_id": "SM10a73a2f7d9fa67bdacdecdfdd0bd078",
+            "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261005",
+            "body": "Send fewer messages",
+            "media_count": 0,
+            "correlation_method": "original_replied_message_sid",
+            "ack_status": "sent"
+          }
+        ]
+      },
+      "adaptation_decisions": {
+        "headers": [
+          "decision_id",
+          "decided_at",
+          "user_id",
+          "behaviour_key",
+          "interaction_id",
+          "signal_type",
+          "rule_applied",
+          "outcome",
+          "reason",
+          "selected_asset_id",
+          "interpretation",
+          "previous_state",
+          "next_state",
+          "scope",
+          "decision_source",
+          "effective_at",
+          "state_version",
+          "changed_fields",
+          "frequency_before",
+          "frequency_after",
+          "media_mode_before",
+          "media_mode_after",
+          "media_kind_before",
+          "media_kind_after",
+          "nudge_id"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "decision_id": "bd_2",
+            "decided_at": "2026-10-04T22:01:00.000Z",
+            "user_id": "usr-f06-chain",
+            "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+            "interaction_id": "",
+            "signal_type": "scheduled_selection",
+            "rule_applied": "least_recently_used_rotation",
+            "outcome": "applied",
+            "reason": "no explicit preference; rotated approved media",
+            "selected_asset_id": "9928748b-67e5-4bdf-a3f4-f54c91689ddb",
+            "interpretation": "{\"explicit\":false,\"format\":null,\"summary_length\":null,\"tone\":null,\"time\":null,\"frequency_delta\":0,\"action\":null}",
+            "previous_state": "{\"format_scores\":{},\"asset_history\":[],\"media_selection_mode\":\"automatic\"}",
+            "next_state": "{\"format_scores\":{},\"asset_history\":[\"9928748b-67e5-4bdf-a3f4-f54c91689ddb\"],\"last_asset_id\":\"9928748b-67e5-4bdf-a3f4-f54c91689ddb\",\"media_selection_mode\":\"automatic\"}",
+            "scope": "behaviour",
+            "decision_source": "system",
+            "effective_at": "2026-10-04T22:01:00.000Z",
+            "state_version": 1,
+            "changed_fields": "[\"last_asset_id\"]",
+            "frequency_before": "",
+            "frequency_after": "",
+            "media_mode_before": "automatic",
+            "media_mode_after": "automatic",
+            "media_kind_before": "",
+            "media_kind_after": "video",
+            "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261005"
+          },
+          {
+            "row_number": 3,
+            "decision_id": "bd_5",
+            "decided_at": "2026-10-11T22:01:00.000Z",
+            "user_id": "usr-f06-chain",
+            "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+            "interaction_id": "",
+            "signal_type": "scheduled_selection",
+            "rule_applied": "least_recently_used_rotation",
+            "outcome": "applied",
+            "reason": "no explicit preference; rotated approved media",
+            "selected_asset_id": "8f7e6152-8088-499f-a1f4-c92c350e40fc",
+            "interpretation": "{\"explicit\":false,\"format\":null,\"summary_length\":null,\"tone\":null,\"time\":null,\"frequency_delta\":0,\"action\":null}",
+            "previous_state": "{\"format_scores\":{},\"asset_history\":[\"9928748b-67e5-4bdf-a3f4-f54c91689ddb\"],\"last_asset_id\":\"9928748b-67e5-4bdf-a3f4-f54c91689ddb\",\"media_selection_mode\":\"automatic\",\"user_id\":\"usr-f06-chain\",\"behaviour_key\":\"2bb3723c492c4cd9bb49194016265527\",\"state_version\":2,\"updated_at\":\"2026-10-04T22:32:00.000Z\",\"last_signal_at\":\"2026-10-04T22:30:00.000Z\",\"last_decision_id\":\"bd_3\"}",
+            "next_state": "{\"format_scores\":{},\"asset_history\":[\"9928748b-67e5-4bdf-a3f4-f54c91689ddb\",\"8f7e6152-8088-499f-a1f4-c92c350e40fc\"],\"last_asset_id\":\"8f7e6152-8088-499f-a1f4-c92c350e40fc\",\"media_selection_mode\":\"automatic\",\"user_id\":\"usr-f06-chain\",\"behaviour_key\":\"2bb3723c492c4cd9bb49194016265527\",\"state_version\":2,\"updated_at\":\"2026-10-04T22:32:00.000Z\",\"last_signal_at\":\"2026-10-04T22:30:00.000Z\",\"last_decision_id\":\"bd_3\"}",
+            "scope": "behaviour",
+            "decision_source": "system",
+            "effective_at": "2026-10-11T22:01:00.000Z",
+            "state_version": 3,
+            "changed_fields": "[\"last_asset_id\"]",
+            "frequency_before": "",
+            "frequency_after": "",
+            "media_mode_before": "automatic",
+            "media_mode_after": "automatic",
+            "media_kind_before": "",
+            "media_kind_after": "paper",
+            "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261012"
+          }
+        ]
+      },
+      "patient_adaptation_state": {
+        "headers": [
+          "user_id",
+          "scope",
+          "behaviour_key",
+          "state_version",
+          "preferred_format",
+          "preferred_frequency",
+          "planned_frequency",
+          "delivered_frequency",
+          "observed_frequency",
+          "last_change_at",
+          "updated_at"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "user_id": "usr-f06-chain",
+            "scope": "global",
+            "behaviour_key": "",
+            "state_version": "",
+            "preferred_format": "",
+            "preferred_frequency": "",
+            "updated_at": "2026-10-05T22:04:00.000Z"
+          },
+          {
+            "row_number": 3,
+            "user_id": "usr-f06-chain",
+            "scope": "behaviour",
+            "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+            "state_version": 2,
+            "preferred_format": "",
+            "preferred_frequency": "",
+            "planned_frequency": 1,
+            "delivered_frequency": 1,
+            "observed_frequency": 0,
+            "last_change_at": "2026-10-05T22:04:00.000Z",
+            "updated_at": "2026-10-04T22:32:00.000Z"
+          }
+        ]
+      },
+      "prescription_revisions": {
+        "headers": [
+          "revision_id",
+          "prescription_id",
+          "user_id",
+          "changed_at",
+          "changed_by",
+          "field",
+          "previous_value",
+          "new_value",
+          "previous_source",
+          "reason"
+        ],
+        "rows": []
+      },
+      "patient_adaptation_timeline": {
+        "headers": [
+          "user_id",
+          "event_id",
+          "event_at",
+          "event_type",
+          "source",
+          "scope",
+          "behaviour_key",
+          "signal",
+          "rule_applied",
+          "outcome",
+          "reason",
+          "previous_state",
+          "new_state",
+          "changed_fields",
+          "selected_asset_id",
+          "selected_media_kind",
+          "nudge_id",
+          "interaction_id"
+        ],
+        "rows": [
+          {
+            "row_number": 2,
+            "user_id": "usr-f06-chain",
+            "event_id": "bd_1",
+            "event_at": "2026-10-04T21:30:00.000Z",
+            "event_type": "adaptation_decision",
+            "source": "clinician",
+            "scope": "behaviour",
+            "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+            "signal": "clinician_schedule_change",
+            "rule_applied": "clinician_saved_schedule",
+            "outcome": "applied",
+            "reason": "Clinician saved a weekly schedule or media change",
+            "previous_state": "{\"planned_frequency\":0,\"media_selection_mode\":\"automatic\"}",
+            "new_state": "{\"planned_frequency\":1,\"media_selection_mode\":\"automatic\"}",
+            "changed_fields": "[\"planned_frequency\",\"media_selection_mode\"]",
+            "selected_asset_id": "",
+            "selected_media_kind": "",
+            "nudge_id": "",
+            "interaction_id": ""
+          },
+          {
+            "row_number": 3,
+            "user_id": "usr-f06-chain",
+            "event_id": "bd_2",
+            "event_at": "2026-10-04T22:01:00.000Z",
+            "event_type": "adaptation_decision",
+            "source": "system",
+            "scope": "behaviour",
+            "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+            "signal": "scheduled_selection",
+            "rule_applied": "least_recently_used_rotation",
+            "outcome": "applied",
+            "reason": "no explicit preference; rotated approved media",
+            "previous_state": "{\"format_scores\":{},\"asset_history\":[],\"media_selection_mode\":\"automatic\"}",
+            "new_state": "{\"format_scores\":{},\"asset_history\":[\"9928748b-67e5-4bdf-a3f4-f54c91689ddb\"],\"last_asset_id\":\"9928748b-67e5-4bdf-a3f4-f54c91689ddb\",\"media_selection_mode\":\"automatic\"}",
+            "changed_fields": "[\"last_asset_id\"]",
+            "selected_asset_id": "9928748b-67e5-4bdf-a3f4-f54c91689ddb",
+            "selected_media_kind": "video",
+            "nudge_id": "",
+            "interaction_id": ""
+          },
+          {
+            "row_number": 4,
+            "user_id": "usr-f06-chain",
+            "event_id": "evt_bd6522613273c479beac5df5",
+            "event_at": "2026-10-04T22:02:00.000Z",
+            "event_type": "delivery_status",
+            "source": "provider",
+            "scope": "behaviour",
+            "behaviour_key": "",
+            "signal": "delivered",
+            "rule_applied": "exposure_only",
+            "outcome": "observed",
+            "reason": "Provider exposure evidence only",
+            "previous_state": "{}",
+            "new_state": "{}",
+            "changed_fields": "[]",
+            "selected_asset_id": "",
+            "selected_media_kind": "",
+            "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261005",
+            "interaction_id": "evt_bd6522613273c479beac5df5"
+          },
+          {
+            "row_number": 5,
+            "user_id": "usr-f06-chain",
+            "event_id": "bd_3",
+            "event_at": "2026-10-04T22:30:00.000Z",
+            "event_type": "adaptation_decision",
+            "source": "patient",
+            "scope": "behaviour",
+            "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+            "signal": "inbound_reply",
+            "rule_applied": "explicit_request_guarded",
+            "outcome": "outside_envelope",
+            "reason": "frequency_outside_envelope",
+            "previous_state": "{\"format_scores\":{},\"asset_history\":[\"9928748b-67e5-4bdf-a3f4-f54c91689ddb\"],\"last_asset_id\":\"9928748b-67e5-4bdf-a3f4-f54c91689ddb\",\"media_selection_mode\":\"automatic\",\"user_id\":\"usr-f06-chain\",\"behaviour_key\":\"2bb3723c492c4cd9bb49194016265527\",\"state_version\":1,\"updated_at\":\"2026-10-04T22:01:00.000Z\"}",
+            "new_state": "{\"format_scores\":{},\"asset_history\":[\"9928748b-67e5-4bdf-a3f4-f54c91689ddb\"],\"last_asset_id\":\"9928748b-67e5-4bdf-a3f4-f54c91689ddb\",\"media_selection_mode\":\"automatic\",\"user_id\":\"usr-f06-chain\",\"behaviour_key\":\"2bb3723c492c4cd9bb49194016265527\",\"state_version\":1,\"updated_at\":\"2026-10-04T22:01:00.000Z\"}",
+            "changed_fields": "[]",
+            "selected_asset_id": "",
+            "selected_media_kind": "",
+            "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261005",
+            "interaction_id": "in_77e55587919d86d7f78e1afa"
+          },
+          {
+            "row_number": 6,
+            "user_id": "usr-f06-chain",
+            "event_id": "ab243c36-fa2d-46cf-a8ce-757a40e2ee39",
+            "event_at": "2026-10-05T22:04:00.000Z",
+            "event_type": "adaptation_decision",
+            "source": "system",
+            "scope": "behaviour",
+            "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+            "signal": "adaptive_policy_no_change",
+            "rule_applied": "bounded_frequency_time_media_policy",
+            "outcome": "no_change",
+            "reason": "Policy evaluated; future schedule already matches or no bounded change was supported",
+            "previous_state": "{\"format_scores\":{},\"asset_history\":[\"9928748b-67e5-4bdf-a3f4-f54c91689ddb\"],\"last_asset_id\":\"9928748b-67e5-4bdf-a3f4-f54c91689ddb\",\"media_selection_mode\":\"automatic\",\"user_id\":\"usr-f06-chain\",\"behaviour_key\":\"2bb3723c492c4cd9bb49194016265527\",\"state_version\":2,\"updated_at\":\"2026-10-04T22:32:00.000Z\",\"last_signal_at\":\"2026-10-04T22:30:00.000Z\",\"last_decision_id\":\"bd_3\",\"planned_frequency\":1,\"preferred_time\":\"09:00\",\"preferred_format\":null}",
+            "new_state": "{\"format_scores\":{},\"asset_history\":[\"9928748b-67e5-4bdf-a3f4-f54c91689ddb\"],\"last_asset_id\":\"9928748b-67e5-4bdf-a3f4-f54c91689ddb\",\"media_selection_mode\":\"automatic\",\"user_id\":\"usr-f06-chain\",\"behaviour_key\":\"2bb3723c492c4cd9bb49194016265527\",\"state_version\":2,\"updated_at\":\"2026-10-04T22:32:00.000Z\",\"last_signal_at\":\"2026-10-04T22:30:00.000Z\",\"last_decision_id\":\"bd_3\",\"planned_frequency\":1,\"preferred_time\":\"09:00\",\"preferred_format\":null}",
+            "changed_fields": "[]",
+            "selected_asset_id": "",
+            "selected_media_kind": "",
+            "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261005",
+            "interaction_id": ""
+          },
+          {
+            "row_number": 7,
+            "user_id": "usr-f06-chain",
+            "event_id": "bd_4",
+            "event_at": "2026-10-05T22:04:00.000Z",
+            "event_type": "adaptation_decision",
+            "source": "system",
+            "scope": "behaviour",
+            "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+            "signal": "frequency_model_recommendation",
+            "rule_applied": "regularized_logistic_regression",
+            "outcome": "no_change",
+            "reason": "Model recommendation: 2 per week",
+            "previous_state": "{\"format_scores\":{},\"asset_history\":[\"9928748b-67e5-4bdf-a3f4-f54c91689ddb\"],\"last_asset_id\":\"9928748b-67e5-4bdf-a3f4-f54c91689ddb\",\"media_selection_mode\":\"automatic\",\"user_id\":\"usr-f06-chain\",\"behaviour_key\":\"2bb3723c492c4cd9bb49194016265527\",\"state_version\":2,\"updated_at\":\"2026-10-04T22:32:00.000Z\",\"last_signal_at\":\"2026-10-04T22:30:00.000Z\",\"last_decision_id\":\"bd_3\",\"planned_frequency\":1,\"preferred_time\":\"09:00\",\"preferred_format\":null}",
+            "new_state": "{\"format_scores\":{},\"asset_history\":[\"9928748b-67e5-4bdf-a3f4-f54c91689ddb\"],\"last_asset_id\":\"9928748b-67e5-4bdf-a3f4-f54c91689ddb\",\"media_selection_mode\":\"automatic\",\"user_id\":\"usr-f06-chain\",\"behaviour_key\":\"2bb3723c492c4cd9bb49194016265527\",\"state_version\":2,\"updated_at\":\"2026-10-04T22:32:00.000Z\",\"last_signal_at\":\"2026-10-04T22:30:00.000Z\",\"last_decision_id\":\"bd_3\",\"planned_frequency\":2,\"preferred_time\":\"09:00\",\"preferred_format\":null}",
+            "changed_fields": "[\"planned_frequency\"]",
+            "selected_asset_id": "",
+            "selected_media_kind": "",
+            "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261005",
+            "interaction_id": ""
+          }
+        ]
+      }
+    },
+    "database": {
+      "profiles": [
+        {
+          "auth_user_id": "11111111-1111-4111-a111-111111111111",
+          "email": "clinician@harness.invalid",
+          "display_name": "Synthetic clinician",
+          "role": "doctor",
+          "doctor_id": "doc-harness",
+          "status": "active"
+        }
+      ],
+      "media_search_jobs": [
+        {
+          "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+          "user_id": "usr-f06-chain",
+          "prescription_id": "rx_6df0277a-6518-4ff2-afb9-d1e09114eda6",
+          "action_text": "Attend your three gym sessions this week.",
+          "pillar": "physical_activity",
+          "category": "maintain",
+          "status": "pending",
+          "updated_at": "2026-10-04T21:30:00.000Z",
+          "job_id": "7f8ae2fe-70bf-475e-a6ea-47830847680f",
+          "created_at": "2026-10-04T21:30:00.000Z"
+        }
+      ],
+      "media_candidates": [
+        {
+          "candidate_id": "f68fd8ec-eb8f-47df-ae06-43d0e8cff946",
+          "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+          "media_kind": "video",
+          "title": "Synthetic video for Attend your three gym sessions this week.",
+          "source_name": "Synthetic approved pool",
+          "source_url": "https://example.test/2bb3723c492c4cd9bb49194016265527/video",
+          "open_access": false,
+          "short_summary": "SHORT synthetic explanation.",
+          "detailed_summary": "DETAILED synthetic explanation for this controlled evaluation.",
+          "ranking_score": 2,
+          "ranking_reasons": [],
+          "metadata": {}
+        },
+        {
+          "candidate_id": "19182554-1aea-4ba4-af5a-7b4a17855c83",
+          "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+          "media_kind": "paper",
+          "title": "Synthetic paper for Attend your three gym sessions this week.",
+          "source_name": "Synthetic approved pool",
+          "source_url": "https://example.test/2bb3723c492c4cd9bb49194016265527/paper",
+          "open_access": true,
+          "short_summary": "SHORT synthetic explanation.",
+          "detailed_summary": "DETAILED synthetic explanation for this controlled evaluation.",
+          "ranking_score": 1,
+          "ranking_reasons": [],
+          "metadata": {}
+        }
+      ],
+      "media_assets": [
+        {
+          "candidate_id": "f68fd8ec-eb8f-47df-ae06-43d0e8cff946",
+          "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+          "media_kind": "video",
+          "title": "Synthetic video for Attend your three gym sessions this week.",
+          "source_name": "Synthetic approved pool",
+          "source_url": "https://example.test/2bb3723c492c4cd9bb49194016265527/video",
+          "short_summary": "SHORT synthetic explanation.",
+          "detailed_summary": "DETAILED synthetic explanation for this controlled evaluation.",
+          "limitations": "",
+          "status": "approved",
+          "approved_at": "2026-10-04T21:30:00.000Z",
+          "approved_by": "11111111-1111-4111-a111-111111111111",
+          "asset_id": "9928748b-67e5-4bdf-a3f4-f54c91689ddb",
+          "created_at": "2026-10-04T21:30:00.000Z"
+        },
+        {
+          "candidate_id": "19182554-1aea-4ba4-af5a-7b4a17855c83",
+          "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+          "media_kind": "paper",
+          "title": "Synthetic paper for Attend your three gym sessions this week.",
+          "source_name": "Synthetic approved pool",
+          "source_url": "https://example.test/2bb3723c492c4cd9bb49194016265527/paper",
+          "short_summary": "SHORT synthetic explanation.",
+          "detailed_summary": "DETAILED synthetic explanation for this controlled evaluation.",
+          "limitations": "",
+          "status": "approved",
+          "approved_at": "2026-10-04T21:30:00.000Z",
+          "approved_by": "11111111-1111-4111-a111-111111111111",
+          "asset_id": "8f7e6152-8088-499f-a1f4-c92c350e40fc",
+          "created_at": "2026-10-04T21:30:00.000Z"
+        }
+      ],
+      "adaptation_envelopes": [
+        {
+          "action_text": "Attend your three gym sessions this week.",
+          "pillar": "physical_activity",
+          "category": "maintain",
+          "formats": [
+            "video",
+            "paper",
+            "reading"
+          ],
+          "summary_lengths": [
+            "short",
+            "detailed"
+          ],
+          "tones": [
+            "encouraging",
+            "neutral_informational"
+          ],
+          "earliest_time": "08:00",
+          "latest_time": "21:00",
+          "frequency_min": 1,
+          "frequency_max": 3,
+          "action_alternatives": [
+            "Attend your three gym sessions this week."
+          ],
+          "user_id": "usr-f06-chain",
+          "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+          "status": "approved",
+          "updated_at": "2026-10-04T21:30:00.000Z",
+          "envelope_id": "eda5e35a-c75e-4519-a17b-a477d2c3a2ac",
+          "created_at": "2026-10-04T21:30:00.000Z",
+          "automatic_schedule_apply": true,
+          "approved_asset_ids": [
+            "9928748b-67e5-4bdf-a3f4-f54c91689ddb",
+            "8f7e6152-8088-499f-a1f4-c92c350e40fc"
+          ],
+          "approved_at": "2026-10-04T21:30:00.000Z",
+          "approved_by": "11111111-1111-4111-a111-111111111111"
+        }
+      ],
+      "user_adaptation_state": [
+        {
+          "format_scores": {},
+          "asset_history": [
+            "9928748b-67e5-4bdf-a3f4-f54c91689ddb",
+            "8f7e6152-8088-499f-a1f4-c92c350e40fc"
+          ],
+          "last_asset_id": "8f7e6152-8088-499f-a1f4-c92c350e40fc",
+          "media_selection_mode": "automatic",
+          "user_id": "usr-f06-chain",
+          "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+          "state_version": 3,
+          "updated_at": "2026-10-11T22:01:00.000Z",
+          "last_signal_at": "2026-10-04T22:30:00.000Z",
+          "last_decision_id": "bd_3"
+        }
+      ],
+      "interaction_events": [
+        {
+          "interaction_id": "evt_bd6522613273c479beac5df5",
+          "event_at": "2026-10-04T22:02:00.000Z",
+          "event_type": "delivery_status",
+          "user_id": "usr-f06-chain",
+          "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261005",
+          "wa_message_id": "SM10a73a2f7d9fa67bdacdecdfdd0bd078",
+          "status": "delivered",
+          "correlation_method": "twilio_message_sid",
+          "raw_payload": {
+            "MessageSid": "SM10a73a2f7d9fa67bdacdecdfdd0bd078",
+            "MessageStatus": "delivered",
+            "AccountSid": "AC00000000000000000000000000000000",
+            "From": "whatsapp:+14155238886",
+            "To": "whatsapp:+61400000001"
+          }
+        },
+        {
+          "interaction_id": "in_77e55587919d86d7f78e1afa",
+          "event_at": "2026-10-04T22:30:00.000Z",
+          "event_type": "inbound_reply",
+          "user_id": "usr-f06-chain",
+          "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+          "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261005",
+          "wa_message_id": "SM10a73a2f7d9fa67bdacdecdfdd0bd078",
+          "inbound_message_sid": "SMf99721c2ffd0ec8f2596f08209995e3b",
+          "reply_to_wa_message_id": "SM10a73a2f7d9fa67bdacdecdfdd0bd078",
+          "body": "Send fewer messages",
+          "media_count": 0,
+          "correlation_method": "original_replied_message_sid",
+          "raw_payload": {
+            "from": "whatsapp:+61400000001",
+            "num_media": "0"
+          },
+          "processed_at": "2026-10-04T22:32:00.000Z"
+        },
+        {
+          "interaction_id": "evt_266442c2fe80215709519f8b",
+          "event_at": "2026-10-11T22:02:00.000Z",
+          "event_type": "delivery_status",
+          "user_id": "usr-f06-chain",
+          "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261012",
+          "wa_message_id": "SM42dbdfab08783bb17a640f1b61647c17",
+          "status": "delivered",
+          "correlation_method": "twilio_message_sid",
+          "raw_payload": {
+            "MessageSid": "SM42dbdfab08783bb17a640f1b61647c17",
+            "MessageStatus": "delivered",
+            "AccountSid": "AC00000000000000000000000000000000",
+            "From": "whatsapp:+14155238886",
+            "To": "whatsapp:+61400000001"
+          }
+        }
+      ],
+      "adaptation_decisions": [
+        {
+          "user_id": "usr-f06-chain",
+          "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+          "interaction_id": null,
+          "nudge_id": null,
+          "signal_type": "clinician_schedule_change",
+          "scope": "behaviour",
+          "decision_source": "clinician",
+          "effective_at": "2026-10-04T21:30:00.000Z",
+          "state_version": 1,
+          "interpretation": {},
+          "scores_before": {},
+          "scores_after": {},
+          "rule_applied": "clinician_saved_schedule",
+          "previous_state": {
+            "planned_frequency": 0,
+            "media_selection_mode": "automatic"
+          },
+          "next_state": {
+            "planned_frequency": 1,
+            "media_selection_mode": "automatic"
+          },
+          "changed_fields": [
+            "planned_frequency",
+            "media_selection_mode"
+          ],
+          "frequency_before": null,
+          "frequency_after": null,
+          "media_mode_before": "automatic",
+          "media_mode_after": "automatic",
+          "media_kind_before": null,
+          "media_kind_after": null,
+          "selected_asset_id": null,
+          "outcome": "applied",
+          "reason": "Clinician saved a weekly schedule or media change",
+          "fulfilled_at": "2026-10-04T21:30:00.000Z",
+          "decision_id": "bd_1",
+          "decided_at": "2026-10-04T21:30:00.000Z"
+        },
+        {
+          "user_id": "usr-f06-chain",
+          "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+          "interaction_id": null,
+          "nudge_id": null,
+          "signal_type": "scheduled_selection",
+          "scope": "behaviour",
+          "decision_source": "system",
+          "effective_at": "2026-10-04T22:01:00.000Z",
+          "state_version": 1,
+          "interpretation": {
+            "explicit": false,
+            "format": null,
+            "summary_length": null,
+            "tone": null,
+            "time": null,
+            "frequency_delta": 0,
+            "action": null
+          },
+          "scores_before": {},
+          "scores_after": {},
+          "rule_applied": "least_recently_used_rotation",
+          "previous_state": {
+            "format_scores": {},
+            "asset_history": [],
+            "media_selection_mode": "automatic"
+          },
+          "next_state": {
+            "format_scores": {},
+            "asset_history": [
+              "9928748b-67e5-4bdf-a3f4-f54c91689ddb"
+            ],
+            "last_asset_id": "9928748b-67e5-4bdf-a3f4-f54c91689ddb",
+            "media_selection_mode": "automatic"
+          },
+          "changed_fields": [
+            "last_asset_id"
+          ],
+          "frequency_before": null,
+          "frequency_after": null,
+          "media_mode_before": "automatic",
+          "media_mode_after": "automatic",
+          "media_kind_before": null,
+          "media_kind_after": "video",
+          "selected_asset_id": "9928748b-67e5-4bdf-a3f4-f54c91689ddb",
+          "outcome": "applied",
+          "reason": "no explicit preference; rotated approved media",
+          "fulfilled_at": "2026-10-04T22:01:00.000Z",
+          "decision_id": "bd_2",
+          "decided_at": "2026-10-04T22:01:00.000Z"
+        },
+        {
+          "user_id": "usr-f06-chain",
+          "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+          "interaction_id": "in_77e55587919d86d7f78e1afa",
+          "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261005",
+          "signal_type": "inbound_reply",
+          "scope": "behaviour",
+          "decision_source": "patient",
+          "effective_at": "2026-10-04T22:30:00.000Z",
+          "state_version": 2,
+          "interpretation": {
+            "explicit": true,
+            "format": null,
+            "summary_length": null,
+            "tone": null,
+            "time": null,
+            "frequency_delta": -1,
+            "action": null
+          },
+          "scores_before": {},
+          "scores_after": {},
+          "rule_applied": "explicit_request_guarded",
+          "previous_state": {
+            "format_scores": {},
+            "asset_history": [
+              "9928748b-67e5-4bdf-a3f4-f54c91689ddb"
+            ],
+            "last_asset_id": "9928748b-67e5-4bdf-a3f4-f54c91689ddb",
+            "media_selection_mode": "automatic",
+            "user_id": "usr-f06-chain",
+            "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+            "state_version": 1,
+            "updated_at": "2026-10-04T22:01:00.000Z"
+          },
+          "next_state": {
+            "format_scores": {},
+            "asset_history": [
+              "9928748b-67e5-4bdf-a3f4-f54c91689ddb"
+            ],
+            "last_asset_id": "9928748b-67e5-4bdf-a3f4-f54c91689ddb",
+            "media_selection_mode": "automatic",
+            "user_id": "usr-f06-chain",
+            "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+            "state_version": 1,
+            "updated_at": "2026-10-04T22:01:00.000Z"
+          },
+          "changed_fields": [],
+          "frequency_before": null,
+          "frequency_after": null,
+          "media_mode_before": "automatic",
+          "media_mode_after": "automatic",
+          "media_kind_before": null,
+          "media_kind_after": null,
+          "selected_asset_id": null,
+          "outcome": "outside_envelope",
+          "reason": "frequency_outside_envelope",
+          "fulfilled_at": null,
+          "decision_id": "bd_3",
+          "decided_at": "2026-10-04T22:32:00.000Z"
+        },
+        {
+          "decided_at": "2026-10-05T22:04:00.000Z",
+          "effective_at": "2026-10-05T22:04:00.000Z",
+          "user_id": "usr-f06-chain",
+          "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+          "interaction_id": null,
+          "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261005",
+          "scope": "behaviour",
+          "decision_source": "system",
+          "media_mode_before": null,
+          "media_mode_after": null,
+          "media_kind_before": null,
+          "media_kind_after": null,
+          "selected_asset_id": null,
+          "signal_type": "frequency_model_recommendation",
+          "interpretation": {
+            "evaluation_key": "frequency-logistic-v1:2bb3723c492c4cd9bb49194016265527:schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261005:2026-10-04T22:02:00.000Z",
+            "model_id": "frequency-logistic-v1",
+            "mode": "apply",
+            "closed_delivery_count": 1,
+            "recent_outcomes": [
+              {
+                "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261005",
+                "delivered_at": "2026-10-04T22:02:00.000Z",
+                "read_at": null,
+                "scheduled_time": "09:00",
+                "media_kind": "video",
+                "first_visit_at": null,
+                "first_reply_at": "2026-10-04T22:30:00.000Z",
+                "first_interaction_at": "2026-10-04T22:30:00.000Z",
+                "read_latency_minutes": null,
+                "visit_latency_minutes": null,
+                "reply_latency_minutes": 28,
+                "interaction_window": "morning",
+                "link_visit_count": 0,
+                "ordinary_reply_count": 1,
+                "closed_24h": true,
+                "interacted_within_24h": 1,
+                "outcome": "ordinary_interaction"
+              }
+            ],
+            "features": {
+              "recent_interaction_rate": 1,
+              "noninteraction_streak": 0,
+              "has_previous_interaction": true,
+              "has_recent_interaction": true
+            },
+            "candidate_scores": {
+              "1": 0.5757221490881697,
+              "2": 0.6057270804803476,
+              "3": 0.6349555136435776
+            },
+            "model_recommended_frequency": 2,
+            "recommended_frequency": 1,
+            "direction": "hold",
+            "policy_reason": "increase_blocked_without_two_recent_interactions",
+            "time_recommendation": {
+              "recommended_time": "09:00",
+              "direction": "hold",
+              "source": "policy",
+              "reason": "fewer_than_two_positive_timing_observations",
+              "evidence_count": 1
+            },
+            "media_recommendation": {
+              "recommended_format": null,
+              "direction": "rotate",
+              "source": "novelty_policy",
+              "reason": "no_format_signal_rotate_least_recently_used",
+              "evidence_count": 0
+            },
+            "passive_evidence": {
+              "delivered_count": 1,
+              "read_count": 0,
+              "read_unknown_count": 1,
+              "visit_count": 0,
+              "reply_count": 1,
+              "no_observable_interaction_count": 0,
+              "open_24h_count": 0,
+              "median_read_latency_minutes": null,
+              "interaction_windows": {
+                "morning": 1
+              },
+              "media_visits": {}
+            },
+            "schedule_applied": false
+          },
+          "scores_before": {},
+          "scores_after": {
+            "1": 0.5757221490881697,
+            "2": 0.6057270804803476,
+            "3": 0.6349555136435776
+          },
+          "rule_applied": "regularized_logistic_regression",
+          "previous_state": {
+            "format_scores": {},
+            "asset_history": [
+              "9928748b-67e5-4bdf-a3f4-f54c91689ddb"
+            ],
+            "last_asset_id": "9928748b-67e5-4bdf-a3f4-f54c91689ddb",
+            "media_selection_mode": "automatic",
+            "user_id": "usr-f06-chain",
+            "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+            "state_version": 2,
+            "updated_at": "2026-10-04T22:32:00.000Z",
+            "last_signal_at": "2026-10-04T22:30:00.000Z",
+            "last_decision_id": "bd_3",
+            "planned_frequency": 1,
+            "preferred_time": "09:00",
+            "preferred_format": null
+          },
+          "next_state": {
+            "format_scores": {},
+            "asset_history": [
+              "9928748b-67e5-4bdf-a3f4-f54c91689ddb"
+            ],
+            "last_asset_id": "9928748b-67e5-4bdf-a3f4-f54c91689ddb",
+            "media_selection_mode": "automatic",
+            "user_id": "usr-f06-chain",
+            "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+            "state_version": 2,
+            "updated_at": "2026-10-04T22:32:00.000Z",
+            "last_signal_at": "2026-10-04T22:30:00.000Z",
+            "last_decision_id": "bd_3",
+            "planned_frequency": 2,
+            "preferred_time": "09:00",
+            "preferred_format": null
+          },
+          "changed_fields": [
+            "planned_frequency"
+          ],
+          "frequency_before": 1,
+          "frequency_after": 2,
+          "outcome": "no_change",
+          "reason": "Model recommendation: 2 per week",
+          "fulfilled_at": null,
+          "decision_id": "bd_4"
+        },
+        {
+          "decided_at": "2026-10-05T22:04:00.000Z",
+          "effective_at": "2026-10-05T22:04:00.000Z",
+          "user_id": "usr-f06-chain",
+          "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+          "interaction_id": null,
+          "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261005",
+          "scope": "behaviour",
+          "decision_source": "system",
+          "media_mode_before": null,
+          "media_mode_after": null,
+          "media_kind_before": null,
+          "media_kind_after": null,
+          "selected_asset_id": null,
+          "decision_id": "ab243c36-fa2d-46cf-a8ce-757a40e2ee39",
+          "signal_type": "adaptive_policy_no_change",
+          "interpretation": {
+            "evaluation_key": "frequency-logistic-v1:2bb3723c492c4cd9bb49194016265527:schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261005:2026-10-04T22:02:00.000Z",
+            "model_id": "frequency-logistic-v1",
+            "mode": "apply",
+            "closed_delivery_count": 1,
+            "recent_outcomes": [
+              {
+                "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261005",
+                "delivered_at": "2026-10-04T22:02:00.000Z",
+                "read_at": null,
+                "scheduled_time": "09:00",
+                "media_kind": "video",
+                "first_visit_at": null,
+                "first_reply_at": "2026-10-04T22:30:00.000Z",
+                "first_interaction_at": "2026-10-04T22:30:00.000Z",
+                "read_latency_minutes": null,
+                "visit_latency_minutes": null,
+                "reply_latency_minutes": 28,
+                "interaction_window": "morning",
+                "link_visit_count": 0,
+                "ordinary_reply_count": 1,
+                "closed_24h": true,
+                "interacted_within_24h": 1,
+                "outcome": "ordinary_interaction"
+              }
+            ],
+            "features": {
+              "recent_interaction_rate": 1,
+              "noninteraction_streak": 0,
+              "has_previous_interaction": true,
+              "has_recent_interaction": true
+            },
+            "candidate_scores": {
+              "1": 0.5757221490881697,
+              "2": 0.6057270804803476,
+              "3": 0.6349555136435776
+            },
+            "model_recommended_frequency": 2,
+            "recommended_frequency": 1,
+            "direction": "hold",
+            "policy_reason": "increase_blocked_without_two_recent_interactions",
+            "time_recommendation": {
+              "recommended_time": "09:00",
+              "direction": "hold",
+              "source": "policy",
+              "reason": "fewer_than_two_positive_timing_observations",
+              "evidence_count": 1
+            },
+            "media_recommendation": {
+              "recommended_format": null,
+              "direction": "rotate",
+              "source": "novelty_policy",
+              "reason": "no_format_signal_rotate_least_recently_used",
+              "evidence_count": 0
+            },
+            "passive_evidence": {
+              "delivered_count": 1,
+              "read_count": 0,
+              "read_unknown_count": 1,
+              "visit_count": 0,
+              "reply_count": 1,
+              "no_observable_interaction_count": 0,
+              "open_24h_count": 0,
+              "median_read_latency_minutes": null,
+              "interaction_windows": {
+                "morning": 1
+              },
+              "media_visits": {}
+            },
+            "schedule_applied": false
+          },
+          "scores_before": {
+            "1": 0.5757221490881697,
+            "2": 0.6057270804803476,
+            "3": 0.6349555136435776
+          },
+          "scores_after": {
+            "1": 0.5757221490881697,
+            "2": 0.6057270804803476,
+            "3": 0.6349555136435776
+          },
+          "rule_applied": "bounded_frequency_time_media_policy",
+          "previous_state": {
+            "format_scores": {},
+            "asset_history": [
+              "9928748b-67e5-4bdf-a3f4-f54c91689ddb"
+            ],
+            "last_asset_id": "9928748b-67e5-4bdf-a3f4-f54c91689ddb",
+            "media_selection_mode": "automatic",
+            "user_id": "usr-f06-chain",
+            "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+            "state_version": 2,
+            "updated_at": "2026-10-04T22:32:00.000Z",
+            "last_signal_at": "2026-10-04T22:30:00.000Z",
+            "last_decision_id": "bd_3",
+            "planned_frequency": 1,
+            "preferred_time": "09:00",
+            "preferred_format": null
+          },
+          "next_state": {
+            "format_scores": {},
+            "asset_history": [
+              "9928748b-67e5-4bdf-a3f4-f54c91689ddb"
+            ],
+            "last_asset_id": "9928748b-67e5-4bdf-a3f4-f54c91689ddb",
+            "media_selection_mode": "automatic",
+            "user_id": "usr-f06-chain",
+            "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+            "state_version": 2,
+            "updated_at": "2026-10-04T22:32:00.000Z",
+            "last_signal_at": "2026-10-04T22:30:00.000Z",
+            "last_decision_id": "bd_3",
+            "planned_frequency": 1,
+            "preferred_time": "09:00",
+            "preferred_format": null
+          },
+          "changed_fields": [],
+          "frequency_before": 1,
+          "frequency_after": 1,
+          "outcome": "no_change",
+          "reason": "Policy evaluated; future schedule already matches or no bounded change was supported",
+          "fulfilled_at": null
+        },
+        {
+          "user_id": "usr-f06-chain",
+          "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+          "interaction_id": null,
+          "nudge_id": null,
+          "signal_type": "scheduled_selection",
+          "scope": "behaviour",
+          "decision_source": "system",
+          "effective_at": "2026-10-11T22:01:00.000Z",
+          "state_version": 3,
+          "interpretation": {
+            "explicit": false,
+            "format": null,
+            "summary_length": null,
+            "tone": null,
+            "time": null,
+            "frequency_delta": 0,
+            "action": null
+          },
+          "scores_before": {},
+          "scores_after": {},
+          "rule_applied": "least_recently_used_rotation",
+          "previous_state": {
+            "format_scores": {},
+            "asset_history": [
+              "9928748b-67e5-4bdf-a3f4-f54c91689ddb"
+            ],
+            "last_asset_id": "9928748b-67e5-4bdf-a3f4-f54c91689ddb",
+            "media_selection_mode": "automatic",
+            "user_id": "usr-f06-chain",
+            "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+            "state_version": 2,
+            "updated_at": "2026-10-04T22:32:00.000Z",
+            "last_signal_at": "2026-10-04T22:30:00.000Z",
+            "last_decision_id": "bd_3"
+          },
+          "next_state": {
+            "format_scores": {},
+            "asset_history": [
+              "9928748b-67e5-4bdf-a3f4-f54c91689ddb",
+              "8f7e6152-8088-499f-a1f4-c92c350e40fc"
+            ],
+            "last_asset_id": "8f7e6152-8088-499f-a1f4-c92c350e40fc",
+            "media_selection_mode": "automatic",
+            "user_id": "usr-f06-chain",
+            "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+            "state_version": 2,
+            "updated_at": "2026-10-04T22:32:00.000Z",
+            "last_signal_at": "2026-10-04T22:30:00.000Z",
+            "last_decision_id": "bd_3"
+          },
+          "changed_fields": [
+            "last_asset_id"
+          ],
+          "frequency_before": null,
+          "frequency_after": null,
+          "media_mode_before": "automatic",
+          "media_mode_after": "automatic",
+          "media_kind_before": null,
+          "media_kind_after": "paper",
+          "selected_asset_id": "8f7e6152-8088-499f-a1f4-c92c350e40fc",
+          "outcome": "applied",
+          "reason": "no explicit preference; rotated approved media",
+          "fulfilled_at": "2026-10-11T22:01:00.000Z",
+          "decision_id": "bd_5",
+          "decided_at": "2026-10-11T22:01:00.000Z"
+        }
+      ],
+      "tracked_links": [
+        {
+          "token": "Cb1i9rtu99ksSs-9hhGxjg38G6BfzcHQ",
+          "expires_at": "2027-04-02T22:01:00.000Z",
+          "asset_id": "9928748b-67e5-4bdf-a3f4-f54c91689ddb",
+          "user_id": "usr-f06-chain",
+          "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+          "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261005",
+          "target_url": "https://example.test/2bb3723c492c4cd9bb49194016265527/video"
+        },
+        {
+          "token": "ez-uSJkQKTqp-I3D11T0m66GxcR6AnJe",
+          "expires_at": "2027-04-09T22:01:00.000Z",
+          "asset_id": "8f7e6152-8088-499f-a1f4-c92c350e40fc",
+          "user_id": "usr-f06-chain",
+          "behaviour_key": "2bb3723c492c4cd9bb49194016265527",
+          "nudge_id": "schd_slot_8-4f34-a76b-3f920a2d97f4_monday_0_20261012",
+          "target_url": "https://example.test/2bb3723c492c4cd9bb49194016265527/paper"
+        }
+      ],
+      "patient_adaptation_state": [],
+      "patient_adaptation_timeline": []
+    }
+  }
+}

@@ -1,0 +1,62 @@
+✔ an applied frequency change leaves another behaviour's slots, occurrences and delivery state unchanged (12.721166ms)
+✖ a reserved occurrence is neither rejected nor rebuilt when its behaviour's frequency changes (3.553458ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 69.021834
+
+✖ failing tests:
+
+test at tests/schedule-isolation.test.js:78:1
+✖ a reserved occurrence is neither rejected nor rebuilt when its behaviour's frequency changes (3.553458ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+  
+    [
+      {
+        action_text: 'Be in bed by 10pm',
+        adaptation_decision_id: 'selection-1',
+        category: 'establish',
+  ...
+        sent_at: '',
+  +     status: 'rejected',
+  -     status: 'approved',
+        template_name: 'health_plan_reminder',
+        tone_variant: 'encouraging',
+        user_id: 'patient-1'
+      },
+      {
+        action_text: 'Be in bed by 10pm',
+  +     adaptation_decision_id: '',
+  -     adaptation_decision_id: 'selection-1',
+        category: 'establish',
+  +     media_asset_id: '',
+  -     media_asset_id: 'asset-1',
+        media_override_asset_id: '',
+        media_selection_mode: 'automatic',
+  +     message_body: 'Prepare for sleep',
+  -     message_body: 'Prepare for sleep\n' +
+  -       '\n' +
+  -       'Sleep guide — Source\n' +
+  -       'https://portal.invalid/api/r/token',
+        message_body_alt: '',
+        nudge_id: 'schd_slot-mon_20260914',
+        nudge_type: 'reminder',
+        pillar: 'sleep',
+        prescription_id: 'rx-1',
+  
+      at TestContext.<anonymous> (~/Documents/Documents - Hans’s MacBook Pro/Uni - Masters - Monash University/Research/Whatsapp Nudging System - System POV/landing/tests/schedule-isolation.test.js:92:10)
+      at async Test.run (node:internal/test_runner/test:1110:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:785:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { row_number: 8, nudge_id: 'schd_slot-thu_20260910', schedule_slot_id: 'slot-thu', prescription_id: 'rx-1', user_id: 'patient-1', nudge_type: 'reminder', pillar: 'sleep', category: 'establish', action_text: 'Be in bed by 10pm', scheduled_date: '2026-09-10', scheduled_time: '09:00', message_body: 'Prepare for sleep\n\nSleep guide — Source\nhttps://portal.invalid/api/r/token', message_body_alt: '', tone_variant: 'encouraging', template_name: 'health_plan_reminder', status: 'rejected', sent_at: '', media_selection_mode: 'automatic', media_override_asset_id: '', media_asset_id: 'asset-1', adaptation_decision_id: 'selection-1' }, { row_number: 10, nudge_id: 'schd_slot-mon_20260914', schedule_slot_id: 'slot-mon', prescription_id: 'rx-1', user_id: 'patient-1', nudge_type: 'reminder', pillar: 'sleep', category: 'establish', action_text: 'Be in bed by 10pm', scheduled_date: '2026-09-14', scheduled_time: '09:00', message_body: 'Prepare for sleep', message_body_alt: '', tone_variant: 'encouraging', template_name: 'health_plan_reminder', status: 'approved', sent_at: '', media_selection_mode: 'automatic', media_override_asset_id: '', media_asset_id: '', adaptation_decision_id: '' } ],
+    expected: [ { row_number: 8, nudge_id: 'schd_slot-thu_20260910', schedule_slot_id: 'slot-thu', prescription_id: 'rx-1', user_id: 'patient-1', nudge_type: 'reminder', pillar: 'sleep', category: 'establish', action_text: 'Be in bed by 10pm', scheduled_date: '2026-09-10', scheduled_time: '09:00', message_body: 'Prepare for sleep\n\nSleep guide — Source\nhttps://portal.invalid/api/r/token', message_body_alt: '', tone_variant: 'encouraging', template_name: 'health_plan_reminder', status: 'approved', sent_at: '', media_selection_mode: 'automatic', media_override_asset_id: '', media_asset_id: 'asset-1', adaptation_decision_id: 'selection-1' }, { row_number: 10, nudge_id: 'schd_slot-mon_20260914', schedule_slot_id: 'slot-mon', prescription_id: 'rx-1', user_id: 'patient-1', nudge_type: 'reminder', pillar: 'sleep', category: 'establish', action_text: 'Be in bed by 10pm', scheduled_date: '2026-09-14', scheduled_time: '09:00', message_body: 'Prepare for sleep\n\nSleep guide — Source\nhttps://portal.invalid/api/r/token', message_body_alt: '', tone_variant: 'encouraging', template_name: 'health_plan_reminder', status: 'approved', sent_at: '', media_selection_mode: 'automatic', media_override_asset_id: '', media_asset_id: 'asset-1', adaptation_decision_id: 'selection-1' } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

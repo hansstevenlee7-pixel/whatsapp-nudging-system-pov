@@ -1,0 +1,250 @@
+diff --git a/landing/api/_lib/clinical-data.js b/landing/api/_lib/clinical-data.js
+index fdb5aa3..b7c77ae 100644
+--- a/landing/api/_lib/clinical-data.js
++++ b/landing/api/_lib/clinical-data.js
+@@ -34,14 +34,21 @@ const PATIENT_ADAPTATION_TIMELINE_HEADERS = [
+   "outcome", "reason", "previous_state", "new_state", "changed_fields", "selected_asset_id", "selected_media_kind", "nudge_id", "interaction_id"
+ ];
+ 
++// Provenance columns (RQ1 translation trace, 4 Oct 2026): which model and prompt
++// template produced a Workflow A row, and which clinician approved a weekly slot.
++const TRANSLATION_FIELDS = ["translation_model", "translation_prompt_sha256", "translation_response_id", "translated_at"];
++const PRESCRIPTION_TRANSLATION_FIELDS = TRANSLATION_FIELDS.concat(["translation_normalised"]);
++const APPROVAL_FIELDS = ["approved_by", "approved_at"];
++
+ async function loadClinicalData(names = TAB_NAMES) {
+   const data = await readTabs(names);
+   // These columns were introduced after the original Sheet was provisioned.
+   // Add only the missing headers on first authenticated access so a production
+   // deployment can self-heal an older isolated Sheet without exporting secrets
+   // or requiring a manual CLI migration step.
+-  if (data.nudges) await ensureHeaders("nudges", data.nudges, ["media_selection_mode", "media_override_asset_id", "media_asset_id", "adaptation_decision_id"]);
+-  if (data.weekly_schedule) await ensureHeaders("weekly_schedule", data.weekly_schedule, ["media_selection_mode", "media_override_asset_id", "media_asset_id", "adaptation_decision_id"]);
++  if (data.prescriptions) await ensureHeaders("prescriptions", data.prescriptions, PRESCRIPTION_TRANSLATION_FIELDS);
++  if (data.nudges) await ensureHeaders("nudges", data.nudges, ["media_selection_mode", "media_override_asset_id", "media_asset_id", "adaptation_decision_id"].concat(TRANSLATION_FIELDS));
++  if (data.weekly_schedule) await ensureHeaders("weekly_schedule", data.weekly_schedule, ["media_selection_mode", "media_override_asset_id", "media_asset_id", "adaptation_decision_id"].concat(APPROVAL_FIELDS));
+   if (data.schedule_state) await ensureHeaders("schedule_state", data.schedule_state,
+     ["read_at", "interacted_at", "last_inbound_message_sid", "delivery_attempt_id", "submission_started_at"]);
+   if (data.interaction_events) await ensureHeaders("interaction_events", data.interaction_events, INTERACTION_EVENT_HEADERS);
+@@ -169,5 +176,5 @@ async function updateUser(userId, changes) {
+ module.exports = {
+   loadClinicalData, buildPatients, allPatients, updateUser, isArchivedPrescription,
+   batchWrite, operation, DELIVERY_EVENT_HEADERS, INTERACTION_EVENT_HEADERS, MEDIA_ASSIGNMENT_HEADERS, ADAPTATION_DECISION_HEADERS,
+-  PATIENT_ADAPTATION_STATE_HEADERS, PATIENT_ADAPTATION_TIMELINE_HEADERS
++  PATIENT_ADAPTATION_STATE_HEADERS, PATIENT_ADAPTATION_TIMELINE_HEADERS, TRANSLATION_FIELDS, PRESCRIPTION_TRANSLATION_FIELDS, APPROVAL_FIELDS
+ };
+diff --git a/landing/api/_lib/prescription-store.js b/landing/api/_lib/prescription-store.js
+index 2998df9..a31c884 100644
+--- a/landing/api/_lib/prescription-store.js
++++ b/landing/api/_lib/prescription-store.js
+@@ -14,6 +14,7 @@
+ const crypto = require("node:crypto");
+ const { httpError } = require("./http");
+ const { loadClinicalData, batchWrite, operation, isArchivedPrescription } = require("./clinical-data");
++const { ensureTabs } = require("./google-sheets");
+ const { melbourneIso, historicalNudge, historicalState } = require("./schedule-store");
+ const { PILLARS, CATEGORIES, NUDGE_TYPES, assertAction, normalizeAction } = require("./taxonomy");
+ 
+@@ -22,6 +23,12 @@ const TIME_RE = /^([01]\d|2[0-3]):[0-5]\d$/;
+ const TONES = new Set(["encouraging", "neutral_informational"]);
+ const TEMPLATES = new Set(["health_plan_reminder", "hello_world"]);
+ const RAW_TEXT_MAX = 4000;
++// Append-only correction history. An edit, archive or reactivation never erases
++// the value it replaces, including one Workflow A's LLM proposed (RQ1 translation
++// trace, 4 Oct 2026). previous_source says whether that value came from the LLM.
++const REVISION_TAB = "prescription_revisions";
++const REVISION_HEADERS = ["revision_id", "prescription_id", "user_id", "changed_at", "changed_by", "field", "previous_value", "new_value",
++  "previous_source", "reason"];
+ const MESSAGE_MAX = 1024;
+ 
+ // Sheets returns FORMATTED_VALUE, so a number written as 3 reads back as "3".
+@@ -61,6 +68,30 @@ function clean(row) {
+   return copy;
+ }
+ 
++async function revisionTable() {
++  await ensureTabs([REVISION_TAB], { [REVISION_TAB]: REVISION_HEADERS });
++  return (await loadClinicalData([REVISION_TAB]))[REVISION_TAB];
++}
++
++function revisionRows(table, existing, next, actor, reason, now) {
++  return Object.keys(next).filter(field => !same(existing[field], next[field])).map(field => {
++    const revisedBefore = table.rows.some(row => same(row.prescription_id, existing.prescription_id) && same(row.field, field));
++    return {
++      revision_id: `rev_${crypto.randomUUID()}`, prescription_id: existing.prescription_id, user_id: existing.user_id, changed_at: now,
++      changed_by: text(actor), field, previous_value: existing[field] == null ? "" : String(existing[field]), new_value: String(next[field]),
++      previous_source: !revisedBefore && text(existing.translation_model) ? `workflow_a:${text(existing.translation_model)}` : "clinician", reason
++    };
++  });
++}
++
++async function confirmRevisions(revisions) {
++  if (!revisions.length) return;
++  const saved = (await loadClinicalData([REVISION_TAB]))[REVISION_TAB].rows;
++  if (!revisions.every(revision => saved.some(row => same(row.revision_id, revision.revision_id)))) {
++    throw httpError(409, "The prescription revision history was not confirmed in Google Sheets. Please retry.");
++  }
++}
++
+ function findPrescription(rows, userId, prescriptionId) {
+   const found = rows.find(row => String(row.user_id) === String(userId) && String(row.prescription_id) === String(prescriptionId));
+   if (!found) throw httpError(404, "Prescription not found");
+@@ -146,7 +177,7 @@ async function createPrescription(userId, doctorId, fields) {
+ // new behaviours, not a lock the schedule inherits, so changing one must not
+ // touch — or be refused because of — the behaviours already scheduled under it.
+ // Re-filing a behaviour is done per behaviour in the Monitor trace card.
+-async function updatePrescription(userId, prescriptionId, changes) {
++async function updatePrescription(userId, prescriptionId, changes, actor = "") {
+   const data = await loadClinicalData(["prescriptions"]);
+   const existing = findPrescription(data.prescriptions.rows, userId, prescriptionId);
+   const next = {};
+@@ -164,7 +195,10 @@ async function updatePrescription(userId, prescriptionId, changes) {
+   if (!Object.keys(next).length) throw httpError(400, "No prescription fields to update");
+ 
+   const row = Object.assign({}, existing, next, { prescription_id: existing.prescription_id, user_id: existing.user_id });
+-  await batchWrite([operation("prescriptions", data.prescriptions, row, existing)]);
++  const history = await revisionTable();
++  const revisions = revisionRows(history, existing, next, actor, "clinician_edit", new Date().toISOString());
++  await batchWrite([operation("prescriptions", data.prescriptions, row, existing),
++    ...revisions.map(revision => operation(REVISION_TAB, history, revision))]);
+ 
+   const verified = await loadClinicalData(["prescriptions"]);
+   const saved = verified.prescriptions.rows.find(item =>
+@@ -176,10 +210,11 @@ async function updatePrescription(userId, prescriptionId, changes) {
+   if (!rowOk) {
+     throw httpError(409, "The prescription update was not confirmed in Google Sheets. Please retry.");
+   }
++  await confirmRevisions(revisions);
+   return clean(saved);
+ }
+ 
+-async function archivePrescription(userId, prescriptionId) {
++async function archivePrescription(userId, prescriptionId, actor = "") {
+   const data = await loadClinicalData(["prescriptions", "nudges", "weekly_schedule", "schedule_state"]);
+   const existing = findPrescription(data.prescriptions.rows, userId, prescriptionId);
+   const now = new Date().toISOString();
+@@ -204,8 +239,10 @@ async function archivePrescription(userId, prescriptionId) {
+     historicalNudge(row)).length;
+ 
+   const statesByNudge = new Map(data.schedule_state.rows.map(row => [String(row.nudge_id), row]));
++  const history = await revisionTable();
++  const revisions = revisionRows(history, existing, { status: "archived" }, actor, "clinician_archive", now);
+   const operations = [operation("prescriptions", data.prescriptions,
+-    Object.assign({}, existing, { status: "archived" }), existing)];
++    Object.assign({}, existing, { status: "archived" }), existing), ...revisions.map(revision => operation(REVISION_TAB, history, revision))];
+   for (const slot of slots) {
+     operations.push(operation("weekly_schedule", data.weekly_schedule,
+       Object.assign({}, slot, { status: "inactive", updated_at: now }), slot));
+@@ -238,6 +275,7 @@ async function archivePrescription(userId, prescriptionId) {
+   if (!saved || !same(saved.status, "archived") || liveSlots.length || liveFuture.length) {
+     throw httpError(409, "The archive was not confirmed in Google Sheets. Please retry.");
+   }
++  await confirmRevisions(revisions);
+   return {
+     prescription: clean(saved),
+     deactivated_slot_count: slots.length,
+@@ -249,21 +287,24 @@ async function archivePrescription(userId, prescriptionId) {
+ // Deliberately restores the prescription only. Un-rejecting the cancelled nudges
+ // would re-arm deliveries for dates that may already have passed, and the
+ // tombstoned slots describe a week the clinician chose to stop.
+-async function reactivatePrescription(userId, prescriptionId) {
++async function reactivatePrescription(userId, prescriptionId, actor = "") {
+   const data = await loadClinicalData(["prescriptions"]);
+   const existing = findPrescription(data.prescriptions.rows, userId, prescriptionId);
+   const row = Object.assign({}, existing, { status: "active" });
+-  await batchWrite([operation("prescriptions", data.prescriptions, row, existing)]);
++  const history = await revisionTable();
++  const revisions = revisionRows(history, existing, { status: "active" }, actor, "clinician_reactivate", new Date().toISOString());
++  await batchWrite([operation("prescriptions", data.prescriptions, row, existing), ...revisions.map(revision => operation(REVISION_TAB, history, revision))]);
+   const verified = await loadClinicalData(["prescriptions"]);
+   const saved = verified.prescriptions.rows.find(item =>
+     String(item.user_id) === String(userId) && String(item.prescription_id) === String(prescriptionId));
+   if (!saved || !same(saved.status, "active")) {
+     throw httpError(409, "The reactivation was not confirmed in Google Sheets. Please retry.");
+   }
++  await confirmRevisions(revisions);
+   return { prescription: clean(saved), schedule_restored: false };
+ }
+ 
+ module.exports = {
+   createPrescription, updatePrescription, archivePrescription, reactivatePrescription,
+-  isArchivedPrescription, normalizeAction
++  isArchivedPrescription, normalizeAction, REVISION_TAB, REVISION_HEADERS
+ };
+diff --git a/landing/api/approve.js b/landing/api/approve.js
+index 9d8a019..c457689 100644
+--- a/landing/api/approve.js
++++ b/landing/api/approve.js
+@@ -21,7 +21,7 @@ module.exports = async function handler(req, res) {
+       throw httpError(409, "Reactivate this patient before approving a schedule");
+     }
+     if (body.decision !== "reject") await validateMediaSelections(body.user_id, body.slots, data.prescriptions.rows);
+-    const result = await saveSchedule(body, body.decision === "reject" ? "reject" : "approve", data);
++    const result = await saveSchedule(body, body.decision === "reject" ? "reject" : "approve", data, new Date(), { approved_by: profile.auth_user_id });
+     if (body.decision !== "reject") {
+       await recordClinicianChanges(body.user_id, patient.weekly_schedule || [], result.weekly_schedule || []);
+       await queuePatientBehaviours(body.user_id, result.weekly_schedule, data.prescriptions.rows).catch(error => console.error("media search queue failed", error));
+diff --git a/landing/api/prescription.js b/landing/api/prescription.js
+index 0fddfac..04ef609 100644
+--- a/landing/api/prescription.js
++++ b/landing/api/prescription.js
+@@ -37,15 +37,15 @@ module.exports = async function handler(req, res) {
+       const prescriptionId = String(body.prescription_id || "").trim();
+       if (!prescriptionId) throw httpError(400, "prescription_id is required");
+       if (req.method === "DELETE") {
+-        result = await archivePrescription(patient.user_id, prescriptionId);
++        result = await archivePrescription(patient.user_id, prescriptionId, profile.auth_user_id);
+       } else if (body.status != null) {
+         if (String(body.status) !== "active") throw httpError(400, "Only reactivation to active is supported here; use DELETE to archive");
+         if (!active) throw httpError(409, "Reactivate this patient before reactivating a prescription");
+-        result = await reactivatePrescription(patient.user_id, prescriptionId);
++        result = await reactivatePrescription(patient.user_id, prescriptionId, profile.auth_user_id);
+       } else {
+         const changes = {};
+         for (const key of EDITABLE) if (body[key] != null) changes[key] = body[key];
+-        result = { prescription: await updatePrescription(patient.user_id, prescriptionId, changes) };
++        result = { prescription: await updatePrescription(patient.user_id, prescriptionId, changes, profile.auth_user_id) };
+       }
+     }
+ 
+diff --git a/landing/api/schedule.js b/landing/api/schedule.js
+index 774056a..ab899c8 100644
+--- a/landing/api/schedule.js
++++ b/landing/api/schedule.js
+@@ -18,7 +18,7 @@ module.exports = async function handler(req, res) {
+     const patient = assertPatientAccess(profile, patients, body.user_id);
+     if (patient.user_status === "disabled") throw httpError(409, "Reactivate this patient before changing their schedule");
+     await validateMediaSelections(body.user_id, body.slots, data.prescriptions.rows);
+-    const result = await saveSchedule(Object.assign({}, body, { decision: "approve" }), "approve", data);
++    const result = await saveSchedule(Object.assign({}, body, { decision: "approve" }), "approve", data, new Date(), { approved_by: profile.auth_user_id });
+     await recordClinicianChanges(body.user_id, patient.weekly_schedule || [], result.weekly_schedule || []);
+     await queuePatientBehaviours(body.user_id, result.weekly_schedule, data.prescriptions.rows).catch(error => console.error("media search queue failed", error));
+     sendJson(res, 200, result);
+diff --git a/landing/tests/sheets-fixture.js b/landing/tests/sheets-fixture.js
+index 44f87df..cbb42d2 100644
+--- a/landing/tests/sheets-fixture.js
++++ b/landing/tests/sheets-fixture.js
+@@ -5,17 +5,20 @@ const sheets = require("../api/_lib/google-sheets");
+ const HEADERS = {
+   user: ["user_id", "name", "phone", "email", "user_status", "doctor_id"],
+   questionnaire: ["questionnaire_id", "user_id", "preferred_nudge_time", "opt_in_whatsapp"],
+-  prescriptions: ["prescription_id", "user_id", "doctor_id", "issued_date", "pillar", "category", "target_behavior", "frequency_per_week", "duration_weeks", "prescription_raw_text", "status"],
++  prescriptions: ["prescription_id", "user_id", "doctor_id", "issued_date", "pillar", "category", "target_behavior", "frequency_per_week", "duration_weeks", "prescription_raw_text", "status",
++    "translation_model", "translation_prompt_sha256", "translation_response_id", "translated_at", "translation_normalised"],
+   // `category` is last on both tabs on purpose: that is where the live migration
+   // appends it, so the fixture proves the read path is order-independent.
+-  nudges: ["nudge_id", "prescription_id", "user_id", "nudge_type", "pillar", "action_text", "scheduled_date", "scheduled_time", "message_body", "message_body_alt", "tone_variant", "template_name", "status", "sent_at", "reviewed_at", "week_number", "schedule_slot_id", "category", "media_selection_mode", "media_override_asset_id", "media_asset_id", "adaptation_decision_id"],
+-  weekly_schedule: ["schedule_slot_id", "user_id", "source_nudge_id", "prescription_id", "day", "scheduled_time", "nudge_type", "pillar", "action_text", "tone_variant", "message_body", "message_body_alt", "template_name", "status", "start_date", "end_date", "created_at", "updated_at", "category", "media_selection_mode", "media_override_asset_id", "media_asset_id", "adaptation_decision_id"],
++  nudges: ["nudge_id", "prescription_id", "user_id", "nudge_type", "pillar", "action_text", "scheduled_date", "scheduled_time", "message_body", "message_body_alt", "tone_variant", "template_name", "status", "sent_at", "reviewed_at", "week_number", "schedule_slot_id", "category", "media_selection_mode", "media_override_asset_id", "media_asset_id", "adaptation_decision_id",
++    "translation_model", "translation_prompt_sha256", "translation_response_id", "translated_at"],
++  weekly_schedule: ["schedule_slot_id", "user_id", "source_nudge_id", "prescription_id", "day", "scheduled_time", "nudge_type", "pillar", "action_text", "tone_variant", "message_body", "message_body_alt", "template_name", "status", "start_date", "end_date", "created_at", "updated_at", "category", "media_selection_mode", "media_override_asset_id", "media_asset_id", "adaptation_decision_id", "approved_by", "approved_at"],
+   schedule_state: ["schedule_id", "nudge_id", "user_id", "parent_nudge_id", "status", "sent_at", "delivered_at", "wa_message_id", "tone_sent", "last_updated", "read_at", "interacted_at", "last_inbound_message_sid", "delivery_attempt_id", "submission_started_at"],
+   delivery_events: ["event_id", "event_at", "wa_message_id", "nudge_id", "user_id", "status", "error_code", "error_message", "channel_to", "raw_payload"],
+   media_assignments: ["assignment_id", "assigned_at", "user_id", "nudge_id", "behaviour_key", "media_asset_id", "adaptation_decision_id", "media_kind", "selection_mode", "source_url", "tracked_url", "planned_frequency", "scheduled_at", "sent_at", "delivered_at", "read_at", "visited_at", "replied_at", "send_to_read_hours", "send_to_visit_hours", "send_to_reply_hours"],
+   interaction_events: ["interaction_id", "event_at", "inbound_message_sid", "user_id", "from_phone", "reply_to_wa_message_id", "nudge_id", "body", "media_count", "correlation_method", "ack_status"],
+   adaptation_decisions: ["decision_id", "decided_at", "user_id", "behaviour_key", "interaction_id", "signal_type", "rule_applied", "outcome", "reason", "selected_asset_id", "interpretation", "previous_state", "next_state", "scope", "decision_source", "effective_at", "state_version", "changed_fields", "frequency_before", "frequency_after", "media_mode_before", "media_mode_after", "media_kind_before", "media_kind_after", "nudge_id"],
+   patient_adaptation_state: ["user_id", "scope", "behaviour_key", "state_version", "preferred_format", "preferred_frequency", "planned_frequency", "delivered_frequency", "observed_frequency", "last_change_at", "updated_at"],
++  prescription_revisions: ["revision_id", "prescription_id", "user_id", "changed_at", "changed_by", "field", "previous_value", "new_value", "previous_source", "reason"],
+   patient_adaptation_timeline: ["user_id", "event_id", "event_at", "event_type", "source", "scope", "behaviour_key", "signal", "rule_applied", "outcome", "reason", "previous_state", "new_state", "changed_fields", "selected_asset_id", "selected_media_kind", "nudge_id", "interaction_id"]
+ };
+ 
