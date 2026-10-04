@@ -1,0 +1,180 @@
+▶ S1 transient: the audit store fails in run 1 and works from run 2
+  ✔ P1 surfaced (0.217542ms)
+  ✖ P2 no unexplained change (0.821667ms)
+  ✖ P3 recovered record (0.132125ms)
+✖ S1 transient: the audit store fails in run 1 and works from run 2 (47.969875ms)
+ℹ {"run":1,"now":"2026-08-27T00:00:00.000Z","audit_failed":true,"status":500,"body_status":null,"active":["slot-0|monday|09:00"],"active_count":1,"unexplained":["692dc0fb-0f48-49f9-b500-fe87c5f1b0ba"],"applied":[],"policy_rows":[]}
+ℹ {"run":2,"now":"2026-08-27T01:00:00.000Z","audit_failed":false,"status":200,"body_status":"complete","active":["slot-0|monday|09:00"],"active_count":1,"unexplained":["692dc0fb-0f48-49f9-b500-fe87c5f1b0ba"],"applied":[],"policy_rows":["adaptive_policy_no_change 1→1"]}
+ℹ {"run":3,"now":"2026-08-27T02:00:00.000Z","audit_failed":false,"status":200,"body_status":"idle","active":["slot-0|monday|09:00"],"active_count":1,"unexplained":["692dc0fb-0f48-49f9-b500-fe87c5f1b0ba"],"applied":[],"policy_rows":["adaptive_policy_no_change 1→1"]}
+▶ S2 persistent: the audit store fails in runs 1 to 3
+  ✔ P1 surfaced (0.045958ms)
+  ✖ P2 no unexplained change (0.103958ms)
+  ✔ P5 no compounding during an outage (0.106916ms)
+✖ S2 persistent: the audit store fails in runs 1 to 3 (1.63225ms)
+ℹ {"run":1,"now":"2026-08-27T00:00:00.000Z","audit_failed":true,"status":500,"body_status":null,"active":["slot-0|monday|09:00"],"active_count":1,"unexplained":["453fba9d-1e37-4c0c-80aa-c880615d0b31"],"applied":[],"policy_rows":[]}
+ℹ {"run":2,"now":"2026-08-27T01:00:00.000Z","audit_failed":true,"status":500,"body_status":null,"active":["slot-0|monday|09:00"],"active_count":1,"unexplained":["453fba9d-1e37-4c0c-80aa-c880615d0b31"],"applied":[],"policy_rows":[]}
+ℹ {"run":3,"now":"2026-08-27T02:00:00.000Z","audit_failed":true,"status":500,"body_status":null,"active":["slot-0|monday|09:00"],"active_count":1,"unexplained":["453fba9d-1e37-4c0c-80aa-c880615d0b31"],"applied":[],"policy_rows":[]}
+▶ S3 step limit: from 3 per week, the audit store fails in run 1 and works in run 2
+  ✔ P1 surfaced (0.046458ms)
+  ✖ P2 no unexplained change (0.084084ms)
+  ✖ P3 recovered record (0.053541ms)
+  ✖ P4 one step per week (0.053875ms)
+✖ S3 step limit: from 3 per week, the audit store fails in run 1 and works in run 2 (2.239125ms)
+ℹ {"run":1,"now":"2026-08-27T00:00:00.000Z","audit_failed":true,"status":500,"body_status":null,"active":["slot-0|monday|09:00","slot-2|friday|09:00"],"active_count":2,"unexplained":["322f81bf-1511-4885-8208-d06d42d1e0cd"],"applied":[],"policy_rows":[]}
+ℹ {"run":2,"now":"2026-08-28T00:00:00.000Z","audit_failed":false,"status":200,"body_status":"complete","active":["slot-0|monday|09:00"],"active_count":1,"unexplained":["322f81bf-1511-4885-8208-d06d42d1e0cd"],"applied":[{"decision_id":"55093422-b2a5-493f-979e-f8fd8cc3c139","frequency_before":2,"frequency_after":1}],"policy_rows":["adaptive_policy_applied 2→1"]}
+ℹ tests 13
+ℹ suites 0
+ℹ pass 4
+ℹ fail 9
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 250.048208
+
+✖ failing tests:
+
+test at tests/audit-write-recovery.test.js:122:11
+✖ P2 no unexplained change (0.821667ms)
+  AssertionError [ERR_ASSERTION]: after run 1, schedule rows name decisions that were never persisted
+  + actual - expected
+  
+  + [
+  +   '692dc0fb-0f48-49f9-b500-fe87c5f1b0ba'
+  + ]
+  - []
+  
+      at explained (/Users/stevenleehans/Documents/Documents - Hans’s MacBook Pro/Uni - Masters - Monash University/Research/Whatsapp Nudging System - System POV/landing/tests/audit-write-recovery.test.js:104:12)
+      at TestContext.<anonymous> (/Users/stevenleehans/Documents/Documents - Hans’s MacBook Pro/Uni - Masters - Monash University/Research/Whatsapp Nudging System - System POV/landing/tests/audit-write-recovery.test.js:122:50)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1103:25)
+      at Test.start (node:internal/test_runner/test:1000:17)
+      at TestContext.test (node:internal/test_runner/test:367:20)
+      at TestContext.<anonymous> (/Users/stevenleehans/Documents/Documents - Hans’s MacBook Pro/Uni - Masters - Monash University/Research/Whatsapp Nudging System - System POV/landing/tests/audit-write-recovery.test.js:122:11)
+      at async Test.run (node:internal/test_runner/test:1110:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ '692dc0fb-0f48-49f9-b500-fe87c5f1b0ba' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/audit-write-recovery.test.js:123:11
+✖ P3 recovered record (0.132125ms)
+  AssertionError [ERR_ASSERTION]: after run 2, the adaptation store holds 0 applied policy decisions (adaptive_policy_no_change 1→1)
+  
+  0 !== 1
+  
+      at recovered (/Users/stevenleehans/Documents/Documents - Hans’s MacBook Pro/Uni - Masters - Monash University/Research/Whatsapp Nudging System - System POV/landing/tests/audit-write-recovery.test.js:112:12)
+      at TestContext.<anonymous> (/Users/stevenleehans/Documents/Documents - Hans’s MacBook Pro/Uni - Masters - Monash University/Research/Whatsapp Nudging System - System POV/landing/tests/audit-write-recovery.test.js:123:45)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1103:25)
+      at Test.start (node:internal/test_runner/test:1000:17)
+      at TestContext.test (node:internal/test_runner/test:367:20)
+      at TestContext.<anonymous> (/Users/stevenleehans/Documents/Documents - Hans’s MacBook Pro/Uni - Masters - Monash University/Research/Whatsapp Nudging System - System POV/landing/tests/audit-write-recovery.test.js:123:11)
+      at async Test.run (node:internal/test_runner/test:1110:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/audit-write-recovery.test.js:130:11
+✖ P2 no unexplained change (0.103958ms)
+  AssertionError [ERR_ASSERTION]: after run 1, schedule rows name decisions that were never persisted
+  + actual - expected
+  
+  + [
+  +   '453fba9d-1e37-4c0c-80aa-c880615d0b31'
+  + ]
+  - []
+  
+      at explained (/Users/stevenleehans/Documents/Documents - Hans’s MacBook Pro/Uni - Masters - Monash University/Research/Whatsapp Nudging System - System POV/landing/tests/audit-write-recovery.test.js:104:12)
+      at TestContext.<anonymous> (/Users/stevenleehans/Documents/Documents - Hans’s MacBook Pro/Uni - Masters - Monash University/Research/Whatsapp Nudging System - System POV/landing/tests/audit-write-recovery.test.js:130:50)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1103:25)
+      at Test.start (node:internal/test_runner/test:1000:17)
+      at TestContext.test (node:internal/test_runner/test:367:20)
+      at TestContext.<anonymous> (/Users/stevenleehans/Documents/Documents - Hans’s MacBook Pro/Uni - Masters - Monash University/Research/Whatsapp Nudging System - System POV/landing/tests/audit-write-recovery.test.js:130:11)
+      at async Test.run (node:internal/test_runner/test:1110:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:785:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ '453fba9d-1e37-4c0c-80aa-c880615d0b31' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/audit-write-recovery.test.js:140:11
+✖ P2 no unexplained change (0.084084ms)
+  AssertionError [ERR_ASSERTION]: after run 1, schedule rows name decisions that were never persisted
+  + actual - expected
+  
+  + [
+  +   '322f81bf-1511-4885-8208-d06d42d1e0cd'
+  + ]
+  - []
+  
+      at explained (/Users/stevenleehans/Documents/Documents - Hans’s MacBook Pro/Uni - Masters - Monash University/Research/Whatsapp Nudging System - System POV/landing/tests/audit-write-recovery.test.js:104:12)
+      at TestContext.<anonymous> (/Users/stevenleehans/Documents/Documents - Hans’s MacBook Pro/Uni - Masters - Monash University/Research/Whatsapp Nudging System - System POV/landing/tests/audit-write-recovery.test.js:140:50)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1103:25)
+      at Test.start (node:internal/test_runner/test:1000:17)
+      at TestContext.test (node:internal/test_runner/test:367:20)
+      at TestContext.<anonymous> (/Users/stevenleehans/Documents/Documents - Hans’s MacBook Pro/Uni - Masters - Monash University/Research/Whatsapp Nudging System - System POV/landing/tests/audit-write-recovery.test.js:140:11)
+      at async Test.run (node:internal/test_runner/test:1110:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:785:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ '322f81bf-1511-4885-8208-d06d42d1e0cd' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/audit-write-recovery.test.js:141:11
+✖ P3 recovered record (0.053541ms)
+  AssertionError [ERR_ASSERTION]: after run 2, the applied decision's frequency_before
+  
+  2 !== 3
+  
+      at recovered (/Users/stevenleehans/Documents/Documents - Hans’s MacBook Pro/Uni - Masters - Monash University/Research/Whatsapp Nudging System - System POV/landing/tests/audit-write-recovery.test.js:113:12)
+      at TestContext.<anonymous> (/Users/stevenleehans/Documents/Documents - Hans’s MacBook Pro/Uni - Masters - Monash University/Research/Whatsapp Nudging System - System POV/landing/tests/audit-write-recovery.test.js:141:45)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1103:25)
+      at Test.start (node:internal/test_runner/test:1000:17)
+      at TestContext.test (node:internal/test_runner/test:367:20)
+      at TestContext.<anonymous> (/Users/stevenleehans/Documents/Documents - Hans’s MacBook Pro/Uni - Masters - Monash University/Research/Whatsapp Nudging System - System POV/landing/tests/audit-write-recovery.test.js:141:11)
+      at async Test.run (node:internal/test_runner/test:1110:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:785:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 3,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/audit-write-recovery.test.js:142:11
+✖ P4 one step per week (0.053875ms)
+  AssertionError [ERR_ASSERTION]: after run 2, 3 → 1 per week within 7 days
+      at TestContext.<anonymous> (/Users/stevenleehans/Documents/Documents - Hans’s MacBook Pro/Uni - Masters - Monash University/Research/Whatsapp Nudging System - System POV/landing/tests/audit-write-recovery.test.js:144:14)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1103:25)
+      at Test.start (node:internal/test_runner/test:1000:17)
+      at TestContext.test (node:internal/test_runner/test:367:20)
+      at TestContext.<anonymous> (/Users/stevenleehans/Documents/Documents - Hans’s MacBook Pro/Uni - Masters - Monash University/Research/Whatsapp Nudging System - System POV/landing/tests/audit-write-recovery.test.js:142:11)
+      at async Test.run (node:internal/test_runner/test:1110:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:785:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

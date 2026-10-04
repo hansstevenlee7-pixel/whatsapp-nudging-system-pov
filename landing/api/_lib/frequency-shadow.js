@@ -1,5 +1,6 @@
 "use strict";
 
+const crypto = require("node:crypto");
 const model = require("../_models/frequency-logistic-v1.json");
 const { behaviourKey } = require("./adaptive-core");
 const { scoreFrequencies, recommendFrequency, recentHistory, ordinaryReply } = require("./frequency-model");
@@ -155,14 +156,17 @@ function policyRows(input) {
     interaction_id: null, nudge_id: result.recent_outcomes.at(-1).nudge_id, scope: "behaviour", decision_source: "system",
     media_mode_before: null, media_mode_after: null, media_kind_before: result.current_media_format,
     media_kind_after: applied ? next.preferred_format : result.current_media_format, selected_asset_id: null };
+  // Both rows carry an id or neither does: PostgREST rejects a bulk insert whose
+  // objects differ in keys (PGRST102), which would drop the whole audit write.
+  const ids = input.policy_decision_id ? [input.recommendation_decision_id || crypto.randomUUID(), input.policy_decision_id] : [];
   return [
-    Object.assign({}, shared, { signal_type: "frequency_model_recommendation", interpretation,
+    Object.assign({}, shared, ids.length ? { decision_id: ids[0] } : {}, { signal_type: "frequency_model_recommendation", interpretation,
       scores_before: {}, scores_after: result.candidate_scores, rule_applied: "regularized_logistic_regression",
       previous_state: previousState, next_state: Object.assign({}, previousState, { planned_frequency: result.model_recommended_frequency }),
       changed_fields: result.model_recommended_frequency === result.current_frequency ? [] : ["planned_frequency"],
       frequency_before: result.current_frequency, frequency_after: result.model_recommended_frequency,
       outcome: "no_change", reason: `Model recommendation: ${result.model_recommended_frequency} per week`, fulfilled_at: null }),
-    Object.assign({}, shared, input.policy_decision_id ? { decision_id: input.policy_decision_id } : {}, {
+    Object.assign({}, shared, ids.length ? { decision_id: ids[1] } : {}, {
       signal_type: applied ? "adaptive_policy_applied" : mode === "apply" ? "adaptive_policy_no_change" : "adaptive_policy_shadow",
       interpretation, scores_before: result.candidate_scores, scores_after: result.candidate_scores,
       rule_applied: "bounded_frequency_time_media_policy", previous_state: previousState,
@@ -197,4 +201,41 @@ function shadowRows(input) {
   ];
 }
 
-module.exports = { DAY_MS, confirmedOutcomes, currentFrequency, evaluateShadow, shadowRows, evaluateAdaptive, policyRows, compactEvidence };
+// An applied evaluation's two rows also travel in the schedule change's own Sheets
+// batch (an outbox), so the change and its explanation persist together even if
+// the adaptation store then fails; the next run replays them from there.
+const OUTBOX_SIGNALS = new Set(["frequency_model_recommendation", "adaptive_policy_applied"]);
+
+function outboxRow(decision) {
+  const blank = value => value == null ? "" : value;
+  return { decision_id: decision.decision_id, decided_at: decision.decided_at, user_id: decision.user_id, behaviour_key: decision.behaviour_key,
+    interaction_id: blank(decision.interaction_id), signal_type: decision.signal_type, rule_applied: decision.rule_applied,
+    outcome: decision.outcome, reason: decision.reason, selected_asset_id: blank(decision.selected_asset_id),
+    interpretation: JSON.stringify(decision.interpretation || {}), previous_state: JSON.stringify(decision.previous_state || {}),
+    next_state: JSON.stringify(decision.next_state || {}), scope: decision.scope, decision_source: decision.decision_source,
+    effective_at: decision.effective_at, state_version: "", changed_fields: JSON.stringify(decision.changed_fields || []),
+    frequency_before: decision.frequency_before, frequency_after: decision.frequency_after,
+    media_mode_before: blank(decision.media_mode_before), media_mode_after: blank(decision.media_mode_after),
+    media_kind_before: blank(decision.media_kind_before), media_kind_after: blank(decision.media_kind_after), nudge_id: blank(decision.nudge_id) };
+}
+
+// The inverse, for policyRows output: the scores and fulfilment the Sheets tab has
+// no column for are restored from the interpretation and the outcome.
+function fromOutbox(row) {
+  const nullable = value => text(value) === "" ? null : value;
+  const interpretation = parsed(row.interpretation); const scores = interpretation.candidate_scores || {};
+  const recommendation = text(row.signal_type) === "frequency_model_recommendation";
+  const changed = parsed(row.changed_fields);
+  return { decision_id: text(row.decision_id), decided_at: row.decided_at, effective_at: row.effective_at, user_id: row.user_id,
+    behaviour_key: row.behaviour_key, interaction_id: nullable(row.interaction_id), nudge_id: nullable(row.nudge_id), scope: row.scope,
+    decision_source: row.decision_source, media_mode_before: nullable(row.media_mode_before), media_mode_after: nullable(row.media_mode_after),
+    media_kind_before: nullable(row.media_kind_before), media_kind_after: nullable(row.media_kind_after),
+    selected_asset_id: nullable(row.selected_asset_id), signal_type: row.signal_type, interpretation,
+    scores_before: recommendation ? {} : scores, scores_after: scores, rule_applied: row.rule_applied,
+    previous_state: parsed(row.previous_state), next_state: parsed(row.next_state), changed_fields: Array.isArray(changed) ? changed : [],
+    frequency_before: Number(row.frequency_before), frequency_after: Number(row.frequency_after), outcome: row.outcome, reason: row.reason,
+    fulfilled_at: !recommendation && text(row.outcome) === "applied" ? row.decided_at : null };
+}
+
+module.exports = { DAY_MS, confirmedOutcomes, currentFrequency, evaluateShadow, shadowRows, evaluateAdaptive, policyRows, compactEvidence,
+  OUTBOX_SIGNALS, outboxRow, fromOutbox };

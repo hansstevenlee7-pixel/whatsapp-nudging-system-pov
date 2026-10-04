@@ -1,0 +1,32 @@
+▶ S1 transient: the audit store fails in run 1 and works from run 2
+  ✔ P1 surfaced (0.211333ms)
+  ✔ P2 no unexplained change (0.245209ms)
+  ✔ P3 recovered record (0.064417ms)
+✔ S1 transient: the audit store fails in run 1 and works from run 2 (13.311584ms)
+ℹ {"run":1,"now":"2026-08-27T00:00:00.000Z","audit_failed":true,"status":500,"body_status":null,"recovered_evaluations":null,"active":["slot-0|monday|09:00"],"active_count":1,"unexplained":[],"applied":[],"policy_rows":[]}
+ℹ {"run":2,"now":"2026-08-27T01:00:00.000Z","audit_failed":false,"status":200,"body_status":"idle","recovered_evaluations":1,"active":["slot-0|monday|09:00"],"active_count":1,"unexplained":[],"applied":[{"decision_id":"a6808659-8485-43c0-89c1-24fb62c663d2","frequency_before":2,"frequency_after":1}],"policy_rows":["adaptive_policy_applied 2→1"]}
+ℹ {"run":3,"now":"2026-08-27T02:00:00.000Z","audit_failed":false,"status":200,"body_status":"idle","recovered_evaluations":0,"active":["slot-0|monday|09:00"],"active_count":1,"unexplained":[],"applied":[{"decision_id":"a6808659-8485-43c0-89c1-24fb62c663d2","frequency_before":2,"frequency_after":1}],"policy_rows":["adaptive_policy_applied 2→1"]}
+▶ S2 persistent: the audit store fails in runs 1 to 3
+  ✔ P1 surfaced (0.049417ms)
+  ✔ P2 no unexplained change (0.03925ms)
+  ✔ P5 no compounding during an outage (0.066334ms)
+✔ S2 persistent: the audit store fails in runs 1 to 3 (1.451042ms)
+ℹ {"run":1,"now":"2026-08-27T00:00:00.000Z","audit_failed":true,"status":500,"body_status":null,"recovered_evaluations":null,"active":["slot-0|monday|09:00"],"active_count":1,"unexplained":[],"applied":[],"policy_rows":[]}
+ℹ {"run":2,"now":"2026-08-27T01:00:00.000Z","audit_failed":true,"status":500,"body_status":null,"recovered_evaluations":null,"active":["slot-0|monday|09:00"],"active_count":1,"unexplained":[],"applied":[],"policy_rows":[]}
+ℹ {"run":3,"now":"2026-08-27T02:00:00.000Z","audit_failed":true,"status":500,"body_status":null,"recovered_evaluations":null,"active":["slot-0|monday|09:00"],"active_count":1,"unexplained":[],"applied":[],"policy_rows":[]}
+▶ S3 step limit: from 3 per week, the audit store fails in run 1 and works in run 2
+  ✔ P1 surfaced (0.056292ms)
+  ✔ P2 no unexplained change (0.04425ms)
+  ✔ P3 recovered record (0.031875ms)
+  ✔ P4 one step per week (0.029417ms)
+✔ S3 step limit: from 3 per week, the audit store fails in run 1 and works in run 2 (1.337334ms)
+ℹ {"run":1,"now":"2026-08-27T00:00:00.000Z","audit_failed":true,"status":500,"body_status":null,"recovered_evaluations":null,"active":["slot-0|monday|09:00","slot-2|friday|09:00"],"active_count":2,"unexplained":[],"applied":[],"policy_rows":[]}
+ℹ {"run":2,"now":"2026-08-28T00:00:00.000Z","audit_failed":false,"status":200,"body_status":"idle","recovered_evaluations":1,"active":["slot-0|monday|09:00","slot-2|friday|09:00"],"active_count":2,"unexplained":[],"applied":[{"decision_id":"47dd4e99-1645-4066-b6a7-f1258e25f96f","frequency_before":3,"frequency_after":2}],"policy_rows":["adaptive_policy_applied 3→2"]}
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 110.046791

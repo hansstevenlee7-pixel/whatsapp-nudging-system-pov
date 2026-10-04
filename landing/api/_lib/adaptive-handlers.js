@@ -13,7 +13,7 @@ const { processInteraction, queuePatientBehaviours } = require("./adaptive-servi
 const { sendMessage } = require("./twilio");
 const { buildPatientDictionary } = require("./patient-dictionary");
 const { exportPatientDictionary } = require("./patient-dictionary-export");
-const { evaluateAdaptive, policyRows } = require("./frequency-shadow");
+const { DAY_MS, evaluateAdaptive, policyRows, OUTBOX_SIGNALS, outboxRow, fromOutbox } = require("./frequency-shadow");
 const { applyAdaptiveSchedule } = require("./schedule-store");
 
 function origin(req) {
@@ -183,17 +183,46 @@ async function adaptationWorker(req, res) {
   } catch (error) { return apiError(res, error); }
 }
 
+// An applied change whose adaptation-store write failed is still recorded in its
+// schedule batch's outbox (the Sheets adaptation_decisions tab). Replay any such
+// evaluation before evaluating again, so the step limit and duplicate check see
+// it; a replay that fails stops the run before any new change.
+const OUTBOX_REPLAY_DAYS = 14;
+async function replayOutbox(userId, key, adaptive, now) {
+  const cutoff = Date.parse(now) - OUTBOX_REPLAY_DAYS * DAY_MS;
+  const known = new Set((adaptive.decisions || []).map(row => String(row.decision_id)));
+  const { adaptation_decisions: tab } = await loadClinicalData(["adaptation_decisions"]);
+  const pending = tab.rows.filter(row => String(row.user_id) === String(userId) && String(row.behaviour_key) === key &&
+    OUTBOX_SIGNALS.has(String(row.signal_type)) && !known.has(String(row.decision_id)) && Date.parse(row.decided_at) >= cutoff);
+  const evaluations = new Map();
+  for (const decision of pending.map(fromOutbox)) {
+    const evaluationKey = String(decision.interpretation.evaluation_key || "");
+    evaluations.set(evaluationKey, (evaluations.get(evaluationKey) || []).concat(decision));
+  }
+  let replayed = 0;
+  for (const decisions of evaluations.values()) {
+    const ordered = decisions.sort((left, right) => (left.signal_type === "frequency_model_recommendation" ? 0 : 1) - (right.signal_type === "frequency_model_recommendation" ? 0 : 1));
+    if (ordered.length !== 2) continue; // both rows share one atomic batch
+    const state = (adaptive.states || []).find(item => String(item.behaviour_key) === key) || {};
+    await store.call("restorePolicyEvaluation", ordered, policyStateUpdate({ state }, ordered[1], ordered[1].decided_at));
+    replayed += 1;
+  }
+  return replayed;
+}
+
 async function frequencyWorker(req, res) {
   if (!method(req, res, ["POST"])) return;
   try {
     requireWorker(req);
     const body = await jsonBody(req); const requestedUser = String(body.user_id || "").trim();
-    const patients = await allPatients();
+    const patients = await allPatients(); let recovered = 0;
     for (const patient of patients) {
       if (requestedUser && String(patient.user_id) !== requestedUser) continue;
       if (String(patient.user_status || "active") !== "active") continue;
-      const adaptive = await store.call("plansForUser", patient.user_id);
+      let adaptive = await store.call("plansForUser", patient.user_id);
       for (const envelope of (adaptive.envelopes || []).filter(item => item.status === "approved")) {
+        const replayed = await replayOutbox(patient.user_id, envelope.behaviour_key, adaptive, body.now || new Date().toISOString());
+        if (replayed) { recovered += replayed; adaptive = await store.call("plansForUser", patient.user_id); }
         const mode = adaptiveApplyEnabled(envelope) ? "apply" : "shadow";
         const result = evaluateAdaptive({ patient, adaptive, envelope, behaviour_key: envelope.behaviour_key, now: body.now, mode });
         if (result.status !== "evaluated") continue;
@@ -207,15 +236,19 @@ async function frequencyWorker(req, res) {
         if (duplicate) continue;
         let schedule = { applied: false, reason: mode === "apply" ? "schedule_already_matches_policy" : "shadow_mode" };
         // Assigned before the schedule write so changed slots can name this policy decision.
-        const policyDecisionId = crypto.randomUUID();
+        const now = body.now || new Date().toISOString();
+        const ids = { recommendation_decision_id: crypto.randomUUID(), policy_decision_id: crypto.randomUUID() };
+        let decisions = null;
         if (mode === "apply" && (result.recommended_frequency !== result.current_frequency ||
             result.time_recommendation.recommended_time && result.time_recommendation.recommended_time !== result.current_time)) {
+          // The rows an applied change will be recorded with travel in the schedule batch.
+          const applied = policyRows(Object.assign({ user_id: patient.user_id, result, mode, schedule_applied: true, now }, ids));
           schedule = await applyAdaptiveSchedule({ user_id: patient.user_id, behaviour_key: envelope.behaviour_key,
             target_frequency: result.recommended_frequency, target_time: result.time_recommendation.recommended_time,
-            adaptation_decision_id: policyDecisionId, now: body.now || new Date().toISOString() });
+            adaptation_decision_id: ids.policy_decision_id, decision_rows: applied.map(outboxRow), now });
+          if (schedule.applied) decisions = applied;
         }
-        const now = body.now || new Date().toISOString();
-        const decisions = policyRows({ user_id: patient.user_id, result, mode, schedule_applied: schedule.applied, now, policy_decision_id: policyDecisionId });
+        decisions = decisions || policyRows(Object.assign({ user_id: patient.user_id, result, mode, schedule_applied: schedule.applied, now }, ids));
         const stateUpdate = policyStateUpdate(result, decisions[1], now);
         const saved = await store.call("savePolicyEvaluation", decisions, stateUpdate);
         try {
@@ -226,10 +259,10 @@ async function frequencyWorker(req, res) {
           await exportPatientDictionary(buildPatientDictionary({ patient: refreshedPatient, adaptive: refreshedAdaptive }));
         } catch (error) { console.error("adaptive policy dictionary export failed", error); }
         return sendJson(res, 200, { status: "complete", user_id: patient.user_id, mode, result, schedule,
-          decision_ids: saved.map(row => row.decision_id) });
+          decision_ids: saved.map(row => row.decision_id), recovered_evaluations: recovered });
       }
     }
-    return sendJson(res, 200, { status: "idle" });
+    return sendJson(res, 200, { status: "idle", recovered_evaluations: recovered });
   } catch (error) { return apiError(res, error); }
 }
 

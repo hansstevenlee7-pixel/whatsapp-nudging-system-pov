@@ -2,7 +2,7 @@
 
 const crypto = require("node:crypto");
 const { httpError } = require("./http");
-const { loadClinicalData, batchWrite, operation, isArchivedPrescription } = require("./clinical-data");
+const { TAB_NAMES, loadClinicalData, batchWrite, operation, isArchivedPrescription } = require("./clinical-data");
 const { PILLARS, CATEGORIES, NUDGE_TYPES: TYPES, assertAction } = require("./taxonomy");
 
 const DAYS = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
@@ -107,7 +107,8 @@ function slotInput(row) {
 async function applyAdaptiveSchedule(input, snapshot) {
   const evaluationTime = new Date(input.now || Date.now());
   if (!Number.isFinite(evaluationTime.getTime())) throw httpError(400, "Invalid evaluation time");
-  const data = snapshot || await loadClinicalData();
+  const outbox = Array.isArray(input.decision_rows) ? input.decision_rows : [];
+  const data = snapshot || await loadClinicalData(outbox.length ? TAB_NAMES.concat("adaptation_decisions") : undefined);
   const userId = String(input.user_id || ""); const key = String(input.behaviour_key || "");
   const active = data.weekly_schedule.rows.filter(row => String(row.user_id) === userId && String(row.status || "active") === "active");
   const current = active.filter(row => safeBehaviourKey(row) === key);
@@ -132,6 +133,7 @@ async function applyAdaptiveSchedule(input, snapshot) {
   // changed or removed, so a schedule row names its cause (RQ1 traceability).
   const decisionLink = String(input.adaptation_decision_id || "").trim();
   const links = decisionLink ? { decision_id: decisionLink, slot_ids: new Set(current.concat(adapted).map(row => String(row.schedule_slot_id))) } : {};
+  if (outbox.length) links.decision_rows = outbox;
   const result = await saveSchedule({ user_id: userId, start_date: startDate, end_date: endDate, slots: combined.map(slotInput) }, "approve", data, evaluationTime, links);
   return Object.assign({ applied: true, reason: "future_unsent_schedule_updated", before: current, after: adapted }, result);
 }
@@ -384,6 +386,12 @@ async function saveSchedule(body, decision = "approve", snapshot, evaluationTime
     }
   }
 
+  // Outbox: the decisions explaining an adaptive change join the same atomic batch,
+  // so the schedule cannot change without its record (audit-recovery test, 5 Oct 2026).
+  if (links.decision_rows && links.decision_rows.length) {
+    if (!data.adaptation_decisions) throw new Error("adaptation_decisions tab is required for decision rows");
+    for (const row of links.decision_rows) operations.push(operation("adaptation_decisions", data.adaptation_decisions, row));
+  }
   await batchWrite(operations);
   const verified = await loadClinicalData(["weekly_schedule"]);
   const saved = verified.weekly_schedule.rows.filter(row => String(row.user_id) === userId && String(row.status) === "active");

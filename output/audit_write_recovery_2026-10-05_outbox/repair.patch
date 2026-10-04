@@ -1,0 +1,262 @@
+diff --git a/landing/api/_lib/adaptive-handlers.js b/landing/api/_lib/adaptive-handlers.js
+index 05c8583..3a74738 100644
+--- a/landing/api/_lib/adaptive-handlers.js
++++ b/landing/api/_lib/adaptive-handlers.js
+@@ -13,7 +13,7 @@ const { processInteraction, queuePatientBehaviours } = require("./adaptive-servi
+ const { sendMessage } = require("./twilio");
+ const { buildPatientDictionary } = require("./patient-dictionary");
+ const { exportPatientDictionary } = require("./patient-dictionary-export");
+-const { evaluateAdaptive, policyRows } = require("./frequency-shadow");
++const { DAY_MS, evaluateAdaptive, policyRows, OUTBOX_SIGNALS, outboxRow, fromOutbox } = require("./frequency-shadow");
+ const { applyAdaptiveSchedule } = require("./schedule-store");
+ 
+ function origin(req) {
+@@ -183,17 +183,46 @@ async function adaptationWorker(req, res) {
+   } catch (error) { return apiError(res, error); }
+ }
+ 
++// An applied change whose adaptation-store write failed is still recorded in its
++// schedule batch's outbox (the Sheets adaptation_decisions tab). Replay any such
++// evaluation before evaluating again, so the step limit and duplicate check see
++// it; a replay that fails stops the run before any new change.
++const OUTBOX_REPLAY_DAYS = 14;
++async function replayOutbox(userId, key, adaptive, now) {
++  const cutoff = Date.parse(now) - OUTBOX_REPLAY_DAYS * DAY_MS;
++  const known = new Set((adaptive.decisions || []).map(row => String(row.decision_id)));
++  const { adaptation_decisions: tab } = await loadClinicalData(["adaptation_decisions"]);
++  const pending = tab.rows.filter(row => String(row.user_id) === String(userId) && String(row.behaviour_key) === key &&
++    OUTBOX_SIGNALS.has(String(row.signal_type)) && !known.has(String(row.decision_id)) && Date.parse(row.decided_at) >= cutoff);
++  const evaluations = new Map();
++  for (const decision of pending.map(fromOutbox)) {
++    const evaluationKey = String(decision.interpretation.evaluation_key || "");
++    evaluations.set(evaluationKey, (evaluations.get(evaluationKey) || []).concat(decision));
++  }
++  let replayed = 0;
++  for (const decisions of evaluations.values()) {
++    const ordered = decisions.sort((left, right) => (left.signal_type === "frequency_model_recommendation" ? 0 : 1) - (right.signal_type === "frequency_model_recommendation" ? 0 : 1));
++    if (ordered.length !== 2) continue; // both rows share one atomic batch
++    const state = (adaptive.states || []).find(item => String(item.behaviour_key) === key) || {};
++    await store.call("restorePolicyEvaluation", ordered, policyStateUpdate({ state }, ordered[1], ordered[1].decided_at));
++    replayed += 1;
++  }
++  return replayed;
++}
++
+ async function frequencyWorker(req, res) {
+   if (!method(req, res, ["POST"])) return;
+   try {
+     requireWorker(req);
+     const body = await jsonBody(req); const requestedUser = String(body.user_id || "").trim();
+-    const patients = await allPatients();
++    const patients = await allPatients(); let recovered = 0;
+     for (const patient of patients) {
+       if (requestedUser && String(patient.user_id) !== requestedUser) continue;
+       if (String(patient.user_status || "active") !== "active") continue;
+-      const adaptive = await store.call("plansForUser", patient.user_id);
++      let adaptive = await store.call("plansForUser", patient.user_id);
+       for (const envelope of (adaptive.envelopes || []).filter(item => item.status === "approved")) {
++        const replayed = await replayOutbox(patient.user_id, envelope.behaviour_key, adaptive, body.now || new Date().toISOString());
++        if (replayed) { recovered += replayed; adaptive = await store.call("plansForUser", patient.user_id); }
+         const mode = adaptiveApplyEnabled(envelope) ? "apply" : "shadow";
+         const result = evaluateAdaptive({ patient, adaptive, envelope, behaviour_key: envelope.behaviour_key, now: body.now, mode });
+         if (result.status !== "evaluated") continue;
+@@ -207,15 +236,19 @@ async function frequencyWorker(req, res) {
+         if (duplicate) continue;
+         let schedule = { applied: false, reason: mode === "apply" ? "schedule_already_matches_policy" : "shadow_mode" };
+         // Assigned before the schedule write so changed slots can name this policy decision.
+-        const policyDecisionId = crypto.randomUUID();
++        const now = body.now || new Date().toISOString();
++        const ids = { recommendation_decision_id: crypto.randomUUID(), policy_decision_id: crypto.randomUUID() };
++        let decisions = null;
+         if (mode === "apply" && (result.recommended_frequency !== result.current_frequency ||
+             result.time_recommendation.recommended_time && result.time_recommendation.recommended_time !== result.current_time)) {
++          // The rows an applied change will be recorded with travel in the schedule batch.
++          const applied = policyRows(Object.assign({ user_id: patient.user_id, result, mode, schedule_applied: true, now }, ids));
+           schedule = await applyAdaptiveSchedule({ user_id: patient.user_id, behaviour_key: envelope.behaviour_key,
+             target_frequency: result.recommended_frequency, target_time: result.time_recommendation.recommended_time,
+-            adaptation_decision_id: policyDecisionId, now: body.now || new Date().toISOString() });
++            adaptation_decision_id: ids.policy_decision_id, decision_rows: applied.map(outboxRow), now });
++          if (schedule.applied) decisions = applied;
+         }
+-        const now = body.now || new Date().toISOString();
+-        const decisions = policyRows({ user_id: patient.user_id, result, mode, schedule_applied: schedule.applied, now, policy_decision_id: policyDecisionId });
++        decisions = decisions || policyRows(Object.assign({ user_id: patient.user_id, result, mode, schedule_applied: schedule.applied, now }, ids));
+         const stateUpdate = policyStateUpdate(result, decisions[1], now);
+         const saved = await store.call("savePolicyEvaluation", decisions, stateUpdate);
+         try {
+@@ -226,10 +259,10 @@ async function frequencyWorker(req, res) {
+           await exportPatientDictionary(buildPatientDictionary({ patient: refreshedPatient, adaptive: refreshedAdaptive }));
+         } catch (error) { console.error("adaptive policy dictionary export failed", error); }
+         return sendJson(res, 200, { status: "complete", user_id: patient.user_id, mode, result, schedule,
+-          decision_ids: saved.map(row => row.decision_id) });
++          decision_ids: saved.map(row => row.decision_id), recovered_evaluations: recovered });
+       }
+     }
+-    return sendJson(res, 200, { status: "idle" });
++    return sendJson(res, 200, { status: "idle", recovered_evaluations: recovered });
+   } catch (error) { return apiError(res, error); }
+ }
+ 
+diff --git a/landing/api/_lib/adaptive-store.js b/landing/api/_lib/adaptive-store.js
+index 606751c..5988c2a 100644
+--- a/landing/api/_lib/adaptive-store.js
++++ b/landing/api/_lib/adaptive-store.js
+@@ -264,6 +264,27 @@ const operations = {
+       method: "POST", headers: { prefer: "return=representation" }, body: JSON.stringify(decisions)
+     }, true));
+   },
++  // Replays an applied evaluation recovered from the schedule's Sheets outbox after
++  // its first write here failed. Idempotent: rows already present are left alone,
++  // and the state moves only if the policy row itself was missing.
++  async restorePolicyEvaluation(decisions, stateUpdate) {
++    if (!Array.isArray(decisions) || decisions.length !== 2 || !decisions.every(row => row.decision_id)) {
++      throw new Error("A recovered evaluation requires recommendation and policy rows with their ids");
++    }
++    const ids = decisions.map(row => q(row.decision_id)).join(",");
++    const present = new Set(rows(await request(`/rest/v1/adaptation_decisions?decision_id=in.(${ids})&select=decision_id`, {}, true))
++      .map(row => String(row.decision_id)));
++    const missing = decisions.filter(row => !present.has(String(row.decision_id)));
++    if (!missing.length) return [];
++    if (stateUpdate && stateUpdate.user_id && stateUpdate.behaviour_key && missing.some(row => row.signal_type === "adaptive_policy_applied")) {
++      await request("/rest/v1/user_adaptation_state?on_conflict=user_id,behaviour_key", {
++        method: "POST", headers: { prefer: "resolution=merge-duplicates" }, body: JSON.stringify(stateUpdate)
++      }, true);
++    }
++    return rows(await request("/rest/v1/adaptation_decisions", {
++      method: "POST", headers: { prefer: "return=representation" }, body: JSON.stringify(missing)
++    }, true));
++  },
+   async createTrackedLink(input) {
+     const token = crypto.randomBytes(24).toString("base64url");
+     const expires = new Date(Date.now() + 180 * 86400000).toISOString();
+diff --git a/landing/api/_lib/clinical-data.js b/landing/api/_lib/clinical-data.js
+index b7c77ae..6a90775 100644
+--- a/landing/api/_lib/clinical-data.js
++++ b/landing/api/_lib/clinical-data.js
+@@ -174,7 +174,7 @@ async function updateUser(userId, changes) {
+ }
+ 
+ module.exports = {
+-  loadClinicalData, buildPatients, allPatients, updateUser, isArchivedPrescription,
++  TAB_NAMES, loadClinicalData, buildPatients, allPatients, updateUser, isArchivedPrescription,
+   batchWrite, operation, DELIVERY_EVENT_HEADERS, INTERACTION_EVENT_HEADERS, MEDIA_ASSIGNMENT_HEADERS, ADAPTATION_DECISION_HEADERS,
+   PATIENT_ADAPTATION_STATE_HEADERS, PATIENT_ADAPTATION_TIMELINE_HEADERS, TRANSLATION_FIELDS, PRESCRIPTION_TRANSLATION_FIELDS, APPROVAL_FIELDS
+ };
+diff --git a/landing/api/_lib/frequency-shadow.js b/landing/api/_lib/frequency-shadow.js
+index beae0b3..c8054a6 100644
+--- a/landing/api/_lib/frequency-shadow.js
++++ b/landing/api/_lib/frequency-shadow.js
+@@ -1,5 +1,6 @@
+ "use strict";
+ 
++const crypto = require("node:crypto");
+ const model = require("../_models/frequency-logistic-v1.json");
+ const { behaviourKey } = require("./adaptive-core");
+ const { scoreFrequencies, recommendFrequency, recentHistory, ordinaryReply } = require("./frequency-model");
+@@ -155,14 +156,17 @@ function policyRows(input) {
+     interaction_id: null, nudge_id: result.recent_outcomes.at(-1).nudge_id, scope: "behaviour", decision_source: "system",
+     media_mode_before: null, media_mode_after: null, media_kind_before: result.current_media_format,
+     media_kind_after: applied ? next.preferred_format : result.current_media_format, selected_asset_id: null };
++  // Both rows carry an id or neither does: PostgREST rejects a bulk insert whose
++  // objects differ in keys (PGRST102), which would drop the whole audit write.
++  const ids = input.policy_decision_id ? [input.recommendation_decision_id || crypto.randomUUID(), input.policy_decision_id] : [];
+   return [
+-    Object.assign({}, shared, { signal_type: "frequency_model_recommendation", interpretation,
++    Object.assign({}, shared, ids.length ? { decision_id: ids[0] } : {}, { signal_type: "frequency_model_recommendation", interpretation,
+       scores_before: {}, scores_after: result.candidate_scores, rule_applied: "regularized_logistic_regression",
+       previous_state: previousState, next_state: Object.assign({}, previousState, { planned_frequency: result.model_recommended_frequency }),
+       changed_fields: result.model_recommended_frequency === result.current_frequency ? [] : ["planned_frequency"],
+       frequency_before: result.current_frequency, frequency_after: result.model_recommended_frequency,
+       outcome: "no_change", reason: `Model recommendation: ${result.model_recommended_frequency} per week`, fulfilled_at: null }),
+-    Object.assign({}, shared, input.policy_decision_id ? { decision_id: input.policy_decision_id } : {}, {
++    Object.assign({}, shared, ids.length ? { decision_id: ids[1] } : {}, {
+       signal_type: applied ? "adaptive_policy_applied" : mode === "apply" ? "adaptive_policy_no_change" : "adaptive_policy_shadow",
+       interpretation, scores_before: result.candidate_scores, scores_after: result.candidate_scores,
+       rule_applied: "bounded_frequency_time_media_policy", previous_state: previousState,
+@@ -197,4 +201,41 @@ function shadowRows(input) {
+   ];
+ }
+ 
+-module.exports = { DAY_MS, confirmedOutcomes, currentFrequency, evaluateShadow, shadowRows, evaluateAdaptive, policyRows, compactEvidence };
++// An applied evaluation's two rows also travel in the schedule change's own Sheets
++// batch (an outbox), so the change and its explanation persist together even if
++// the adaptation store then fails; the next run replays them from there.
++const OUTBOX_SIGNALS = new Set(["frequency_model_recommendation", "adaptive_policy_applied"]);
++
++function outboxRow(decision) {
++  const blank = value => value == null ? "" : value;
++  return { decision_id: decision.decision_id, decided_at: decision.decided_at, user_id: decision.user_id, behaviour_key: decision.behaviour_key,
++    interaction_id: blank(decision.interaction_id), signal_type: decision.signal_type, rule_applied: decision.rule_applied,
++    outcome: decision.outcome, reason: decision.reason, selected_asset_id: blank(decision.selected_asset_id),
++    interpretation: JSON.stringify(decision.interpretation || {}), previous_state: JSON.stringify(decision.previous_state || {}),
++    next_state: JSON.stringify(decision.next_state || {}), scope: decision.scope, decision_source: decision.decision_source,
++    effective_at: decision.effective_at, state_version: "", changed_fields: JSON.stringify(decision.changed_fields || []),
++    frequency_before: decision.frequency_before, frequency_after: decision.frequency_after,
++    media_mode_before: blank(decision.media_mode_before), media_mode_after: blank(decision.media_mode_after),
++    media_kind_before: blank(decision.media_kind_before), media_kind_after: blank(decision.media_kind_after), nudge_id: blank(decision.nudge_id) };
++}
++
++// The inverse, for policyRows output: the scores and fulfilment the Sheets tab has
++// no column for are restored from the interpretation and the outcome.
++function fromOutbox(row) {
++  const nullable = value => text(value) === "" ? null : value;
++  const interpretation = parsed(row.interpretation); const scores = interpretation.candidate_scores || {};
++  const recommendation = text(row.signal_type) === "frequency_model_recommendation";
++  const changed = parsed(row.changed_fields);
++  return { decision_id: text(row.decision_id), decided_at: row.decided_at, effective_at: row.effective_at, user_id: row.user_id,
++    behaviour_key: row.behaviour_key, interaction_id: nullable(row.interaction_id), nudge_id: nullable(row.nudge_id), scope: row.scope,
++    decision_source: row.decision_source, media_mode_before: nullable(row.media_mode_before), media_mode_after: nullable(row.media_mode_after),
++    media_kind_before: nullable(row.media_kind_before), media_kind_after: nullable(row.media_kind_after),
++    selected_asset_id: nullable(row.selected_asset_id), signal_type: row.signal_type, interpretation,
++    scores_before: recommendation ? {} : scores, scores_after: scores, rule_applied: row.rule_applied,
++    previous_state: parsed(row.previous_state), next_state: parsed(row.next_state), changed_fields: Array.isArray(changed) ? changed : [],
++    frequency_before: Number(row.frequency_before), frequency_after: Number(row.frequency_after), outcome: row.outcome, reason: row.reason,
++    fulfilled_at: !recommendation && text(row.outcome) === "applied" ? row.decided_at : null };
++}
++
++module.exports = { DAY_MS, confirmedOutcomes, currentFrequency, evaluateShadow, shadowRows, evaluateAdaptive, policyRows, compactEvidence,
++  OUTBOX_SIGNALS, outboxRow, fromOutbox };
+diff --git a/landing/api/_lib/schedule-store.js b/landing/api/_lib/schedule-store.js
+index 524f650..13f4d45 100644
+--- a/landing/api/_lib/schedule-store.js
++++ b/landing/api/_lib/schedule-store.js
+@@ -2,7 +2,7 @@
+ 
+ const crypto = require("node:crypto");
+ const { httpError } = require("./http");
+-const { loadClinicalData, batchWrite, operation, isArchivedPrescription } = require("./clinical-data");
++const { TAB_NAMES, loadClinicalData, batchWrite, operation, isArchivedPrescription } = require("./clinical-data");
+ const { PILLARS, CATEGORIES, NUDGE_TYPES: TYPES, assertAction } = require("./taxonomy");
+ 
+ const DAYS = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+@@ -107,7 +107,8 @@ function slotInput(row) {
+ async function applyAdaptiveSchedule(input, snapshot) {
+   const evaluationTime = new Date(input.now || Date.now());
+   if (!Number.isFinite(evaluationTime.getTime())) throw httpError(400, "Invalid evaluation time");
+-  const data = snapshot || await loadClinicalData();
++  const outbox = Array.isArray(input.decision_rows) ? input.decision_rows : [];
++  const data = snapshot || await loadClinicalData(outbox.length ? TAB_NAMES.concat("adaptation_decisions") : undefined);
+   const userId = String(input.user_id || ""); const key = String(input.behaviour_key || "");
+   const active = data.weekly_schedule.rows.filter(row => String(row.user_id) === userId && String(row.status || "active") === "active");
+   const current = active.filter(row => safeBehaviourKey(row) === key);
+@@ -132,6 +133,7 @@ async function applyAdaptiveSchedule(input, snapshot) {
+   // changed or removed, so a schedule row names its cause (RQ1 traceability).
+   const decisionLink = String(input.adaptation_decision_id || "").trim();
+   const links = decisionLink ? { decision_id: decisionLink, slot_ids: new Set(current.concat(adapted).map(row => String(row.schedule_slot_id))) } : {};
++  if (outbox.length) links.decision_rows = outbox;
+   const result = await saveSchedule({ user_id: userId, start_date: startDate, end_date: endDate, slots: combined.map(slotInput) }, "approve", data, evaluationTime, links);
+   return Object.assign({ applied: true, reason: "future_unsent_schedule_updated", before: current, after: adapted }, result);
+ }
+@@ -384,6 +386,12 @@ async function saveSchedule(body, decision = "approve", snapshot, evaluationTime
+     }
+   }
+ 
++  // Outbox: the decisions explaining an adaptive change join the same atomic batch,
++  // so the schedule cannot change without its record (audit-recovery test, 5 Oct 2026).
++  if (links.decision_rows && links.decision_rows.length) {
++    if (!data.adaptation_decisions) throw new Error("adaptation_decisions tab is required for decision rows");
++    for (const row of links.decision_rows) operations.push(operation("adaptation_decisions", data.adaptation_decisions, row));
++  }
+   await batchWrite(operations);
+   const verified = await loadClinicalData(["weekly_schedule"]);
+   const saved = verified.weekly_schedule.rows.filter(row => String(row.user_id) === userId && String(row.status) === "active");

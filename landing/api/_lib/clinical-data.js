@@ -174,7 +174,7 @@ async function updateUser(userId, changes) {
 }
 
 module.exports = {
-  loadClinicalData, buildPatients, allPatients, updateUser, isArchivedPrescription,
+  TAB_NAMES, loadClinicalData, buildPatients, allPatients, updateUser, isArchivedPrescription,
   batchWrite, operation, DELIVERY_EVENT_HEADERS, INTERACTION_EVENT_HEADERS, MEDIA_ASSIGNMENT_HEADERS, ADAPTATION_DECISION_HEADERS,
   PATIENT_ADAPTATION_STATE_HEADERS, PATIENT_ADAPTATION_TIMELINE_HEADERS, TRANSLATION_FIELDS, PRESCRIPTION_TRANSLATION_FIELDS, APPROVAL_FIELDS
 };

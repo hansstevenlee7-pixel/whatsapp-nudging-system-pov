@@ -7,6 +7,11 @@ const adaptiveStore = require("../api/_lib/adaptive-store");
 const { behaviourKey } = require("../api/_lib/adaptive-core");
 const { fixture } = require("./sheets-fixture");
 
+// PostgREST rejects a bulk insert whose objects differ in keys (PGRST102).
+function postgrestInsert(rows) {
+  assert.equal(new Set(rows.map(row => Object.keys(row).sort().join(","))).size, 1, "PGRST102 All object keys must match");
+}
+
 function responseRecorder() {
   return { statusCode: 0, headers: {}, body: "", setHeader(name, value) { this.headers[name] = value; }, end(value) { this.body = value || ""; } };
 }
@@ -31,6 +36,7 @@ function setup(t) {
   adaptiveStore._setTestAdapter({
     plansForUser: async () => plans(),
     savePolicyEvaluation: async rows => {
+      postgrestInsert(rows);
       const stored = rows.map((row, index) => Object.assign({ decision_id: `shadow-${saved.length + index + 1}` }, row));
       saved.push(...stored); return stored;
     }
@@ -80,7 +86,7 @@ test("enabled bounded policy applies a model decision to future unsent schedule 
     plansForUser: async () => ({ envelopes: [Object.assign({ behaviour_key: key, status: "approved", automatic_schedule_apply: true, frequency_min: 1,
       frequency_max: 3, earliest_time: "09:00", latest_time: "09:00", formats: ["video", "paper", "reading"] }, behaviour)],
       events: [], decisions: saved.slice(), states: [], assets: [], historical_assets: [], candidates: [], global_state: {} }),
-    savePolicyEvaluation: async rows => { const stored = rows.map((row, index) => Object.assign({ decision_id: `applied-${index}` }, row)); saved.push(...stored); return stored; }
+    savePolicyEvaluation: async rows => { postgrestInsert(rows); const stored = rows.map((row, index) => Object.assign({ decision_id: `applied-${index}` }, row)); saved.push(...stored); return stored; }
   });
   const previousSecret = process.env.N8N_PROXY_SECRET; const previousApply = process.env.ADAPTIVE_SCHEDULE_APPLY_ENABLED;
   process.env.N8N_PROXY_SECRET = "worker-test"; process.env.ADAPTIVE_SCHEDULE_APPLY_ENABLED = "true";
@@ -94,4 +100,7 @@ test("enabled bounded policy applies a model decision to future unsent schedule 
   // The changed recurring schedule names the persisted policy decision that changed it.
   assert.match(saved[1].decision_id, /^[0-9a-f-]{36}$/);
   assert.ok(fx.tables.weekly_schedule.rows.every(row => row.adaptation_decision_id === saved[1].decision_id));
+  // Outbox: the same two rows were written in the schedule's own Sheets batch.
+  assert.deepEqual(fx.tables.adaptation_decisions.rows.map(row => row.decision_id), saved.map(row => row.decision_id));
+  assert.deepEqual(fx.tables.adaptation_decisions.rows.map(row => row.signal_type), ["frequency_model_recommendation", "adaptive_policy_applied"]);
 });

@@ -264,6 +264,27 @@ const operations = {
       method: "POST", headers: { prefer: "return=representation" }, body: JSON.stringify(decisions)
     }, true));
   },
+  // Replays an applied evaluation recovered from the schedule's Sheets outbox after
+  // its first write here failed. Idempotent: rows already present are left alone,
+  // and the state moves only if the policy row itself was missing.
+  async restorePolicyEvaluation(decisions, stateUpdate) {
+    if (!Array.isArray(decisions) || decisions.length !== 2 || !decisions.every(row => row.decision_id)) {
+      throw new Error("A recovered evaluation requires recommendation and policy rows with their ids");
+    }
+    const ids = decisions.map(row => q(row.decision_id)).join(",");
+    const present = new Set(rows(await request(`/rest/v1/adaptation_decisions?decision_id=in.(${ids})&select=decision_id`, {}, true))
+      .map(row => String(row.decision_id)));
+    const missing = decisions.filter(row => !present.has(String(row.decision_id)));
+    if (!missing.length) return [];
+    if (stateUpdate && stateUpdate.user_id && stateUpdate.behaviour_key && missing.some(row => row.signal_type === "adaptive_policy_applied")) {
+      await request("/rest/v1/user_adaptation_state?on_conflict=user_id,behaviour_key", {
+        method: "POST", headers: { prefer: "resolution=merge-duplicates" }, body: JSON.stringify(stateUpdate)
+      }, true);
+    }
+    return rows(await request("/rest/v1/adaptation_decisions", {
+      method: "POST", headers: { prefer: "return=representation" }, body: JSON.stringify(missing)
+    }, true));
+  },
   async createTrackedLink(input) {
     const token = crypto.randomBytes(24).toString("base64url");
     const expires = new Date(Date.now() + 180 * 86400000).toISOString();

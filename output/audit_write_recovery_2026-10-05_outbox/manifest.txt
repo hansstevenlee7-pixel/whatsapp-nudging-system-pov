@@ -1,0 +1,10 @@
+run_at_utc: 2026-10-04T15:53:11Z
+git_head: 36de24f46ae7be4ebed20f354bffd1f14568b861 (repair uncommitted; source hashes below; full diff in repair.patch)
+protocol_sha256: bb9704f4d85ed01dc312fd72895ad91db8226090669f1a50e428fdb53e3c22a1
+sha256 9190ac25a9f8d17dd696b38d9017e5bde6cbeb3dd7d775b87d410d371e7d04b3  landing/tests/audit-write-recovery.test.js
+sha256 f1e9e361dcd045946e8ed5a5656dbe90e8ac113e34f583036a86e75e8ec2526b  landing/api/_lib/adaptive-handlers.js
+sha256 9b7ff21584e75214d8155d70ad59472265dbd028214dc90133157f59739ec9ab  landing/api/_lib/adaptive-store.js
+sha256 77b7aa9f079922fda3cde159c9672625da148b3cb52a17f3715d857c05748523  landing/api/_lib/clinical-data.js
+sha256 161d3cc02974d517fae10c11b7f56fe03bb1cc0761e31ad9338995850eae6680  landing/api/_lib/frequency-shadow.js
+sha256 4f611ff5aa54927e395d3086fd7f6329ebc864f53b731125d83f36d967a20242  landing/api/_lib/schedule-store.js
+node: v24.13.1
