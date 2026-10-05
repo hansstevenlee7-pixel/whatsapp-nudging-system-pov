@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-10-04T13:00:25.201Z",
-  "git_commit": "a9965690fc55e3beafa13c417e1bb76d2341002a",
-  "git_last_commit_date": "2026-10-04",
+  "generated_at": "2026-10-05T08:59:43.601Z",
+  "git_commit": "def9940dac67abb1583bf6451e034a5a25a7642d",
+  "git_last_commit_date": "2026-10-05",
   "git_changed_or_untracked_entries": 1,
   "node": "v24.13.1",
   "os": "27.2",
@@ -62,13 +62,21 @@
       "files": 13,
       "bytes": 1187385
     },
+    "output/audit_write_recovery_2026-10-05": {
+      "files": 3,
+      "bytes": 15633
+    },
+    "output/audit_write_recovery_2026-10-05_outbox": {
+      "files": 4,
+      "bytes": 28537
+    },
     "output/data": {
       "files": 2,
       "bytes": 272442
     },
     "output/deployment_check_2026-10-04": {
       "files": 1,
-      "bytes": 3106
+      "bytes": 13921
     },
     "output/frequency_comparison_2026-09-30": {
       "files": 230,
@@ -123,7 +131,7 @@
     {
       "group": "Clinician web pages and browser scripts",
       "files": 11,
-      "lines": 1646,
+      "lines": 1648,
       "committed_unchanged": 11,
       "committed_modified": 0,
       "not_committed": 0
@@ -131,7 +139,7 @@
     {
       "group": "Server API handlers and libraries",
       "files": 38,
-      "lines": 4043,
+      "lines": 4172,
       "committed_unchanged": 38,
       "committed_modified": 0,
       "not_committed": 0
@@ -146,9 +154,9 @@
     },
     {
       "group": "Automated tests and fixtures",
-      "files": 39,
-      "lines": 4111,
-      "committed_unchanged": 39,
+      "files": 42,
+      "lines": 4473,
+      "committed_unchanged": 42,
       "committed_modified": 0,
       "not_committed": 0
     },
@@ -178,16 +186,16 @@
     },
     {
       "group": "Protocols and method notes for scripts",
-      "files": 10,
-      "lines": 593,
-      "committed_unchanged": 10,
+      "files": 11,
+      "lines": 652,
+      "committed_unchanged": 11,
       "committed_modified": 0,
       "not_committed": 0
     }
   ],
   "tests": {
-    "files": 38,
-    "passed": 241,
+    "files": 41,
+    "passed": 269,
     "failed": 0
   }
 }

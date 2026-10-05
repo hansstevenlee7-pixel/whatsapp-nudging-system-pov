@@ -5,22 +5,22 @@ Clinician web pages and browser scripts,landing/auth.js,141,committed_unchanged
 Clinician web pages and browser scripts,landing/clinician-summary.js,37,committed_unchanged
 Clinician web pages and browser scripts,landing/forgot-password.html,9,committed_unchanged
 Clinician web pages and browser scripts,landing/index.html,189,committed_unchanged
-Clinician web pages and browser scripts,landing/input.html,594,committed_unchanged
+Clinician web pages and browser scripts,landing/input.html,596,committed_unchanged
 Clinician web pages and browser scripts,landing/login.html,22,committed_unchanged
 Clinician web pages and browser scripts,landing/monitor.html,108,committed_unchanged
 Clinician web pages and browser scripts,landing/review-state.js,491,committed_unchanged
 Clinician web pages and browser scripts,landing/set-password.html,11,committed_unchanged
 Server API handlers and libraries,landing/api/_lib/adaptive-core.js,226,committed_unchanged
-Server API handlers and libraries,landing/api/_lib/adaptive-handlers.js,357,committed_unchanged
+Server API handlers and libraries,landing/api/_lib/adaptive-handlers.js,390,committed_unchanged
 Server API handlers and libraries,landing/api/_lib/adaptive-service.js,86,committed_unchanged
-Server API handlers and libraries,landing/api/_lib/adaptive-store.js,289,committed_unchanged
+Server API handlers and libraries,landing/api/_lib/adaptive-store.js,310,committed_unchanged
 Server API handlers and libraries,landing/api/_lib/auth.js,26,committed_unchanged
 Server API handlers and libraries,landing/api/_lib/behaviour-policy.js,153,committed_unchanged
 Server API handlers and libraries,landing/api/_lib/clinical-data.js,181,committed_unchanged
 Server API handlers and libraries,landing/api/_lib/clinician-adaptation.js,37,committed_unchanged
 Server API handlers and libraries,landing/api/_lib/delivery-store.js,71,committed_unchanged
 Server API handlers and libraries,landing/api/_lib/frequency-model.js,104,committed_unchanged
-Server API handlers and libraries,landing/api/_lib/frequency-shadow.js,201,committed_unchanged
+Server API handlers and libraries,landing/api/_lib/frequency-shadow.js,242,committed_unchanged
 Server API handlers and libraries,landing/api/_lib/google-sheets.js,164,committed_unchanged
 Server API handlers and libraries,landing/api/_lib/http.js,70,committed_unchanged
 Server API handlers and libraries,landing/api/_lib/internal-auth.js,18,committed_unchanged
@@ -32,7 +32,7 @@ Server API handlers and libraries,landing/api/_lib/patient-dictionary.js,323,com
 Server API handlers and libraries,landing/api/_lib/policy.js,39,committed_unchanged
 Server API handlers and libraries,landing/api/_lib/prescription-store.js,311,committed_unchanged
 Server API handlers and libraries,landing/api/_lib/reply-classifier.js,43,committed_unchanged
-Server API handlers and libraries,landing/api/_lib/schedule-store.js,414,committed_unchanged
+Server API handlers and libraries,landing/api/_lib/schedule-store.js,422,committed_unchanged
 Server API handlers and libraries,landing/api/_lib/supabase.js,75,committed_unchanged
 Server API handlers and libraries,landing/api/_lib/taxonomy.js,54,committed_unchanged
 Server API handlers and libraries,landing/api/_lib/twilio.js,98,committed_unchanged
@@ -40,7 +40,7 @@ Server API handlers and libraries,landing/api/adaptive.js,14,committed_unchanged
 Server API handlers and libraries,landing/api/admin/users.js,91,committed_unchanged
 Server API handlers and libraries,landing/api/approve.js,32,committed_unchanged
 Server API handlers and libraries,landing/api/config.js,12,committed_unchanged
-Server API handlers and libraries,landing/api/intake.js,34,committed_unchanged
+Server API handlers and libraries,landing/api/intake.js,60,committed_unchanged
 Server API handlers and libraries,landing/api/me.js,13,committed_unchanged
 Server API handlers and libraries,landing/api/patient.js,36,committed_unchanged
 Server API handlers and libraries,landing/api/patients.js,45,committed_unchanged
@@ -57,6 +57,7 @@ Automated tests and fixtures,landing/tests/adaptation-fixture.test.js,27,committ
 Automated tests and fixtures,landing/tests/adaptive-core.test.js,112,committed_unchanged
 Automated tests and fixtures,landing/tests/adaptive-delivery.test.js,97,committed_unchanged
 Automated tests and fixtures,landing/tests/adaptive-schedule.test.js,115,committed_unchanged
+Automated tests and fixtures,landing/tests/audit-write-recovery.test.js,164,committed_unchanged
 Automated tests and fixtures,landing/tests/auth-integration.test.js,33,committed_unchanged
 Automated tests and fixtures,landing/tests/behaviour-policy.test.js,55,committed_unchanged
 Automated tests and fixtures,landing/tests/clinician-summary.test.js,24,committed_unchanged
@@ -65,7 +66,8 @@ Automated tests and fixtures,landing/tests/direct-sheets-api.test.js,95,committe
 Automated tests and fixtures,landing/tests/frequency-comparison.test.js,143,committed_unchanged
 Automated tests and fixtures,landing/tests/frequency-model.test.js,49,committed_unchanged
 Automated tests and fixtures,landing/tests/frequency-shadow.test.js,51,committed_unchanged
-Automated tests and fixtures,landing/tests/frequency-worker.test.js,98,committed_unchanged
+Automated tests and fixtures,landing/tests/frequency-worker.test.js,107,committed_unchanged
+Automated tests and fixtures,landing/tests/intake-api.test.js,110,committed_unchanged
 Automated tests and fixtures,landing/tests/manual-media.test.js,79,committed_unchanged
 Automated tests and fixtures,landing/tests/media-discovery.test.js,51,committed_unchanged
 Automated tests and fixtures,landing/tests/media-populate.test.js,44,committed_unchanged
@@ -74,6 +76,7 @@ Automated tests and fixtures,landing/tests/message-options.test.js,232,committed
 Automated tests and fixtures,landing/tests/patient-api.test.js,66,committed_unchanged
 Automated tests and fixtures,landing/tests/patient-dictionary.test.js,110,committed_unchanged
 Automated tests and fixtures,landing/tests/patient-schema-synthetic.test.js,26,committed_unchanged
+Automated tests and fixtures,landing/tests/policy-outbox.test.js,79,committed_unchanged
 Automated tests and fixtures,landing/tests/prescription-api.test.js,410,committed_unchanged
 Automated tests and fixtures,landing/tests/reply-acknowledgement.test.js,64,committed_unchanged
 Automated tests and fixtures,landing/tests/reply-classifier-schema.test.js,13,committed_unchanged
@@ -146,6 +149,7 @@ Database migrations,supabase/migrations/006_bounded_schedule_apply.sql,11,commit
 Protocols and method notes for scripts,scripts/adaptability-scenarios/PROTOCOL.md,90,committed_unchanged
 Protocols and method notes for scripts,scripts/adaptation-benchmark/AMENDMENT.md,10,committed_unchanged
 Protocols and method notes for scripts,scripts/adaptation-benchmark/README.md,43,committed_unchanged
+Protocols and method notes for scripts,scripts/audit-recovery/PROTOCOL.md,59,committed_unchanged
 Protocols and method notes for scripts,scripts/frequency-comparison/README.md,99,committed_unchanged
 Protocols and method notes for scripts,scripts/patient-schema-synthetic/README.md,12,committed_unchanged
 Protocols and method notes for scripts,scripts/taxonomy-frequency/README.md,89,committed_unchanged

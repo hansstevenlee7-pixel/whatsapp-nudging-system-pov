@@ -7,6 +7,7 @@ adaptation-fixture.test.js,1,0
 adaptive-core.test.js,10,0
 adaptive-delivery.test.js,4,0
 adaptive-schedule.test.js,5,0
+audit-write-recovery.test.js,13,0
 auth-integration.test.js,2,0
 behaviour-policy.test.js,3,0
 clinician-summary.test.js,4,0
@@ -16,6 +17,7 @@ frequency-comparison.test.js,14,0
 frequency-model.test.js,5,0
 frequency-shadow.test.js,4,0
 frequency-worker.test.js,3,0
+intake-api.test.js,10,0
 manual-media.test.js,3,0
 media-discovery.test.js,2,0
 media-populate.test.js,1,0
@@ -24,6 +26,7 @@ message-options.test.js,17,0
 patient-api.test.js,3,0
 patient-dictionary.test.js,3,0
 patient-schema-synthetic.test.js,2,0
+policy-outbox.test.js,5,0
 prescription-api.test.js,23,0
 reply-acknowledgement.test.js,2,0
 reply-classifier-schema.test.js,1,0
