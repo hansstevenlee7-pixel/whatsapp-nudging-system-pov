@@ -95,3 +95,64 @@ Checked read-only at 00:59:
 The server-side behaviour on an unconfirmed intake is verified only by the tests so far. The scheduled re-test checks it in production.
 
 **Spreadsheet setting.** On 5 October Hans confirmed that Railway's `GOOGLE_SHEETS_SPREADSHEET_ID` equals Vercel's. Workflow A and the portal therefore use the same workbook. He had changed the setting earlier, following the wrong diagnosis above.
+
+## Intake re-check after the Gemini daily reset (5 October 2026, 19:47 AEDT)
+
+This was scheduled for 18:07 AEDT, after the free-tier daily quota reset at midnight Pacific. It waited for Hans to sign in to the portal himself.
+
+**Pre-checks.**
+- The intake fix is deployed: the production `input.html` carries the confirmation check.
+- Hans confirmed that Railway's `GOOGLE_SHEETS_SPREADSHEET_ID` equals Vercel's.
+- The portal session had expired; Hans signed in at 19:46.
+
+**Intake.** One synthetic intake was submitted through the portal form at 19:47:
+- name "Synthetic provenance check 4", ACMA fictitious mobile +61491570158, `synthetic.provenance.check4@example.com`;
+- prescription text "SYNTHETIC TEST, not a real patient. Walk 20 minutes after dinner, twice a week, for 6 weeks.";
+- prescriber Hans Lee.
+
+This made one Gemini call, with no retry.
+
+| Step | Observed | Verdict |
+|---|---|---|
+| Form outcome | Redirected to the Monitor with `user_id` `9b7680a2-6d0f-4b75-94b5-94ca302792e6`. Since the fix, the page redirects only when Workflow A answers `status: "ok"` with the submitted id | Workflow A confirmed this patient. The confirmed-success path is verified in production; the failure path is not |
+| `/api/patients` | The patient exists in the workbook the portal reads. One prescription, `rx_43ca5d41…`: `physical_activity/increase`, 2 per week, 6 weeks. Two drafts (`needs_review`) on 5 and 7 October at 19:00 | Workflow A and the portal share the workbook |
+| Translation provenance, on the prescription and both drafts | `translation_model` `gemini-2.5-flash`; `translation_response_id` `GGTDaqGcE_me_uMP0KuR4QI`; `translated_at` 2026-10-05T08:47:22.402Z; **`translation_prompt_sha256` empty**; `translation_normalised` empty | Model, response id and time **verified in production**. Prompt hash **not recorded** (below). An empty `translation_normalised` means nothing was normalised; that is correct for this text, but it cannot be told apart from an unrecorded value |
+| Correction | `PATCH /api/prescription`, category increase → establish: HTTP 200, `persisted: true`. The endpoint returns only after confirming the revision row | Revision written. `previous_source` is set by code from the row's `translation_model`, so it is `workflow_a:gemini-2.5-flash`; the tab itself was not read, because the Sheet needs a Google sign-in |
+| Archive | `DELETE /api/prescription`: HTTP 200. Prescription archived; 0 active prescriptions, 0 active slots, 0 dated occurrences | Cleanup complete. No plan was approved and nothing will be sent |
+| n8n execution | Not read: Hans was not signed in to n8n (optional) | — |
+
+**Why the prompt hash is empty.**
+- Workflow A's *Build Gemini Prompt* node computes the hash with `require('crypto')` inside `try`, and records `''` if that throws.
+- Production n8n lets Code nodes load Node built-in modules only when `NODE_FUNCTION_ALLOW_BUILTIN` permits them. The local harness allowed `crypto`, so the gap appeared only in production.
+- The fallback hid the failure.
+
+**Fix options (Hans's decision):**
+- set `NODE_FUNCTION_ALLOW_BUILTIN=crypto` on Railway; or
+- compute the hash without a built-in module.
+
+**Not verified in production:**
+- the prompt-template hash;
+- the failure path of the intake fix: Gemini answered, so the "did not confirm" message was not exercised live.
+
+## Intake re-check after enabling `crypto` in n8n (5 October 2026, 19:53 AEDT)
+
+**Change.** Hans set `NODE_FUNCTION_ALLOW_BUILTIN=crypto` on the Railway n8n service and redeployed it. At 19:53 n8n `/healthz` answered 200.
+
+**Intake.** One synthetic intake was submitted through the portal form, with one Gemini call and no retry:
+- name "Synthetic provenance check 5", ACMA fictitious mobile +61491570159, `synthetic.provenance.check5@example.com`;
+- the same prescription text and prescriber as check 4.
+
+| Step | Observed | Verdict |
+|---|---|---|
+| Form outcome | Redirected to the Monitor with `user_id` `f32fe145-66b4-41ce-9897-10295e98364e` | Workflow A confirmed the patient |
+| `/api/patients` | One prescription, `rx_3378b824…`: `physical_activity/increase`, 2 per week, 6 weeks. Two drafts (`needs_review`) | Same translation as check 4 |
+| Translation provenance, on the prescription and both drafts | `translation_model` `gemini-2.5-flash`; `translation_prompt_sha256` `1f34b557576949f51651e037d79fc575ae0473ac16e3403de209f7c42a419c9a`; `translation_response_id` `nGXDarGZDNi2_PUPrvL60Ao`; `translated_at` 2026-10-05T08:53:50.224Z; `translation_normalised` empty, because nothing was normalised | **All translation provenance fields are verified in production** |
+| Prompt hash against the repository | Identical to the hash on all 191 rows of `output/translation_trace_2026-10-04_iteration2/results.json`, produced by the repository's Workflow A (`7e8a2385…`) | The deployed Workflow A uses the repository's prompt template |
+| Correction | `PATCH /api/prescription`, category → establish: HTTP 200, `persisted: true`, revision row confirmed by the endpoint | `previous_source` follows from code: `workflow_a:gemini-2.5-flash`. The tab was not read |
+| Archive | `DELETE /api/prescription`: HTTP 200. Archived; 0 active prescriptions, 0 active slots, 0 dated occurrences | Nothing approved or sent |
+
+**Still not verified in production:**
+- the intake fix's failure path;
+- `previous_source`, read directly from the Sheet tab.
+
+**Gemini use.** Two calls were made on 5 October after the daily reset (checks 4 and 5).

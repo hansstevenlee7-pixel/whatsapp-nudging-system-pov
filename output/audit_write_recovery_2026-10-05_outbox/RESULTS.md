@@ -67,3 +67,14 @@ The properties, scenarios and assertions are unchanged.
 - **A Sheets failure.** If Sheets fails, the schedule batch fails as a whole: no change and no outbox row are written.
 - **Not tested:** concurrent workers, and a replay racing a second worker.
 - **The double-failure case.** If the first adaptation-store write fails after the state update but before the decision insert, the replay moves the state version once more. The preferred values are the same.
+
+## Deployment
+
+Hans deployed the repair from `landing/` at 04:06 AEDT on 5 October 2026. The deployment is `dpl_2E9RA7uDPTMf23mEULeX3X4PbjW1`, aliased to `whatsapp-nudging-system-pov.vercel.app`. At deploy time `landing/` was clean at commit `d605dd4`.
+
+Checked read-only at 04:07:
+- the pages answer 200;
+- `/api/patients` without a session answers 401;
+- the three internal worker routes without the worker secret answer 403 `invalid_worker_secret`.
+
+Recovery has not been exercised against the deployed stores.
